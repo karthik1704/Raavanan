@@ -15,6 +15,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
+import RavananLogo from '../../asserts/raavanan logo.png';
+
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -173,6 +175,7 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
+          <img src={RavananLogo} alt="logo" height="80px" />
           <Typography className={classes.title} variant="h6" noWrap>
             இராவணன்
           </Typography>
