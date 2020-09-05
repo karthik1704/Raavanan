@@ -21,6 +21,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LockIcon from '@material-ui/icons/Lock';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 import RavananLogo from '../../asserts/raavanan logo.png';
 
@@ -246,6 +247,14 @@ export default function Navbar() {
               }
             >
               சலுகை
+            </Button>
+
+            <Button
+              aria-label=" 4 product in cart"
+              color="inherit"
+              startIcon={<Brightness4Icon />}
+            >
+              Dark Mode
             </Button>
 
             <IconButton
