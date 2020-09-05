@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 
-import { theme } from './theme';
+import theme from './theme';
 import { useStyles } from './AppStyle';
 
 function App() {
