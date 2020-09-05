@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,10 +15,20 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
+
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import LockIcon from '@material-ui/icons/Lock';
 
 import RavananLogo from '../../asserts/raavanan logo.png';
 
 const useStyles = makeStyles((theme) => ({
+  links: {
+    color: '#fff',
+    textDecoration: 'none',
+  },
   grow: {
     flexGrow: 1,
   },
@@ -167,6 +178,15 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
+          <Button>கொள்கைகள்</Button>
+          <Button>எங்களைப் பற்றி</Button>
+          <Button>தொடர்புக்கு</Button>
+          <Button>மென்பொருள் பதிவிறக்கம் செய்ய</Button>
+          <Button>Track Orders</Button>
+          <div className={classes.grow} />
+          <Button startIcon={<LockIcon />}>உள்நுழைய / பதிவு செய்ய</Button>
+        </Toolbar>
+        <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -194,16 +214,40 @@ export default function Navbar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Button
+              aria-label="show 4 new mails"
+              color="inherit"
+              startIcon={
+                <Badge badgeContent={4} color="secondary">
+                  <FavoriteIcon />
+                </Badge>
+              }
+            >
+              விருப்ப பட்டியல்
+            </Button>
+            <Button
+              aria-label=" 4 product in cart"
+              color="inherit"
+              startIcon={
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              }
+            >
+              கூடை
+            </Button>
+            <Button
+              aria-label=" 4 product in cart"
+              color="inherit"
+              startIcon={
+                <Badge badgeContent={4} color="secondary">
+                  <LocalOfferIcon />
+                </Badge>
+              }
+            >
+              சலுகை
+            </Button>
+
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -226,6 +270,16 @@ export default function Navbar() {
               <MoreIcon />
             </IconButton>
           </div>
+        </Toolbar>
+        <Toolbar>
+          <Button>புதிய வெளியீடு</Button>
+          <Button>படச்சட்டகம்</Button>
+          <Button>சட்டை</Button>
+          <Button>தலையணை</Button>
+          <Button>கைபேசி உறை</Button>
+          <Button>தேநீர் கோப்பை</Button>
+          <Button>சுவரொட்டிகள்</Button>
+          <Button>இதர</Button>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
