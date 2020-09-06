@@ -181,11 +181,11 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Button>கொள்கைகள்</Button>
-          <Button>எங்களைப் பற்றி</Button>
-          <Button>தொடர்புக்கு</Button>
-          <Button>மென்பொருள் பதிவிறக்கம் செய்ய</Button>
-          <Button>Track Orders</Button>
+          <Button color="inherit">கொள்கைகள்</Button>
+          <Button color="inherit">எங்களைப் பற்றி</Button>
+          <Button color="inherit">தொடர்புக்கு</Button>
+          <Button color="inherit">மென்பொருள் பதிவிறக்கம் செய்ய</Button>
+          <Button color="inherit">Track Orders</Button>
           <div className={classes.grow} />
           <Button startIcon={<LockIcon />}>உள்நுழைய / பதிவு செய்ய</Button>
         </Toolbar>
@@ -283,14 +283,14 @@ export default function Navbar() {
           </div>
         </Toolbar>
         <Toolbar>
-          <Button>புதிய வெளியீடு</Button>
-          <Button>படச்சட்டகம்</Button>
-          <Button>சட்டை</Button>
-          <Button>தலையணை</Button>
-          <Button>கைபேசி உறை</Button>
-          <Button>தேநீர் கோப்பை</Button>
-          <Button>சுவரொட்டிகள்</Button>
-          <Button>இதர</Button>
+          <Button color="inherit">புதிய வெளியீடு</Button>
+          <Button color="inherit">படச்சட்டகம்</Button>
+          <Button color="inherit">சட்டை</Button>
+          <Button color="inherit">தலையணை</Button>
+          <Button color="inherit">கைபேசி உறை</Button>
+          <Button color="inherit">தேநீர் கோப்பை</Button>
+          <Button color="inherit">சுவரொட்டிகள்</Button>
+          <Button color="inherit">இதர</Button>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
