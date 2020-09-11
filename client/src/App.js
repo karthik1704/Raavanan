@@ -5,14 +5,19 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
+import { useSelector } from 'react-redux';
+
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 import theme from './theme';
 import { useStyles } from './AppStyle';
 
 function App() {
   const classes = useStyles();
+  const dark = useSelector((state) => state.appUi.darkMode);
+  console.log(dark);
   return (
     <ThemeProvider theme={theme}>
       <Paper>
@@ -24,6 +29,7 @@ function App() {
             Hi
           </Button>
         </Container>
+        <Footer />
       </Paper>
     </ThemeProvider>
   );
