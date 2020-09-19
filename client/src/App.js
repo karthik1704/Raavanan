@@ -1,36 +1,56 @@
 import React from 'react';
 
-import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 
 import { useSelector } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import Routes from './routes/Routes';
 
 import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-import theme from './theme';
+// import { dark, light } from './theme';
+
 import { useStyles } from './AppStyle';
 
 function App() {
   const classes = useStyles();
-  const dark = useSelector((state) => state.appUi.darkMode);
-  console.log(dark);
+  const darkMode = useSelector((state) => state.appUi.darkMode);
+
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        main: red[500],
+      },
+    },
+  });
+
+  const lightTheme = createMuiTheme({
+    palette: {
+      primary: {
+        main: red[500],
+      },
+    },
+  });
+
   return (
-    <ThemeProvider theme={theme}>
-      <Paper>
-        <Loader />
-        <Navbar />
-        <Container>
-          <h1 className={classes.title}>இராவணன் கலைகூடம்</h1>
-          <Button variant="contained" color="primary">
-            Hi
-          </Button>
-        </Container>
-        <Footer />
-      </Paper>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <Router>
+        <Paper>
+          <Loader />
+          <Navbar />
+          <Container className={classes.root}>
+            <Routes />
+          </Container>
+          <Footer />
+        </Paper>
+      </Router>
     </ThemeProvider>
   );
 }
