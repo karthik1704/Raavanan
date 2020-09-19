@@ -1,7 +1,7 @@
 import { TOGGLE_DARK_MODE } from '../CONSTANTS';
 
 const initalState = {
-  darkmode: false,
+  darkMode: false,
 };
 
 const appReducer = (state = initalState, { type, payload }) => {
@@ -9,7 +9,7 @@ const appReducer = (state = initalState, { type, payload }) => {
     case TOGGLE_DARK_MODE:
       return {
         ...state,
-        darkmode: !state.darkmode,
+        darkMode: !state.darkMode,
       };
 
     default:
