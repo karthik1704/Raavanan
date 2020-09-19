@@ -6,9 +6,12 @@ import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import { useStyles } from './style';
+
 const Footer = () => {
+  const classes = useStyles();
   return (
-    <footer mt={2}>
+    <footer mt={2} className={classes.root}>
       <Paper elevation={3}>
         <Box display="flex" justifyContent="center">
           <Toolbar>
@@ -19,7 +22,7 @@ const Footer = () => {
         </Box>
         <Box display="flex" justifyContent="center">
           <Typography variant="caption" display="block" gutterBottom>
-            &copy; Raavaanan Digital Media
+            &copy; Raavanan Digital Media
           </Typography>
         </Box>
       </Paper>
