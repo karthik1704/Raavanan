@@ -23,6 +23,11 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LockIcon from '@material-ui/icons/Lock';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DARK_MODE } from '../../data/CONSTANTS';
+
+import { Link } from 'react-router-dom';
+
 import RavananLogo from '../../asserts/raavanan logo.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -103,6 +108,8 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const dispatch = useDispatch();
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -181,13 +188,21 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Button color="inherit">கொள்கைகள்</Button>
-          <Button color="inherit">எங்களைப் பற்றி</Button>
-          <Button color="inherit">தொடர்புக்கு</Button>
+          <Button color="inherit" component={Link} to="/terms">
+            கொள்கைகள்
+          </Button>
+          <Button color="inherit" component={Link} to="/about">
+            எங்களைப் பற்றி
+          </Button>
+          <Button color="inherit" component={Link} to="/contact">
+            தொடர்புக்கு
+          </Button>
           <Button color="inherit">மென்பொருள் பதிவிறக்கம் செய்ய</Button>
           <Button color="inherit">Track Orders</Button>
           <div className={classes.grow} />
-          <Button startIcon={<LockIcon />}>உள்நுழைய / பதிவு செய்ய</Button>
+          <Button color="inherit" startIcon={<LockIcon />}>
+            உள்நுழைய / பதிவு செய்ய
+          </Button>
         </Toolbar>
         <Toolbar>
           <IconButton
@@ -198,10 +213,13 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <img src={RavananLogo} alt="logo" height="80px" />
+          <Link to="/">
+            <img src={RavananLogo} alt="logo" height="80px" />
+          </Link>
           <Typography className={classes.title} variant="h6" noWrap>
             இராவணன்
           </Typography>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -255,6 +273,7 @@ export default function Navbar() {
               aria-label=" 4 product in cart"
               color="inherit"
               startIcon={<Brightness4Icon />}
+              onClick={() => dispatch({ type: TOGGLE_DARK_MODE })}
             >
               Dark Mode
             </Button>
