@@ -1,7 +1,15 @@
-import { TOGGLE_DARK_MODE } from '../CONSTANTS';
+import { TOGGLE_THEME, TOGGLE_APP_DRAWER } from '../CONSTANTS';
 
-export const toggleDarkMode = () => {
+export const changeTheme = (payload) => {
   return {
-    type: TOGGLE_DARK_MODE,
+    type: TOGGLE_THEME,
+    payload,
+  };
+};
+
+export const toggleAppDrawer = (payload) => {
+  return {
+    type: TOGGLE_APP_DRAWER,
+    payload
   };
 };

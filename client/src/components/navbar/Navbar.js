@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
+
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,9 +13,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -23,10 +21,13 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LockIcon from '@material-ui/icons/Lock';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
-import { useDispatch } from 'react-redux';
-import { TOGGLE_DARK_MODE } from '../../data/CONSTANTS';
-
+import {  useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import useDarkTheme from '../../hooks/useDarkTheme';
+
+import AppDrawer from '../drawer/AppDrawer';
+import { toggleAppDrawer } from '../../data/actions/appAction';
 
 import RavananLogo from '../../asserts/raavanan logo.png';
 
@@ -60,9 +61,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 1,
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
+      //marginLeft: theme.spacing(3),
       width: 'auto',
     },
+    [theme.breakpoints.down('sm')]: {
+      //marginLeft: theme.spacing(3),
+      width: 'auto',
+      marginRight: 0,
+    },
+
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -98,34 +105,35 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+
+  centerToolbar: {
+    margin: 'auto'
+  }
+
 }));
 
 export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const [theme , onToggleTheme] = useDarkTheme();
+  const dispatch = useDispatch();
+
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const dispatch = useDispatch();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+ 
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+ 
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -143,51 +151,12 @@ export default function Navbar() {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+  
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" color ={theme === 'dark' ? 'inherit' : 'primary'}>
+        <Toolbar className={classes.sectionDesktop}>
           <Button color="inherit" component={Link} to="/terms">
             கொள்கைகள்
           </Button>
@@ -205,22 +174,24 @@ export default function Navbar() {
           </Button>
         </Toolbar>
         <Toolbar>
-          <IconButton
+          <IconButton 
             edge="start"
-            className={classes.menuButton}
+            className={`${classes.menuButton} ${classes.sectionMobile}`}
             color="inherit"
             aria-label="open drawer"
+            onClick={()=>dispatch(toggleAppDrawer(true))}
           >
             <MenuIcon />
           </IconButton>
+       
           <Link to="/">
             <img src={RavananLogo} alt="logo" height="80px" />
-          </Link>
+            </Link>
           <Typography className={classes.title} variant="h6" noWrap>
             இராவணன்
           </Typography>
-
-          <div className={classes.search}>
+          
+          <div className={`${classes.search} ${classes.sectionDesktop}`}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -273,7 +244,7 @@ export default function Navbar() {
               aria-label=" 4 product in cart"
               color="inherit"
               startIcon={<Brightness4Icon />}
-              onClick={() => dispatch({ type: TOGGLE_DARK_MODE })}
+              onClick={()=>onToggleTheme()}
             >
               Dark Mode
             </Button>
@@ -290,30 +261,56 @@ export default function Navbar() {
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+          <IconButton
+              aria-label="show 4 new Favorite"
               color="inherit"
             >
-              <MoreIcon />
+              <Badge badgeContent={4} color="secondary">
+                  <FavoriteIcon />
+                </Badge>
+            </IconButton>
+
+            <IconButton
+              aria-label=" 4 product in cart"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              
             </IconButton>
           </div>
         </Toolbar>
-        <Toolbar>
-          <Button color="inherit">புதிய வெளியீடு</Button>
-          <Button color="inherit">படச்சட்டகம்</Button>
-          <Button color="inherit">சட்டை</Button>
-          <Button color="inherit">தலையணை</Button>
-          <Button color="inherit">கைபேசி உறை</Button>
-          <Button color="inherit">தேநீர் கோப்பை</Button>
-          <Button color="inherit">சுவரொட்டிகள்</Button>
-          <Button color="inherit">இதர</Button>
+        <Toolbar className={classes.sectionMobile}>
+        <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+        </Toolbar>
+ 
+        <Toolbar className={`${classes.sectionDesktop} ${classes.centerToolbar}`} >
+          <Button color="inherit" component={Link} to='/new'>புதிய வெளியீடு</Button>
+          <Button color="inherit" component={Link} to='/photoframe'>படச்சட்டகம்</Button>
+          <Button color="inherit" component={Link} to='/t-shirt'>சட்டை</Button>
+          <Button color="inherit" component={Link} to='/pillow'>தலையணை</Button>
+          <Button color="inherit" component={Link} to='/phonecase'>கைபேசி உறை</Button>
+          <Button color="inherit" component={Link} to='/cups'>தேநீர் கோப்பை</Button>
+          <Button color="inherit" component={Link} to='/stickers'>சுவரொட்டிகள்</Button>
+          <Button color="inherit" component={Link} to='/others'>இதர</Button>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+      
       {renderMenu}
+    <AppDrawer />
     </div>
   );
 }
