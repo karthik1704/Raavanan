@@ -1,10 +1,10 @@
-import { HomeTwoTone } from '@material-ui/icons';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Home from '../views/home/Home';
 import About from '../views/about/About';
 import Contact from '../views/contact/Contact';
+import Home from '../views/home/Home';
+import Products from '../views/products/Products';
 import Terms from '../views/terms/Terms';
 
 const Router = () => {
@@ -21,6 +21,9 @@ const Router = () => {
       </Route>
       <Route path="/terms" exact>
         <Terms />
+      </Route>
+      <Route path="/:category" exact>
+        <Products />
       </Route>
     </Switch>
   );

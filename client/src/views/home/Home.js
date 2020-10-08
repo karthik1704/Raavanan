@@ -1,15 +1,31 @@
 import React from 'react';
 
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import {makeStyles} from '@material-ui/core/styles';
+
+import {useSelector} from 'react-redux';
+
+import ProductList from '../../components/productList/ProductList';
+
+
+const useStyles = makeStyles((theme)=> ({
+
+  root: {
+    marginTop: theme.spacing(1),
+  },
+
+}));
 
 const Home = () => {
+  const {products} = useSelector(state => state.products)
+
+  const classes = useStyles()
   return (
-    <>
-      <h1>இராவணன் கலைகூடம்</h1>
-      <Button variant="contained" color="primary">
-        Hi
-      </Button>
-    </>
+    <div>
+    <Grid container className={classes.root} >
+     <ProductList products={products} />
+    </Grid>
+    </div>
   );
 };
 
