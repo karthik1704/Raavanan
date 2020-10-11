@@ -5,7 +5,7 @@ import productReducer from './productReducer';
 
 const rootReducers = combineReducers({
   appUi: appReducer,
-  products: productReducer
+  products: productReducer,
 });
 
 export default rootReducers;

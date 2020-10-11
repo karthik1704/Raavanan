@@ -3,12 +3,14 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import  Grid  from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import  Typography  from '@material-ui/core/Typography';
 
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import {Link} from 'react-router-dom';
 
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -42,6 +44,7 @@ const ProductList = ({products}) => {
         <Grid item xs={12} sm={4} md={2} key={product.id} >
 
         <Card  className={classes.root} >
+        <CardActionArea component={Link} to={`/product/${product.id}`}>
                 <div className={classes.center}>
                   <img src={product.imageUrl} alt={product.name} className={classes.media} />
                   </div>
@@ -52,12 +55,13 @@ const ProductList = ({products}) => {
                       <Typography variant='subtitle1' color="textPrimary" >
                        ₹{product.price}
                       </Typography>
-
+                    
                   </CardContent>
+                  </CardActionArea>
+
                   <CardActions>
                   <IconButton aria-label="add to favorites">
                     <FavoriteBorderOutlinedIcon />
-
                   </IconButton>
                   </CardActions>
                   

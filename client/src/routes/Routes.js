@@ -6,6 +6,7 @@ import Contact from '../views/contact/Contact';
 import Home from '../views/home/Home';
 import Products from '../views/products/Products';
 import Terms from '../views/terms/Terms';
+import ProductDetail from '../views/productDetail/ProductDetail';
 
 const Router = () => {
   return (
@@ -24,6 +25,9 @@ const Router = () => {
       </Route>
       <Route path="/:category" exact>
         <Products />
+      </Route>
+      <Route path="/product/:id" exact>
+        <ProductDetail />
       </Route>
     </Switch>
   );
