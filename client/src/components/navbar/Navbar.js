@@ -21,7 +21,7 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LockIcon from '@material-ui/icons/Lock';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import useDarkTheme from '../../hooks/useDarkTheme';
@@ -61,15 +61,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 1,
     [theme.breakpoints.up('sm')]: {
-      //marginLeft: theme.spacing(3),
+      // marginLeft: theme.spacing(3),
       width: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
-      //marginLeft: theme.spacing(3),
+      // marginLeft: theme.spacing(3),
       width: 'auto',
       marginRight: 0,
     },
-
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -107,33 +106,26 @@ const useStyles = makeStyles((theme) => ({
   },
 
   centerToolbar: {
-    margin: 'auto'
-  }
-
+    margin: 'auto',
+  },
 }));
 
 export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const [theme , onToggleTheme] = useDarkTheme();
+  const [theme, onToggleTheme] = useDarkTheme();
   const dispatch = useDispatch();
 
-
   const isMenuOpen = Boolean(anchorEl);
-
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
- 
-
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
- 
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -151,11 +143,12 @@ export default function Navbar() {
     </Menu>
   );
 
-  
-
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color ={theme === 'dark' ? 'inherit' : 'primary'}>
+      <AppBar
+        position="static"
+        color={theme === 'dark' ? 'inherit' : 'primary'}
+      >
         <Toolbar className={classes.sectionDesktop}>
           <Button color="inherit" component={Link} to="/terms">
             கொள்கைகள்
@@ -174,23 +167,23 @@ export default function Navbar() {
           </Button>
         </Toolbar>
         <Toolbar>
-          <IconButton 
+          <IconButton
             edge="start"
             className={`${classes.menuButton} ${classes.sectionMobile}`}
             color="inherit"
             aria-label="open drawer"
-            onClick={()=>dispatch(toggleAppDrawer(true))}
+            onClick={() => dispatch(toggleAppDrawer(true))}
           >
             <MenuIcon />
           </IconButton>
-       
+
           <Link to="/">
             <img src={RavananLogo} alt="logo" height="80px" />
-            </Link>
+          </Link>
           <Typography className={classes.title} variant="h6" noWrap>
             இராவணன்
           </Typography>
-          
+
           <div className={`${classes.search} ${classes.sectionDesktop}`}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -244,7 +237,7 @@ export default function Navbar() {
               aria-label=" 4 product in cart"
               color="inherit"
               startIcon={<Brightness4Icon />}
-              onClick={()=>onToggleTheme()}
+              onClick={() => onToggleTheme()}
             >
               Dark Mode
             </Button>
@@ -261,28 +254,21 @@ export default function Navbar() {
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
-          <IconButton
-              aria-label="show 4 new Favorite"
-              color="inherit"
-            >
+            <IconButton aria-label="show 4 new Favorite" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                  <FavoriteIcon />
-                </Badge>
+                <FavoriteIcon />
+              </Badge>
             </IconButton>
 
-            <IconButton
-              aria-label=" 4 product in cart"
-              color="inherit"
-            >
+            <IconButton aria-label=" 4 product in cart" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                  <ShoppingCartIcon />
-                </Badge>
-              
+                <ShoppingCartIcon />
+              </Badge>
             </IconButton>
           </div>
         </Toolbar>
         <Toolbar className={classes.sectionMobile}>
-        <div className={classes.search}>
+          <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -296,21 +282,39 @@ export default function Navbar() {
             />
           </div>
         </Toolbar>
- 
-        <Toolbar className={`${classes.sectionDesktop} ${classes.centerToolbar}`} >
-          <Button color="inherit" component={Link} to='/new'>புதிய வெளியீடு</Button>
-          <Button color="inherit" component={Link} to='/photoframe'>படச்சட்டகம்</Button>
-          <Button color="inherit" component={Link} to='/t-shirt'>சட்டை</Button>
-          <Button color="inherit" component={Link} to='/pillow'>தலையணை</Button>
-          <Button color="inherit" component={Link} to='/phonecase'>கைபேசி உறை</Button>
-          <Button color="inherit" component={Link} to='/cups'>தேநீர் கோப்பை</Button>
-          <Button color="inherit" component={Link} to='/stickers'>சுவரொட்டிகள்</Button>
-          <Button color="inherit" component={Link} to='/others'>இதர</Button>
+
+        <Toolbar
+          className={`${classes.sectionDesktop} ${classes.centerToolbar}`}
+        >
+          <Button color="inherit" component={Link} to="/new">
+            புதிய வெளியீடு
+          </Button>
+          <Button color="inherit" component={Link} to="/photoframe">
+            படச்சட்டகம்
+          </Button>
+          <Button color="inherit" component={Link} to="/t-shirt">
+            சட்டை
+          </Button>
+          <Button color="inherit" component={Link} to="/pillow">
+            தலையணை
+          </Button>
+          <Button color="inherit" component={Link} to="/phonecase">
+            கைபேசி உறை
+          </Button>
+          <Button color="inherit" component={Link} to="/cups">
+            தேநீர் கோப்பை
+          </Button>
+          <Button color="inherit" component={Link} to="/stickers">
+            சுவரொட்டிகள்
+          </Button>
+          <Button color="inherit" component={Link} to="/others">
+            இதர
+          </Button>
         </Toolbar>
       </AppBar>
-      
+
       {renderMenu}
-    <AppDrawer />
+      <AppDrawer />
     </div>
   );
 }
