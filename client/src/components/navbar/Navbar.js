@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 1,
     [theme.breakpoints.up('sm')]: {
-      // marginLeft: theme.spacing(3),
+      marginLeft: theme.spacing(3),
       width: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
@@ -94,13 +94,13 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionDesktop: {
     display: 'none',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'flex',
     },
   },
   sectionMobile: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none',
     },
   },

@@ -8,7 +8,7 @@ const initalState = {
   products: [
     {
       id: 1,
-      name: 'Phone Case 1',
+      name: 'Ma Phone Case 1',
       price: 399,
       offer: '20%',
       category: 'phonecase',
@@ -17,7 +17,7 @@ const initalState = {
     },
     {
       id: 2,
-      name: 'Phone Case 2',
+      name: 'சேயோன் கைபேசி உறை',
       price: 399,
       offer: '20%',
       category: 'phonecase',

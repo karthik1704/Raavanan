@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+// eslint-disable-next-line import/prefer-default-export
 export const useStyles = makeStyles((theme) => ({
   root: {
-    
-    left: 0,
-    bottom: 0,
     maxWidth: '100vw',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 }));

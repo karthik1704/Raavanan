@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   productImage: {
-    width: 400,
+    width: 300,
     height: 600,
   },
   buttons: {
