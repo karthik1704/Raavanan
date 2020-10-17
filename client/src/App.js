@@ -20,14 +20,11 @@ import { useStyles } from './AppStyle';
 
 function App() {
   const classes = useStyles();
-  const [theme]=useDarkTheme();
-
-
+  const [theme] = useDarkTheme();
 
   const darkTheme = createMuiTheme({
     palette: {
       type: 'dark',
-     
     },
   });
 
@@ -40,7 +37,7 @@ function App() {
   });
 
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme }>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Router>
         <Paper>
           <Loader />
