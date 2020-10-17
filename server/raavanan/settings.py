@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Custom USER MODEL
+AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
@@ -40,9 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'dj_rest_auth.registration',
     'corsheaders',
 
-    'products',
+    'users',
+   
 
 ]
 
@@ -58,6 +69,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'raavanan.urls'
+
+
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
@@ -120,6 +133,24 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# DJ REST AUTH & ALL AUTH SOCIAL
+
+# GOOGLE OAUTH2
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SITE_ID = 1
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
