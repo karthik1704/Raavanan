@@ -28,36 +28,41 @@ const ProductDetail = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(fetchProductDetail(id));
+
+    fetch(`http://localhost:8000/api/product/${id}`)
+    .then(res => res.json())
+    .then( data =>  dispatch(fetchProductDetail(data)))
+    .catch(err => console.log(err));
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
     <div>
-      {productDetail.map((product) => (
-        <div key={product.id}>
+     
+        <div key={productDetail.id}>
           <Grid container>
             <Grid item xs={12} md={6} lg={5}>
               <div>
                 <img
-                  src={product.imageUrl}
-                  alt={product.name}
+                  src={productDetail.imageurl}
+                  alt={productDetail.name}
                   className={classes.productImage}
                 />
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="h3">{product.name}</Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="h3">{productDetail.product_name}</Typography>
+              {/* <Typography variant="subtitle1">
                 category: {product.category}
-              </Typography>
+              </Typography> */}
               <Divider />
-              <Typography variant="subtitle1">
+              {/* <Typography variant="subtitle1">
                 M.R.P.: ₹ {product.mrp}
               </Typography>
               <Typography variant="subtitle1">
                 Price: ₹ <b>{product.price}</b>
-              </Typography>
+              </Typography> */}
               <Divider />
               <div>
                 <Typography variant="body1">In stock</Typography>
@@ -116,7 +121,7 @@ const ProductDetail = () => {
             </Grid>
           </Grid>
         </div>
-      ))}
+   
     </div>
   );
 };

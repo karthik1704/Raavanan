@@ -1,4 +1,4 @@
-import { FETCH_PRODUCT_DETAIL } from '../CONSTANTS';
+import { FETCH_PRODUCT_DETAIL, FETCH_PRODUCT } from '../CONSTANTS';
 
 import Image1 from '../../asserts/images/main model 3.png';
 import Image2 from '../../asserts/images/main model 4.png';
@@ -62,8 +62,25 @@ const products = [
 ];
 
 // eslint-disable-next-line import/prefer-default-export
-export const fetchProductDetail = (id) => {
-  const payload = products.filter((product) => product.id === +id);
+
+
+export  const fetchProduct = (payload) => {
+  
+
+
+
+  
+
+  return {
+    type: FETCH_PRODUCT,
+    payload,
+  };
+};
+
+
+export const fetchProductDetail = (payload) => {
+ 
+ 
 
   return {
     type: FETCH_PRODUCT_DETAIL,

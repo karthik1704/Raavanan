@@ -64,31 +64,31 @@ const ProductList = ({ products }) => {
         <Grid item xs={6} sm={4} md={2} key={product.id}>
           <Card className={classes.root}>
             <CardActionArea component={Link} to={`/product/${product.id}`}>
-              <div className={classes.center}>
+               <div className={classes.center}>
                 <img
-                  src={product.imageUrl}
+                  src={product.imageurl}
                   alt={product.name}
                   className={classes.media}
                 />
-              </div>
+              </div> 
               <CardContent>
                 <Typography
-                  variant="p"
+                  variant="h1"
                   color="textPrimary"
                   className={classes.title}
                 >
-                  {product.name.length >= 10
-                    ? `${product.name.substring(0, 10)}...`
-                    : product.name}
+                  {product.product_name.length >= 10
+                    ? `${product.product_name.substring(0, 10)}...`
+                    : product.product_name}
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="subtitle1"
                   color="textPrimary"
                   className={classes.price}
                 >
                   ₹{'  '}
                   {product.price}
-                </Typography>
+                </Typography> */}
               </CardContent>
             </CardActionArea>
 

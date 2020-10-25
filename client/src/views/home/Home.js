@@ -3,7 +3,9 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchProduct } from '../../data/actions/productActions';
 
 import Carousel from '../../components/carousel/Carousel';
 import ProductList from '../../components/productList/ProductList';
@@ -16,6 +18,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const { products } = useSelector((state) => state.products);
+
+  const dispatch =  useDispatch();
+
+  React.useEffect(()=>{
+    let payload = []
+    fetch('http://localhost:8000/api/product.json')
+    .then(res => res.json())
+    .then( data => dispatch(fetchProduct(data)))
+    .catch(err => console.log(err));
+
+    
+
+  },[dispatch])
 
   const classes = useStyles();
   return (
