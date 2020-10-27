@@ -51,3 +51,12 @@ class Profile(models.Model):
     last_name= models.CharField(_('last name'),max_length=50)
     birth_year=models.CharField(_('birth year'),max_length=4, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+
+
+class Address(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    address1 = models.CharField(max_length=250)
+    address2 = models.CharField(max_length=250)
+    city = models.CharField(max_length=60)
+    state = models.CharField(max_length=70)
+    pincode = models.IntegerField(_('Pin Code / Zip Code'))
