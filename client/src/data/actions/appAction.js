@@ -10,6 +10,6 @@ export const changeTheme = (payload) => {
 export const toggleAppDrawer = (payload) => {
   return {
     type: TOGGLE_APP_DRAWER,
-    payload
+    payload,
   };
 };

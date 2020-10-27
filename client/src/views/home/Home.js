@@ -19,18 +19,14 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const { products } = useSelector((state) => state.products);
 
-  const dispatch =  useDispatch();
+  const dispatch = useDispatch();
 
-  React.useEffect(()=>{
-    let payload = []
+  React.useEffect(() => {
     fetch('http://localhost:8000/api/product.json')
-    .then(res => res.json())
-    .then( data => dispatch(fetchProduct(data)))
-    .catch(err => console.log(err));
-
-    
-
-  },[dispatch])
+      .then((res) => res.json())
+      .then((data) => dispatch(fetchProduct(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
 
   const classes = useStyles();
   return (
