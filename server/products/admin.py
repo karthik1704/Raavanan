@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Product, ProductMaterial
+from .models import Category, Product, ProductMaterial, ProductImage
 
 # Register your models here.
 # class CategoryAdmin(admin.StackedInline):
@@ -9,9 +9,13 @@ from .models import Category, Product, ProductMaterial
 # class ProductMaterialAdmin(admin.StackedInline):
 #     model = ProductMaterial
 
-# class ProductAdmin(admin.ModelAdmin):
-#     inlines = (CategoryAdmin, ProductMaterialAdmin)
+class ProductImageAdmin(admin.StackedInline):
+    model = ProductImage
+    extra = 3
 
-admin.site.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    inlines = (ProductImageAdmin,)
+
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)
 admin.site.register(ProductMaterial)
