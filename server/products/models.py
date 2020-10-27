@@ -31,7 +31,7 @@ class Category(models.Model):
 class Product(models.Model):
     id = models.CharField(unique=True , db_index=True , max_length=15 , primary_key=True)
     product_name=models.CharField(max_length=255)
-    mrp =  models.FloatField(_('MRP'))
+    mrp =  models.FloatField(_('M.R.P.'))
     discount = models.IntegerField(_('Discount %'))
     price = models.FloatField()
     brand=models.CharField(max_length=50)
@@ -42,7 +42,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     origin = models.CharField(max_length=20)
     description = models.TextField()
-    imageurl = models.ImageField(upload_to='product/', blank=True, null=True)
+    imageurl = models.ImageField(upload_to=f'product/{id}/', blank=True, null=True)
 
 
     def __str__(self):
