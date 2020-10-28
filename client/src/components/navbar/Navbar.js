@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import React from 'react';
+import { useState } from 'react';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const [theme, onToggleTheme] = useDarkTheme();
   const dispatch = useDispatch();

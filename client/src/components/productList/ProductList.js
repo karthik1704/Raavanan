@@ -1,6 +1,4 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from 'react';
-
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';

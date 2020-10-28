@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,7 +21,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('http://localhost:8000/api/product.json')
       .then((res) => res.json())
       .then((data) => dispatch(fetchProduct(data)))

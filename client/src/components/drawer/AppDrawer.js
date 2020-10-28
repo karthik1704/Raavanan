@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
