@@ -42,7 +42,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     origin = models.CharField(max_length=20)
     description = models.TextField()
-    imageurl = models.ImageField(upload_to=f'product/{id}/', blank=True, null=True)
+    imageurl = models.ImageField(upload_to=f'product/', blank=True, null=True)
 
 
     def __str__(self):
@@ -50,4 +50,4 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=f'product/{product_id}/')
+    image = models.ImageField(upload_to=f'product/')
