@@ -91,29 +91,29 @@ const ProductDetail = () => {
               <Divider />
               <Typography variant="body2">{ productDetail.description }</Typography>
               <Divider />
-              <Typography variant="h6">Product Details</Typography>
+              <Typography variant="h6">பொருள் விவரங்கள் </Typography>
               <Table size="small" aria-label="Product Detail table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Product By</TableCell>
+                    <TableCell>தயாரிப்பு</TableCell>
                     <TableCell>{productDetail.manufacturer}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Brand</TableCell>
+                    <TableCell>வியாபாரக் குறி</TableCell>
 
                     <TableCell>{productDetail.brand}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Supported Mobile</TableCell>
+                    <TableCell>தகுதியான சாதனங்கள்</TableCell>
                     <TableCell>{productDetail.supported_devices}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Count </TableCell>
+                    <TableCell>எண்ணிக்கை </TableCell>
 
                     <TableCell>{productDetail.quantity}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Component </TableCell>
+                    <TableCell>மூலப்பொருள் </TableCell>
                     {/* <TableCell>
                       {
                         productDetail.materials.map(material => (
@@ -123,11 +123,11 @@ const ProductDetail = () => {
                     </TableCell> */}
                   </TableRow>
                   <TableRow>
-                    <TableCell>Category </TableCell>
+                    <TableCell>வகை </TableCell>
                     {/* <TableCell>{productDetail.category.category_name}</TableCell> */}
                   </TableRow>
                   <TableRow>
-                    <TableCell>Origin </TableCell>
+                    <TableCell>தோற்றம் </TableCell>
                     <TableCell>{productDetail.origin}</TableCell>
                   </TableRow>
                 </TableHead>
