@@ -52,21 +52,26 @@ const ProductDetail = () => {
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="h3">{productDetail.product_name}</Typography>
+              <Typography variant="h5">{productDetail.product_name}</Typography>
               {/* <Typography variant="subtitle1">
                 category: {product.category}
               </Typography> */}
               <Divider />
-              {/* <Typography variant="subtitle1">
-                M.R.P.: ₹ {product.mrp}
+              <Typography variant="subtitle1">
+               M.R.P.: ₹  <del>{productDetail.mrp}</del>
               </Typography>
               <Typography variant="subtitle1">
-                Price: ₹ <b>{product.price}</b>
-              </Typography> */}
+                Price: ₹ <b>{productDetail.price}</b>
+              </Typography>
               <Divider />
               <div>
                 <Typography variant="body1">In stock</Typography>
-                <div className={classes.buttons}>
+
+                <Typography variant="h4">
+                   இந்தப் பொருளை வாங்க 7871003935 என்ற எண்ணுக்கு பகிரியில் ( வாட்சாப் )உங்களுக்கு விருப்பமான இந்தப் பொருளின் "{productDetail.id}" எண்ணை அனுப்பவும்.
+                </Typography>
+                
+                {/* <div className={classes.buttons}>
                   <Button
                     variant="contained"
                     startIcon={<AddShoppingCartIcon />}
@@ -80,44 +85,54 @@ const ProductDetail = () => {
                   >
                     Buy Now
                   </Button>
-                </div>
+                </div> */}
+                <br />
               </div>
+              <Divider />
+              <Typography variant="body2">{ productDetail.description }</Typography>
               <Divider />
               <Typography variant="h6">Product Details</Typography>
               <Table size="small" aria-label="Product Detail table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Product By</TableCell>
-                    <TableCell>Raavanan</TableCell>
+                    <TableCell>{productDetail.manufacturer}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Brand</TableCell>
 
-                    <TableCell>Raavanan</TableCell>
+                    <TableCell>{productDetail.brand}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Supported Mobile</TableCell>
-                    <TableCell>All Mobiles</TableCell>
+                    <TableCell>{productDetail.supported_devices}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Count </TableCell>
 
-                    <TableCell>1</TableCell>
+                    <TableCell>{productDetail.quantity}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Component </TableCell>
-                    <TableCell>Plastic</TableCell>
+                    {/* <TableCell>
+                      {
+                        productDetail.materials.map(material => (
+                          <span key={material.id} > {material.material_name} </span>
+                        ))
+                      }
+                    </TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Category </TableCell>
-                    <TableCell>Phone Case</TableCell>
+                    {/* <TableCell>{productDetail.category.category_name}</TableCell> */}
                   </TableRow>
                   <TableRow>
                     <TableCell>Origin </TableCell>
-                    <TableCell>Tamil Nadu</TableCell>
+                    <TableCell>{productDetail.origin}</TableCell>
                   </TableRow>
                 </TableHead>
               </Table>
+              
             </Grid>
           </Grid>
         </div>

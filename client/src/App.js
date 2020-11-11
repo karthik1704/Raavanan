@@ -8,9 +8,9 @@ import Routes from './routes/Routes';
 
 import useDarkTheme from './hooks/useDarkTheme';
 
-import Loader from './components/loader/Loader';
+import Loader from './components/Loader/Loader';
 import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
+import Footer from './components/Footer/Footer';
 
 // import { dark, light } from './theme';
 

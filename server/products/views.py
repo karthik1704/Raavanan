@@ -33,7 +33,7 @@ class ProductSerializer(serializers.ModelSerializer):
     materials = ProductMaterialSerializer(many=True)
     class Meta:
         model= Product
-        fields=['id','product_name', 'brand','manufacturer','imageurl', 'category', 'materials', 'supported_devices','origin','description']
+        fields=['id','product_name', 'mrp', 'price', 'brand','manufacturer','imageurl', 'quantity',  'supported_devices','origin','description','category','materials',]
 
 
 class ProductViewset(viewsets.ModelViewSet):

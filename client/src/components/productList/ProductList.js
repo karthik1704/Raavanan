@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductList = ({ products }) => {
+  
   const classes = useStyles();
   return (
     <>
@@ -71,7 +72,7 @@ const ProductList = ({ products }) => {
               </div> 
               <CardContent>
                 <Typography
-                  variant="h1"
+                  variant="body1"
                   color="textPrimary"
                   className={classes.title}
                 >
