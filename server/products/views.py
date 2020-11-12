@@ -9,6 +9,8 @@ from .models import Category, Product
 class ProductViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category']
     
 
 class CategoryViewSet(viewsets.ModelViewSet):
