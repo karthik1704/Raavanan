@@ -1,11 +1,13 @@
-from rest_framework import  serializers
-from rest_framework.relations import PrimaryKeyRelatedField, StringRelatedField
 
 from .models import Product, ProductImage, ProductMaterial , Category
 
+from rest_framework import  serializers
+
+# Create your views here.
+
 
 class CategorySerializer(serializers.ModelSerializer):
-    parent_category = StringRelatedField(many=True)
+    parent_category = serializers.StringRelatedField()
     class Meta:
         model = Category
         fields = ['id','category_name', 'parent_category']
@@ -23,8 +25,7 @@ class ProductMaterialSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
-    #category = serializers.SlugRelatedField(many=True, read_only=True, slug_field='slug')
-    #images = PrimaryKeyRelatedField()
+    image = ProductImageSerializer(many=True)
     materials = ProductMaterialSerializer(many=True)
     class Meta:
         model= Product
@@ -42,5 +43,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'description',
             'category',
             'materials',
-        ]
+            'image',
 
+        ]
+ 

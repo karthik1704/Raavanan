@@ -47,6 +47,11 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+    
+    def image(self):
+        if not hasattr(self, '_productimage'):
+            self._productimage = self.productimage_set.all()
+        return self._productimage
 
 class ProductImage(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
