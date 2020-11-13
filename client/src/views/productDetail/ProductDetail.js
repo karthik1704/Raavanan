@@ -11,8 +11,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import StoreIcon from '@material-ui/icons/Store';
+// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+// import StoreIcon from '@material-ui/icons/Store';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+
+// import green from '@material-ui/core/colors/green';
+
+import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -28,18 +33,21 @@ const ProductDetail = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    // fetch(`http://localhost:8000/api/product/${id}`)
+    //   .then((res) => res.json())
+    //   .then((data) => dispatch(fetchProductDetail(data)))
+    //   .catch((err) => console.log(err));
 
-    fetch(`http://localhost:8000/api/product/${id}`)
-    .then(res => res.json())
-    .then( data =>  dispatch(fetchProductDetail(data)))
-    .catch(err => console.log(err));
-   
+    axios
+      .get(`http://localhost:8000/api/product/${id}`)
+      .then((res) => dispatch(fetchProductDetail(res.data)));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
     <div>
-     
+      {productDetail && (
         <div key={productDetail.id}>
           <Grid container>
             <Grid item xs={12} md={6} lg={5}>
@@ -58,7 +66,7 @@ const ProductDetail = () => {
               </Typography> */}
               <Divider />
               <Typography variant="subtitle1">
-               M.R.P.: ₹  <del>{productDetail.mrp}</del>
+                M.R.P.: ₹ <del>{productDetail.mrp}</del>
               </Typography>
               <Typography variant="subtitle1">
                 Price: ₹ <b>{productDetail.price}</b>
@@ -67,10 +75,10 @@ const ProductDetail = () => {
               <div>
                 <Typography variant="body1">In stock</Typography>
 
-                <Typography variant="h4">
-                   இந்தப் பொருளை வாங்க 7871003935 என்ற எண்ணுக்கு பகிரியில் ( வாட்சாப் )உங்களுக்கு விருப்பமான இந்தப் பொருளின் "{productDetail.id}" எண்ணை அனுப்பவும்.
-                </Typography>
-                
+                <Button variant="contained" startIcon={<WhatsAppIcon />}>
+                  Buy Via WhatsApp
+                </Button>
+
                 {/* <div className={classes.buttons}>
                   <Button
                     variant="contained"
@@ -89,7 +97,9 @@ const ProductDetail = () => {
                 <br />
               </div>
               <Divider />
-              <Typography variant="body2">{ productDetail.description }</Typography>
+              <Typography variant="body2">
+                {productDetail.description}
+              </Typography>
               <Divider />
               <Typography variant="h6">பொருள் விவரங்கள் </Typography>
               <Table size="small" aria-label="Product Detail table">
@@ -114,17 +124,20 @@ const ProductDetail = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>மூலப்பொருள் </TableCell>
-                    {/* <TableCell>
-                      {
-                        productDetail.materials.map(material => (
-                          <span key={material.id} > {material.material_name} </span>
-                        ))
-                      }
-                    </TableCell> */}
+                    <TableCell>
+                      {productDetail.materials.map((material) => (
+                        <span key={material.id}>
+                          {' '}
+                          {material.material_name}{' '}
+                        </span>
+                      ))}
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>வகை </TableCell>
-                    {/* <TableCell>{productDetail.category.category_name}</TableCell> */}
+                    <TableCell>
+                      {productDetail.category.category_name}
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>தோற்றம் </TableCell>
@@ -132,11 +145,10 @@ const ProductDetail = () => {
                   </TableRow>
                 </TableHead>
               </Table>
-              
             </Grid>
           </Grid>
         </div>
-   
+      )}
     </div>
   );
 };

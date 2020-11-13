@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
+import axios from 'axios';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchProduct } from '../../data/actions/productActions';
@@ -22,10 +24,14 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/product.json')
-      .then((res) => res.json())
-      .then((data) => dispatch(fetchProduct(data)))
-      .catch((err) => console.log(err));
+    // fetch('http://localhost:8000/api/product.json')
+    //   .then((res) => res.json())
+    //   .then((data) => dispatch(fetchProduct(data.results)))
+    //   .catch((err) => console.log(err));
+
+    axios
+      .get('http://localhost:8000/api/product')
+      .then((res) => dispatch(fetchProduct(res.data.results)));
   }, [dispatch]);
 
   const classes = useStyles();
