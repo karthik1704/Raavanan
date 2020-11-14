@@ -85,7 +85,7 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
             <ListItemText primary="புதிய வெளியீடு" />
           </ListItem>
 
-          <ListItem button component={Link} to="/photoframe">
+          <ListItem button component={Link} to="/photo-frame">
             <ListItemIcon>
               <FilterFramesIcon />
             </ListItemIcon>
@@ -106,7 +106,7 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
             <ListItemText primary="தலையணை" />
           </ListItem>
 
-          <ListItem button component={Link} to="/phonecase">
+          <ListItem button component={Link} to="/phone-case">
             <ListItemIcon>
               <SmartphoneRoundedIcon />
             </ListItemIcon>
