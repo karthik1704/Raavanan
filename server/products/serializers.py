@@ -44,6 +44,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'category',
             'materials',
             'image',
+            'created_at',
 
         ]
  

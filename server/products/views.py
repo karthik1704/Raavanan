@@ -10,7 +10,13 @@ class ProductViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category']
+    filterset_fields = ['category__slug', 'category__parent_category' ]
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
+
+  
+        
+
     
 
 class CategoryViewSet(viewsets.ModelViewSet):
