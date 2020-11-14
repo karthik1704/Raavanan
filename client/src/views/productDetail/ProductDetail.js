@@ -125,18 +125,20 @@ const ProductDetail = () => {
                   <TableRow>
                     <TableCell>மூலப்பொருள் </TableCell>
                     <TableCell>
-                      {productDetail.materials.map((material) => (
-                        <span key={material.id}>
-                          {' '}
-                          {material.material_name}{' '}
-                        </span>
-                      ))}
+                      {productDetail.materials &&
+                        productDetail.materials.map((material) => (
+                          <span key={material.id}>
+                            {' '}
+                            {material.material_name}{' '}
+                          </span>
+                        ))}
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>வகை </TableCell>
                     <TableCell>
-                      {productDetail.category.category_name}
+                      {productDetail.category &&
+                        productDetail.category.category_name}
                     </TableCell>
                   </TableRow>
                   <TableRow>
