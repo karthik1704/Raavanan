@@ -1,4 +1,4 @@
-import Avatar from '@material-ui/core/Avatar';
+//import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Typography from '@material-ui/core/Typography';
+import Switch from '@material-ui/core/Switch';
 
 import EmojiFoodBeverageIcon from '@material-ui/icons/EmojiFoodBeverage';
 import FilterFramesIcon from '@material-ui/icons/FilterFrames';
@@ -20,6 +21,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { toggleAppDrawer } from '../../data/actions/appAction';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppDrawer = () => {
+const AppDrawer = ({ theme, onToggleTheme }) => {
   const { appDrawerOpen } = useSelector((state) => state.appUi);
   const dispatch = useDispatch();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -63,8 +65,10 @@ const AppDrawer = () => {
       onOpen={(e) => toggleDrawer(true, e)}
     >
       <div className={classes.root}>
-        <Avatar className={classes.purple}>S</Avatar>
-        <Typography variant="body1">SRBN Loves N! </Typography>
+        {/* <Avatar className={classes.purple}>S</Avatar>
+        <Typography variant="body1">SRBN Loves N! </Typography> */}
+        <Typography>Hi!!</Typography>
+        <Button color="primary">Login</Button>
       </div>
 
       <Divider />
@@ -145,6 +149,18 @@ const AppDrawer = () => {
           </ListItem>
         </List>
       </div>
+      <Divider />
+      <List>
+        <ListItem>
+          <ListItemText primary="Dark Mode" />
+          <Switch
+            checked={theme === 'light' ? false : true}
+            onChange={onToggleTheme}
+            name="checkedA"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+        </ListItem>
+      </List>
     </SwipeableDrawer>
   );
 };

@@ -314,7 +314,7 @@ export default function Navbar() {
       </AppBar>
 
       {renderMenu}
-      <AppDrawer />
+      <AppDrawer theme={theme} onToggleTheme={onToggleTheme} />
     </div>
   );
 }
