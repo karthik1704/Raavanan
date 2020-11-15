@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
+  const { page, setPage } = useState(0);
   const { category } = useParams();
   const dispatch = useDispatch();
 
