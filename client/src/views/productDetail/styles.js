@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
 
 const useStyles = makeStyles((theme) => ({
   productImage: {
@@ -9,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     display: 'flex',
     justifyContent: 'space-evenly',
+  },
+  whatsappBtn: {
+    margin: theme.spacing(1),
+    backgroundColor: green[500],
   },
 }));
 

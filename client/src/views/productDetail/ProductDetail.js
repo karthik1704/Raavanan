@@ -75,7 +75,11 @@ const ProductDetail = () => {
               <div>
                 <Typography variant="body1">In stock</Typography>
 
-                <Button variant="contained" startIcon={<WhatsAppIcon />}>
+                <Button
+                  variant="contained"
+                  startIcon={<WhatsAppIcon />}
+                  className={classes.whatsappBtn}
+                >
                   Buy Via WhatsApp
                 </Button>
 
