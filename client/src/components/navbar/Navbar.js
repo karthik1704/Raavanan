@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+// import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -119,9 +119,9 @@ export default function Navbar() {
 
   const isMenuOpen = Boolean(anchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -159,10 +159,11 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/contact">
             தொடர்புக்கு
           </Button>
-          <Button color="inherit">மென்பொருள் பதிவிறக்கம் செய்ய</Button>
+          {/* <Button color="inherit">மென்பொருள் பதிவிறக்கம் செய்ய</Button>
           <Button color="inherit">Track Orders</Button>
+          */}
           <div className={classes.grow} />
-          <Button color="inherit" startIcon={<LockIcon />}>
+          <Button color="inherit" startIcon={<LockIcon />} disabled>
             உள்நுழைய / பதிவு செய்ய
           </Button>
         </Toolbar>
@@ -200,13 +201,14 @@ export default function Navbar() {
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <Button
-              aria-label="show 4 new mails"
+              aria-label="New Fav"
               color="inherit"
               startIcon={
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={0} color="secondary">
                   <FavoriteIcon />
                 </Badge>
               }
+              disabled
             >
               விருப்ப பட்டியல்
             </Button>
@@ -214,27 +216,29 @@ export default function Navbar() {
               aria-label=" 4 product in cart"
               color="inherit"
               startIcon={
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={0} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               }
+              disabled
             >
               கூடை
             </Button>
             <Button
-              aria-label=" 4 product in cart"
+              aria-label=" offers"
               color="inherit"
               startIcon={
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={0} color="secondary">
                   <LocalOfferIcon />
                 </Badge>
               }
+              disabled
             >
               சலுகை
             </Button>
 
             <Button
-              aria-label=" 4 product in cart"
+              aria-label="Dark Mode"
               color="inherit"
               startIcon={<Brightness4Icon />}
               onClick={() => onToggleTheme()}
@@ -242,7 +246,7 @@ export default function Navbar() {
               Dark Mode
             </Button>
 
-            <IconButton
+            {/* <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -251,18 +255,32 @@ export default function Navbar() {
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> */}
           </div>
+
           <div className={classes.sectionMobile}>
-            <IconButton aria-label="show 4 new Favorite" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton
+              aria-label="show 4 new Favorite"
+              color="inherit"
+              disabled
+            >
+              <Badge badgeContent={0} color="secondary">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
 
-            <IconButton aria-label=" 4 product in cart" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton
+              aria-label=" 4 product in cart"
+              color="inherit"
+              disabled
+            >
+              <Badge badgeContent={0} color="secondary">
                 <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+            <IconButton aria-label=" Offers" color="inherit" disabled>
+              <Badge badgeContent={0} color="secondary">
+                <LocalOfferIcon />
               </Badge>
             </IconButton>
           </div>
@@ -289,7 +307,7 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/new">
             புதிய வெளியீடு
           </Button>
-          <Button color="inherit" component={Link} to="/photoframe">
+          <Button color="inherit" component={Link} to="/photo-frame">
             படச்சட்டகம்
           </Button>
           <Button color="inherit" component={Link} to="/t-shirt">
@@ -298,7 +316,7 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/pillow">
             தலையணை
           </Button>
-          <Button color="inherit" component={Link} to="/phonecase">
+          <Button color="inherit" component={Link} to="/phone-case">
             கைபேசி உறை
           </Button>
           <Button color="inherit" component={Link} to="/cups">
