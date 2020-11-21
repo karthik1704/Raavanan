@@ -6,6 +6,7 @@ import Home from '../views/home/Home';
 import Products from '../views/products/Products';
 import Terms from '../views/terms/Terms';
 import ProductDetail from '../views/productDetail/ProductDetail';
+import WAOrder from '../views/wAOrder/WAOrder';
 
 const Router = () => {
   return (
@@ -24,6 +25,9 @@ const Router = () => {
       </Route>
       <Route path="/:category" exact>
         <Products />
+      </Route>
+      <Route path="/:id/waorder" exact>
+        <WAOrder />
       </Route>
       <Route path="/product/:id" exact>
         <ProductDetail />

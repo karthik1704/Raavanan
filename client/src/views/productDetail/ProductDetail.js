@@ -20,7 +20,9 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+
+import { API_URL } from '../../CONSTANTS';
 
 import { fetchProductDetail } from '../../data/actions/productActions';
 
@@ -39,7 +41,7 @@ const ProductDetail = () => {
     //   .catch((err) => console.log(err));
 
     axios
-      .get(`http://localhost:8000/api/product/${id}`)
+      .get(`${API_URL}api/product/${id}`)
       .then((res) => dispatch(fetchProductDetail(res.data)));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,6 +81,8 @@ const ProductDetail = () => {
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
                   className={classes.whatsappBtn}
+                  component={Link}
+                  to={`/${productDetail.id}/waorder`}
                 >
                   Buy Via WhatsApp
                 </Button>
