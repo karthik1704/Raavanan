@@ -25,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import useDarkTheme from '../../hooks/useDarkTheme';
+import useTopLoader from '../../hooks/useTopLoader';
 
 import AppDrawer from '../drawer/AppDrawer';
 import { toggleAppDrawer } from '../../data/actions/appAction';
@@ -115,6 +116,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [theme, onToggleTheme] = useDarkTheme();
+  const [loading, onToggleTopLoader] = useTopLoader();
   const dispatch = useDispatch();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -150,20 +152,40 @@ export default function Navbar() {
         color={theme === 'dark' ? 'inherit' : 'primary'}
       >
         <Toolbar className={classes.sectionDesktop}>
-          <Button color="inherit" component={Link} to="/terms">
+          <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            component={Link}
+            to="/terms"
+          >
             கொள்கைகள்
           </Button>
-          <Button color="inherit" component={Link} to="/about">
+          <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            component={Link}
+            to="/about"
+          >
             எங்களைப் பற்றி
           </Button>
-          <Button color="inherit" component={Link} to="/contact">
+          <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            component={Link}
+            to="/contact"
+          >
             தொடர்புக்கு
           </Button>
           {/* <Button color="inherit">மென்பொருள் பதிவிறக்கம் செய்ய</Button>
           <Button color="inherit">Track Orders</Button>
           */}
           <div className={classes.grow} />
-          <Button color="inherit" startIcon={<LockIcon />} disabled>
+          <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            startIcon={<LockIcon />}
+            disabled
+          >
             உள்நுழைய / பதிவு செய்ய
           </Button>
         </Toolbar>
@@ -182,7 +204,7 @@ export default function Navbar() {
             <img src={RavananLogo} alt="logo" height="80px" />
           </Link>
           <Typography className={classes.title} variant="h6" noWrap>
-            இராவணன்
+            இராவணன் அங்காடி
           </Typography>
 
           <div className={`${classes.search} ${classes.sectionDesktop}`}>
