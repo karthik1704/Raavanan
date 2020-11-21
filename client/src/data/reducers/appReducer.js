@@ -1,4 +1,8 @@
-import { TOGGLE_THEME, TOGGLE_APP_DRAWER } from '../CONSTANTS';
+import {
+  TOGGLE_THEME,
+  TOGGLE_APP_DRAWER,
+  TOGGLE_APP_LOADING,
+} from '../CONSTANTS';
 
 const initalState = {
   theme: 'light',
@@ -18,6 +22,12 @@ const appReducer = (state = initalState, { type, payload }) => {
       return {
         ...state,
         appDrawerOpen: payload,
+      };
+
+    case TOGGLE_APP_LOADING:
+      return {
+        ...state,
+        loading: payload,
       };
 
     default:

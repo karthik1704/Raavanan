@@ -1,10 +1,12 @@
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes/Routes';
+
+import { useSelector } from 'react-redux';
 
 import useDarkTheme from './hooks/useDarkTheme';
 
@@ -19,6 +21,7 @@ import { useStyles } from './AppStyle';
 function App() {
   const classes = useStyles();
   const [theme] = useDarkTheme();
+  const { loading } = useSelector((state) => state.appUi);
 
   const darkTheme = createMuiTheme({
     palette: {
@@ -29,7 +32,7 @@ function App() {
   const lightTheme = createMuiTheme({
     palette: {
       primary: {
-        main: red[500],
+        main: green[600],
       },
     },
   });
@@ -38,7 +41,7 @@ function App() {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Router>
         <Paper>
-          <Loader />
+          {loading && <Loader />}
           <Navbar />
           <Container className={classes.root}>
             <Routes />
