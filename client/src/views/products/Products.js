@@ -4,13 +4,17 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import axios from 'axios';
 
-import { fetchProduct } from '../../data/actions/productActions';
+import { API_URL } from '../../CONSTANTS';
+
+import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 import ProductList from '../../components/productList/ProductList';
-import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,18 +24,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
-  const { page, setPage } = useState(0);
   const { category } = useParams();
   const dispatch = useDispatch();
 
-  const filterUrl = `http://localhost:8000/api/product/?category__slug=${category}&category__parent_category=`;
-  const url = 'http://localhost:8000/api/product/';
+  const filterUrl = `${API_URL}api/product/?category__slug=${category}&category__parent_category=`;
+  const url = `${API_URL}api/product/`;
+
+  useEffect(() => {
+    dispatch(resetProduct([]));
+  }, [dispatch, category]);
 
   useEffect(() => {
     axios.get(category === 'new' ? url : filterUrl).then((res) => {
       return dispatch(fetchProduct(res.data.results));
     });
-  }, [dispatch, category, filterUrl]);
+  }, [dispatch, category, url, filterUrl]);
 
   const classes = useStyles();
 
@@ -41,7 +48,7 @@ const Products = () => {
         {products.length !== 0 ? (
           <ProductList products={products} />
         ) : (
-          <Typography>Coming Soon...</Typography>
+          <Typography>விரைவில்...</Typography>
         )}
       </Grid>
     </div>
