@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,7 +7,11 @@ import axios from 'axios';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchProduct } from '../../data/actions/productActions';
+import { API_URL } from '../../CONSTANTS';
+
+import { fetchProduct, resetProduct } from '../../data/actions/productActions';
+
+import useTopLoader from '../../hooks/useTopLoader';
 
 import Carousel from '../../components/carousel/Carousel';
 import ProductList from '../../components/productList/ProductList';
@@ -20,19 +24,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const { products } = useSelector((state) => state.products);
-  const { page, setPage } = useState(0);
-
+  const [loading, onToggleTopLoader] = useTopLoader();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // fetch('http://localhost:8000/api/product.json')
-    //   .then((res) => res.json())
-    //   .then((data) => dispatch(fetchProduct(data.results)))
-    //   .catch((err) => console.log(err));
-
-    axios
-      .get('http://localhost:8000/api/product')
-      .then((res) => dispatch(fetchProduct(res.data.results)));
+    dispatch(resetProduct([]));
+    axios.get(`${API_URL}api/product`).then((res) => {
+      onToggleTopLoader();
+      return dispatch(fetchProduct(res.data.results));
+    });
   }, [dispatch]);
 
   const classes = useStyles();
