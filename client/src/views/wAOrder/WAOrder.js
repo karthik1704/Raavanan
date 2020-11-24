@@ -173,7 +173,7 @@ const WAOrder = () => {
               <CardContent>
                 <TextField
                   id="Quantity"
-                  label="என்ணிக்கை"
+                  label="எண்ணிக்கை"
                   name="quantity"
                   type="number"
                   value={quantity}
