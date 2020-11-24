@@ -5,9 +5,9 @@ const useTopLoader = () => {
   const { loading } = useSelector((state) => state.appUi);
   const dispatch = useDispatch();
 
-  const onToggleTopLoader = () => {
+  const onToggleTopLoader = (loader) => {
     setTimeout(() => {
-      dispatch(toggleAppLoading(!loading));
+      dispatch(toggleAppLoading(loader));
     }, 500);
   };
 
