@@ -67,8 +67,8 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
       <div className={classes.root}>
         {/* <Avatar className={classes.purple}>S</Avatar>
         <Typography variant="body1">SRBN Loves N! </Typography> */}
-        <Typography>Hi!!</Typography>
-        <Button color="primary">Login</Button>
+        <Typography>வணக்கம் !</Typography>
+        <Button color="primary" disabled>உள்நுழை</Button>
       </div>
 
       <Divider />
