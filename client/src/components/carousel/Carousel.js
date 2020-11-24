@@ -2,7 +2,7 @@ import Card from '@material-ui/core/Card';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import CarouselImage1 from '../../asserts/images/1.jpg';
+import CarouselImage1 from '../../asserts/images/3.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
