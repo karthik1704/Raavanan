@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -21,13 +22,40 @@ import { API_URL } from '../../CONSTANTS';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      margin: '16px 0',
+    },
   },
   card: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+    // [theme.breakpoints.up('md')]: {
+    //   flexDirection: 'row',
+    // },
+  },
+  header: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+    },
+  },
+  center: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   },
   image: {
     height: 115,
-    width: 70,
+    width: 60,
+    [theme.breakpoints.down('sm')]: {
+      width: 50,
+    },
   },
   grow: {
     flex: 1,
@@ -38,7 +66,27 @@ const useStyles = makeStyles((theme) => ({
   orderForm: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+      [theme.breakpoints.down('sm')]: {
+        width: 'auto',
+      },
+    },
+  },
+  nameForm: {
+    display: 'flex',
+    flexDirection: 'row',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+  btnSize: {
+    width: '40%',
+    [theme.breakpoints.down('sm')]: {
+      width: 'auto',
+    },
   },
 }));
 
@@ -75,9 +123,10 @@ const WAOrder = () => {
 கோரிக்கை
 ====
 தயாரிப்பு எண்: ${id.slice(2)},
-பொருளின் பெயர்: ${product.product_name},
+பொருளின் பெயர்: ${product.product_name}\n,
+விலை: ₹ ${product.price}
 Quantity: ${quantity},
-விலை: ₹.${product.price * quantity}
+Total விலை: ₹.${product.price * quantity}
 
 வாடிக்கையாளர் தகவல்
 =================
@@ -103,39 +152,44 @@ Quantity: ${quantity},
       <Grid container className={classes.root} sapcing={2}>
         <Grid item xs={12}>
           <Card className={classes.card}>
-            <img
-              className={classes.image}
-              src={product.imageurl}
-              alt={product.product_name}
-            />
-            <CardContent>
-              <Typography component="h5" variant="h5">
-                {product.product_name}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                Price: <strong>₹ {product.price} </strong>
-              </Typography>
-            </CardContent>
-            <div className={classes.grow} />
-            <CardContent>
-              <TextField
-                id="Quantity"
-                label="Quantity"
-                name="quantity"
-                type="number"
-                value={quantity}
-                onChange={handleQuantity}
-                InputLabelProps={{
-                  shrink: true,
-                }}
+            <div className={classes.header}>
+              <img
+                className={classes.image}
+                src={product.imageurl}
+                alt={product.product_name}
               />
-            </CardContent>
-            <CardContent>
-              <Typography> Total </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                ₹ {product.price * quantity}
-              </Typography>
-            </CardContent>
+              <CardContent>
+                <Typography component="h5" variant="h5">
+                  {product.product_name}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  Price: <strong>₹ {product.price} </strong>
+                </Typography>
+              </CardContent>
+            </div>
+            <div className={classes.grow} />
+
+            <div className={classes.center}>
+              <CardContent>
+                <TextField
+                  id="Quantity"
+                  label="Quantity"
+                  name="quantity"
+                  type="number"
+                  value={quantity}
+                  onChange={handleQuantity}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </CardContent>
+              <CardContent>
+                <Typography> Total </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  ₹ {product.price * quantity}
+                </Typography>
+              </CardContent>
+            </div>
           </Card>
         </Grid>
       </Grid>
@@ -144,14 +198,19 @@ Quantity: ${quantity},
           <Card>
             <CardHeader title="Order" />
             <CardContent>
-              <form onSubmit={sendMessage} className={clsx(classes.orderForm)}>
-                <FormControl className={classes.margin}>
+              <form
+                onSubmit={sendMessage}
+                className={clsx(classes.orderForm)}
+                validate="true"
+              >
+                <FormControl className={classes.nameForm}>
                   <TextField
                     id="first-name"
                     label="First Name"
                     name="firstname"
                     variant="outlined"
                     onChange={handleChange}
+                    required
                   />
                   <TextField
                     id="last-name"
@@ -159,40 +218,50 @@ Quantity: ${quantity},
                     name="lastname"
                     variant="outlined"
                     onChange={handleChange}
+                    required
                   />
                 </FormControl>
-                <FormControl>
-                  <TextField
-                    id="extra"
-                    label="Mobile Model Name"
-                    name="mobile"
-                    variant="outlined"
-                    onChange={handleChange}
-                  />
-                </FormControl>
+                {product.category && product.category.id === 1 && (
+                  <FormControl>
+                    <TextField
+                      id="extra"
+                      label="Mobile Model Name"
+                      name="mobile"
+                      variant="outlined"
+                      onChange={handleChange}
+                      required
+                      fullWidth
+                    />
+                  </FormControl>
+                )}
                 <TextField
                   id="address"
                   label="Address"
                   name="address"
                   multiline
-                  rowsMax={7}
+                  rows={4}
                   variant="outlined"
                   onChange={handleChange}
+                  required
                 />
                 <TextField
                   id="pincode"
                   label="Pin Code"
                   name="pincode"
+                  type="number"
                   variant="outlined"
                   onChange={handleChange}
+                  required
                 />
 
                 <TextField
                   id="phonenumber"
                   label="Phone Number"
                   name="phone"
+                  type="number"
                   variant="outlined"
                   onChange={handleChange}
+                  required
                 />
 
                 <Button
@@ -200,6 +269,8 @@ Quantity: ${quantity},
                   startIcon={<WhatsAppIcon />}
                   variant="contained"
                   type="submit"
+                  size="medium"
+                  className={classes.btnSize}
                 >
                   {' '}
                   Order{' '}
