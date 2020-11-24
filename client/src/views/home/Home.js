@@ -30,7 +30,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(resetProduct([]));
     axios.get(`${API_URL}api/product`).then((res) => {
-      onToggleTopLoader();
+      onToggleTopLoader(false);
       return dispatch(fetchProduct(res.data.results));
     });
   }, [dispatch]);
