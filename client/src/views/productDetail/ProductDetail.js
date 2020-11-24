@@ -48,7 +48,7 @@ const ProductDetail = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={classes.root}>
       {productDetail && (
         <div key={productDetail.id}>
           <Grid container>
