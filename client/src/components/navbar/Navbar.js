@@ -265,7 +265,7 @@ export default function Navbar() {
               startIcon={<Brightness4Icon />}
               onClick={() => onToggleTheme()}
             >
-              Dark Mode
+              இருண்ட பயன்முறை
             </Button>
 
             {/* <IconButton

@@ -68,15 +68,14 @@ const ProductDetail = () => {
               </Typography> */}
               <Divider />
               <Typography variant="subtitle1">
-                M.R.P.: ₹ <del>{productDetail.mrp}</del>
+                அதிகபட்ச விற்பனை விலை: ₹ <del>{productDetail.mrp}</del>
               </Typography>
               <Typography variant="subtitle1">
-                Price: ₹ <b>{productDetail.price}</b>
+                தற்போதைய விலை: ₹ <b>{productDetail.price}</b>
               </Typography>
               <Divider />
               <div>
-                <Typography variant="body1">In stock</Typography>
-
+                <Typography variant="body1">இருப்பில் உள்ளது</Typography>
                 <Button
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
@@ -84,7 +83,7 @@ const ProductDetail = () => {
                   component={Link}
                   to={`/${productDetail.id}/waorder`}
                 >
-                  Buy Via WhatsApp
+                  பொருளை வாங்க 
                 </Button>
 
                 {/* <div className={classes.buttons}>

@@ -20,7 +20,7 @@ const Footer = () => {
         </Box>
         <Box display="flex" justifyContent="center">
           <Typography variant="caption" display="block" gutterBottom>
-            &copy; Raavanan Digital Media
+            &copy; இராவணன் மிண்ணனுப் பிரிவு
           </Typography>
         </Box>
       </Paper>

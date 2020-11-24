@@ -121,15 +121,15 @@ const WAOrder = () => {
     e.preventDefault();
     const waMessage = `
 கோரிக்கை
-====
+=========
 தயாரிப்பு எண்: ${id.slice(2)},
 பொருளின் பெயர்: ${product.product_name}\n,
 விலை: ₹ ${product.price}
-Quantity: ${quantity},
-Total விலை: ₹.${product.price * quantity}
+எண்ணிக்கை: ${quantity},
+மொத்த விலை: ₹.${product.price * quantity}
 
 வாடிக்கையாளர் தகவல்
-=================
+=======================
 பெயர்: ${message.firstname} ${message.lastname},\n
 கைபேசி மாதிரி: ${message.mobile},\n
 முகவரி: \n${message.address},
@@ -163,7 +163,7 @@ Total விலை: ₹.${product.price * quantity}
                   {product.product_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  Price: <strong>₹ {product.price} </strong>
+                  விலை: <strong>₹ {product.price} </strong>
                 </Typography>
               </CardContent>
             </div>
@@ -173,7 +173,7 @@ Total விலை: ₹.${product.price * quantity}
               <CardContent>
                 <TextField
                   id="Quantity"
-                  label="Quantity"
+                  label="என்ணிக்கை"
                   name="quantity"
                   type="number"
                   value={quantity}
@@ -184,7 +184,7 @@ Total விலை: ₹.${product.price * quantity}
                 />
               </CardContent>
               <CardContent>
-                <Typography> Total </Typography>
+                <Typography> மொத்த விலை </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   ₹ {product.price * quantity}
                 </Typography>
@@ -196,7 +196,7 @@ Total விலை: ₹.${product.price * quantity}
       <Grid container className={classes.root} sapcing={2}>
         <Grid item xs={12}>
           <Card>
-            <CardHeader title="Order" />
+            <CardHeader title="தங்களது கோரிக்கை விவரங்களைப் பூர்த்தி செய்யவும்" />
             <CardContent>
               <form
                 onSubmit={sendMessage}
@@ -206,7 +206,7 @@ Total விலை: ₹.${product.price * quantity}
                 <FormControl className={classes.nameForm}>
                   <TextField
                     id="first-name"
-                    label="First Name"
+                    label="பெயர்"
                     name="firstname"
                     variant="outlined"
                     onChange={handleChange}
@@ -214,18 +214,18 @@ Total விலை: ₹.${product.price * quantity}
                   />
                   <TextField
                     id="last-name"
-                    label="Last Name"
+                    label="இறுதிப் பெயர்"
                     name="lastname"
                     variant="outlined"
                     onChange={handleChange}
                     required
                   />
                 </FormControl>
-                {product.category && product.category.id === 1 && (
+                {product.category && product.category.category_name === 'கைபேசி உறை' && (
                   <FormControl>
                     <TextField
                       id="extra"
-                      label="Mobile Model Name"
+                      label="கைபேசி வகை"
                       name="mobile"
                       variant="outlined"
                       onChange={handleChange}
@@ -236,7 +236,7 @@ Total விலை: ₹.${product.price * quantity}
                 )}
                 <TextField
                   id="address"
-                  label="Address"
+                  label="முகவரி"
                   name="address"
                   multiline
                   rows={4}
@@ -246,7 +246,7 @@ Total விலை: ₹.${product.price * quantity}
                 />
                 <TextField
                   id="pincode"
-                  label="Pin Code"
+                  label="அஞ்சல் குறியீட்டு எண்"
                   name="pincode"
                   type="number"
                   variant="outlined"
@@ -256,7 +256,7 @@ Total விலை: ₹.${product.price * quantity}
 
                 <TextField
                   id="phonenumber"
-                  label="Phone Number"
+                  label="கைபேசி எண்"
                   name="phone"
                   type="number"
                   variant="outlined"
@@ -273,7 +273,7 @@ Total விலை: ₹.${product.price * quantity}
                   className={classes.btnSize}
                 >
                   {' '}
-                  Order{' '}
+                  பொருளை வாங்க{' '}
                 </Button>
               </form>
             </CardContent>

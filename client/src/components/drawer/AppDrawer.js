@@ -152,7 +152,7 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
       <Divider />
       <List>
         <ListItem>
-          <ListItemText primary="Dark Mode" />
+          <ListItemText primary="இருண்ட பயன்முறை" />
           <Switch
             checked={theme === 'light' ? false : true}
             onChange={onToggleTheme}
