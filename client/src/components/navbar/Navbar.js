@@ -329,19 +329,19 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/new">
             புதிய வெளியீடு
           </Button>
-          <Button color="inherit" component={Link} to="/photo-frame">
+          <Button color="inherit" component={Link} to="/photo-frames">
             படச்சட்டகம்
           </Button>
-          <Button color="inherit" component={Link} to="/t-shirt">
+          <Button color="inherit" component={Link} to="/t-shirts">
             சட்டை
           </Button>
-          <Button color="inherit" component={Link} to="/pillow">
+          <Button color="inherit" component={Link} to="/pillows">
             தலையணை
           </Button>
-          <Button color="inherit" component={Link} to="/phone-case">
+          <Button color="inherit" component={Link} to="/phone-cases">
             கைபேசி உறை
           </Button>
-          <Button color="inherit" component={Link} to="/cups">
+          <Button color="inherit" component={Link} to="/mugs">
             தேநீர் கோப்பை
           </Button>
           <Button color="inherit" component={Link} to="/stickers">

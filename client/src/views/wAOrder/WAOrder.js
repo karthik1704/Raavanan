@@ -149,7 +149,7 @@ const WAOrder = () => {
   const classes = useStyles();
   return (
     <div>
-      <Grid container className={classes.root} sapcing={2}>
+      <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Card className={classes.card}>
             <div className={classes.header}>
@@ -221,19 +221,20 @@ const WAOrder = () => {
                     required
                   />
                 </FormControl>
-                {product.category && product.category.category_name === 'கைபேசி உறை' && (
-                  <FormControl>
-                    <TextField
-                      id="extra"
-                      label="கைபேசி வகை"
-                      name="mobile"
-                      variant="outlined"
-                      onChange={handleChange}
-                      required
-                      fullWidth
-                    />
-                  </FormControl>
-                )}
+                {product.category &&
+                  product.category.category_name === 'கைபேசி உறை' && (
+                    <FormControl>
+                      <TextField
+                        id="extra"
+                        label="கைபேசி வகை"
+                        name="mobile"
+                        variant="outlined"
+                        onChange={handleChange}
+                        required
+                        fullWidth
+                      />
+                    </FormControl>
+                  )}
                 <TextField
                   id="address"
                   label="முகவரி"

@@ -85,35 +85,35 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
             <ListItemText primary="புதிய வெளியீடு" />
           </ListItem>
 
-          <ListItem button component={Link} to="/photo-frame">
+          <ListItem button component={Link} to="/photo-frames">
             <ListItemIcon>
               <FilterFramesIcon />
             </ListItemIcon>
             <ListItemText primary="படச்சட்டகம்" />
           </ListItem>
 
-          <ListItem button component={Link} to="/t-shirt">
+          <ListItem button component={Link} to="/t-shirts">
             <ListItemIcon>
               <LocalMallIcon />
             </ListItemIcon>
             <ListItemText primary="சட்டை" />
           </ListItem>
 
-          <ListItem button component={Link} to="/pillow">
+          <ListItem button component={Link} to="/pillows">
             <ListItemIcon>
               <LocalMallIcon />
             </ListItemIcon>
             <ListItemText primary="தலையணை" />
           </ListItem>
 
-          <ListItem button component={Link} to="/phone-case">
+          <ListItem button component={Link} to="/phone-cases">
             <ListItemIcon>
               <SmartphoneRoundedIcon />
             </ListItemIcon>
             <ListItemText primary="கைபேசி உறை" />
           </ListItem>
 
-          <ListItem button component={Link} to="/cups">
+          <ListItem button component={Link} to="/mugs">
             <ListItemIcon>
               <EmojiFoodBeverageIcon />
             </ListItemIcon>
