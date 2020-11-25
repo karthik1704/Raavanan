@@ -1,4 +1,13 @@
+import { useEffect } from 'react';
+
+import useTopLoader from '../../hooks/useTopLoader';
+
 const Terms = () => {
+  const [loading, onToggleTopLoader] = useTopLoader();
+
+  useEffect(() => {
+    onToggleTopLoader(false);
+  }, []);
   return (
     <div>
       <h4> தனியுரிமைக் கொள்கைகள் : </h4>

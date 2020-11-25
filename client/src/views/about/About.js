@@ -1,7 +1,17 @@
+import { useEffect } from 'react';
+
+import useTopLoader from '../../hooks/useTopLoader';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const About = () => {
+  const [loading, onToggleTopLoader] = useTopLoader();
+
+  useEffect(() => {
+    onToggleTopLoader(false);
+  }, []);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
