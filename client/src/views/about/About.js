@@ -15,7 +15,7 @@ const About = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography component="h5" variant="h5">
+        <Typography component="h4" variant="h6">
           எங்களைப் பற்றி
         </Typography>
         <Typography component="p" variant="body1">

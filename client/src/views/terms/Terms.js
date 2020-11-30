@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import useTopLoader from '../../hooks/useTopLoader';
 
 const Terms = () => {
+  // eslint-disable-next-line no-unused-vars
   const [loading, onToggleTopLoader] = useTopLoader();
 
   useEffect(() => {
@@ -84,8 +85,13 @@ const Terms = () => {
         </li>
       </ol>
       <address>
-        வாடிக்கையாளர் பிரிவு தொடர்புக்கு : தொலைபேசி/பகிரி : 7871003935
-        மின்னஞ்சல் : raavananstore@gmail.com
+        வாடிக்கையாளர் பிரிவு தொடர்புக்கு : <br />
+        தொலைபேசி/பகிரி : <strong>7871003935</strong> <br />
+        மின்னஞ்சல் :{' '}
+        <a href="mailto:raavananstore@gmail.com">
+          <strong>raavananstore@gmail.com</strong>
+        </a>{' '}
+        <br />
       </address>
     </div>
   );
