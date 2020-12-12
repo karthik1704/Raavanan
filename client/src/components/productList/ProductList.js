@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     width: 100,
     height: 200,
   },
+  frameImage: {
+    width: 150,
+    height: 200,
+  },
   center: {
     display: 'flex',
     justifyContent: 'center',
@@ -68,7 +72,12 @@ const ProductList = ({ products }) => {
                 <img
                   src={product.imageurl}
                   alt={product.name}
-                  className={classes.media}
+                  className={
+                    product.category &&
+                    product.category.category_name !== 'கைபேசி உறை'
+                      ? classes.frameImage
+                      : classes.media
+                  }
                 />
               </div>
               <CardContent>

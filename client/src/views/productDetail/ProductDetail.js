@@ -25,6 +25,8 @@ import { Link, useParams } from 'react-router-dom';
 
 import { API_URL } from '../../CONSTANTS';
 
+import { Helmet } from 'react-helmet';
+
 import { fetchProductDetail } from '../../data/actions/productActions';
 
 import useStyles from './styles';
@@ -55,6 +57,11 @@ const ProductDetail = () => {
 
   return (
     <div className={classes.root}>
+      <Helmet>
+        <title>
+          இராவணன் அங்காடி | {ProductDetail && productDetail.product_name}
+        </title>
+      </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
           <Grid container>
@@ -63,7 +70,12 @@ const ProductDetail = () => {
                 <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}
-                  className={classes.productImage}
+                  className={
+                    productDetail.category &&
+                    productDetail.category.category_name !== 'கைபேசி உறை'
+                      ? classes.frameImage
+                      : classes.productImage
+                  }
                 />
               </div>
             </Grid>
@@ -73,13 +85,19 @@ const ProductDetail = () => {
                 category: {product.category}
               </Typography> */}
               <Divider />
-              <Typography variant="subtitle1">
-                அதிகபட்ச விற்பனை விலை: ₹ <del>{productDetail.mrp}</del>
-              </Typography>
-              <Typography variant="subtitle1">
-                தற்போதைய விலை: ₹ <b>{productDetail.price}</b>
-              </Typography>
-              <Divider />
+              {productDetail.category &&
+                productDetail.category.category_name !== 'படச்சட்டகம்' && (
+                  <>
+                    <Typography variant="subtitle1">
+                      அதிகபட்ச விற்பனை விலை: ₹ <del>{productDetail.mrp}</del>
+                    </Typography>
+                    <Typography variant="subtitle1">
+                      தற்போதைய விலை: ₹ <b>{productDetail.price}</b>
+                    </Typography>
+                    <Divider />
+                  </>
+                )}
+
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
                 <Button
