@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     height: 600,
   },
+  frameImage: {
+    width: 400,
+    height: 550,
+  },
   buttons: {
     margin: theme.spacing(1),
     display: 'flex',
