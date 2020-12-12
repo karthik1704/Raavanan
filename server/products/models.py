@@ -2,6 +2,8 @@ from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
 
+from mptt.models import MPTTModel, TreeForeignKey
+
 
 # Create your models here.
 class ProductMaterial(models.Model):
@@ -10,22 +12,32 @@ class ProductMaterial(models.Model):
     def __str__(self):
         return self.material_name
 
-class Category(models.Model):
-    category_name = models.CharField(max_length=60)
+class Category(MPTTModel):
+    name = models.CharField(max_length=60)
     slug = models.SlugField()
-    parent_category = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='children')
+    parent = TreeForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='children')
 
     class Meta:
-        unique_together = ('slug', 'parent_category',)    
         verbose_name_plural = "categories" 
 
+    
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
     def __str__(self):
-        full_path = [self.category_name]                  
-        k = self.parent_category
+        full_path = [self.name]                  
+        k = self.parent
         while k is not None:
-            full_path.append(k.category_name)
-            k = k.parent_category
+            full_path.append(k.name)
+            k = k.parent
         return ' -> '.join(full_path[::-1])
+
+
+    # def __str__(self) -> str:
+
+    #     return self.name
+
+
 
 
 class Product(models.Model):

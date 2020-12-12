@@ -1,16 +1,32 @@
 
+from rest_framework import  serializers
+
+from rest_framework_recursive.fields import RecursiveField
+
 from .models import Product, ProductImage, ProductMaterial , Category
 
-from rest_framework import  serializers
 
 # Create your views here.
 
-
-class CategorySerializer(serializers.ModelSerializer):
-    parent_category = serializers.StringRelatedField()
+class ParentCategorySerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Category
-        fields = ['id','category_name', 'parent_category']
+        fields = ['id','name', 'slug','parent']
+
+class CategorySerializer(serializers.ModelSerializer):
+    children = RecursiveField(many=True)
+    parent = ParentCategorySerializer()
+    class Meta:
+        model = Category
+        fields = ['id','name', 'slug', 'parent', 'children']
+
+# CategorySerializer._declared_fields['children'] = CategorySerializer(
+#     many=True,
+#     source='get_children',
+# )
+
+
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
