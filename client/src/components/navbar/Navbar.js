@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import axios from 'axios';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -23,6 +25,8 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { API_URL } from '../../CONSTANTS';
 
 import useDarkTheme from '../../hooks/useDarkTheme';
 import useTopLoader from '../../hooks/useTopLoader';
@@ -114,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [category, setCategory] = useState([]);
 
   const [theme, onToggleTheme] = useDarkTheme();
   const [loading, onToggleTopLoader] = useTopLoader();
@@ -128,6 +133,13 @@ export default function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${API_URL}api/category/`)
+  //     .then((res) => setCategory(res.data.results));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
