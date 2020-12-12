@@ -1,5 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 
+import ReactGA from 'react-ga';
+
 import About from '../views/about/About';
 import Contact from '../views/contact/Contact';
 import Home from '../views/home/Home';
@@ -11,9 +13,15 @@ import WAOrder from '../views/wAOrder/WAOrder';
 const Router = () => {
   return (
     <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
+      <Route
+        path="/"
+        render={(props) => {
+          ReactGA.pageview(props.location.pathname);
+          return <Home />;
+        }}
+        exact
+      />
+
       <Route path="/about" exact>
         <About />
       </Route>
@@ -29,9 +37,14 @@ const Router = () => {
       <Route path="/:id/waorder" exact>
         <WAOrder />
       </Route>
-      <Route path="/product/:id" exact>
-        <ProductDetail />
-      </Route>
+      <Route
+        path="/product/:id"
+        render={(props) => {
+          ReactGA.pageview(props.location.pathname);
+          return <ProductDetail />;
+        }}
+        exact
+      />
     </Switch>
   );
 };
