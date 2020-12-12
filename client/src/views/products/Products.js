@@ -13,6 +13,8 @@ import axios from 'axios';
 
 import { API_URL } from '../../CONSTANTS';
 
+import { Helmet } from 'react-helmet';
+
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 import ProductList from '../../components/productList/ProductList';
 
@@ -44,6 +46,9 @@ const Products = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>இராவணன் அங்காடி | {category}</title>
+      </Helmet>
       <Grid container className={classes.root}>
         {products.length !== 0 ? (
           <ProductList products={products} />
