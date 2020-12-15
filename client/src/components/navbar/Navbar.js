@@ -201,11 +201,11 @@ export default function Navbar() {
           </IconButton>
 
           <Link to="/">
-            <img src={RavananLogo} alt="logo" height="80px" />
+            <img src={RavananLogo} alt="logo"  height="130px" width="130px" />
           </Link>
-          <Typography className={classes.title} variant="h6" noWrap>
+          {/* <Typography className={classes.title} variant="h6" noWrap>
             இராவணன் அங்காடி
-          </Typography>
+          </Typography> */}
 
           <div className={`${classes.search} ${classes.sectionDesktop}`}>
             <div className={classes.searchIcon}>
