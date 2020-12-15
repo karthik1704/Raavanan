@@ -66,7 +66,7 @@ const ProductDetail = () => {
         <div key={productDetail.id}>
           <Grid container>
             <Grid item xs={12} md={6} lg={5}>
-              <div>
+              <div className={classes.center}>
                 <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}

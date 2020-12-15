@@ -338,8 +338,11 @@ export default function Navbar() {
         <Toolbar
           className={`${classes.sectionDesktop} ${classes.centerToolbar}`}
         >
-          <Button color="inherit" component={Link} to="/new">
+          {/* <Button color="inherit" component={Link} to="/new">
             புதிய வெளியீடு
+          </Button> */}
+          <Button color="inherit" component={Link} to="/organic-foods">
+            இயற்கை உணவு
           </Button>
           <Button color="inherit" component={Link} to="/photo-frames">
             படச்சட்டகம்
@@ -347,9 +350,7 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/t-shirts">
             சட்டை
           </Button>
-          <Button color="inherit" component={Link} to="/pillows">
-            தலையணை
-          </Button>
+      
           <Button color="inherit" component={Link} to="/phone-cases">
             கைபேசி உறை
           </Button>

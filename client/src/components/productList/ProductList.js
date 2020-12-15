@@ -18,22 +18,36 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 180,
-    marginBottom: theme.spacing(1),
+    maxWidth: 238,
+    marginBottom: theme.spacing(0.5),
     [theme.breakpoints.down('sm')]: {
       maxWidth: 140,
     },
     [theme.breakpoints.up('sm')]: {
-      maxWidth: 180,
+      minWidth: 180,
     },
   },
   media: {
-    width: 100,
-    height: 200,
+    marginTop: '5px',
+    paddingTop: 10,
+    [theme.breakpoints.down('sm')]: {
+      width: 150,
+      height: 200,
+    },
+    width: 207,
+    height: 276,
+  
   },
   frameImage: {
-    width: 150,
-    height: 200,
+    marginTop: '5px',
+    paddingTop: 10,
+    [theme.breakpoints.down('sm')]: {
+      width: 150,
+      height: 200,
+    },
+    width: 207,
+    height: 276,
+ 
   },
   center: {
     display: 'flex',
@@ -41,9 +55,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     margin: '0 auto',
   },
+  content:{
+    padding: '0.5rem auto'
+  },
   title: {
     textAlign: 'center',
     fontSize: '0.9rem',
+    marginBottom: '1px',
 
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.6rem',
@@ -65,7 +83,7 @@ const ProductList = ({ products }) => {
   return (
     <>
       {products.map((product) => (
-        <Grid item xs={6} sm={4} md={2} key={product.id}>
+        <Grid item xs={6} sm={4} md={3} key={product.id}>
           <Card className={classes.root}>
             <CardActionArea component={Link} to={`/product/${product.id}`}>
               <div className={classes.center}>
@@ -80,7 +98,7 @@ const ProductList = ({ products }) => {
                   }
                 />
               </div>
-              <CardContent>
+              <CardContent className={classes.content}>
                 <Typography
                   variant="body1"
                   color="textPrimary"
