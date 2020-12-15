@@ -39,9 +39,11 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     textAlign: 'center',
+    fontSize: '0.9rem',
+
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.8rem',
-      fontWeight: 400,
+      fontSize: '0.6rem',
+      fontWeight: 600,
     },
   },
   price: {
@@ -55,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductList = ({ products }) => {
-  
   const classes = useStyles();
   return (
     <>
@@ -63,13 +64,13 @@ const ProductList = ({ products }) => {
         <Grid item xs={6} sm={4} md={2} key={product.id}>
           <Card className={classes.root}>
             <CardActionArea component={Link} to={`/product/${product.id}`}>
-               <div className={classes.center}>
+              <div className={classes.center}>
                 <img
                   src={product.imageurl}
                   alt={product.name}
                   className={classes.media}
                 />
-              </div> 
+              </div>
               <CardContent>
                 <Typography
                   variant="body1"

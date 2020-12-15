@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -45,7 +46,12 @@ const ProductDetail = () => {
       .then((res) => dispatch(fetchProductDetail(res.data)));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => dispatch(fetchProductDetail({}));
   }, [dispatch]);
+
+  if (Object.keys(productDetail).length === 0) {
+    return <div />;
+  }
 
   return (
     <div className={classes.root}>
@@ -83,7 +89,7 @@ const ProductDetail = () => {
                   component={Link}
                   to={`/${productDetail.id}/waorder`}
                 >
-                  பொருளை வாங்க 
+                  பொருளை வாங்க
                 </Button>
 
                 {/* <div className={classes.buttons}>

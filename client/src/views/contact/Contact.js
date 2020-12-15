@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import useTopLoader from '../../hooks/useTopLoader';
 
 const Contact = () => {
-  const [loading,onToggleTopLoader] = useTopLoader();
+  const [loading, onToggleTopLoader] = useTopLoader();
 
   useEffect(() => {
     onToggleTopLoader(false);
@@ -11,19 +11,24 @@ const Contact = () => {
 
   return (
     <div>
+      <h4>தொடர்புக்கு :</h4>
       <p>
-      தொடர்புக்கு :
-வணக்கம் ! இன்பத் தமிழ் நம் உயிருக்கு நேர் !
+        வணக்கம் ! இன்பத் தமிழ் நம் உயிருக்கு நேர் !<br />
+        இராவணன் அங்காடியைத் தொடர்பு கொள்ள கீழ்காணும் இணைப்புகளைப்
+        பயன்படுத்தவும்.
+      </p>
 
-இராவணன் அங்காடியைத் தொடர்பு கொள்ள கீழ்காணும் இணைப்புகளைப் பயன்படுத்தவும்.
-
-வாடிக்கையாளர் பிரிவு தொடர்புக்கு :
-
-தொலைபேசி/பகிரி : 7871003935
-மின்னஞ்சல் : raavananstore@gmail.com
-
-மற்றபடி எந்த ஒரு சமூக வலைத்தலங்களிலும் இராவணன் அங்காடியின் பக்கங்களில் குறுஞ்செய்தி அனுப்பியும் தொடர்பு கொள்ளலாம். 
-
+      <p>வாடிக்கையாளர் பிரிவு தொடர்புக்கு :</p>
+      <address>
+        தொலைபேசி/பகிரி : <strong>+91-7871003935</strong> <br />
+        மின்னஞ்சல் :{' '}
+        <a href="mailto:raavananstore@gmail.com">
+          <strong>raavananstore@gmail.com</strong>
+        </a>
+      </address>
+      <p>
+        மற்றபடி எந்த ஒரு சமூக வலைத்தலங்களிலும் இராவணன் அங்காடியின் பக்கங்களில்
+        குறுஞ்செய்தி அனுப்பியும் தொடர்பு கொள்ளலாம்.{' '}
       </p>
     </div>
   );

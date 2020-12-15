@@ -2,6 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 
 const useStyles = makeStyles((theme) => ({
+  loading: {
+    display: 'flex',
+    justifyContent: 'conter',
+    alignItems: 'center',
+  },
   root: {
     margin: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
