@@ -30,23 +30,25 @@ const useStyles = makeStyles((theme) => ({
   media: {
     marginTop: '5px',
     paddingTop: 10,
+    paddingRight: 10,
     [theme.breakpoints.down('sm')]: {
       width: 150,
-      height: 200,
+      height: 150,
     },
-    width: 207,
-    height: 276,
+    width: 200,
+    height: 200,
   
   },
   frameImage: {
     marginTop: '5px',
     paddingTop: 10,
+    paddingRight: 10,
     [theme.breakpoints.down('sm')]: {
       width: 150,
-      height: 200,
+      height: 150,
     },
-    width: 207,
-    height: 276,
+    width: 200,
+    height: 200,
  
   },
   center: {

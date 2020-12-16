@@ -64,9 +64,9 @@ const ProductDetail = () => {
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
-          <Grid container>
-            <Grid item xs={12} md={6} lg={5}>
-              <div className={classes.center}>
+          <Grid container  spacing={10}>
+            <Grid item xs={12} md={6} lg={5}  className={classes.center}>
+              <div>
                 <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}

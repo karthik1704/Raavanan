@@ -14,26 +14,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   productImage: {
-    
-    width: 400,
-    height: 550,
+    paddingTop: 6,
+    width: 500,
+    height: 500,
     [theme.breakpoints.down('sm')]: {
-      width: 260,
-      height: 320,
+      width: 300,
+      height: 300,
     },
   },
   center:{
     display: 'flex',
     justifyContent: 'conter',
-    alignItems: 'center',
     
   },
   frameImage: {
-    width: 400,
-    height: 550,
+    paddingTop: 6,
+    width: 500,
+    height: 500,
     [theme.breakpoints.down('sm')]: {
-      width: 260,
-      height: 320,
+      width: 300,
+      height: 300,
     },
   },
   buttons: {
