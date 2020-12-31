@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 import axois from 'axios';
 
@@ -90,17 +90,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WAOrder = () => {
+const WAOrder = (props) => {
   const [message, setMessage] = useState({});
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(0);
   const { id } = useParams();
+  const { state } = useLocation();
 
+  console.log(state);
   useEffect(() => {
     axois
       .get(`${API_URL}api/product/${id}`)
       .then((res) => setProduct(res.data));
   }, [id]);
+
+  useEffect(() => {
+    if (state.material === 'இரப்பர்') {
+      setPrice(product.price + 50);
+    } else if (state.material === 'குழைமம் ( பிளாஸ்டிக் )') {
+      setPrice(product.price);
+    } else {
+      setPrice(product.price);
+    }
+  }, [product]);
 
   const handleQuantity = (e) => {
     if (e.target.value <= 0) {
@@ -117,16 +130,41 @@ const WAOrder = () => {
     });
   };
 
+  const phonecase = `
+மூலப்பொருள்: ${state.material}
+`;
+
+  const photoFramePrice = `
+விலை: '₹' ${state.price}
+எண்ணிக்கை: ${quantity},
+மொத்த விலை: ₹.${state.price * quantity},
+அளவு: ${state.size}
+`;
+
+  const OtherProductPrice = `
+விலை: '₹' ${price},
+எண்ணிக்கை: ${quantity},
+மொத்த விலை: ₹.${price * quantity},
+`;
+
   const sendMessage = (e) => {
     e.preventDefault();
     const waMessage = `
 கோரிக்கை
 =========
-தயாரிப்பு எண்: ${id.slice(2)},
+தயாரிப்பு எண்: ${id},
 பொருளின் பெயர்: ${product.product_name}\n,
-விலை: ₹ ${product.price}
-எண்ணிக்கை: ${quantity},
-மொத்த விலை: ₹.${product.price * quantity}
+${
+  product.category && product.category.category_name === 'படச்சட்டகம்'
+    ? photoFramePrice
+    : OtherProductPrice
+}
+
+${
+  product.category && product.category.category_name === 'கைபேசி உறை'
+    ? phonecase
+    : ''
+}
 
 வாடிக்கையாளர் தகவல்
 =======================
@@ -163,8 +201,21 @@ const WAOrder = () => {
                   {product.product_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  விலை: <strong>₹ {product.price} </strong>
+                  விலை:{' '}
+                  <strong>
+                    ₹{' '}
+                    {product.category &&
+                    product.category.category_name === 'படச்சட்டகம்'
+                      ? state.price
+                      : price}{' '}
+                  </strong>
                 </Typography>
+                {product.category &&
+                  product.category.category_name === 'படச்சட்டகம்' && (
+                    <Typography variant="subtitle1" color="textSecondary">
+                      அளவு: {state.size}
+                    </Typography>
+                  )}
               </CardContent>
             </div>
             <div className={classes.grow} />
@@ -186,7 +237,11 @@ const WAOrder = () => {
               <CardContent>
                 <Typography> மொத்த விலை </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  ₹ {product.price * quantity}
+                  ₹{' '}
+                  {product.category &&
+                  product.category.category_name === 'படச்சட்டகம்'
+                    ? state.price * quantity
+                    : price * quantity}
                 </Typography>
               </CardContent>
             </div>
