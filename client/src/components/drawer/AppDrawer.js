@@ -68,7 +68,9 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
         {/* <Avatar className={classes.purple}>S</Avatar>
         <Typography variant="body1">SRBN Loves N! </Typography> */}
         <Typography>வணக்கம் !</Typography>
-        <Button color="primary" disabled>உள்நுழை</Button>
+        <Button color="primary" disabled>
+          உள்நுழை
+        </Button>
       </div>
 
       <Divider />
@@ -78,11 +80,11 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
         onKeyDown={(e) => toggleDrawer(false, e)}
       >
         <List>
-          <ListItem button component={Link} to="/new">
+          <ListItem button component={Link} to="/organic-foods">
             <ListItemIcon>
               <NewReleasesIcon />
             </ListItemIcon>
-            <ListItemText primary="புதிய வெளியீடு" />
+            <ListItemText primary="இயற்கை உணவு" />
           </ListItem>
 
           <ListItem button component={Link} to="/photo-frames">
