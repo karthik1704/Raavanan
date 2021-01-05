@@ -1,9 +1,10 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import get_user_model
+from django.conf import settings
 from products.models import Product
 # Create your models here.
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 class Order(models.Model):
     user = models.ForeignKey(User,on_delete=models.DO_NOTHING)
