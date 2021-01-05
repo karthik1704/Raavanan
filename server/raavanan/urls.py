@@ -18,7 +18,9 @@ from django.urls import include, path
 
 from django.conf import settings
 from django.conf.urls.static import static
-from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
+
+from dj_rest_auth.views import PasswordResetConfirmView
+from dj_rest_auth.registration.views import VerifyEmailView,ConfirmEmailView
 
 app_name = 'raavanan'
 urlpatterns = [
@@ -26,12 +28,15 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include('products.urls')),
     path('api/', include('orders.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('api/auth/', include('dj_rest_auth.urls')),
+
     path('api/auth/', include('accounts.urls')),
-    path('api/auth/registration/account-confirm-email/<str:key>/', ConfirmEmailView.as_view(), name='account_email_verification_view'),
+    path('api/auth/password-reset/confrim/<str:uidb64>/<str:token>/', PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
+    path('api/auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
+
+    path('api/auth/', include('dj_rest_auth.urls')),
+    
+    path('api/auth/registration/account-confirm-email/<str:key>/', ConfirmEmailView.as_view(), name='account_confirm_email'),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('api/auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent')
 ]
 
 if settings.DEBUG:

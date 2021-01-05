@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Custom USER MODEL
-AUTH_USER_MODEL = 'accounts.MyUser'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 
@@ -41,20 +41,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'django_filters',
     'rest_framework.authtoken',
+    'django_filters',
     'dj_rest_auth',
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'dj_rest_auth.registration',
+
+    'allauth.socialaccount.providers.google',
+    
     'corsheaders',
     'mptt',
 
-    # 'users',
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'products',
     # 'cart',
     'orders',
@@ -93,7 +95,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # `allauth` needs this from django
-                'django.template.context_processors.request',
+                # 'django.template.context_processors.request',
             ],
         },
     },
@@ -151,42 +153,61 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
 
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
 
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'accounts.serializer.CustomLoginSerializer',    
+    'USER_DETAILS_SERIALIZER': 'accounts.serializer.CustomUserDetailsSerializer',
+    'PASSWORD_RESET_SERIALIZER': 'accounts.serializer.CustomPasswordResetSerializer',     
 }
 
-# DJ REST AUTH & ALL AUTH SOCIAL
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializer.CustomRegisterSerializer',
+}
+
+# Custom Backend & ALL AUTH SOCIAL 
 
 AUTHENTICATION_BACKENDS = [
-    
+ 
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
+
+    # Custom Backend
+    'accounts.backend.EmailPhoneBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
     
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Mail
+if DEBUG:
+    EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    EMAIL_HOST = 'smtp.hostinger.in'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'no-reply@raavananstore.com'
+    EMAIL_HOST_PASSWORD = 'Raavanan@2020'
+    DEFAULT_FROM_EMAIL = 'no-reply@raavananstore.com'
+    EMAIL_USE_TLS = False
 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_REQUIRED = True
-EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+# OTP
 
-LOGIN_URL = 'http://localhost:8000/api/auth/login'
+OTP_AUTH_KEY = '245795AhKoE1fl8h5fdeff61P1'
+
+
+
+
 
 
 # GOOGLE OAUTH2
@@ -201,6 +222,15 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+# JWT 
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'raavanan-auth'
+
+
+
+# Site
 
 SITE_ID = 1
 

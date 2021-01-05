@@ -1,28 +1,43 @@
 from django.contrib.auth.models import BaseUserManager
 
+class UserManager(BaseUserManager):
 
-class MyUserManager(BaseUserManager):
-    
-    def create_user(self, email, first_name, last_name, phone, password=None):
+    def create_user(self, username, email, phone, password=None, **kwargs):
+
+        if not email:
+            raise ValueError('User must have email address.')
+        
         user = self.model(
-            email=self.normalize_email(email),
-            first_name = first_name,
-            last_name = last_name,
-            phone = phone
+            username = username,
+            email = self.normalize_email(email), 
+            phone = phone,
         )
 
+       
+        # user.first_name = kwargs.first_name
+        # user.last_name = kwargs.last_name
+        # user.birth_year = kwargs.birth_year
+        # user.country = kwargs.country
+
         user.set_password(password)
-        user.save(using=self._db)
+        user.save(using = self._db)
         return user
 
-    def create_superuser(self, email,  password ):
+    def create_superuser(self, username, email, phone, password=None, **kwargs):
+
         user = self.create_user(
-            email=self.normalize_email(email),
-            password=password,
-           
+            username,
+            email,
+            phone,
+            password = password,
         )
 
         user.is_staff = True
         user.is_superuser = True
-        user.save(using=self._db)
+        user.save(using = self._db)
+
         return user
+
+
+class PhoneConfirmationManager():
+    pass
