@@ -40,6 +40,7 @@ class Category(MPTTModel):
 
 
 
+
 class Product(models.Model):
     id = models.CharField(unique=True , db_index=True , max_length=15 , primary_key=True)
     product_name=models.CharField(max_length=255)
@@ -65,6 +66,12 @@ class Product(models.Model):
         if not hasattr(self, '_productimage'):
             self._productimage = self.productimage_set.all()
         return self._productimage
+
+
+# class Price(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     material = models.ForeignKey(ProductMaterial, on_delete=models.DO_NOTHING, null=True, blank=True)
+#     types = models.CharField(max_length=255, blank=True, null=True)
 
 class ProductImage(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
