@@ -1,3 +1,4 @@
+from datetime import date, time
 from accounts.utils import send_otp
 from rest_framework import serializers,exceptions
 from rest_framework.exceptions import ValidationError
@@ -10,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes 
 
-from .models import User , PhoneConfirmation
+from .models import OneTimePassword, User 
 
 class CustomRegisterSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(style={'input_type':'password'}, write_only=True)
@@ -100,7 +101,7 @@ class CustomLoginSerializer(serializers.Serializer):
         if phone and password:
             user = self.authenticate(phone=phone, password=password)
         else:
-            msg = _('Must include "phone " and "password".')
+            msg = _('Must include \"phone\" and \"password\".')
             raise exceptions.ValidationError(msg)
 
         return user
@@ -111,7 +112,7 @@ class CustomLoginSerializer(serializers.Serializer):
         if username and password:
             user = self.authenticate(username=username, password=password)
         else:
-            msg = _('Must include "username " and "password".')
+            msg = _('Must include \"username\" and \"password\".')
             raise exceptions.ValidationError(msg)
 
         return user
@@ -129,7 +130,7 @@ class CustomLoginSerializer(serializers.Serializer):
         elif username:
             user = self._validate_username(username, password)
         else:
-            msg = _('Must include "email" or "Phone" and "password".')
+            msg = _('Must include \"email\" or \"phone\" and \"password\".')
             raise exceptions.ValidationError(msg)
         
         if user:
@@ -232,9 +233,9 @@ class PhonePassowordResetSerializer(serializers.Serializer):
         otp = get_random_otp()
 
         try:
-            check_otp_unique = PhoneConfirmation.objects.get(otp=otp)
-        except PhoneConfirmation.DoesNotExist:
-            otpModel = PhoneConfirmation(
+            OneTimePassword.objects.get(otp=otp)
+        except OneTimePassword.DoesNotExist:
+            otpModel = OneTimePassword(
                 phone = user,
                 otp = otp
             )
@@ -254,7 +255,7 @@ class OTPVerifySerializer(serializers.Serializer):
         phone = value.get('mobile')
 
         try:
-            otp_verify = PhoneConfirmation.objects.get(phone__phone = phone)
+            otp_verify = OneTimePassword.objects.get(phone = phone)
             if otp == otp_verify.otp:
                
                 return value
@@ -262,7 +263,7 @@ class OTPVerifySerializer(serializers.Serializer):
                 err_msg = _("Wrong OTP")
                 raise serializers.ValidationError(err_msg) 
             
-        except PhoneConfirmation.DoesNotExist:
+        except OneTimePassword.DoesNotExist:
             err_msg = _("User Not Found")
             raise serializers.ValidationError(err_msg)
         
@@ -276,9 +277,9 @@ class OTPVerifySerializer(serializers.Serializer):
         token = default_token_generator.make_token(user)
 
         try:
-            otp_model = PhoneConfirmation.objects.get(phone__phone = phone)
+            otp_model = OneTimePassword.objects.get(phone = phone)
             otp_model.delete()
-        except PhoneConfirmation.DoesNotExist:
+        except OneTimePassword.DoesNotExist:
             err_msg = _("OTP Expired / Not Found")
             raise serializers.ValidationError(err_msg) 
 
@@ -297,10 +298,68 @@ class OTPResendSerializer(serializers.Serializer):
         mobile = self.validated_data['mobile']
         resend_otp(mobile)
 
-class OTPSendSerializer(serializers.Serializer):
+class PhoneRegisterVerifySerializer(serializers.Serializer):
     mobile = serializers.CharField()
 
     def save(self):
-        from .utils import  send_otp
+        from .utils import  send_otp, get_random_otp
         mobile = self.validated_data['mobile']
-        send_otp(mobile)
+        try:
+            user = User.objects.get(phone=mobile)
+        except User.DoesNotExist:
+            user = None
+
+        otp = get_random_otp()
+        
+        try:
+            OneTimePassword.objects.get(otp=otp)
+        except OneTimePassword.DoesNotExist:
+            otpModel = OneTimePassword(
+                user = user,
+                phone = mobile,
+                otp = otp
+            )
+            otpModel.save()
+        
+        res = send_otp(mobile,otp)
+        data = res.read()
+        print(data.decode('utf-8'))
+
+class PhoneRegisterConfirmSerializer(serializers.Serializer):
+
+    otp = serializers.CharField()
+    mobile = serializers.CharField()  
+
+    def validate(self,value):
+        otp = value.get('otp')
+        phone = value.get('mobile')
+
+        try:
+            otp_verify = OneTimePassword.objects.get(phone = phone)
+            from django.utils import timezone
+            if timezone.now() <= otp_verify.created + timezone.timedelta(minutes=10):
+                if otp == otp_verify.otp:
+                
+                    return value
+                else:
+                    err_msg = _("Wrong OTP")
+                    raise serializers.ValidationError(err_msg) 
+            else:
+                err_msg = _('OTP Expired')
+                raise serializers.ValidationError(err_msg)
+        except OneTimePassword.DoesNotExist:
+            err_msg = _('OTP Not Found')
+            raise serializers.ValidationError(err_msg)
+        
+    
+
+    def save(self):
+        phone = self.validated_data['mobile']
+        try:
+            otp_model = OneTimePassword.objects.get(phone = phone)
+            otp_model.delete()
+        except OneTimePassword.DoesNotExist:
+            err_msg = _("OTP Expired / Not Found")
+            raise serializers.ValidationError(err_msg) 
+
+           

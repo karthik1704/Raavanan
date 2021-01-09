@@ -7,9 +7,18 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
-from .serializer import OTPResendSerializer, OTPVerifySerializer, PhonePassowordResetSerializer
+from .serializer import (
+    OTPResendSerializer, 
+    OTPVerifySerializer, 
+    PhonePassowordResetSerializer, 
+    PhoneRegisterVerifySerializer,
+    PhoneRegisterConfirmSerializer
+)
 
-from .models import User, PhoneConfirmation
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+
+from .models import User
 
 # Create your views here.
 
@@ -66,8 +75,34 @@ class OTPResendView(GenericAPIView):
         },)
 
 
-from dj_rest_auth.registration.views import SocialLoginView
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+class PhoneNumberVerifyView(GenericAPIView):
+    serializer_class = PhoneRegisterVerifySerializer
+    permission_classes = (AllowAny,)
+    throttle_scope = 'dj_rest_auth'
+
+    def post(self, request):
+
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid()
+     
+        serializer.save()
+        return Response({
+            'detail': 'otp sent successfully'
+        },)
+
+class PhoneNumberConfirmView(GenericAPIView):
+    serializer_class = PhoneRegisterConfirmSerializer
+    permission_classes = (AllowAny,)
+    throttle_scope = 'dj_rest_auth'
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+     
+        data = serializer.save()
+    
+        return Response({
+         'detail': 'OTP Verified'
+        },)
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter

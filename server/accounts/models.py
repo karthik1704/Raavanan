@@ -62,21 +62,34 @@ class User(AbstractBaseUser):
 
 
 
-class PhoneConfirmation(models.Model):
+# class PhoneConfirmation(models.Model):
 
-    phone = models.ForeignKey(User,on_delete=models.CASCADE)
+#     phone = models.ForeignKey(User,on_delete=models.CASCADE)
+#     created = models.DateTimeField(_('created'), auto_now_add=True)
+#     sent = models.DateTimeField(_('sent'),null= True, auto_now=True)
+#     otp = models.CharField(_('OTP'), max_length=8, unique=True)
+
+#     objects = PhoneConfirmationManager()
+
+#     class Meta:
+#         verbose_name = _("Phone OTP confirmation")
+#         verbose_name_plural = _("Phone OTP confirmations")
+
+#     def __str__(self):
+#         return self.phone.first_name
+
+    
+class OneTimePassword(models.Model):
+
+    user = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
+    phone = models.CharField(_('Phone Number'), max_length=33)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     sent = models.DateTimeField(_('sent'),null= True, auto_now=True)
     otp = models.CharField(_('OTP'), max_length=8, unique=True)
 
-    objects = PhoneConfirmationManager()
-
     class Meta:
-        verbose_name = _("Phone OTP confirmation")
-        verbose_name_plural = _("Phone OTP confirmations")
+        verbose_name = _('OTP')
+        verbose_name_plural = _('OTP')
 
     def __str__(self):
-        return self.phone.first_name
-
-    
-  
+        return self.phone
