@@ -53,7 +53,7 @@ class User(AbstractBaseUser):
         return self.first_name + ' ' +self.last_name
 
     # this methods are require to login super user from admin panel
-    def has_perm(self, perm, obj=None):
+    def has_perms(self, perm, obj=None):
         return self.is_superuser
 
     # this methods are require to login super user from admin panel

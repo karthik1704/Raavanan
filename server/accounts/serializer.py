@@ -1,8 +1,9 @@
-from datetime import date, time
-from accounts.utils import send_otp
 from rest_framework import serializers,exceptions
 from rest_framework.exceptions import ValidationError
 
+from accounts.utils import send_otp
+
+from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.utils.translation import ugettext_lazy as _
@@ -256,12 +257,13 @@ class OTPVerifySerializer(serializers.Serializer):
 
         try:
             otp_verify = OneTimePassword.objects.get(phone = phone)
-            if otp == otp_verify.otp:
-               
-                return value
-            else:
-                err_msg = _("Wrong OTP")
-                raise serializers.ValidationError(err_msg) 
+            if timezone.now() <= otp_verify.created + timezone.timedelta(minutes=10):
+                if otp == otp_verify.otp:
+                
+                    return value
+                else:
+                    err_msg = _("Wrong OTP")
+                    raise serializers.ValidationError(err_msg)
             
         except OneTimePassword.DoesNotExist:
             err_msg = _("User Not Found")
@@ -336,7 +338,6 @@ class PhoneRegisterConfirmSerializer(serializers.Serializer):
 
         try:
             otp_verify = OneTimePassword.objects.get(phone = phone)
-            from django.utils import timezone
             if timezone.now() <= otp_verify.created + timezone.timedelta(minutes=10):
                 if otp == otp_verify.otp:
                 
