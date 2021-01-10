@@ -1,12 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from django.utils.translation import ugettext_lazy as _
 
 from .manager import UserManager, PhoneConfirmationManager
 # Create your models here.
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(_('Username'),unique=True,blank=True, null=True, max_length=10)
     email = models.EmailField(_('e-mail'), unique=True, blank=True, null=True)
@@ -48,13 +48,20 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.first_name
+    
+    def get_username(self):
+        return self.username
 
     def __str__(self) -> str:
-        return self.first_name + ' ' +self.last_name
-
+        if not self.username:
+            return self.first_name + ' ' +self.last_name
+        return self.username
     # this methods are require to login super user from admin panel
-    def has_perms(self, perm, obj=None):
+    def has_perm(self, perm, obj=None):
         return self.is_superuser
+
+    # def has_perms(self, perm, obj=None):
+    #     return self.is_superuser
 
     # this methods are require to login super user from admin panel
     def has_module_perms(self, app_label):
