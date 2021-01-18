@@ -42,11 +42,8 @@ class Category(MPTTModel):
 
 
 class Product(models.Model):
-    id = models.CharField(unique=True , db_index=True , max_length=15 , primary_key=True)
-    product_name=models.CharField(max_length=255)
-    mrp =  models.FloatField(_('M.R.P.'))
-    discount = models.IntegerField(_('Discount %'))
-    price = models.FloatField()
+    product_id = models.CharField(unique=True , max_length=15 )
+    name=models.CharField(max_length=255)
     brand=models.CharField(max_length=50)
     manufacturer=models.CharField(max_length=50)
     supported_devices = models.CharField(max_length=100)
@@ -60,19 +57,28 @@ class Product(models.Model):
 
 
     def __str__(self):
-        return self.product_name
+        return self.name
     
     def image(self):
         if not hasattr(self, '_productimage'):
             self._productimage = self.productimage_set.all()
         return self._productimage
 
+    def price(self):
+        if not hasattr(self, '_price'):
+            self._price =  self.price_set.all()
+            return self._price
 
-# class Price(models.Model):
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     material = models.ForeignKey(ProductMaterial, on_delete=models.DO_NOTHING, null=True, blank=True)
-#     types = models.CharField(max_length=255, blank=True, null=True)
+
+class Price(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    material = models.ForeignKey(ProductMaterial, on_delete=models.DO_NOTHING, null=True, blank=True)
+    types = models.CharField(max_length=255, blank=True, null=True)
+    mrp =  models.FloatField(_('M.R.P.'))
+    discount = models.IntegerField(_('Discount %'))
+    price = models.FloatField()
+
 
 class ProductImage(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=f'product/')
