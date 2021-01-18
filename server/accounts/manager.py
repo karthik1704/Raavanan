@@ -2,17 +2,17 @@ from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, email, phone, password=None, **kwargs):
+    def create_user(self, email, phone, password=None, **kwargs):
 
         if not email:
             raise ValueError('User must have email address.')
         
-        if not username: 
-            raise ValueError('User must have username address.')
+        # if not username: 
+        #     raise ValueError('User must have username address.')
 
 
         user = self.model(
-            username = username,
+           # username = username,
             email = self.normalize_email(email), 
             phone = phone,
         )
@@ -27,10 +27,10 @@ class UserManager(BaseUserManager):
         user.save(using = self._db)
         return user
 
-    def create_superuser(self, username, email, phone, password=None, **kwargs):
+    def create_superuser(self, email, phone, password=None, **kwargs):
 
         user = self.create_user(
-            username,
+            #username,
             email,
             phone,
             password = password,
@@ -43,5 +43,3 @@ class UserManager(BaseUserManager):
         return user
 
 
-class PhoneConfirmationManager():
-    pass

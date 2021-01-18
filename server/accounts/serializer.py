@@ -21,7 +21,7 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'username',
+            #'username',
             'email', 
             'phone', 
             'first_name',
@@ -48,7 +48,7 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
         # )
 
         user = User(
-            username = self.validated_data['username'] or None,
+            #username = self.validated_data['username'] or None,
             email = self.validated_data['email'] or None,
             phone = phone or None,
             first_name = self.validated_data['first_name'],
@@ -69,14 +69,14 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
 
     
 class CustomLoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=False, allow_blank=True)
+   # username = serializers.CharField(required=False, allow_blank=True)
     email = serializers.EmailField(required=False, allow_blank=True)
     phone = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(style={'input_type':'password'})
 
     class Meta:
         model = User
-        fields = ['username','email', 'phone', 'password']
+        fields = ['email', 'phone', 'password']
         extra_kwargs = {
         'password':
             {'write_only':True}
@@ -107,19 +107,19 @@ class CustomLoginSerializer(serializers.Serializer):
 
         return user
 
-    def _validate_username(self, username, password):
-        user = None
+    # def _validate_username(self, username, password):
+    #     user = None
 
-        if username and password:
-            user = self.authenticate(username=username, password=password)
-        else:
-            msg = _('Must include \"username\" and \"password\".')
-            raise exceptions.ValidationError(msg)
+    #     if username and password:
+    #         user = self.authenticate(username=username, password=password)
+    #     else:
+    #         msg = _('Must include \"username\" and \"password\".')
+    #         raise exceptions.ValidationError(msg)
 
-        return user
+    #     return user
 
     def validate(self, attrs):
-        username = attrs.get('username')
+        # username = attrs.get('username')
         email = attrs.get('email')
         phone = attrs.get('phone')
         password = attrs.get('password')
@@ -128,8 +128,8 @@ class CustomLoginSerializer(serializers.Serializer):
             user = self._validate_email(email, password)
         elif phone:
             user = self._validate_phone(phone, password)
-        elif username:
-            user = self._validate_username(username, password)
+        # elif username:
+        #     user = self._validate_username(username, password)
         else:
             msg = _('Must include \"email\" or \"phone\" and \"password\".')
             raise exceptions.ValidationError(msg)
@@ -157,7 +157,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
         model = User
         fields = (
         'pk', 
-        'username', 
+        # 'username', 
         'email', 
         'phone', 
         'first_name', 
@@ -165,7 +165,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
         'birth_year',
         'country'
         )
-        read_only_fields = ('username', 'email', 'phone')
+        read_only_fields = ('email', 'phone')
 
 class CustomPasswordResetSerializer(serializers.Serializer):
 

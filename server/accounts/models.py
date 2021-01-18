@@ -3,12 +3,12 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from django.utils.translation import ugettext_lazy as _
 
-from .manager import UserManager, PhoneConfirmationManager
+from .manager import UserManager
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    username = models.CharField(_('Username'),unique=True,blank=True, null=True, max_length=10)
+    #username = models.CharField(_('Username'),unique=True,blank=True, null=True, max_length=10)
     email = models.EmailField(_('e-mail'), unique=True, blank=True, null=True)
     phone = models.CharField(
         _('phone number'),
@@ -29,9 +29,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff'), default=False)
     is_superuser = models.BooleanField(_('superuser'), default=False)
     
-    USERNAME_FIELD = 'username'
-    EMAIL_FIELD = "email"
-    REQUIRED_FIELDS = ['email','phone']
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['phone']
 
     objects = UserManager()
 
@@ -49,13 +49,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
     
-    def get_username(self):
-        return self.username
+    # def get_username(self):
+    #     return self.username
 
     def __str__(self) -> str:
-        if not self.username:
+        if not self.email:
             return self.first_name + ' ' +self.last_name
-        return self.username
+        return self.email
     # this methods are require to login super user from admin panel
     def has_perm(self, perm, obj=None):
         return self.is_superuser
@@ -100,3 +100,9 @@ class OneTimePassword(models.Model):
 
     def __str__(self):
         return self.phone
+
+
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    address = models.TextField()
+    postal = models.CharField(max_length=20)
