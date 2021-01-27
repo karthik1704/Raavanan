@@ -25,7 +25,7 @@ SECRET_KEY = '+zfz^!#%u--rjlow!jr((7w3zx1fj0ncw1@%f=--dd6o!qxzj^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.11','127.0.0.1']
 
 # Custom USER MODEL
 AUTH_USER_MODEL = 'accounts.User'
@@ -83,6 +83,7 @@ ROOT_URLCONF = 'raavanan.urls'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://192.168.1.12:3000',
 ]
 
 TEMPLATES = [
@@ -110,18 +111,18 @@ WSGI_APPLICATION = 'raavanan.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
     # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': '<db_name>',
-    #     'USER': '<db_username>',
-    #     'PASSWORD': '<password>',
-    #     'HOST': 'localhost',
-    #     'PORT': '<db_port>',
-    # }
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'raavananstore',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 

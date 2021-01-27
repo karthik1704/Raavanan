@@ -19,9 +19,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     first_name = models.CharField(_('first name'), max_length=50)
-    last_name = models.CharField(_('last name'), max_length=50)
-    birth_year = models.CharField(_('birth year'), max_length=4)
-    country = models.CharField(_('country'), max_length=5)
+    last_name = models.CharField(_('last name'), blank=True, null=True, max_length=50)
+    birth_year = models.CharField(_('birth year'), blank=True, null=True, max_length=4)
+    country = models.CharField(_('country'), blank=True, null=True, max_length=5)
 
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     last_login = models.DateTimeField(_('last login'), auto_now=True)
@@ -29,9 +29,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff'), default=False)
     is_superuser = models.BooleanField(_('superuser'), default=False)
     
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'phone'
     EMAIL_FIELD = "email"
-    REQUIRED_FIELDS = ['email','phone']
+    REQUIRED_FIELDS = ['email']
 
     objects = UserManager()
 

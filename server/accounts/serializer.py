@@ -40,7 +40,7 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
 
     def save(self, request):
         import phonenumbers
-        country = self.validated_data['country']
+        # country = self.validated_data['country']
         phone = self.validated_data['phone']
         # phone_number = phonenumbers.parse(phone, country)
         # phone = phonenumbers.format_number(
@@ -48,13 +48,13 @@ class CustomRegisterSerializer(serializers.ModelSerializer):
         # )
 
         user = User(
-            username = self.validated_data['username'] or None,
+            # username = self.validated_data['username'] or None,
             email = self.validated_data['email'] or None,
             phone = phone or None,
             first_name = self.validated_data['first_name'],
             last_name = self.validated_data['last_name'],
-            birth_year = self.validated_data['birth_year'],
-            country = self.validated_data['country'],
+            # birth_year = self.validated_data['birth_year'],
+            # country = self.validated_data['country'],
         )
 
         password1 = self.validated_data['password1']
