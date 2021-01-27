@@ -60,7 +60,8 @@ INSTALLED_APPS = [
 
     'accounts.apps.AccountsConfig',
     'products',
-    # 'cart',
+    'cart',
+    'wishlist',
     'orders',
    
 
@@ -89,7 +90,7 @@ CORS_ALLOWED_ORIGINS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -181,16 +182,26 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 AUTHENTICATION_BACKENDS = [
  
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
 
     # Custom Backend
     'accounts.backend.EmailPhoneBackend',
 
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 ]
+
+# All Auth
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'
 
 # Mail
 if DEBUG:
@@ -204,6 +215,7 @@ else:
     EMAIL_HOST_PASSWORD = 'Raavanan@2020'
     DEFAULT_FROM_EMAIL = 'no-reply@raavananstore.com'
     EMAIL_USE_TLS = False
+
 
 # OTP
 

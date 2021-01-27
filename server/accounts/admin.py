@@ -7,7 +7,7 @@ from .models import OneTimePassword, User
 class CustomUserAdmin(UserAdmin):
     model = User
 
-    list_display = ('email', 'phone', 'username', 'pk', 'date_joined', 'last_login', 'is_superuser', 'is_staff')
+    list_display = ('email', 'phone', 'pk', 'date_joined', 'last_login', 'is_superuser', 'is_staff')
     search_fields = ('email',)
     readonly_fields = ('date_joined', 'last_login')
     ordering = ('email',)
@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ()
     fieldsets = (
         ('Account Information', {
-            'fields': ('username', 'email', 'phone', 'password'),
+            'fields': ('email', 'phone', 'password'),
         }),
         ('Personal Information', {
             'fields': ('first_name','last_name', 'country'),
@@ -27,7 +27,7 @@ class CustomUserAdmin(UserAdmin):
 
     add_fieldsets = (
         (None, {
-            'fields': ('username', 'email', 'phone', 'password1', 'password2'),
+            'fields': ('email', 'phone', 'password1', 'password2'),
         }),
         ('Personal Information', {
             'fields': ('first_name','last_name', 'country'),

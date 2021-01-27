@@ -45,6 +45,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include('products.urls')),
     path('api/', include('orders.urls')),
+    path('api/', include('wishlist.urls')),
 
     path('api/auth/', include('accounts.urls')),
     path('api/auth/password-reset/confrim/<str:uidb64>/<str:token>/', PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
