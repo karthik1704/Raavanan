@@ -14,6 +14,8 @@ import useDarkTheme from './hooks/useDarkTheme';
 import Loader from './components/Loader/Loader';
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import NewFooter from './components/NewFooter/NewFooter';
+
 
 // import { dark, light } from './theme';
 
@@ -71,7 +73,7 @@ function App() {
             <Container className={classes.root}>
               <Routes />
             </Container>
-            <Footer />
+            <NewFooter />
           </Paper>
         </Router>
       </ThemeProvider>

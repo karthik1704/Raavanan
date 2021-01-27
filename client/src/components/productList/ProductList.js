@@ -94,7 +94,7 @@ const ProductList = ({ products }) => {
                   alt={product.name}
                   className={
                     product.category &&
-                    product.category.category_name !== 'கைபேசி உறை'
+                    product.category.name !== 'கைபேசி உறை'
                       ? classes.frameImage
                       : classes.media
                   }

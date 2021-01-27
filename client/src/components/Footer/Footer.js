@@ -9,7 +9,7 @@ import { useStyles } from './style';
 const Footer = () => {
   const classes = useStyles();
   return (
-    <footer mt={2} className={classes.root}>
+    <footer  className={classes.root}>
       <Paper elevation={3}>
         <Box display="flex" justifyContent="center">
           <Toolbar>

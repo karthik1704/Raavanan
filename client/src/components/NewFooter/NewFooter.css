@@ -1,0 +1,42 @@
+.Footer_Main_Wrap
+{
+    flex-grow: 1;
+    padding-bottom: 20px;
+    padding-top: 40px;
+    border-bottom: 1px solid white;
+}
+.Footer_Wrap
+{
+    background-image: url("../../asserts/images/footer/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+  height: 400px;
+    margin-top: 40px;
+}
+
+.Footer_Main_Container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.Footer_Icon_Container
+{
+    height: 50px;
+    width: 50px;
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.Footer_Text_Details
+{
+    padding-left: 20px;
+}
+.Footer_Text_Details p
+{
+    margin: 0px;
+}
