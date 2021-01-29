@@ -13,7 +13,9 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+
 class OrderItem(models.Model):
+    user = models.ForeignKey(User,on_delete=models.DO_NOTHING)
     order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
     product = models.ForeignKey(Product,on_delete=models.DO_NOTHING)
     extra = models.CharField(max_length=250)
