@@ -196,9 +196,19 @@ export default function Navbar() {
             color="inherit"
             onClick={onToggleTopLoader}
             startIcon={<LockIcon />}
-            disabled
+            component={Link}
+            to="/login"
           >
-            உள்நுழைய / பதிவு செய்ய
+            உள்நுழைய 
+          </Button>
+          <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            startIcon={<LockIcon />}
+            component={Link}
+            to="/register"
+          >
+            பதிவு செய்ய
           </Button>
         </Toolbar>
         <Toolbar>
@@ -362,6 +372,16 @@ export default function Navbar() {
           </Button>
           <Button color="inherit" component={Link} to="/others">
             இதர
+          </Button>
+
+          <Button color="inherit" component={Link} to="/Otpverification">
+              Otp
+          </Button>
+          <Button color="inherit" component={Link} to="/Forgetpassword">
+          Forget
+          </Button>
+          <Button color="inherit" component={Link} to="/Cartpage">
+          Cart
           </Button>
         </Toolbar>
       </AppBar>

@@ -155,13 +155,13 @@ const WAOrder = (props) => {
 தயாரிப்பு எண்: ${id},
 பொருளின் பெயர்: ${product.product_name}\n,
 ${
-  product.category && product.category.category_name === 'படச்சட்டகம்'
+  product.category && product.category.name === 'படச்சட்டகம்'
     ? photoFramePrice
     : OtherProductPrice
 }
 
 ${
-  product.category && product.category.category_name === 'கைபேசி உறை'
+  product.category && product.category.name === 'கைபேசி உறை'
     ? phonecase
     : ''
 }
@@ -205,13 +205,13 @@ ${
                   <strong>
                     ₹{' '}
                     {product.category &&
-                    product.category.category_name === 'படச்சட்டகம்'
+                    product.category.name === 'படச்சட்டகம்'
                       ? state.price
                       : price}{' '}
                   </strong>
                 </Typography>
                 {product.category &&
-                  product.category.category_name === 'படச்சட்டகம்' && (
+                  product.category.name === 'படச்சட்டகம்' && (
                     <Typography variant="subtitle1" color="textSecondary">
                       அளவு: {state.size}
                     </Typography>
@@ -239,7 +239,7 @@ ${
                 <Typography variant="subtitle1" color="textSecondary">
                   ₹{' '}
                   {product.category &&
-                  product.category.category_name === 'படச்சட்டகம்'
+                  product.category.name === 'படச்சட்டகம்'
                     ? state.price * quantity
                     : price * quantity}
                 </Typography>
@@ -277,7 +277,7 @@ ${
                   />
                 </FormControl>
                 {product.category &&
-                  product.category.category_name === 'கைபேசி உறை' && (
+                  product.category.name === 'கைபேசி உறை' && (
                     <FormControl>
                       <TextField
                         id="extra"

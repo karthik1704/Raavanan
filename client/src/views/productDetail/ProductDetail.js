@@ -55,8 +55,12 @@ const ProductDetail = () => {
 
     axios
       .get(`${API_URL}api/product/${id}`)
-      .then((res) => dispatch(fetchProductDetail(res.data)));
-
+      .then((res) => {
+        console.log(res);
+        dispatch(fetchProductDetail(res.data))
+      }
+      );
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => dispatch(fetchProductDetail({}));
   }, [dispatch]);
@@ -118,7 +122,7 @@ const ProductDetail = () => {
                   alt={productDetail.name}
                   className={
                     productDetail.category &&
-                    productDetail.category.category_name !== 'கைபேசி உறை'
+                    productDetail.category.name !== 'கைபேசி உறை'
                       ? classes.frameImage
                       : classes.productImage
                   }
@@ -132,10 +136,10 @@ const ProductDetail = () => {
               </Typography> */}
               <Divider />
               {productDetail.category &&
-                productDetail.category.category_name !== 'படச்சட்டகம்' && (
+                productDetail.category.name !== 'படச்சட்டகம்' && (
                   <>
                     {productDetail.category &&
-                    productDetail.category.category_name === 'கைபேசி உறை' ? (
+                    productDetail.category.name === 'கைபேசி உறை' ? (
                       <>
                         <Typography variant="subtitle1">
                           அதிகபட்ச விற்பனை விலை: ₹{' '}
@@ -197,7 +201,7 @@ const ProductDetail = () => {
                 )}
 
               {productDetail.category &&
-                productDetail.category.category_name === 'படச்சட்டகம்' && (
+                productDetail.category.name === 'படச்சட்டகம்' && (
                   <>
                     <Typography variant="subtitle1">
                       அதிகபட்ச விற்பனை விலை: ₹ <del>{mrp}</del>
@@ -340,7 +344,7 @@ const ProductDetail = () => {
                     <TableCell>வகை </TableCell>
                     <TableCell>
                       {productDetail.category &&
-                        productDetail.category.category_name}
+                        productDetail.category.name}
                     </TableCell>
                   </TableRow>
                   <TableRow>
