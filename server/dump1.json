@@ -1,0 +1,85 @@
+[
+  {
+    "model": "products.productmaterial",
+    "pk": 1,
+    "fields": { "material_name": "plastic" }
+  },
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Phone Xase",
+      "slug": "phone-case",
+      "parent": null,
+      "lft": 1,
+      "rght": 2,
+      "tree_id": 1,
+      "level": 0
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "product_id": "00001",
+      "name": "Test",
+      "brand": "BAmdml",
+      "manufacturer": "RAvha",
+      "supported_devices": "All",
+      "quantity": null,
+      "category": 1,
+      "origin": "hgh",
+      "description": "mmnm",
+      "imageurl": "product/main_model_3_30i9asF.png",
+      "created_at": "2021-01-29T12:30:51.344Z",
+      "materials": [1]
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "product_id": "00002",
+      "name": "Test 1",
+      "brand": "BAmdml",
+      "manufacturer": "RAvha",
+      "supported_devices": "All",
+      "quantity": null,
+      "category": 1,
+      "origin": "hgh",
+      "description": "bmnm",
+      "imageurl": "product/main_model_4_lrFwXkz.png",
+      "created_at": "2021-01-29T13:13:56.196Z",
+      "materials": [1]
+    }
+  },
+  {
+    "model": "products.price",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "material": null,
+      "types": "Plastic",
+      "mrp": 400.0,
+      "discount": 25,
+      "price": 300.0
+    }
+  },
+  {
+    "model": "products.price",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "material": null,
+      "types": null,
+      "mrp": 200.0,
+      "discount": 25,
+      "price": 100.0
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": { "product": 1, "image": "product/main_model_5_4aci5lg.png" }
+  }
+]
