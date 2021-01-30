@@ -71,7 +71,7 @@ export default function Otpverification() {
        Otp Verification
         </Typography>
         <Typography component="p" variant="p">
-       Enter the correct 4 digits number
+       Enter the correct 6 digits number
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -85,6 +85,10 @@ export default function Otpverification() {
             autoComplete="email"
             autoFocus
             className="Register_text"
+            inputProps={{
+              maxlength :6,
+              autocomplete : false
+            }}
           />
           
           <Button

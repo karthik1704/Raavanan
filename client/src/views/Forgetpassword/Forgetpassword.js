@@ -7,6 +7,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -54,7 +56,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Forgetpassword() {
   const classes = useStyles();
+  const [email, setEmail] = useState('');
 
+  const handleSubmit = (e) =>  {
+   
+  }
+  const handleEmailChange = (event) => {
+    const email = event.target.value;  
+    setEmail(email);
+  }
   return (
       <>
        <Header title="Create Account"  subtitle="Home"/>
@@ -76,8 +86,12 @@ export default function Forgetpassword() {
         We will send you an email to reset your password.
 
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
+        <ValidatorForm
+                // ref="form"
+                onSubmit={handleSubmit}
+                onError={errors => console.log(errors)}
+            >
+          {/* <TextField
             variant="outlined"
             margin="normal"
             required
@@ -88,6 +102,21 @@ export default function Forgetpassword() {
             autoComplete="email"
             autoFocus
             className="Register_text"
+          /> */}
+          <TextValidator
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            onChange={handleEmailChange}
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"            
+            className="Register_text"
+            value={email}
+            validators={['required', 'isEmail']}
+            errorMessages={['this field is required', 'email is not valid']}
           />
           
           <Button
@@ -100,7 +129,7 @@ export default function Forgetpassword() {
           Submit
           </Button>
         
-        </form>
+        </ValidatorForm>
       </div>
       <Box mt={8}>
         <Copyright />

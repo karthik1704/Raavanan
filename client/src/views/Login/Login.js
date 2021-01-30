@@ -7,12 +7,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import MuiPhoneInput from 'material-ui-phone-number';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Header from "../../components/Header/Header";
+import GoogleLogin from 'react-google-login';
 
 function Copyright() {
   return (
@@ -49,7 +53,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const [mobile, setMobile] = useState('');
+  const [password, setPassword] = useState('');
+  const [mobileerror, setMobileerror] = useState(false);
+  const [passworderror, setPassworderror] = useState(false);
+  const handleSubmit = (e) =>  {
+    if(passworderror && mobile !=13)
+      return
+    
+    //axios.get(filterUrl).then((res) => {
+  
+      // return dispatch(fetchProduct(res.data.results));
+  
+   // });
+  }
+  const handleMobileChange = (event) => {
 
+    setMobile(event);
+    
+    if(mobile.length != 12)
+    setMobileerror(true)
+    else
+    setMobileerror(false)
+    console.log(mobile)
+}
+
+const handlePasswordChange = (event) => {
+  const password = event.target.value;  
+  setPassword(password);
+  if (password.length > 0 && password.length <8 )
+  setPassworderror(true);
+  else
+  setPassworderror(false);
+
+}
+const responseGoogle = (response) => {
+  console.log(response);
+}
   return (
     <>
  <Header title="Login Here"  subtitle="Home"/>
@@ -62,18 +102,38 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="Phone"
-            label="Phone"
-            name="Phone"
-            autoComplete="Phone"
-            autoFocus
-          />
+        <ValidatorForm
+                // ref="form"
+                onSubmit={handleSubmit}
+                onError={errors => console.log(errors)}
+            >
+        <MuiPhoneInput
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="phone"
+          label="Phone"
+          name="phone"
+          // autoComplete="phone"
+          autoFocus
+          className="Register_text"
+          defaultCountry='in'
+          onlyCountries={['in']}
+          //disableCountryCode = {true}
+          //disableDropdown = {true}
+          autoFormat = {false}
+          inputProps={{
+            maxlength :13,
+            autocomplete : false
+          }}
+          countryCodeEditable = {false}
+          onChange={handleMobileChange}
+            value={mobile}
+            helperText={`${mobile.length < 13 && mobile.length >3 ? 'Invalid phone number' :''}`}
+            error = {mobileerror}
+           
+        />
           {/* <TextField
             variant="outlined"
             margin="normal"
@@ -85,7 +145,7 @@ export default function Login() {
             autoComplete="email"
             autoFocus
           /> */}
-          <TextField
+          <TextValidator
             variant="outlined"
             margin="normal"
             required
@@ -94,7 +154,18 @@ export default function Login() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            inputProps={{
+              maxlength: 20,
+              autocomplete : false
+            }}
+            
+            autoComplete={false}
+            onChange={handlePasswordChange}
+            value={password}
+            validators={['required']}
+            errorMessages={['Password is required']}
+            helperText={`${password.length < 8 && password.length > 0? 'Password should be minimum 8 characters' :''}`}
+            error = {passworderror}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -110,22 +181,46 @@ export default function Login() {
             Sign In
           </Button>
           <Grid container>
+            <Grid item xs>      </Grid>      
+           
+            <Grid item xs>      
+          <GoogleLogin
+    clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    isSignedIn={true}
+    scopes={ [
+      'email', 
+      'profile','https://www.googleapis.com/auth/user.phonenumbers.read',
+      'https://www.googleapis.com/auth/user.addresses.read',
+      'https://www.googleapis.com/auth/user.birthday.read'
+   ]}
+    cookiePolicy={'single_host_origin'}
+  />
+  </Grid>
+   <Grid item xs>      </Grid> 
+  
+          </Grid>
+          <br></br>
+          <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </ValidatorForm>
+        
       </div>
-      <Box mt={8}>
+      {/* <Box mt={8}>
         <Copyright />
-      </Box>
+      </Box> */}
     </Container>
         
     </>
