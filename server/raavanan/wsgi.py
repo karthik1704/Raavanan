@@ -11,6 +11,17 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'raavanan.settings')
+import environ
+
+env = environ.Env()
+# reading .env file
+root = environ.Path(__file__) - 2
+environ.Env.read_env(root() + '/.env')
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'raavanan.settings.production')
+
+if env('DJANGO_SETTINGS_MODULE'):
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', env('DJANGO_SETTINGS_MODULE'))
 
 application = get_wsgi_application()
