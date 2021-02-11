@@ -12,20 +12,21 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from environ import Env
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+
+env = Env()
+# reading .env file
+env_file = Path.joinpath(BASE_DIR, '.env')
+Env.read_env(env_file.as_posix())
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+zfz^!#%u--rjlow!jr((7w3zx1fj0ncw1@%f=--dd6o!qxzj^'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['192.168.1.11','127.0.0.1']
 
 # Custom USER MODEL
 AUTH_USER_MODEL = 'accounts.User'
@@ -108,25 +109,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'raavanan.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'raavananstore',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -203,27 +185,10 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
 ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'
 
-# Mail
-if DEBUG:
-    EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-
-    EMAIL_HOST = 'smtp.hostinger.in'
-    EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'no-reply@raavananstore.com'
-    EMAIL_HOST_PASSWORD = 'Raavanan@2020'
-    DEFAULT_FROM_EMAIL = 'no-reply@raavananstore.com'
-    EMAIL_USE_TLS = False
-
 
 # OTP
 
-OTP_AUTH_KEY = '245795AhKoE1fl8h5fdeff61P1'
-
-
-
-
+OTP_AUTH_KEY = env('OTP_API_KEY')
 
 
 # GOOGLE OAUTH2

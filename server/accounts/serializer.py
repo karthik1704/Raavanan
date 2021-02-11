@@ -224,9 +224,9 @@ class PhonePassowordResetSerializer(serializers.Serializer):
         request = self.context.get('request')
 
         from .utils import get_random_otp, send_otp
-        phonenumber = self.validated_data['phone']
+        mobile = self.validated_data['phone']
         try:
-            user = User.objects.get(phone=phonenumber)
+            user = User.objects.get(phone=mobile)
         except User.DoesNotExist:
             err_msg = _("User Not Found")
             raise serializers.ValidationError(err_msg)
@@ -234,15 +234,23 @@ class PhonePassowordResetSerializer(serializers.Serializer):
         otp = get_random_otp()
 
         try:
-            OneTimePassword.objects.get(otp=otp)
+            check_already_in_db =   OneTimePassword.objects.filter(phone=mobile)
+            check_already_in_db.delete()
+            otpModel = OneTimePassword(
+                user = user,
+                phone = mobile,
+                otp = otp
+            )
+            otpModel.save()
         except OneTimePassword.DoesNotExist:
             otpModel = OneTimePassword(
-                phone = user,
+                user = user,
+                phone = mobile ,
                 otp = otp
             )
             otpModel.save()
         
-        res = send_otp(phonenumber,otp)
+        res = send_otp(mobile,otp)
         data = res.read()
         print(data.decode('utf-8'))
 
@@ -314,7 +322,14 @@ class PhoneRegisterVerifySerializer(serializers.Serializer):
         otp = get_random_otp()
         
         try:
-            OneTimePassword.objects.get(otp=otp)
+            already_in_db =   OneTimePassword.objects.filter(phone=mobile)
+            already_in_db.delete()
+            otpModel = OneTimePassword(
+                user = user,
+                phone = mobile,
+                otp = otp
+            )
+            otpModel.save()           
         except OneTimePassword.DoesNotExist:
             otpModel = OneTimePassword(
                 user = user,
