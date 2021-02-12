@@ -71,3 +71,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
         ]
  
+
+class PriceDetailSerializer(serializers.ModelSerializer):
+
+    class Meta: 
+        model = Price
+        fields = '__all__'
