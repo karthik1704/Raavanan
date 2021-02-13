@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 
 from environ import Env
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -209,6 +210,11 @@ SOCIALACCOUNT_PROVIDERS = {
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'raavanan-auth'
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 
 # Site
