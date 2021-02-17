@@ -8,6 +8,7 @@ from products.models import Price
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ('id', 'product',  'price')
+        fields = ('id', 'product',  'price', 'quantity')
+        read_only_fields = ('quantity',)
 
    
