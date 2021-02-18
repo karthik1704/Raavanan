@@ -69,7 +69,7 @@ class AllowPUTAsCreateMixin(object):
 # ? put as create getting permission defined , Why?
 # TODO: find a way to overcame waring
 # TODO: or Create new view for put as create
-# TODO: Mutiple carts Items add as once view
+# TODO: Mutiple carts Items add view
 
 
 
@@ -84,7 +84,7 @@ class CartViewSet(viewsets.ModelViewSet):
     def get_serializer(self, *args, **kwargs):
         return super().get_serializer(many=True ,*args, **kwargs)
 
-    # ! Mutiple carts Items add as once view
+    # ! Mutiple carts Items add  view
     """ 
     To Use Multi Create send data as array of objects
 
