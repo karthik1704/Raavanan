@@ -80,9 +80,32 @@ class CartViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Cart.objects.filter(user=self.request.user)
         return queryset
+    
+    def get_serializer(self, *args, **kwargs):
+        return super().get_serializer(many=True ,*args, **kwargs)
 
-    def perform_create(self, serializer):
-        serializer.validated_data['user'] = self.request.user 
+    # ! Mutiple carts Items add as once view
+    """ 
+    To Use Multi Create send data as array of objects
+
+    EXAMPLE:
+        [
+        {
+            "product": 12,
+            "price": 1
+        },
+        {
+            "product": 12,
+            "price": 1
+        }
+        ]
+
+    but it breaks normal one object create !!
+    TODO: Plan to separate Multi Create form normal create giving different API endpints
+    """
+    def perform_create(self, serializer): 
+        for item in serializer.validated_data:
+            item['user'] = self.request.user
         return super(CartViewSet, self).perform_create(serializer)
 
     def perform_update(self, serializer):
