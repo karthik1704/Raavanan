@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import request
 
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework import viewsets 
 from rest_framework.permissions import IsAuthenticated, BasePermission
 
@@ -12,7 +12,11 @@ from rest_framework import status
 
 
 from .models import Cart
-from .serializers import CartSerializer
+from .serializers import (
+    CartSerializer,
+    CartUpdateSerializer,
+    CartQuantityUpdateSerializer, 
+) 
 # Create your views here.
 
 class IsOwner(BasePermission):
@@ -80,9 +84,17 @@ class CartViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Cart.objects.filter(user=self.request.user)
         return queryset
-    
-    def get_serializer(self, *args, **kwargs):
-        return super().get_serializer(many=True ,*args, **kwargs)
+
+    def perform_create(self, serializer): 
+        serializer.validated_data['user'] = self.request.user
+        return super(CartViewSet, self).perform_create(serializer)
+
+    def perform_update(self, serializer):
+        serializer.validated_data['user'] = self.request.user
+        serializer.validated_data['quantity'] =  self.get_object().quantity + 1
+        return super(CartViewSet, self).perform_update(serializer)
+
+class CartMutipleCreateView(CreateAPIView):
 
     # ! Mutiple carts Items add  view
     """ 
@@ -99,24 +111,45 @@ class CartViewSet(viewsets.ModelViewSet):
             "price": 1
         }
         ]
-
-    but it breaks normal one object create !!
-    TODO: Plan to separate Multi Create form normal create giving different API endpints
     """
+    #queryset = Cart.objects.none()
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated, IsOwner]
+
+    def get_queryset(self):
+        queryset = Cart.objects.filter(user=self.request.user)
+        return queryset
+    
+    def get_serializer(self, *args, **kwargs):
+        if isinstance(kwargs.get('data', {}), list):
+            kwargs['many'] = True
+        return super(CartMutipleCreateView, self).get_serializer(*args, **kwargs)
+
+
     def perform_create(self, serializer): 
         for item in serializer.validated_data:
             item['user'] = self.request.user
-        return super(CartViewSet, self).perform_create(serializer)
+        return super(CartMutipleCreateView, self).perform_create(serializer)
 
+
+class CartQuantityAddView(RetrieveUpdateDestroyAPIView):
+
+    serializer_class = CartQuantityUpdateSerializer
+    permission_classes = [IsAuthenticated, IsOwner]
+
+    def get_queryset(self):
+        queryset = Cart.objects.filter(user=self.request.user)
+        return queryset
+    
     def perform_update(self, serializer):
         serializer.validated_data['user'] = self.request.user
         serializer.validated_data['quantity'] =  self.get_object().quantity + 1
-        return super(CartViewSet, self).perform_update(serializer)
+        return super(CartQuantityAddView, self).perform_update(serializer)
 
 
 class CartQuantitySubtractView(RetrieveUpdateDestroyAPIView):
 
-    serializer_class = CartSerializer
+    serializer_class = CartQuantityUpdateSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
@@ -129,7 +162,7 @@ class CartQuantitySubtractView(RetrieveUpdateDestroyAPIView):
         if instance <= 0: 
             return self.delete(request)
       
-        return super().update(request, *args, **kwargs)
+        return super(CartQuantitySubtractView, self).update(request, *args, **kwargs)
     
     def perform_update(self, serializer):
         serializer.validated_data['user'] = self.request.user
