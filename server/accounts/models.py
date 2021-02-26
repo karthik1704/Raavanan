@@ -104,13 +104,4 @@ class OneTimePassword(models.Model):
         return self.phone
 
 
-class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    address1 = models.CharField(max_length=115)
-    address2 = models.CharField(max_length=115)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
-    postal = models.CharField(max_length=20)
-    phone = models.CharField(max_length=32)
-    created = models.DateTimeField(_('created'), auto_now_add=True)
+ 
