@@ -1,11 +1,10 @@
 from rest_framework import viewsets
-from rest_framework.generics import RetrieveAPIView
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-from .serializers import CategorySerializer, PriceDetailSerializer, ProductSerializer
-from .models import Category, Price, Product
+from .serializers import CategorySerializer, ProductSerializer
+from .models import Category, Product
 
 # Create your views here.
 class ProductViewset(viewsets.ModelViewSet):
@@ -29,8 +28,3 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 
-
-
-class PriceDetailView(RetrieveAPIView):
-    queryset = Price.objects.all()
-    serializer_class = PriceDetailSerializer

@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 from .views import (
-    CategoryViewSet, PriceDetailView,
+    CategoryViewSet,
     ProductViewset
 )
 
@@ -11,6 +11,5 @@ router.register('product', ProductViewset)
 router.register('category', CategoryViewSet)
 
 urlpatterns=[
-    path('', include(router.urls)),
-    path('price/<int:pk>/', PriceDetailView.as_view())
+    path('', include(router.urls))
 ]

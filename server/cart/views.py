@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import request
 
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView
+
 from rest_framework import viewsets 
 from rest_framework.permissions import IsAuthenticated, BasePermission
 
@@ -9,14 +10,44 @@ from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.request import clone_request
 from rest_framework import status
-
-
+from rest_framework.decorators import api_view
+# import json
 from .models import Cart
 from .serializers import (
     CartSerializer,
     CartUpdateSerializer,
     CartQuantityUpdateSerializer, 
-) 
+   
+)
+# from snippets.models import Snippet
+# from snippets.serializers import SnippetSerializer
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+
+class CartList(APIView):
+    """
+    List all carts, or create a new snippet.
+    """
+    permission_classes = [IsAuthenticated]
+    def get(self, request, format=None):
+        snippets = Cart.objects.all()
+        serializer = CartSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = CartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
 # Create your views here.
 
 class IsOwner(BasePermission):
@@ -117,16 +148,66 @@ class CartMutipleCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        print("queryset")
         queryset = Cart.objects.filter(user=self.request.user)
         return queryset
     
     def get_serializer(self, *args, **kwargs):
-        if isinstance(kwargs.get('data', {}), list):
-            kwargs['many'] = True
-        return super(CartMutipleCreateView, self).get_serializer(*args, **kwargs)
+        print("get_serializer")
+        # if isinstance(kwargs.get('data', {}), list):
+        kwargs['many'] = True
+        # print(super(CartMutipleCreateView, self).get_serializer(*args, **kwargs))
+        k = super(CartMutipleCreateView, self).get_serializer(*args, **kwargs)
+        return k
+        
 
 
     def perform_create(self, serializer): 
+        print('perform create')
+        carts = self.get_queryset()
+        print('carts')
+        # output_dict = dict(serializer.validated_data)
+        # print(dict(serializer.validated_data))
+        # dict(serializer.validated_data)
+        
+        # item = dict(serializer.validated_data)
+         
+        for item in serializer.validated_data:
+            # print(item)
+            # item = dict(item)      
+            # item['user_id'] = self.request.user                  
+            item['user_id'] = self.request.user            
+            print(item)
+            for cart in carts:
+                print(cart.user_id)
+                print(cart.product_id)
+                print(cart.price_id)
+                print(item['user_id'])
+                print(item['product'])
+                print(item['price'])
+                if item['user_id'].id == cart.user_id and item['product'].id == cart.product_id and item['price'].id == cart.price_id:
+                    cart.quantity = item['quantity']
+                    cart.save()
+                    continue
+        Cart.objects.create(product=item['product'],user_id = item['user_id'].id, price_id=item['price'].id, quantity=item['quantity'])
+        
+        # for cart in carts:
+            
+            
+        #     for item in serializer.validated_data:
+        #         item = dict(item)
+        #         item['user_id'] = self.request.user
+        #         print(item)
+        #         if item['user_id'] == cart.user_id and item['product'] == cart.product_id and item['price'] == cart.price_id:
+                    
+        #             continue
+        #         del[cart]
+        # Cart.objects.create((product=item['product_id'], product_id=item['product_id'], quantity=item['qunatity']))
+        # data = serializer.data[:]
+        return Response(item)
+
+    def sync(self, serializer): 
+        print('sync')
         for item in serializer.validated_data:
             item['user'] = self.request.user
         return super(CartMutipleCreateView, self).perform_create(serializer)
@@ -168,3 +249,5 @@ class CartQuantitySubtractView(RetrieveUpdateDestroyAPIView):
         serializer.validated_data['user'] = self.request.user
         serializer.validated_data['quantity'] =  self.get_object().quantity - 1
         return super(CartQuantitySubtractView, self).perform_update(serializer)
+
+
