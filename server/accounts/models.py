@@ -104,7 +104,4 @@ class OneTimePassword(models.Model):
         return self.phone
 
 
-class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    address = models.TextField()
-    postal = models.CharField(max_length=20)
+ 

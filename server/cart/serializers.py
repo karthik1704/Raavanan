@@ -20,10 +20,9 @@ class CartSerializer(serializers.ModelSerializer):
         # read_only_fields = ('quantity',)
 
 class CartUpdateSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(read_only=False)
     class Meta:
         model = Cart
-        list_serializer_class = CartListSerializer
         fields = ('id', 'product',  'price', 'quantity')
         read_only_fields = ('quantity',)
 

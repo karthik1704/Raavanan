@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from rest_framework import request
 
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView
-
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView, UpdateAPIView 
 from rest_framework import viewsets 
 from rest_framework.permissions import IsAuthenticated, BasePermission
 
@@ -124,6 +123,18 @@ class CartViewSet(viewsets.ModelViewSet):
         serializer.validated_data['user'] = self.request.user
         serializer.validated_data['quantity'] =  self.get_object().quantity + 1
         return super(CartViewSet, self).perform_update(serializer)
+
+
+class CartUpdateOrCreateView(AllowPUTAsCreateMixin, UpdateAPIView,):
+    serializer_class = CartUpdateSerializer
+    permission_classes = [IsAuthenticated, IsOwner]
+    
+    def get_queryset(self):
+        queryset = Cart.objects.filter(user=self.request.user)
+        return queryset
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
 
 class CartMutipleCreateView(CreateAPIView):
 
