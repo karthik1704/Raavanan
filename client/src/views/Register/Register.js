@@ -8,20 +8,26 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import MuiPhoneInput from 'material-ui-phone-number';
-
 import { useSelector, useDispatch } from 'react-redux';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import './Register.css';
+import { API_URL } from '../../CONSTANTS';
 import Header from "../../components/Header/Header";
+import { loginUser } from '../../data/actions/loginActions';
 
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -54,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  let history = useHistory()
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [firstname, setFirstname] = useState('');
@@ -63,16 +70,88 @@ export default function Register() {
   const [mobileerror, setMobileerror] = useState(false);
   const [passworderror, setPassworderror] = useState(false);
   const [confirmpassworderror, setConfirmpassworderror] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isOtpVerfied, setIsOtpVerified] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState('');
+  const [otperror, setOtperror] = useState(false);
+  const [otperrortext, setOtperrortext] = useState('');
+  const [checkValue, setCheckValue] = useState(false)
+  //const [isOtpResent, setIsOtpResent] = useState(false);
   
+  const registration_url = `${API_URL}api/auth/registration/`;
+  const otp_url = `${API_URL}api/auth/phone/verify/otp/`;
+  const otp_verify_url = `${API_URL}api/auth/phone/verify/otp/confirm/`;
+  const otp_resend_url = `${API_URL}api/auth/phone/resend/`;
+
   const handleSubmit = (e) =>  {
-    if(passworderror && confirmpassworderror && mobile !=13)
+    if(passworderror || confirmpassworderror || mobile.length !=13)
       return
-    
-    //axios.get(filterUrl).then((res) => {
+    registeruser();
+    return; // remove this return for otp logic
+
+    if(!isOtpSent){
+      axios.post(otp_url, {        
+        "mobile": mobile.substring(3),        
+        })
+        .then((response) => {
+         
+        
+         setIsOtpSent(true);
+        }, (error) => {
+          console.log(error);
+          setError("Unable to send OTP, Please try after some time");
+          setOpen(true);
+        });
+    }
+    else{
+      if(otp.length < 6 ){
+        setError("Please Enter valid OTP");
+        setOpen(true);
+        return;
+      }
+      axios.post(otp_verify_url, {        
+        "mobile": mobile.substring(3),
+        "otp":otp        
+        })
+        .then((response) => {        
+          
+         registeruser();
+         setIsOtpSent(false);
+         setOtp('');
+        }, (error) => {          
+          
+          setError(error.response.data['non_field_errors'][0]);
+          setOpen(true);
+        });
+      
+    }
   
-      // return dispatch(fetchProduct(res.data.results));
-  
-   // });
+  }
+
+  const registeruser =() =>{
+    axios.post(registration_url, {
+      "email": email,
+      "phone": mobile.substring(3),
+      "first_name": firstname,
+      "last_name": lastname,
+      "password1": password,
+      "password2": confirmpassword,
+      "birth_year": "",
+      "country": "",      
+      })
+      .then((response) => {
+        // console.log(response);
+        dispatch(loginUser(response.data));
+      }, (error) => {
+       
+       for(var i in error.response.data){        
+        setError(error.response.data[i]);
+        setOpen(true);
+        break;
+      }
+      });
   }
   const handleMobileChange = (event) => {
 
@@ -82,7 +161,10 @@ export default function Register() {
     setMobileerror(true)
     else
     setMobileerror(false)
-    console.log(mobile)
+    
+}
+const handleCheckClick = (event) => {
+  setCheckValue(event.target.checked);
 }
 const handleEmailChange = (event) => {
   const email = event.target.value;  
@@ -124,9 +206,57 @@ const handleConfirmpasswordChange = (event) => {
 
   }
   else
-  setConfirmpassworderror(false);
-  console.log(confirmpassworderror)
+  setConfirmpassworderror(false);  
 }
+
+const handleOtpChange = (event) => {
+  const otp = event.target.value;  
+  if (isNaN(otp))
+  {
+    
+    return;
+  }
+  setOtp(otp);
+    
+  if(otp.length < 6)
+  {
+    setOtperrortext('Please enter 6 digits')
+    setOtperror(true);
+  }
+  else
+    {
+      setOtperrortext('')
+      setOtperror(false);
+    }
+    
+}
+const handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setOpen(false);
+};
+const call_redirect=(url) => {  
+ 
+  history.push(url)
+  
+}
+const handleResend = (event) => {
+  console.log('ss')
+  axios.post(otp_resend_url, {        
+    "mobile": mobile.substring(3),        
+    })
+    .then((response) => {
+     // dispatch(loginUser(response));
+     setIsOtpSent(true);
+    }, (error) => {
+      //console.log(error);
+      setError("Unable to send OTP, Please try after some time");
+      setOpen(true);
+    });
+  //
+};
 
   return (
       <>
@@ -168,8 +298,8 @@ const handleConfirmpasswordChange = (event) => {
           //disableDropdown = {true}
           autoFormat = {false}
           inputProps={{
-            maxlength :13,
-            autocomplete : false
+            maxLength :13,
+            autoComplete : 'false'
           }}
           countryCodeEditable = {false}
           onChange={handleMobileChange}
@@ -225,7 +355,7 @@ const handleConfirmpasswordChange = (event) => {
             type="text"
             id="first_name"
             inputProps={{
-              maxlength: 20
+              maxLength: 20
             }}
             autoComplete="first_name"
             onChange={handleFirstnameChange}
@@ -238,7 +368,7 @@ const handleConfirmpasswordChange = (event) => {
             required
             fullWidth
             inputProps={{
-              maxlength: 20
+              maxLength: 20
             }}
             name="last_name"
             label="Last Name"
@@ -259,11 +389,9 @@ const handleConfirmpasswordChange = (event) => {
             type="password"
             id="password"
             inputProps={{
-              maxlength: 20,
-              autocomplete : false
-            }}
-            
-            autoComplete={false}
+              maxLength: 20,
+              autoComplete : 'false'
+            }}                        
             onChange={handlePasswordChange}
             value={password}
             validators={['required']}
@@ -279,11 +407,10 @@ const handleConfirmpasswordChange = (event) => {
             name="confirm_password"
             label="Confirm Password"
             type="password"
-            id="confirm_password"
-            autoComplete={false}
+            id="confirm_password"            
             inputProps={{
-              maxlength: 20,
-              autocomplete : false
+              maxLength: 20,
+              autoComplete :'false'
             }}
             onChange={handleConfirmpasswordChange}
             value={confirmpassword}
@@ -292,34 +419,121 @@ const handleConfirmpasswordChange = (event) => {
             helperText={`${confirmpassword.length < 8 && confirmpassword.length > 0? 'Password should be minimum 8 characters' : confirmpassword.length >0 && confirmpassword != password ? 'Passwords does not match': ''}`}
             error = {confirmpassworderror}
           />
-          <FormControlLabel
+          {
+            isOtpSent && (
+              <TextField
+            variant="outlined"
+            margin="normal"
+            required            
+            inputProps={{
+              maxLength: 6
+            }}
+            name="OTP"
+            label="OTP"
+            type="text"
+            id="otp"            
+            onChange={handleOtpChange}                        
+            helperText={otperrortext}
+            error = {otperror}
+            value={otp}
+            
+          />                    
+            )            
+            }
+            {
+            isOtpSent && (
+              <Button
+              onClick = {handleResend}            
+              variant="contained"
+              color="primary"
+              className={classes.submit}            
+            >
+            Resend OTP
+          </Button>
+            )
+            
+          
+           
+            }
+            <br></br>
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
+            label={
+              <div>
+                 <span>I accept the </span>
+                 <Link to={'/terms'}>terms of use</Link>
+                 <span> and </span>
+                 <Link to={'/privacy'}>privacy policy</Link>
+              </div>
+              }
+          /> */}
+          
+          <FormControlLabel
+  style={{ pointerEvents: "none" }}
+  control={
+    <Checkbox
+       onClick={handleCheckClick}
+      style={{ pointerEvents: "auto" }}
+      color="default"
+    />
+  }
+  label={
+    <div>
+       <span>I accept the </span>
+       <Link  style={{ pointerEvents: "auto" }} href='/terms'>terms of use &#38; privacy poilicy</Link>
+      
+    </div>
+    }
+/>
+          {/* {
+            !isOtpSent && (
+              <Button
           type = 'submit'        
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            // onClick={handleSubmit}
+            disabled = {!checkValue}            
           >
-            Sign Up
+            GET OTP
           </Button>
+            )
+          } */}
+            {
+            !isOtpSent && (
+              <Button
+          type = 'submit'        
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}        
+            disabled = {!checkValue}         
+          >
+            Submit
+          </Button>
+            )
+          }
+          
+          
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link onClick={()=>call_redirect('/Forgetpassword')} variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link onClick={()=>call_redirect('/login')} variant="body2">
                 {"Do you have an account? Sign in"}
               </Link>
             </Grid>
           </Grid>
           {/* </form> */}
         </ValidatorForm>
+        <Snackbar open={open} autoHideDuration={6000}  anchorOrigin={{vertical:'top',horizontal:'right'}} onClose={handleClose}>
+        <Alert severity="error" onClose={handleClose}>
+          {error}
+        </Alert>
+      </Snackbar>
       </div>
     
     </Container>

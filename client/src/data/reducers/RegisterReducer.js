@@ -13,7 +13,7 @@ const registerReducer = (state = initalState, { type, payload }) => {
     case REGISTER:
       return {
         ...state,
-        products: [...state.user, ...payload],
+        user: [...state.user, ...payload],
       };
     // case FETCH_PRODUCT_DETAIL:
     //   return {

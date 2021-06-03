@@ -7,7 +7,7 @@ from products.models import Price
 class CartListSerializer(serializers.ListSerializer):
 
     def create(self, validated_data):
-        print("create")
+        
         carts = [Cart(**item) for item in validated_data]
         return Cart.objects.bulk_create(carts)
 

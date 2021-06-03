@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import MuiPhoneInput from 'material-ui-phone-number';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +18,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Header from "../../components/Header/Header";
 import GoogleLogin from 'react-google-login';
+import { API_URL } from '../../CONSTANTS';
+import {useHistory} from 'react-router-dom';
+import { loginUser } from '../../data/actions/loginActions';
 
 function Copyright() {
   return (
@@ -49,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  
 }));
 
 export default function Login() {
@@ -57,16 +62,33 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [mobileerror, setMobileerror] = useState(false);
   const [passworderror, setPassworderror] = useState(false);
+  const  cart  = useSelector((state) => state.cart);
+  const  login  = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+  let history = useHistory()
+  const login_url = `${API_URL}api/auth/login/`;
+  const social_login_url = `${API_URL}api/auth/google/`;
+  const sync_url = `${API_URL}api/carts/sync_cart/`;
   const handleSubmit = (e) =>  {
-    if(passworderror && mobile !=13)
+    if(passworderror && mobile.length !=13)
       return
-    
-    //axios.get(filterUrl).then((res) => {
-  
-      // return dispatch(fetchProduct(res.data.results));
-  
-   // });
+      axios.post(login_url, {        
+        "phone": mobile.substring(3),        
+        "password": password,
+        
+        })
+        .then((response) => {
+          dispatch(loginUser(response.data));
+        }, (error) => {
+          console.log(error);
+        });
+      
   }
+
+ 
+
+ 
+  
   const handleMobileChange = (event) => {
 
     setMobile(event);
@@ -75,7 +97,7 @@ export default function Login() {
     setMobileerror(true)
     else
     setMobileerror(false)
-    console.log(mobile)
+    
 }
 
 const handlePasswordChange = (event) => {
@@ -87,8 +109,27 @@ const handlePasswordChange = (event) => {
   setPassworderror(false);
 
 }
+const call_redirect=(url) => {  
+ 
+  history.push(url)
+  
+}
 const responseGoogle = (response) => {
-  console.log(response);
+ console.log(response);
+ if (!'profileObj' in response){
+  return;
+ }
+ axios.post(social_login_url, {        
+  "access_token": response['accessToken'],        
+  "code": response['googleId'],
+  "id_token":response['tokenId'],  
+  })
+  .then((response) => {
+    dispatch(loginUser(response.data));
+  }, (error) => {
+    console.log(error);
+  });
+
 }
   return (
     <>
@@ -205,12 +246,12 @@ const responseGoogle = (response) => {
           <br></br>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link variant="body2" onClick={()=>call_redirect('/Forgetpassword')}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link onClick={()=>call_redirect('/register')} variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

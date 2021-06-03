@@ -10,13 +10,21 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useState, useEffect, useLayoutEffect } from 'react';
+import { createSelector } from 'reselect';
+import axios from 'axios';
+import { API_URL } from '../../CONSTANTS';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import './Cartpage.css';
+import { useSelector, useDispatch } from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import Icon from '@material-ui/core/Icon';
 import Header from '../../components/Header/Header';
+import CartItem from '../../components/cart-item/cart-item'
+import './Cartpage.css';
 
+// import {selectCartItems} from '../Cartpage/cart.selectors'
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -52,9 +60,131 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 10,
   },
 }));
+export const selectCartItems = createSelector(
+  state => state.cart,
+  cart => cart.cartItems
+);
 
-export default function Otpverification() {
+
+
+export default function Cartpage() {
   const classes = useStyles();
+  // const cart = useSelector((state) => state.cart);
+  // const cartItems = selectCartItems();
+  const login = useSelector((state) => state.login);
+  const loggedIn = login.loggedIn;
+  // const cartItems = useSelector(selectCartItems)
+  const cart = useSelector((state) => state.cart);
+  const cartItems = cart.cartItems;
+  const [prodList,setProdList] = useState([]);
+  const [total,setTotal] = useState(0);
+  let history = useHistory()
+  const dispatch = useDispatch();
+  // console.log(selectCartItems);
+//   const get_prods = (myArray) => {
+//     const promises = myArray.map(async (myValue) => {
+//         return {
+//             id: "my_id",
+//             myValue: await service.getByValue(myValue)
+//         }
+//     });
+//     return Promise.all(promises);
+// }
+
+  useEffect(() => {
+    var cart_ids = [];
+    const prods = [];
+    var totals = 0;
+
+    cartItems.map((product) =>(
+      cart_ids.push(product.id)
+    ))
+    // var myArray = ['a', 1, 'a', 2, '1'];
+    var cart_ids = cart_ids.filter((v, i, a) => a.indexOf(v) === i);
+    cart_ids = cart_ids.join(',');
+    console.log(cartItems);
+    console.log(cart_ids)
+    if(cart_ids.length < 1)
+      return;
+    axios
+    .get(`${API_URL}api/custom/products/?ids=${cart_ids}`)
+    .then((res) => {
+      var prod = res.data
+      // prod.filter()
+
+
+      cartItems.map((prod) =>{
+
+        var product = res.data.results.find(
+          product => product.id === prod.id 
+        );
+
+        var price = product.price.find(
+          price => price.id ===prod.price_id
+        );
+
+        totals  = totals + (prod.quantity * price.price)
+        product = {...product,quantity:prod.quantity, price : price, total : prod.quantity * price.price }
+        prods.push(product);
+
+      })
+
+
+      // res.data.results.map((product) =>{
+       
+      //   var prod = cartItems.find(
+      //     cartItem => cartItem.id === product.id
+      //   );
+
+      //   var price = product.price.find(
+      //     price => price.id ===prod.price_id
+      //   );
+      //   totals  = totals + (prod.quantity * price.price)
+      //   product = {...product,quantity:prod.quantity, price : price, total : prod.quantity * price.price }
+      //   prods.push(product);
+        
+      //   })
+      
+      
+      setProdList(prods);
+      setTotal(totals);
+      
+    }
+  )
+    
+}, [cartItems,dispatch]);
+
+const checkout=() => {  
+  history.push("/checkout")
+  
+}
+
+  // useEffect(() => {
+    
+  //   if(!login.loggedIn)
+  //     return;
+      
+  //   if(cartItems.length > 0){
+  //     var carts = []
+  //     for(var i=0;i<cartItems.length;i++){
+  //       carts.push({
+  //         "product" : cartItems[i]['id'],
+  //         "price" : cartItems[i]['price_id']['id'],
+  //         "quantity": cartItems[i]['quantity']
+  //       })
+  //     }
+  //     axios
+  //     .post(`${API_URL}api/sync_cart/`,carts)
+  //     .then((res) => {
+        
+  //     });
+  //   }
+    
+      
+        
+  // }, [login]);
+
+  
 
   return (
     <>
@@ -66,31 +196,20 @@ export default function Otpverification() {
             <div>
               <h3 className="Order_title">PRODUCTS</h3>
             </div>
-            <Grid container spacing={3}>
-            <Grid item xs={12} sm={12} md={3} className="Product_Text" >
-            <div className="Product_Image_Container">
-                <img  src="https://cdn.shopify.com/s/files/1/0108/7370/0415/products/Shop-2_medium.png?v=1583912700"/>
-            </div>
-            </Grid>
-            <Grid item  xs={12} sm={12} md={3} className="Product_Text_Margin">
-           <h3>Capsicum</h3>
-           <h4>5 kg / Gold</h4>
-           <p>$553.00</p>
-            </Grid>
-            <Grid item  xs={12} sm={12} md={3} className="Product_Text">
-          <div className="Product_Increment">
-          <Icon>add_circle</Icon>
-          <p>1</p>
-          <Icon>add_circle</Icon>
-          </div>
-            </Grid>
-            <Grid item  xs={12} sm={12} md={3} className="Product_Text">
-            <div >
-            <h4>Total: $553.00</h4>
-            </div>
-            </Grid>
-            </Grid>
-          
+            {prodList.length > 0
+            ? 
+        
+            prodList.map((product) => (
+              
+             // var prod = {...product,''}
+              <CartItem product={product} />            
+             
+              ))
+            
+            : <h4 class="Product_Text"> Your cart is empty</h4> 
+      }
+            
+            
           </div>
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
@@ -100,11 +219,11 @@ export default function Otpverification() {
             </div>
             <div className="Total_Text">
               <h3>Subtotal:</h3>
-              <h3>₹ 556</h3>
+              <h3>₹ {total}.00</h3>
             </div>
             <div>
               <p>
-                Shipping, taxes, and discounts will be calculated at checkout.
+                Shipping, taxes, and discounts are included in the total.
               </p>
 
               <Button
@@ -113,6 +232,7 @@ export default function Otpverification() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={checkout}
               >
                 Check Out
               </Button>
@@ -123,3 +243,4 @@ export default function Otpverification() {
     </>
   );
 }
+

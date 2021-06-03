@@ -17,7 +17,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-
+import { addItem } from '../../data/actions/cartActions';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import StoreIcon from '@material-ui/icons/Store';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
@@ -37,16 +38,43 @@ import { fetchProductDetail } from '../../data/actions/productActions';
 
 import useStyles from './styles';
 
-const ProductDetail = () => {
+export default function ProductDetail (){
   const { id } = useParams();
   const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [value, setValue] = useState('');
   const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
+  // const [price, setPrice] = useState('');
+  const [type, setType] = useState('');
   const [mrp, setMrp] = useState('');
+  const login = useSelector((state) => state.login);
+  const loggedIn = login.loggedIn;
+  const cart = useSelector((state) => state.cart);
+  const cartItems = cart.cartItems;
 
+  const handleAddItemtoCart = (product_id) =>  {    
+      dispatch(addItem({id : productDetail.id,price: value.id, material:productDetail.material}))   
+  }
+
+  // useEffect(() => {
+  //   var carts = []
+  //   for(var i=0;i<cartItems.length;i++){
+  //     carts.push({
+  //       "product" : cartItems[i]['id'],
+  //       "price" : cartItems[i]['price_id'],
+  //       "quantity": cartItems[i]['quantity']
+  //     })
+  //   }
+  // axios.post(`${API_URL}api/sync_cart/`, carts)
+  //   .then((response) => {     
+  //  console.log(response);
+  //   }, (error) => {
+  //     console.log(error);
+      
+  //   });
+  // }, [cartItems]);
+  
   useEffect(() => {
     // fetch(`http://localhost:8000/api/product/${id}`)
     //   .then((res) => res.json())
@@ -54,63 +82,66 @@ const ProductDetail = () => {
     //   .catch((err) => console.log(err));
 
     axios
-      .get(`${API_URL}api/product/${id}`)
-      .then((res) => {
-        console.log(res);
+      .get(`${API_URL}api/product_detail/${id}`)
+      .then((res) => {        
         dispatch(fetchProductDetail(res.data))
+     
+      if (res.data.price) {        
+        setValue(res.data.price[0]);
+      }
+
       }
       );
+      
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => dispatch(fetchProductDetail({}));
+    //return () => dispatch(fetchProductDetail({}));
   }, [dispatch]);
 
-  useEffect(() => {
-    if (productDetail.materials) {
-      setValue(productDetail.materials[0].material_name);
-    }
-    setSize('12*10');
-  }, [productDetail]);
+  // useEffect(() => {
+  //   if (productDetail.materials) {
+  //     setValue(productDetail.materials[0].material_name);
+  //   }
+  //   setSize('12*10');
+  // }, [productDetail]);
 
-  useEffect(() => {
-    if (size === '12*10' || size === '') {
-      setMrp(649);
-      setPrice(499);
-    } else if (size === '10*15') {
-      setMrp(799);
-      setPrice(599);
-    } else if (size === '12*18') {
-      setMrp(1099);
-      setPrice(799);
-    } else if (size === '20*16') {
-      setMrp(1399);
-      setPrice(999);
-    } else if (size === '20*30') {
-      setMrp(2499);
-      setPrice(1999);
-    } else if (size === '24*36') {
-      setMrp(3000);
-      setPrice(2499);
-    }
-  }, [size]);
+  
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
+  // useEffect(() => {
+  //   console.log("use effect")
+  //   if(!productDetail)
+  //     return
+  //   console.log(productDetail)
+    
+    
+  // }, [size]);
+
+  // const handleChange = (e) => {
+  //   setValue(e.target.value);
+  // };
   const handleSizeChange = (e) => {
     setSize(e.target.value);
-  };
+    productDetail.price.filter(price => price.types == e.target.value).map((price) =>{
+      // setMrp(price.mrp);
+      // setPrice(price.price);
+      setValue(price);
+      console.log(price);
+    })
+    
+  }
 
   if (Object.keys(productDetail).length === 0) {
     return <div />;
   }
+ 
 
   return (
     <div className={classes.root}>
-      <Helmet>
+      <Helmet>{`
         <title>
           இராவணன் அங்காடி | {ProductDetail && productDetail.product_name}
         </title>
+`}
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
@@ -121,21 +152,21 @@ const ProductDetail = () => {
                   src={productDetail.imageurl}
                   alt={productDetail.name}
                   className={
-                    productDetail.category &&
-                    productDetail.category.name !== 'கைபேசி உறை'
-                      ? classes.frameImage
-                      : classes.productImage
+                    //productDetail.category &&
+                   // productDetail.category.name !== 'கைபேசி உறை'
+                     // ? classes.frameImage
+                       classes.productImage
                   }
                 />
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="h5">{productDetail.product_name}</Typography>
+              <Typography variant="h5" className={classes.title}>{productDetail.name}</Typography>
               {/* <Typography variant="subtitle1">
                 category: {product.category}
               </Typography> */}
               <Divider />
-              {productDetail.category &&
+              {/* {productDetail.category &&
                 productDetail.category.name !== 'படச்சட்டகம்' && (
                   <>
                     {productDetail.category &&
@@ -198,77 +229,61 @@ const ProductDetail = () => {
                       </>
                     )}
                   </>
-                )}
+                )} */}
 
-              {productDetail.category &&
-                productDetail.category.name === 'படச்சட்டகம்' && (
+              {/* {productDetail.category &&
+                productDetail.category.name === 'படச்சட்டகம்' && ( */}
                   <>
                     <Typography variant="subtitle1">
-                      அதிகபட்ச விற்பனை விலை: ₹ <del>{mrp}</del>
+                      அதிகபட்ச விற்பனை விலை: ₹ <del>{value.mrp}</del>
                     </Typography>
                     <Typography variant="subtitle1">
-                      தற்போதைய விலை: ₹ <b>{price}</b>
+                      தற்போதைய விலை: ₹ <b>{value.price}</b>
                     </Typography>
                     <Divider />
                     <FormControl component="fieldset">
-                      <FormLabel component="legend" color="secondary">
-                        அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
-                      </FormLabel>
+                      {
+                        productDetail.price.length > 1 && (
+                          <FormLabel component="legend" color="secondary">
+                          அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
+                        </FormLabel>
+                        )
+                      }
+                     
                       <RadioGroup
                         row
                         aria-label="position"
                         name="position"
-                        defaultValue="12*10"
+                        defaultValue={productDetail.price[0].types}
                         onChange={handleSizeChange}
                       >
-                        <FormControlLabel
-                          value="12*10"
-                          control={<Radio color="primary" />}
-                          label="12*10"
-                          labelPlacement="end"
-                        />
-                        <FormControlLabel
-                          value="10*15"
-                          control={<Radio color="primary" />}
-                          label="10*15"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          value="12*18"
-                          control={<Radio color="primary" />}
-                          label="12*18"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          value="20*16"
-                          control={<Radio color="primary" />}
-                          label="20*16"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          value="20*30"
-                          control={<Radio color="primary" />}
-                          label="20*30"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          value="24*36"
-                          control={<Radio color="primary" />}
-                          label="24*36"
-                          labelPlacement="end"
-                        />
+                        {
+                          productDetail.price.filter(price => price.types !== null).map((price) =>(
+                            <FormControlLabel
+                            value={price.types}
+                            control={<Radio color="primary" />}
+                            label={price.types}
+                            labelPlacement="end"
+                          />
+                          ))
+                        }
+                        
+                       
                       </RadioGroup>
                     </FormControl>
                   </>
-                )}
+                {/* )} */}
 
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
-                <Button
+                <Button color="secondary" justifycontent="flex-end" 
+                className={classes.whatsappBtn}
+                variant="contained"
+                startIcon={<AddShoppingCartIcon />} 
+                onClick={(event) => { handleAddItemtoCart(productDetail.id)}}>
+                கூடை
+              </Button>
+                {/* <Button
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
                   className={classes.whatsappBtn}
@@ -283,7 +298,7 @@ const ProductDetail = () => {
                   }}
                 >
                   பொருளை வாங்க
-                </Button>
+                </Button> */}
 
                 {/* <div className={classes.buttons}>
                   <Button
@@ -361,4 +376,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+//export default ProductDetail;

@@ -43,7 +43,9 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
   const dispatch = useDispatch();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const classes = useStyles();
-
+  const login = useSelector((state) => state.login);
+  
+  const loggedIn = login.loggedIn;
   const toggleDrawer = (open, event) => {
     if (
       event.type === 'keydown' &&
@@ -68,9 +70,28 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
         {/* <Avatar className={classes.purple}>S</Avatar>
         <Typography variant="body1">SRBN Loves N! </Typography> */}
         <Typography>வணக்கம் !</Typography>
-        <Button color="primary" disabled>
+        {(()=> {
+          if (loggedIn) {
+            return (
+              <>
+              <Button color="primary">
+          Logout
+        </Button>
+              </>
+            )
+          
+        } else {
+          return (
+            <>
+            <Button color="primary">
           உள்நுழை
         </Button>
+              </>
+          )
+        }
+      })()}
+        
+        
       </div>
 
       <Divider />
