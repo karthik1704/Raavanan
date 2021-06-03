@@ -19,6 +19,20 @@ class ProductViewset(viewsets.ModelViewSet):
     ordering_fields = ['created_at']
     ordering = ['-created_at']
 
+
+class CustomProductsList(generics.ListAPIView):
+    queryset = Product.objects.none()
+    serializer_class=ProductSerializer
+
+    def get_queryset(self):
+        ids = self.request.query_params.get('ids', None)
+
+        if ids is not None:
+            ids = [int(x) for x in ids.split(',')]
+            queryset = Product.objects.filter(pk__in=ids)
+        else:
+             queryset = Product.objects.none()
+        return queryset
   
 class CustomProductsList(generics.ListAPIView):
     queryset = Product.objects.none()
