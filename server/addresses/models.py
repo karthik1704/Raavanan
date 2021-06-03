@@ -15,5 +15,5 @@ class Address(models.Model):
     country = models.CharField(max_length=100)
     postal = models.CharField(max_length=20)
     phone = models.CharField(max_length=32)
-    landmark = models.CharField(max_length=250)
+    name = models.CharField(max_length=250)
     created = models.DateTimeField(_('created'), auto_now_add=True)

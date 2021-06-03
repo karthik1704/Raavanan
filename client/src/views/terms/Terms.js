@@ -10,6 +10,54 @@ const Terms = () => {
     onToggleTopLoader(false);
   }, []);
   return (
+    <>
+    <div>
+      <h4> Privacy Policy </h4>
+      <p>
+      Thank you for using our site. These Privacy Policies describe how we handle personal information collected from you on our site. By using our site you agree to the procedures described in these policies.
+
+Any changes in procedures will be described immediately on this page. So our team encourages themselves to be well aware of this.
+</p>
+<ol>
+<li>
+Our website section stores the name, address, contact information, etc. that our visitors voluntarily provide.
+</li>
+<li>The stored information will be used to fulfill their specific requests and to be in touch with us when we need them.</li>
+<li>For whatever reason their information we have will not be shared with third parties or companies.</li>
+<li>We will be sending whatsapp messages to the provided mobile number for verification code and order notifications </li>
+<li>Not sharing information such as their password with anyone will avoid unnecessary hassles</li>
+<li>Their information will be secure in our company. Only the web section of our company is set up to access and handle their information.</li>
+</ol>  
+<h4> Shipping Policy  </h4>
+<ol>
+<li>We usually take 4 to 6 days to deliver the item to you from the date you requested. Total orders take one or two more days.</li>
+
+<li>If you want to know more about tracking the messenger presence of your request you can contact us by email / share / phone. Below are the links.</li>
+
+<li>You can easily reach our customer section by sharing or calling us at 7871003935 or by emailing us at raavananstore@gmail.com from 9:30 am to 5:30 pm</li>
+</ol>
+<h4> Return Policy : </h4>
+
+  <ol>
+<li>If you are not satisfied with our product or our product is affected, you can contact our customer section within three days of receiving the product and report the problem in detail. By doing so you help us to provide you with a good quality service. Taking the junk from you will pave the way for them to deliver good quality replacement material as soon as possible.</li>
+
+<li>If you wish to get a refund without full satisfaction with our item we will be able to refund your money as soon as possible by notifying us within three days of receiving the item.</li>
+</ol>
+
+
+<address>
+Customer Section Contact: <br />
+Phone / Share : <strong>7871003935</strong> <br />
+Email :{' '}
+        <a href="mailto:care@raavananstore.com">
+          <strong>care@raavananstore.com</strong>
+        </a>{' '}
+        <br />
+      </address>
+
+
+
+    </div>
     <div>
       <h4> தனியுரிமைக் கொள்கைகள் : </h4>
       <p>
@@ -94,6 +142,7 @@ const Terms = () => {
         <br />
       </address>
     </div>
+  </>
   );
 };
 

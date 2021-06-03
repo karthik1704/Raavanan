@@ -9,14 +9,45 @@ from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.request import clone_request
 from rest_framework import status
-
-
+from rest_framework.decorators import api_view
+from django.core import serializers
+# import json
 from .models import Cart
 from .serializers import (
     CartSerializer,
     CartUpdateSerializer,
     CartQuantityUpdateSerializer, 
-) 
+   
+)
+# from snippets.models import Snippet
+# from snippets.serializers import SnippetSerializer
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+
+class CartList(APIView):
+    """
+    List all carts, or create a new snippet.
+    """
+    permission_classes = [IsAuthenticated]
+    def get(self, request, format=None):
+        snippets = Cart.objects.all()
+        serializer = CartSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = CartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
 # Create your views here.
 
 class IsOwner(BasePermission):
@@ -128,21 +159,98 @@ class CartMutipleCreateView(CreateAPIView):
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
-    def get_queryset(self):
+    def get_queryset(self):        
         queryset = Cart.objects.filter(user=self.request.user)
         return queryset
     
-    def get_serializer(self, *args, **kwargs):
-        if isinstance(kwargs.get('data', {}), list):
-            kwargs['many'] = True
-        return super(CartMutipleCreateView, self).get_serializer(*args, **kwargs)
+    def get_serializer(self, *args, **kwargs):        
+        kwargs['many'] = True
+        # print(super(CartMutipleCreateView, self).get_serializer(*args, **kwargs))
+        k = super(CartMutipleCreateView, self).get_serializer(*args, **kwargs)
+        return k
+        
 
 
     def perform_create(self, serializer): 
+        
+        carts = self.get_queryset()        
+        
+        for item in serializer.validated_data:
+                          
+            item['user_id'] = self.request.user            
+            
+            for cart in carts:
+                
+                if item['user_id'].id == cart.user_id and item['product'].id == cart.product_id and item['price'].id == cart.price_id:
+                    cart.quantity = item['quantity']
+                    cart.save()
+                    continue
+        Cart.objects.create(product=item['product'],user_id = item['user_id'].id, price_id=item['price'].id, quantity=item['quantity'])
+        
+        # for cart in carts:
+            
+            
+        #     for item in serializer.validated_data:
+        #         item = dict(item)
+        #         item['user_id'] = self.request.user
+        #         print(item)
+        #         if item['user_id'] == cart.user_id and item['product'] == cart.product_id and item['price'] == cart.price_id:
+                    
+        #             continue
+        #         del[cart]
+        # Cart.objects.create((product=item['product_id'], product_id=item['product_id'], quantity=item['qunatity']))
+        # data = serializer.data[:]
+        return Response(item)
+
+    def sync(self, serializer): 
+        
         for item in serializer.validated_data:
             item['user'] = self.request.user
         return super(CartMutipleCreateView, self).perform_create(serializer)
 
+class CartSyncView(APIView):
+    """
+    List all orders, or create a new snippet.
+    """
+    permission_classes = [IsAuthenticated]
+    # def get(self, request, format=None):
+    #     snippets = Order.objects.filter(user=self.request.user,).exclude(order_status='Processing')
+    #     serializer = OrderSerializer(snippets, many=True)        
+
+    #     return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = CartSerializer(data=request.data, many = True)
+        if serializer.is_valid():
+            
+            user = self.request.user           
+            # serializer.validated_data['user'] = self.request.user
+            data = serializer.validated_data            
+            print(data)
+            carts  = Cart.objects.filter(user=self.request.user)
+            non_deletable_ids = []
+            for item in data:
+                          
+                item['user_id'] = self.request.user            
+                found = False
+                for cart in carts:
+                    
+                    if item['user_id'].id == cart.user_id and item['product'].id == cart.product_id and item['price'].id == cart.price_id:
+                       
+                        cart.quantity = item['quantity']
+                        cart.save()
+                        non_deletable_ids.append(cart.id)
+                        found = True
+                        break
+                if not found :
+                    Cart.objects.create(product=item['product'],user_id = item['user_id'].id, price_id=item['price'].id, quantity=item['quantity'])
+            print(non_deletable_ids)   
+            for cart in carts:
+                if cart.id not in non_deletable_ids:
+                    cart.delete()
+            # data = serializers.serialize('json', data) 
+            return Response(request.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CartQuantityAddView(RetrieveUpdateDestroyAPIView):
 
@@ -180,3 +288,5 @@ class CartQuantitySubtractView(RetrieveUpdateDestroyAPIView):
         serializer.validated_data['user'] = self.request.user
         serializer.validated_data['quantity'] =  self.get_object().quantity - 1
         return super(CartQuantitySubtractView, self).perform_update(serializer)
+
+

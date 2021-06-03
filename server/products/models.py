@@ -69,17 +69,10 @@ class Product(models.Model):
             self._price =  self.price_set.all()
             return self._price
 
-class Size(models.Model):
-    name = models.CharField(max_length=50)
-    size = models.CharField(max_length=100)
-
-    def __str__(self) -> str:
-        return self.name
 
 class Price(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     material = models.ForeignKey(ProductMaterial, on_delete=models.DO_NOTHING, null=True, blank=True)
-    size = models.ForeignKey(Size, on_delete=models.DO_NOTHING, null=True, blank=True)
     types = models.CharField(max_length=255, blank=True, null=True)
     mrp =  models.FloatField(_('M.R.P.'))
     discount = models.IntegerField(_('Discount %'))

@@ -7,25 +7,25 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-
+import { useSelector, useDispatch } from 'react-redux';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import { Link } from 'react-router-dom';
 
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-
+import { addItem } from '../../data/actions/cartActions';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 238,
-    marginBottom: theme.spacing(0.5),
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: 140,
-    },
-    [theme.breakpoints.up('sm')]: {
-      minWidth: 180,
-    },
+    // maxWidth: 238,
+    margin: theme.spacing(0.5),
+    // [theme.breakpoints.down('sm')]: {
+    //   maxWidth: 140,
+    // },
+    // [theme.breakpoints.up('sm')]: {
+    //   minWidth: 180,
+    // },
   },
   media: {
     marginTop: '5px',
@@ -62,8 +62,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     textAlign: 'center',
-    fontSize: '0.9rem',
+    fontSize: '12px',
     marginBottom: '1px',
+    fontWeight:'bold',
 
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.6rem',
@@ -76,18 +77,20 @@ const useStyles = makeStyles((theme) => ({
   },
   cardButtons: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 }));
 
 const ProductList = ({ products }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <>
       {products.map((product) => (
-        <Grid item xs={6} sm={4} md={3} key={product.id}>
+        <Grid item xs={6} sm={4} md={3} xl={3} key={product.id}>
           <Card className={classes.root}>
-            <CardActionArea component={Link} to={`/product/${product.id}`}>
+            
+            <CardActionArea component={Link} to={`/product/${product.slug ? product.slug : product.id}`}>
               <div className={classes.center}>
                 <img
                   src={product.imageurl}
@@ -106,9 +109,10 @@ const ProductList = ({ products }) => {
                   color="textPrimary"
                   className={classes.title}
                 >
-                  {product.product_name.length >= 10
-                    ? `${product.product_name.substring(0, 10)}...`
-                    : product.product_name}
+                  {/* {product.name.length >= 10
+                    ? `${product.name.substring(0, 10)}...`
+                    : product.name} */}
+                    {product.name.split('|')[0]}
                 </Typography>
                 {/* <Typography
                   variant="subtitle1"
@@ -122,12 +126,13 @@ const ProductList = ({ products }) => {
             </CardActionArea>
 
             <CardActions className={classes.cardButtons}>
-              <Button color="secondary" startIcon={<AddShoppingCartIcon />}>
+              
+              {/* <IconButton aria-label="add to favorites">
+                <FavoriteBorderOutlinedIcon />
+              </IconButton> */}
+              <Button color="secondary" justifycontent="center" startIcon={<AddShoppingCartIcon />} onClick={() => dispatch(addItem({...product, price : product.price[0].id}))}>
                 கூடை
               </Button>
-              <IconButton aria-label="add to favorites">
-                <FavoriteBorderOutlinedIcon />
-              </IconButton>
             </CardActions>
           </Card>
         </Grid>

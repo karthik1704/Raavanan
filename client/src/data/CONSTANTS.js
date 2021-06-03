@@ -5,3 +5,5 @@ export const FETCH_PRODUCT_DETAIL = 'FETCH_PRODUCT_DETAIL';
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
 export const RESET_PRODUCT = 'RESET_PRODUCT';
 export const REGISTER = 'REGISTER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

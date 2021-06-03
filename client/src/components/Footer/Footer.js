@@ -11,14 +11,14 @@ const Footer = () => {
   return (
     <footer  className={classes.root}>
       <Paper elevation={3}>
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifycontent="center">
           <Toolbar>
             <Button>எங்களைத் தெரிந்து கெள்ளுங்கள்</Button>
             <Button>எங்களுடன் இணைந்திருங்கள்</Button>
             <Button>உங்களுக்கு உதவ</Button>
           </Toolbar>
         </Box>
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifycontent="center">
           <Typography variant="caption" display="block" gutterBottom>
             &copy; இராவணன் மிண்ணனுப் பிரிவு
           </Typography>
