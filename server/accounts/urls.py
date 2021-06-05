@@ -1,4 +1,4 @@
-from  django.urls import path
+from  django.urls import path, include
 
 from .views import (
     GoogleLogin,
@@ -15,5 +15,5 @@ urlpatterns = [
     path('phone/verify/otp/', PhoneNumberVerifyView.as_view(), name="send_otp"),
     path('phone/verify/otp/confirm/', PhoneNumberConfirmView.as_view(), name="send_otp"),
     path('google/', GoogleLogin.as_view(), name="google_login"),
-    
+    path('accounts/', include('allauth.urls'), name='socialaccount_signup'),
 ]

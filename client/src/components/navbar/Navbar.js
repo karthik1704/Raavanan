@@ -409,7 +409,7 @@ export default function Navbar() {
 
           </div>
 
-          <div className={classes.sectionMobile}>
+          {/* <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show 4 new Favorite"
               color="inherit"
@@ -435,6 +435,8 @@ export default function Navbar() {
               </Badge>
             </IconButton>
           </div>
+         */}
+        
         </Toolbar>
         <Toolbar className={classes.sectionMobile}>
           <div className={classes.search}>
