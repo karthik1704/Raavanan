@@ -38,7 +38,7 @@ import { fetchProductDetail } from '../../data/actions/productActions';
 
 import useStyles from './styles';
 
-export default function ProductDetail (){
+export default function ProductDetail() {
   const { id } = useParams();
   const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
@@ -53,9 +53,15 @@ export default function ProductDetail (){
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
 
-  const handleAddItemtoCart = (product_id) =>  {    
-      dispatch(addItem({id : productDetail.id,price: value.id, material:productDetail.material}))   
-  }
+  const handleAddItemtoCart = (product_id) => {
+    dispatch(
+      addItem({
+        id: productDetail.id,
+        price: value.id,
+        material: productDetail.material,
+      })
+    );
+  };
 
   // useEffect(() => {
   //   var carts = []
@@ -67,33 +73,28 @@ export default function ProductDetail (){
   //     })
   //   }
   // axios.post(`${API_URL}api/sync_cart/`, carts)
-  //   .then((response) => {     
+  //   .then((response) => {
   //  console.log(response);
   //   }, (error) => {
   //     console.log(error);
-      
+
   //   });
   // }, [cartItems]);
-  
+
   useEffect(() => {
     // fetch(`http://localhost:8000/api/product/${id}`)
     //   .then((res) => res.json())
     //   .then((data) => dispatch(fetchProductDetail(data)))
     //   .catch((err) => console.log(err));
 
-    axios
-      .get(`${API_URL}api/product_detail/${id}`)
-      .then((res) => {        
-        dispatch(fetchProductDetail(res.data))
-     
-      if (res.data.price) {        
+    axios.get(`${API_URL}api/product/${id}`).then((res) => {
+      dispatch(fetchProductDetail(res.data));
+
+      if (res.data.price) {
         setValue(res.data.price[0]);
       }
+    });
 
-      }
-      );
-      
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     //return () => dispatch(fetchProductDetail({}));
   }, [dispatch]);
@@ -105,15 +106,12 @@ export default function ProductDetail (){
   //   setSize('12*10');
   // }, [productDetail]);
 
-  
-
   // useEffect(() => {
   //   console.log("use effect")
   //   if(!productDetail)
   //     return
   //   console.log(productDetail)
-    
-    
+
   // }, [size]);
 
   // const handleChange = (e) => {
@@ -121,23 +119,24 @@ export default function ProductDetail (){
   // };
   const handleSizeChange = (e) => {
     setSize(e.target.value);
-    productDetail.price.filter(price => price.types == e.target.value).map((price) =>{
-      // setMrp(price.mrp);
-      // setPrice(price.price);
-      setValue(price);
-      console.log(price);
-    })
-    
-  }
+    productDetail.price
+      .filter((price) => price.types == e.target.value)
+      .map((price) => {
+        // setMrp(price.mrp);
+        // setPrice(price.price);
+        setValue(price);
+        console.log(price);
+      });
+  };
 
   if (Object.keys(productDetail).length === 0) {
     return <div />;
   }
- 
 
   return (
     <div className={classes.root}>
-      <Helmet>{`
+      <Helmet>
+        {`
         <title>
           இராவணன் அங்காடி | {ProductDetail && productDetail.product_name}
         </title>
@@ -153,15 +152,17 @@ export default function ProductDetail (){
                   alt={productDetail.name}
                   className={
                     //productDetail.category &&
-                   // productDetail.category.name !== 'கைபேசி உறை'
-                     // ? classes.frameImage
-                       classes.productImage
+                    // productDetail.category.name !== 'கைபேசி உறை'
+                    // ? classes.frameImage
+                    classes.productImage
                   }
                 />
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="h5" className={classes.title}>{productDetail.name}</Typography>
+              <Typography variant="h5" className={classes.title}>
+                {productDetail.name}
+              </Typography>
               {/* <Typography variant="subtitle1">
                 category: {product.category}
               </Typography> */}
@@ -233,56 +234,57 @@ export default function ProductDetail (){
 
               {/* {productDetail.category &&
                 productDetail.category.name === 'படச்சட்டகம்' && ( */}
-                  <>
-                    <Typography variant="subtitle1">
-                      அதிகபட்ச விற்பனை விலை: ₹ <del>{value.mrp}</del>
-                    </Typography>
-                    <Typography variant="subtitle1">
-                      தற்போதைய விலை: ₹ <b>{value.price}</b>
-                    </Typography>
-                    <Divider />
-                    <FormControl component="fieldset">
-                      {
-                        productDetail.price.length > 1 && (
-                          <FormLabel component="legend" color="secondary">
-                          அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
-                        </FormLabel>
-                        )
-                      }
-                     
-                      <RadioGroup
-                        row
-                        aria-label="position"
-                        name="position"
-                        defaultValue={productDetail.price[0].types}
-                        onChange={handleSizeChange}
-                      >
-                        {
-                          productDetail.price.filter(price => price.types !== null).map((price) =>(
-                            <FormControlLabel
-                            value={price.types}
-                            control={<Radio color="primary" />}
-                            label={price.types}
-                            labelPlacement="end"
-                          />
-                          ))
-                        }
-                        
-                       
-                      </RadioGroup>
-                    </FormControl>
-                  </>
-                {/* )} */}
+              <>
+                <Typography variant="subtitle1">
+                  அதிகபட்ச விற்பனை விலை: ₹ <del>{value.mrp}</del>
+                </Typography>
+                <Typography variant="subtitle1">
+                  தற்போதைய விலை: ₹ <b>{value.price}</b>
+                </Typography>
+                <Divider />
+                <FormControl component="fieldset">
+                  {productDetail.price.length > 1 && (
+                    <FormLabel component="legend" color="secondary">
+                      அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
+                    </FormLabel>
+                  )}
+
+                  <RadioGroup
+                    row
+                    aria-label="position"
+                    name="position"
+                    defaultValue={productDetail.price[0].types}
+                    onChange={handleSizeChange}
+                  >
+                    {productDetail.price
+                      .filter((price) => price.types !== null)
+                      .map((price) => (
+                        <FormControlLabel
+                          value={price.types}
+                          control={<Radio color="primary" />}
+                          label={price.types}
+                          labelPlacement="end"
+                        />
+                      ))}
+                  </RadioGroup>
+                </FormControl>
+              </>
+              {/* )} */}
 
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
-                <Button color="secondary" justifycontent="flex-end" 
-                className={classes.whatsappBtn}
-                variant="contained"
-                startIcon={<AddShoppingCartIcon />} 
-                onClick={(event) => { handleAddItemtoCart(productDetail.id)}}>
-                கூடை
-              </Button>
+                <Button
+                  color="secondary"
+                  justifycontent="flex-end"
+                  className={classes.whatsappBtn}
+                  variant="contained"
+                  startIcon={<AddShoppingCartIcon />}
+                  onClick={(event) => {
+                    handleAddItemtoCart(productDetail.id);
+                  }}
+                >
+                  கூடை
+                </Button>
                 {/* <Button
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
@@ -358,8 +360,7 @@ export default function ProductDetail (){
                   <TableRow>
                     <TableCell>வகை </TableCell>
                     <TableCell>
-                      {productDetail.category &&
-                        productDetail.category.name}
+                      {productDetail.category && productDetail.category.name}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -374,6 +375,6 @@ export default function ProductDetail (){
       )}
     </div>
   );
-};
+}
 
 //export default ProductDetail;
