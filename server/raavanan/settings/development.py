@@ -47,8 +47,9 @@ PAYTM_CALL_BACK = "http://127.0.0.1:8000/api/order_confirm/"
 CLIENT_CALL_BACK = "http://localhost:3000/orderconfirmation"
 PAYTM_INITIATE_TRANSACTION = "https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=BapaHR15076620391870&orderId="
 PAYTM_STATUS_TRANSACTION =  "https://securegw-stage.paytm.in/v3/order/status"
-M_KEY = 'BapaHR15076620391870'
-M_ID = '3LK9Ws71IuWJ2C3C'
+M_ID = 'BapaHR15076620391870'
+M_KEY = '3LK9Ws71IuWJ2C3C'
+PAYTM_WEBSITE = 'WEBSTAGING'
 TWILIO_ACCOUNT_SID = 'AC390b9fc4f6f5f7fd2ce146259b5f6ce9'
 TWILIO_AUTH_TOKEN = '0e4b1e56dca116cbf9e5c743a7249eb6'  
 TWILIO_NUMBER = '+14155238886'
