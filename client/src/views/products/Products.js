@@ -50,7 +50,7 @@ const Products = () => {
         <title>இராவணன் அங்காடி | {category}</title>
       </Helmet>
       <Grid container className={classes.root}>
-        {products.length !== 0 ? (
+        {products?.length !== 0 ? (
           <ProductList products={products} />
         ) : (
           <Typography>விரைவில்...</Typography>
