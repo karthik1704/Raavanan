@@ -28,8 +28,8 @@ def paytm(order_id, customer_id, price):
 
     paytmParams["body"] = {
         "requestType": "Payment",
-        "mid": settings.M_KEY,
-        "websiteName": "WEBSTAGING",
+        "mid": settings.M_ID,
+        "websiteName": settings.PAYTM_WEBSITE,
         "orderId": order_id,
         "callbackUrl": settings.PAYTM_CALL_BACK,
         "txnAmount": {
@@ -44,7 +44,7 @@ def paytm(order_id, customer_id, price):
     # Generate checksum by parameters we have in body
     # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
     checksum = paytmchecksum.generateSignature(
-        json.dumps(paytmParams["body"]), settings.M_ID)
+        json.dumps(paytmParams["body"]), settings.M_KEY)
     
     paytmParams["head"] = {
         "signature": checksum
@@ -76,7 +76,7 @@ def paytm_transaction_status(order_id, customer_id, total_price):
     paytmParams["body"] = {
 
     # Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
-    "mid" : settings.M_KEY,
+    "mid" : settings.M_ID,
 
     # Enter your order id which needs to be check status for
     "orderId" : order_id,
@@ -84,7 +84,7 @@ def paytm_transaction_status(order_id, customer_id, total_price):
 
     # Generate checksum by parameters we have in body
     # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
-    checksum = paytmchecksum.generateSignature(json.dumps(paytmParams["body"]), settings.M_ID)    
+    checksum = paytmchecksum.generateSignature(json.dumps(paytmParams["body"]), settings.M_KEY)    
     # head parameters
     paytmParams["head"] = {
 
