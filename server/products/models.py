@@ -7,7 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 # Create your models here.
 class ProductMaterial(models.Model):
-    material_name = models.CharField(max_length=30)
+    material_name = models.CharField(max_length=150)
 
     def __str__(self):
         return self.material_name
@@ -51,7 +51,7 @@ class Product(models.Model):
     quantity = models.IntegerField(blank=True, null=True)
     materials = models.ManyToManyField(ProductMaterial)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
-    origin = models.CharField(max_length=20)
+    origin = models.CharField(max_length=150)
     description = models.TextField()
     imageurl = models.ImageField(upload_to=f'product/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
