@@ -44,6 +44,7 @@ class Category(MPTTModel):
 class Product(models.Model):
     product_id = models.CharField(unique=True , max_length=15 )
     name=models.CharField(max_length=255)
+    slug=models.CharField(max_length=255, null=True, unique=True)
     brand=models.CharField(max_length=50)
     manufacturer=models.CharField(max_length=50)
     supported_devices = models.CharField(max_length=100)
