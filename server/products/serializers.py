@@ -56,6 +56,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields=[
             'id',
             'name',
+            'slug',
             'price',
             'brand',
             'manufacturer',
@@ -70,6 +71,10 @@ class ProductSerializer(serializers.ModelSerializer):
             'created_at',
 
         ]
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
  
 
 class PriceDetailSerializer(serializers.ModelSerializer):
