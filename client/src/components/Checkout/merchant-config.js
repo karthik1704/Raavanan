@@ -1,3 +1,5 @@
+import { PAYTM_MID } from '../../CONSTANTS';
+
 const CONFIG = {
     style: {
         bodyBackgroundColor: "#fafafb",
@@ -25,7 +27,7 @@ const CONFIG = {
         // }
     },
     merchant: {
-        mid: "BapaHR15076620391870",
+        mid: PAYTM_MID,
         name: "Raavanan",
         // logo: "/static/media/raavanan logo.07b03d7b.png",
         logo: "/static/media/raavananlogo.png",

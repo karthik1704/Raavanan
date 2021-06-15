@@ -15,9 +15,10 @@ class ProductViewset(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend,filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category__slug', 'category__parent', 'category__parent__parent' ]
-    search_fields = ['product_name','category__name']
+    search_fields = ['product_name','category__name','slug']
     ordering_fields = ['created_at']
     ordering = ['-created_at']
+    lookup_field = 'slug'
 
 
 class CustomProductsList(generics.ListAPIView):

@@ -9,7 +9,8 @@ import CONFIG from './merchant-config';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { API_URL } from '../../CONSTANTS';
+import { API_URL, ENV} from '../../CONSTANTS';
+
 import { CheckoutProvider, Checkout, injectCheckout} from 'paytm-blink-checkout-react';
 
 function Test(props) {
@@ -24,12 +25,11 @@ export default function PaymentForm(props) {
           useEffect(() => {
             
             axios.post(order_create_url, props.order)
-          .then((response) => {            
-            console.log(response);  
+          .then((response) => {                        
             CONFIG.data.amount = response.data.price;
             CONFIG.data.token = response.data.body.txnToken;
             CONFIG.data.orderId = response.data.order_id;
-            console.log(CONFIG);
+            
             setConfig(CONFIG);       
             // return <PaymentForm paytmdata={response}/>;
           }, (error) => {
@@ -58,7 +58,7 @@ export default function PaymentForm(props) {
 <CheckoutProvider config={config}
           // checkoutJsInstance={checkoutJsInstance}
           openInPopup={true} 
-          env="STAGE">
+          env={ENV}>
           {/* <InjectedCheckout /> */}
           <Checkout />
         </CheckoutProvider>
