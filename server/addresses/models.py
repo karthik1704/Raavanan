@@ -17,3 +17,6 @@ class Address(models.Model):
     phone = models.CharField(max_length=32)
     name = models.CharField(max_length=250)
     created = models.DateTimeField(_('created'), auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user}-{self.address1}'

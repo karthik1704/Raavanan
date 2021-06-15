@@ -47,6 +47,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(null=True)
     
    
-
+    def __str__(self):
+        return f'{self.product.product_id} - {self.product}'
 
     
