@@ -1,24 +1,42 @@
 from django.db.models import query
 from rest_framework import viewsets
 from rest_framework import generics
+from django.db.models import Q
 from rest_framework.generics import RetrieveAPIView
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
-
-
+from rest_framework.response import Response
+from django.http import HttpResponse
 from .serializers import CategorySerializer, PriceDetailSerializer, ProductSerializer
 from .models import Category, Price, Product
+from django.conf import settings
+
 
 # Create your views here.
 class ProductViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend,filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category__slug', 'category__parent', 'category__parent__parent' ]
-    search_fields = ['product_name','category__name','slug']
+    filterset_fields = ['category__slug', 'category__parent', 'category__parent__parent','slug']
+    search_fields = ['product_name','category__name']
     ordering_fields = ['created_at']
     ordering = ['-created_at']
-    lookup_field = 'slug'
+    lookup_fields = ('slug','pk')  
+
+    def retrieve(self, request, *args, **kwargs):
+        ids = self.kwargs.get('pk', None)
+        if ids is not None:                       
+            if not ids.isnumeric() :
+                queryset = Product.objects.filter(slug=ids)                
+                if queryset:
+                    serializer = ProductSerializer(queryset[0], many=False)                       
+                    item = serializer.data.copy()
+                    item['imageurl'] = '%s%s' % (self.request._current_scheme_host,  item['imageurl'])                    
+                    return Response(item)
+                
+        return super(ProductViewset, self).retrieve(request, *args, **kwargs)
+
+
 
 
 class CustomProductsList(generics.ListAPIView):
@@ -63,3 +81,24 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PriceDetailView(RetrieveAPIView):
     queryset = Price.objects.all()
     serializer_class = PriceDetailSerializer
+
+# class ProductDetailView(RetrieveAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+
+#     def get_queryset(self):
+#         print(self.kwargs)
+#         ids = self.kwargs.get('pk', None)
+#         if ids is not None:           
+#             print(ids)
+#             if not ids.isnumeric() :
+#                 queryset = Product.objects.filter(slug=ids)
+#                 print('|ff')
+#                 print(queryset)
+#             else :
+#                 queryset = Product.objects.filter(pk=ids)
+#         else:
+#              queryset = Product.objects.none()
+
+#         print(queryset)
+#         return queryset
