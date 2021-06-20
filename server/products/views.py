@@ -81,24 +81,3 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PriceDetailView(RetrieveAPIView):
     queryset = Price.objects.all()
     serializer_class = PriceDetailSerializer
-
-# class ProductDetailView(RetrieveAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-
-#     def get_queryset(self):
-#         print(self.kwargs)
-#         ids = self.kwargs.get('pk', None)
-#         if ids is not None:           
-#             print(ids)
-#             if not ids.isnumeric() :
-#                 queryset = Product.objects.filter(slug=ids)
-#                 print('|ff')
-#                 print(queryset)
-#             else :
-#                 queryset = Product.objects.filter(pk=ids)
-#         else:
-#              queryset = Product.objects.none()
-
-#         print(queryset)
-#         return queryset
