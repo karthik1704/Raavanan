@@ -31,6 +31,7 @@ class OrderItemAdmin(admin.StackedInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = (OrderItemAdmin,)
     exclude = ('address',)
+    list_display= ['id', 'user','payment_id', 'transaction_status', 'order_status']
     readonly_fields = ('user', 'total_price', 'payment_id', 'extra', 'transaction_status','delivery_address',)
 
     def delivery_address(self,instance):
