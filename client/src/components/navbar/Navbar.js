@@ -24,7 +24,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
-import {useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { API_URL } from '../../CONSTANTS';
@@ -38,7 +38,7 @@ import { toggleAppDrawer } from '../../data/actions/appAction';
 import RavananLogo from '../../asserts/raavanan_logo.png';
 import { logoutUser } from '../../data/actions/loginActions';
 
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   links: {
     color: '#fff',
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    
+
     display: 'flex',
     flex: 1,
     [theme.breakpoints.up('sm')]: {
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
       // marginLeft: theme.spacing(3),
       width: 'auto',
       marginRight: 0,
-      marginBottom:'20px'
+      marginBottom: '20px',
     },
   },
   searchIcon: {
@@ -90,15 +90,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: 'inherit',  
-    height:'40px'  
+    color: 'inherit',
+    height: '40px',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
-    width: '70%',    
+    width: '70%',
     [theme.breakpoints.up('md')]: {
       width: '50ch',
     },
@@ -115,19 +115,18 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  
+
   centerToolbar: {
-   backgroundColor:'darkslategrey'
+    backgroundColor: 'darkslategrey',
   },
   rightToolbar: {
-  display: 'flex',
-width: '100%',
-flexWrap: 'wrap',
-justifyContent: 'flex-end',
+    display: 'flex',
+    width: '100%',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
   },
-  logoutBtn:{
-    
-    boxShadow:'none !important'
+  logoutBtn: {
+    boxShadow: 'none !important',
   },
 }));
 
@@ -146,7 +145,7 @@ export default function Navbar() {
   const cartItems = cart.cartItems;
   // console.log(state);
   const isMenuOpen = Boolean(anchorEl);
-  let history = useHistory()
+  let history = useHistory();
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
@@ -157,16 +156,16 @@ export default function Navbar() {
 
   const logout = () => {
     // axios.post(logout_url, {
-      
+
     //   })
     //   .then((response) => {
     //     dispatch(logoutUser(response.data));
     //   }, (error) => {
     //     console.log(error);
     //   });
-      dispatch(logoutUser(''));
-      
-      history.push("/")
+    dispatch(logoutUser(''));
+
+    history.push('/');
   };
 
   // useEffect(() => {
@@ -177,30 +176,20 @@ export default function Navbar() {
   // }, []);
 
   useEffect(() => {
-   
-    if(!login.loggedIn)
-      return;
-      
-    if(cartItems.length > 0){
-      var carts = []
-      for(var i=0;i<cartItems.length;i++){
+    if (!login.loggedIn) return;
+
+    if (cartItems.length > 0) {
+      var carts = [];
+      for (var i = 0; i < cartItems.length; i++) {
         carts.push({
-          "product" : cartItems[i]['id'],
-          "price" : cartItems[i]['price_id'],
-          "quantity": cartItems[i]['quantity']
-        })
+          product: cartItems[i]['id'],
+          price: cartItems[i]['price_id'],
+          quantity: cartItems[i]['quantity'],
+        });
       }
-      axios
-      .post(`${API_URL}api/sync_cart/`,carts)
-      .then((res) => {
-        
-      });
+      axios.post(`${API_URL}api/sync_cart/`, carts).then((res) => {});
     }
-    
-      
-        
   }, [login, cartItems]);
- 
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -213,23 +202,23 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem  component={Link} to="/orders">My Orders</MenuItem>
+      <MenuItem component={Link} to="/orders">
+        My Orders
+      </MenuItem>
       {/* <MenuItem  onClick={logout}>Log out</MenuItem> */}
-      <GoogleLogout icon={false} 
-      className={classes.logoutBtn}
-      clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
-      buttonText="Logout"
-      onLogoutSuccess={logout}
-    >
-    </GoogleLogout>
+      <GoogleLogout
+        icon={false}
+        className={classes.logoutBtn}
+        clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
+        buttonText="Logout"
+        onLogoutSuccess={logout}
+      ></GoogleLogout>
     </Menu>
   );
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-  
 
   return (
     <div className={classes.grow}>
@@ -326,10 +315,8 @@ export default function Navbar() {
           </IconButton>
 
           <Link to="/">
-            <img src={RavananLogo} alt="logo"  height="80px" width="80px" />
-          
+            <img src={RavananLogo} alt="logo" height="80px" width="80px" />
           </Link>
-          
 
           <div className={`${classes.search} ${classes.sectionDesktop}`}>
             <div className={classes.searchIcon}>
@@ -346,7 +333,6 @@ export default function Navbar() {
           </div>
           {/* <div className={classes.grow} /> */}
           <div className={`${classes.sectionDesktop}  ${classes.rightToolbar}`}>
-            
             <Button
               aria-label=" 4 product in cart"
               color="inherit"
@@ -357,56 +343,54 @@ export default function Navbar() {
                   <ShoppingCartIcon />
                 </Badge>
               }
-              
             >
               கூடை
             </Button>
-           
-            
-   
-            {(()=> {
-          if (loggedIn) {
-            return (
-              <>
-              {/* {login.user} */}
-          <div>
-            
-       <Button aria-label=" 4 product in cart"
-              color="inherit" aria-haspopup="true" onClick={handleClick}>
-      
-      {login.user.user &&(`${login.user.user.first_name}`) }
-      </Button>
-      {renderMenu}
-      
-      
-    </div>
-              </>
-            )
-          } else {
-            return (<> <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            startIcon={<LockIcon />}
-            component={Link}
-            to="/login"
-          >
-            உள்நுழைய 
-          </Button>
-          <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            startIcon={<AssignmentIndIcon />}
-            component={Link}
-            to="/register"
-          >
-            பதிவு செய்ய
-          </Button></>)
-          }
-        })()}
 
-           
-
-
+            {(() => {
+              if (loggedIn) {
+                return (
+                  <>
+                    {/* {login.user} */}
+                    <div>
+                      <Button
+                        aria-label=" 4 product in cart"
+                        color="inherit"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                      >
+                        {login.user.user && `${login.user.user.first_name}`}
+                      </Button>
+                      {renderMenu}
+                    </div>
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    {' '}
+                    <Button
+                      color="inherit"
+                      onClick={onToggleTopLoader}
+                      startIcon={<LockIcon />}
+                      component={Link}
+                      to="/login"
+                    >
+                      உள்நுழைய
+                    </Button>
+                    <Button
+                      color="inherit"
+                      onClick={onToggleTopLoader}
+                      startIcon={<AssignmentIndIcon />}
+                      component={Link}
+                      to="/register"
+                    >
+                      பதிவு செய்ய
+                    </Button>
+                  </>
+                );
+              }
+            })()}
           </div>
 
           {/* <div className={classes.sectionMobile}>
@@ -436,7 +420,6 @@ export default function Navbar() {
             </IconButton>
           </div>
          */}
-        
         </Toolbar>
         <Toolbar className={classes.sectionMobile}>
           <div className={classes.search}>
@@ -469,7 +452,7 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/t-shirts">
             சட்டை
           </Button>
-      
+
           <Button color="inherit" component={Link} to="/phone-cases">
             கைபேசி உறை
           </Button>
@@ -482,7 +465,6 @@ export default function Navbar() {
           <Button color="inherit" component={Link} to="/others">
             இதர
           </Button>
-
 
           <Button
             color="inherit"
@@ -508,13 +490,11 @@ export default function Navbar() {
           >
             தொடர்புக்கு
           </Button>
-
-          
         </Toolbar>
       </AppBar>
 
       {/* {renderMenu} */}
-      
+
       <AppDrawer theme={theme} onToggleTheme={onToggleTheme} />
     </div>
   );
