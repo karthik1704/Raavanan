@@ -7,3 +7,10 @@ body {
 .MuiLink-underlineHover{
   cursor: pointer;
 }
+.MuiButton-root{
+  text-transform : none !important;
+}
+.MuiButton-textPrimary:hover{
+  border-color: #43a047 !important;
+  background: None !important;
+}

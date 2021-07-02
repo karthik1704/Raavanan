@@ -45,7 +45,8 @@ function App() {
   const lightTheme = createMuiTheme({
     palette: {
       primary: {
-        main: green[600],
+         main: green[600],
+        // main: '#8bc34a'
       },
     },
   });
@@ -112,6 +113,7 @@ function App() {
           property="og:description"
           content="Raavanan Store , இராவணன் அங்காடி"
         />
+        
       </Helmet>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <Router>

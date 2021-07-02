@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import { addItem } from '../../data/actions/cartActions';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Badge from '@material-ui/core/Badge';
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 238,
@@ -74,24 +74,53 @@ const useStyles = makeStyles((theme) => ({
   price: {
     textAlign: 'center',
     fontWeight: 500,
+    fontSize: '13px',
   },
   cardButtons: {
     display: 'flex',
     justifyContent: 'center',
   },
+  cartBtn: {
+    color: 'white',
+    background: '#43a047',
+    paddingLeft: '10px',
+    fontSize : '10px'
+
+  },
+  shapeCircle: {
+    borderRadius: '50%',
+    left: '6%',
+    display: 'contents',
+  },
+  
 }));
 
 const ProductList = ({ products }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  // console.log(products);
+  // products.map((product) => (
+  //   console.log(product.price[0].price)
+  // ))
   return (
     <>
-      {products.map((product) => (
-        <Grid item xs={6} sm={4} md={3} xl={3} key={product.id}>
+      {products.map((product, i) => {
+        return <Grid item xs={6} sm={4} md={3} xl={3} key={i}>
           <Card className={classes.root}>
-            
+          
             <CardActionArea component={Link} to={`/product/${product.slug ? product.slug : product.id}`}>
+            {product['price'].length > 0 && product.price[0].discount !=0 && (
+             
+                         <Badge  anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }} color="primary" overlap="circle" badgeContent= {`${product.price[0].discount}%`}  variant="standard" className={classes.shapeCircle}>
+                             
+                            </Badge>
+                  )}
+         
               <div className={classes.center}>
+            
                 <img
                   src={product.imageurl}
                   alt={product.name}
@@ -109,19 +138,22 @@ const ProductList = ({ products }) => {
                   color="textPrimary"
                   className={classes.title}
                 >
-                  {/* {product.name.length >= 10
-                    ? `${product.name.substring(0, 10)}...`
-                    : product.name} */}
+                  
                     {product.name.split('|')[0]}
+                   
                 </Typography>
-                {/* <Typography
+                <Typography
                   variant="subtitle1"
                   color="textPrimary"
-                  className={classes.price}
+                  className={classes.price} 
                 >
-                  ₹{'  '}
-                  {product.price}
-                </Typography> */}
+                  {product['price'].length > 0 &&(
+                     `₹ ${product.price[0].price}`
+                  )} 
+                  
+                 {/* ₹{product.price[0].id} */}
+                  
+                </Typography>
               </CardContent>
             </CardActionArea>
 
@@ -130,13 +162,13 @@ const ProductList = ({ products }) => {
               {/* <IconButton aria-label="add to favorites">
                 <FavoriteBorderOutlinedIcon />
               </IconButton> */}
-              <Button color="secondary" justifycontent="center" startIcon={<AddShoppingCartIcon />} onClick={() => dispatch(addItem({...product, price : product.price[0].id}))}>
+              <Button color="primary" className={classes.cartBtn}  justifycontent="center" startIcon={<AddShoppingCartIcon />} onClick={() => dispatch(addItem({...product, price : product.price[0].id}))}>
                 கூடை
               </Button>
             </CardActions>
           </Card>
         </Grid>
-      ))}
+})}
     </>
   );
 };

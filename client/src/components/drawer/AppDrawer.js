@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
-
+import { MENUS } from '../../CONSTANTS';
 import EmojiFoodBeverageIcon from '@material-ui/icons/EmojiFoodBeverage';
 import FilterFramesIcon from '@material-ui/icons/FilterFrames';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
@@ -18,10 +18,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import { deepPurple } from '@material-ui/core/colors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import { toggleAppDrawer } from '../../data/actions/appAction';
 import { Button } from '@material-ui/core';
+
+import Collapse from '@material-ui/core/Collapse';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 const AppDrawer = ({ theme, onToggleTheme }) => {
@@ -46,6 +56,29 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
   const login = useSelector((state) => state.login);
   
   const loggedIn = login.loggedIn;
+  
+  var anchors_dict = {}
+  MENUS.map((option) => {
+    if(option.submenu){
+      anchors_dict[option.menu] = true
+      
+    }
+    
+  })
+  const [anchors, setAnchors] = useState(anchors_dict);
+  let history = useHistory()
+
+  const handleClick = (menu) => {
+    
+    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));
+  };
+
+  const handleParentClick = (menu) => {
+    // setOpen(!open);
+    history.push(menu);
+    dispatch(toggleAppDrawer(false));
+  };
+
   const toggleDrawer = (open, event) => {
     if (
       event.type === 'keydown' &&
@@ -97,66 +130,53 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
       <Divider />
       <div
         role="presentation"
-        onClick={(e) => toggleDrawer(false, e)}
-        onKeyDown={(e) => toggleDrawer(false, e)}
+        // onClick={(e) => toggleDrawer(false, e)}
+        // onKeyDown={(e) => toggleDrawer(false, e)}
       >
         <List>
-          <ListItem button component={Link} to="/organic-foods">
-            <ListItemIcon>
-              <NewReleasesIcon />
-            </ListItemIcon>
-            <ListItemText primary="இயற்கை உணவு" />
-          </ListItem>
+        {MENUS.map((menu, index) => {
+            return menu.submenu ? 
+        //     <ListItem button component={Link} to={menu.link}>
+        //    <ListItemIcon>
+        //      <NewReleasesIcon />
+        //    </ListItemIcon>
+        //    <ListItemText primary={menu.menu} />
+        //  </ListItem>
+        <>
+                <ListItem   >
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText button primary={menu.menu} onClick={() => handleParentClick(menu.link)}/> 
+                {anchors[menu.menu] ? <ExpandLess onClick={()=> handleClick(menu.menu)}/> : <ExpandMore onClick={() => handleClick(menu.menu)}/>}
+                </ListItem>
+                <Collapse in={anchors[menu.menu]} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                {menu.submenu.map((option, index1) => {
+                 return <ListItem button className={classes.nested} component={Link} to={option.link} onClick={(e) => toggleDrawer(false, e)}>
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary={option.menu}/>
+                  </ListItem>
+                })}
+                </List>
+                </Collapse>
+        </>
 
-          <ListItem button component={Link} to="/photo-frames">
-            <ListItemIcon>
-              <FilterFramesIcon />
-            </ListItemIcon>
-            <ListItemText primary="படச்சட்டகம்" />
-          </ListItem>
 
-          <ListItem button component={Link} to="/t-shirts">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="சட்டை" />
-          </ListItem>
+            :
+            <ListItem button component={Link} to={menu.link}>
+           <ListItemIcon>
+           <InboxIcon />
+           </ListItemIcon>
+           <ListItemText primary={menu.menu} />
+         </ListItem>
 
-          <ListItem button component={Link} to="/pillows">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="தலையணை" />
-          </ListItem>
+            })}
+          
+        </List> 
 
-          <ListItem button component={Link} to="/phone-cases">
-            <ListItemIcon>
-              <SmartphoneRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="கைபேசி உறை" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/mugs">
-            <ListItemIcon>
-              <EmojiFoodBeverageIcon />
-            </ListItemIcon>
-            <ListItemText primary="தேநீர் கோப்பை" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/stickers">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="சுவரொட்டிகள்" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/others">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="இதர" />
-          </ListItem>
-        </List>
         <Divider />
         <List>
           <ListItem button component={Link} to="/terms">
