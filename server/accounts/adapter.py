@@ -7,17 +7,20 @@ from urllib.parse import urlsplit
 
 class CustomAccountAdapter(DefaultAccountAdapter):
 
+    # def get_email_confirmation_url(self, request, emailconfirmation):
+    #     site = get_current_site(request)
+    #     location = reverse("account_confirm_email", args=[emailconfirmation.key])
+
+    #     bits = urlsplit(location)
+    #     if not (bits.scheme and bits.netloc):
+    #         uri = '{proto}://{domain}{url}'.format(
+    #             proto=app_settings.DEFAULT_HTTP_PROTOCOL,
+    #             domain=site.domain,
+    #             url=location)
+    #     else:
+    #         uri = location
+
+    #     return uri
+
     def get_email_confirmation_url(self, request, emailconfirmation):
-        site = get_current_site(request)
-        location = reverse("account_confirm_email", args=[emailconfirmation.key])
-
-        bits = urlsplit(location)
-        if not (bits.scheme and bits.netloc):
-            uri = '{proto}://{domain}{url}'.format(
-                proto=app_settings.DEFAULT_HTTP_PROTOCOL,
-                domain=site.domain,
-                url=location)
-        else:
-            uri = location
-
-        return uri
+        return f'https://raavananstore.com/verify/{emailconfirmation.key}'

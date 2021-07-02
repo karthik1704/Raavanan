@@ -88,7 +88,7 @@ def paytm_transaction_status(order_id, customer_id, total_price):
 
     # Enter your order id which needs to be check status for
     "orderId" : order_id,
-        }
+    }
 
     # Generate checksum by parameters we have in body
     # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
@@ -116,6 +116,7 @@ class OrderConfirmView(APIView):
     """
     List all orders, or create a new snippet.
     """
+    authentication_classes=[]
     permission_classes = [AllowAny]
     def get(self, request, format=None):
         snippets = Order.objects.filter(user=self.request.user).latest('created_at')
