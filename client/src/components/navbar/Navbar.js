@@ -42,7 +42,7 @@ import useTopLoader from '../../hooks/useTopLoader';
 import AppDrawer from '../drawer/AppDrawer';
 import { toggleAppDrawer } from '../../data/actions/appAction';
 
-import RavananLogo from '../../asserts/raavanan_logo.png';
+import RavananLogo from '../../asserts/raavanan logo png.png';
 import { logoutUser } from '../../data/actions/loginActions';
 
 import {useHistory} from 'react-router-dom';
