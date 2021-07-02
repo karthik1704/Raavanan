@@ -1,0 +1,1032 @@
+[1mdiff --cc client/src/CONSTANTS.js[m
+[1mindex 498f44b,faf4f57..0000000[m
+[1m--- a/client/src/CONSTANTS.js[m
+[1m+++ b/client/src/CONSTANTS.js[m
+[36m@@@ -1,53 -1,9 +1,63 @@@[m
+[32m++<<<<<<< HEAD[m
+[32m +// export const API_URL = 'https://api.raavananstore.com/';[m
+[32m +//export const API_URL = 'http://api.raavananstore.com/';[m
+[32m +export const API_URL = 'http://127.0.0.1:8000/';[m
+[32m +// export const PAYTM_MID = 'GyzTqR94486284090859'; //Production[m
+[32m +export const PAYTM_MID = 'BapaHR15076620391870'; //Dev[m
+[32m +// export const ENV = 'PROD'[m
+[32m +export const ENV = 'ENV'[m
+[32m +// export const API_URL = 'http://192.168.1.11:8000/';[m
+[32m++=======[m
+[32m+ export const API_URL = 'https://api.raavananstore.com/';[m
+[32m+ //export const API_URL = 'http://api.raavananstore.com/';[m
+[32m+ //export const API_URL = 'http://127.0.0.1:8000/';[m
+[32m+ export const PAYTM_MID = 'GyzTqR94486284090859'; //Production[m
+[32m+ //export const PAYTM_MID = 'BapaHR15076620391870'; //Dev[m
+[32m+ export const ENV = 'PROD';[m
+[32m+ //export const ENV = 'ENV';[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  [m
+  // Test Commit[m
+[32m +[m
+[32m +export const MENUS = [[m
+[32m +    {[m
+[32m +        'menu' : 'இயற்கை உணவு',[m
+[32m +        'link' : 'organic-foods',[m
+[32m +        [m
+[32m +    },[m
+[32m +    {[m
+[32m +        'menu' : 'கைபேசி உறை',[m
+[32m +        'link' : 'phone-cases',[m
+[32m +        'submenu' : [[m
+[32m +            {[m
+[32m +                'menu' : 'தமிழ் தேசியம்',[m
+[32m +                'link' : 'tamil-desiyam-cases',[m
+[32m +            },[m
+[32m +            {[m
+[32m +                'menu' : 'தலைவர் பிரபாகரன்',[m
+[32m +                'link' : 'leader-prabhakaran-cases',[m
+[32m +            }[m
+[32m +        ][m
+[32m +    },[m
+[32m +    {[m
+[32m +        'menu' : 'படச்சட்டகம்',[m
+[32m +        'link' : 'photo-frames',[m
+[32m +        'link' : 'phone-cases',[m
+[32m +        'submenu' : [[m
+[32m +            {[m
+[32m +                'menu' : 'தமிழ் தேசியம்',[m
+[32m +                'link' : 'tamil-desiyam-photoframes',[m
+[32m +            },[m
+[32m +            {[m
+[32m +                'menu' : 'தலைவர் பிரபாகரன்',[m
+[32m +                'link' : 'leader-prabhakaran-photoframes',[m
+[32m +            }[m
+[32m +        ][m
+[32m +        [m
+[32m +    },[m
+[32m +    {[m
+[32m +        'menu' : 'கொசுவு சட்டைகள்',[m
+[32m +        'link' : 't-shirts',[m
+[32m +        [m
+[32m +    }[m
+[32m +][m
+[1mdiff --cc client/src/components/navbar/Navbar.js[m
+[1mindex 3fb240d,3b4cfba..0000000[m
+[1m--- a/client/src/components/navbar/Navbar.js[m
+[1m+++ b/client/src/components/navbar/Navbar.js[m
+[36m@@@ -23,18 -23,11 +23,22 @@@[m [mimport LocalOfferIcon from '@material-u[m
+  import LockIcon from '@material-ui/icons/Lock';[m
+  import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';[m
+  import Brightness4Icon from '@material-ui/icons/Brightness4';[m
+[31m -[m
+[32m +import ButtonGroup from '@material-ui/core/ButtonGroup';[m
+[32m +import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';[m
+[32m +import ClickAwayListener from '@material-ui/core/ClickAwayListener';[m
+[32m +import Grow from '@material-ui/core/Grow';[m
+[32m +import Paper from '@material-ui/core/Paper';[m
+[32m +import Popper from '@material-ui/core/Popper';[m
+[32m +[m
+[32m++<<<<<<< HEAD[m
+[32m +import MenuList from '@material-ui/core/MenuList';[m
+[32m +import {useSelector, useDispatch } from 'react-redux';[m
+[32m++=======[m
+[32m+ import { useSelector, useDispatch } from 'react-redux';[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  import { Link } from 'react-router-dom';[m
+  [m
+[31m -import { API_URL } from '../../CONSTANTS';[m
+[32m +import { API_URL, MENUS } from '../../CONSTANTS';[m
+  [m
+  import useDarkTheme from '../../hooks/useDarkTheme';[m
+  import useTopLoader from '../../hooks/useTopLoader';[m
+[36m@@@ -42,11 -35,10 +46,15 @@@[m
+  import AppDrawer from '../drawer/AppDrawer';[m
+  import { toggleAppDrawer } from '../../data/actions/appAction';[m
+  [m
+[31m- import RavananLogo from '../../asserts/raavanan_logo.png';[m
+[32m+ import RavananLogo from '../../asserts/raavanan logo png.png';[m
+  import { logoutUser } from '../../data/actions/loginActions';[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +import {useHistory} from 'react-router-dom';[m
+[32m +import { event } from 'react-ga';[m
+[32m++=======[m
+[32m+ import { useHistory } from 'react-router-dom';[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  const useStyles = makeStyles((theme) => ({[m
+    links: {[m
+      color: '#fff',[m
+[36m@@@ -123,44 -115,19 +131,47 @@@[m
+        display: 'none',[m
+      },[m
+    },[m
+[31m-   [m
+[32m+ [m
+    centerToolbar: {[m
+[32m++<<<<<<< HEAD[m
+[32m +    display: 'none',[m
+[32m +    [theme.breakpoints.up('lg')]: {[m
+[32m +      backgroundColor:'darkblue',[m
+[32m +     display: 'flex',[m
+[32m +    justifyContent: 'space-between'[m
+[32m +    },[m
+[32m +   [m
+[32m++=======[m
+[32m+     backgroundColor: 'darkslategrey',[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+    },[m
+    rightToolbar: {[m
+[31m-   display: 'flex',[m
+[31m- width: '100%',[m
+[31m- flexWrap: 'wrap',[m
+[31m- justifyContent: 'flex-end',[m
+[32m+     display: 'flex',[m
+[32m+     width: '100%',[m
+[32m+     flexWrap: 'wrap',[m
+[32m+     justifyContent: 'flex-end',[m
+    },[m
+[31m-   logoutBtn:{[m
+[31m-     [m
+[31m-     boxShadow:'none !important'[m
+[32m+   logoutBtn: {[m
+[32m+     boxShadow: 'none !important',[m
+    },[m
+[32m +  secMenu:{[m
+[32m +    background:'darkblue !important',[m
+[32m +    fontSize:'12px !important',[m
+[32m +    [m
+[32m +    [m
+[32m +  },[m
+[32m +  subMenu:{[m
+[32m +    background:'darkblue !important',[m
+[32m +    fontSize:'12px !important',[m
+[32m +    color:'white',[m
+[32m +    '&:hover': {[m
+[32m +      backgroundColor: "green !important",[m
+[32m +   },[m
+[32m +  },[m
+[32m +  MenuPopup:{[m
+[32m +    background:'darkblue !important',[m
+[32m +  }[m
+[32m +  [m
+  }));[m
+  [m
+  export default function Navbar() {[m
+[36m@@@ -188,35 -144,19 +199,40 @@@[m
+    const cart = useSelector((state) => state.cart);[m
+    const cartItems = cart.cartItems;[m
+    // console.log(state);[m
+[32m++<<<<<<< HEAD[m
+[32m +  // const isMenuOpen = Boolean(false);[m
+[32m +  const [isMenuOpen, setIsMenuOpen] = useState(false);[m
+[32m +  const [open, setOpen] = useState(false);[m
+[32m +[m
+[32m +  let history = useHistory()[m
+[32m++=======[m
+[32m+   const isMenuOpen = Boolean(anchorEl);[m
+[32m+   let history = useHistory();[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+    // const handleProfileMenuOpen = (event) => {[m
+    //   setAnchorEl(event.currentTarget);[m
+    // };[m
+  [m
+    const handleMenuClose = () => {[m
+      setAnchorEl(null);[m
+[32m +    setIsMenuOpen(false);[m
+    };[m
+[32m +  // const handleClick = (event) => {[m
+[32m +  //   setAnchorEl(event.currentTarget);[m
+[32m +  // };[m
+  [m
+[32m +  const handleClose = (event) => {[m
+[32m +    setAnchors(anchors_dict);[m
+[32m +    setAnchorEl(null);[m
+[32m +    setOpen(false);[m
+[32m +    [m
+[32m +    if (anchorRef.current && anchorRef.current.contains(event.target)) {[m
+[32m +      return;[m
+[32m +    }[m
+[32m +  };[m
+    const logout = () => {[m
+      // axios.post(logout_url, {[m
+[31m-       [m
+[32m+ [m
+      //   })[m
+      //   .then((response) => {[m
+      //     dispatch(logoutUser(response.data));[m
+[36m@@@ -285,33 -217,9 +293,36 @@@[m
+    );[m
+  [m
+    const handleClick = (event) => {[m
+[32m +    [m
+      setAnchorEl(event.currentTarget);[m
+[32m +    [m
+[32m +    [m
+    };[m
+[32m +  const handleProfileMenuClick = (event) => {[m
+[32m +    [m
+[32m +    setAnchorEl(event.currentTarget);[m
+[32m +    setIsMenuOpen(true);[m
+[32m +    [m
+[32m +  };[m
+[32m +[m
+[32m +  const handleMenuItemClick = (menu) => {[m
+[32m +    // setSelectedIndex(index);[m
+[32m +    [m
+[32m +    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));[m
+[32m +  };[m
+[32m +[m
+[32m +  const handleToggle = (menu, e) => {[m
+[32m +    console.log(e);[m
+[32m +    setAnchorEl(e.currentTarget);[m
+[32m +    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));[m
+[32m +    [m
+[32m +    // setOpen((prevOpen) => !prevOpen);[m
+[32m +  };[m
+[32m +[m
+[32m++<<<<<<< HEAD[m
+  [m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+    return ([m
+      <div className={classes.grow}>[m
+        <AppBar[m
+[36m@@@ -349,9 -331,8 +358,8 @@@[m
+                inputProps={{ 'aria-label': 'search' }}[m
+              />[m
+            </div>[m
+[31m -          {/* <div className={classes.grow} /> */}[m
+[32m +          <div className={classes.grow} />[m
+            <div className={`${classes.sectionDesktop}  ${classes.rightToolbar}`}>[m
+[31m-             [m
+              <Button[m
+                aria-label=" 4 product in cart"[m
+                color="inherit"[m
+[36m@@@ -362,56 -343,54 +370,102 @@@[m
+                    <ShoppingCartIcon />[m
+                  </Badge>[m
+                }[m
+[31m-               [m
+              >[m
+[31m -              கூடை[m
+[32m +              Cart[m
+              </Button>[m
+[32m++<<<<<<< HEAD[m
+[32m +           [m
+[32m +            [m
+[32m +   [m
+[32m +            {(()=> {[m
+[32m +          if (loggedIn) {[m
+[32m +            return ([m
+[32m +              <>[m
+[32m +              {/* {login.user} */}[m
+[32m +          <div>[m
+[32m +            [m
+[32m +       <Button aria-label=" 4 product in cart"[m
+[32m +              color="inherit" aria-haspopup="true" onClick={handleProfileMenuClick}>[m
+[32m +      [m
+[32m +      {login.user.user &&(`${login.user.user.first_name}`) }[m
+[32m +      </Button>[m
+[32m +      {renderMenu}[m
+[32m +      [m
+[32m +      [m
+[32m +    </div>[m
+[32m +              </>[m
+[32m +            )[m
+[32m +          } else {[m
+[32m +            return (<> <Button[m
+[32m +            color="inherit"[m
+[32m +            onClick={onToggleTopLoader}[m
+[32m +            startIcon={<LockIcon />}[m
+[32m +            component={Link}[m
+[32m +            to="/login"[m
+[32m +          >[m
+[32m +            Sign In [m
+[32m +          </Button>[m
+[32m +          <Button[m
+[32m +            color="inherit"[m
+[32m +            onClick={onToggleTopLoader}[m
+[32m +            startIcon={<AssignmentIndIcon />}[m
+[32m +            component={Link}[m
+[32m +            to="/register"[m
+[32m +          >[m
+[32m +            Sign Up[m
+[32m +          </Button></>)[m
+[32m +          }[m
+[32m +        })()}[m
+[32m +[m
+[32m +           [m
+[32m +[m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  [m
+[32m+             {(() => {[m
+[32m+               if (loggedIn) {[m
+[32m+                 return ([m
+[32m+                   <>[m
+[32m+                     {/* {login.user} */}[m
+[32m+                     <div>[m
+[32m+                       <Button[m
+[32m+                         aria-label=" 4 product in cart"[m
+[32m+                         color="inherit"[m
+[32m+                         aria-haspopup="true"[m
+[32m+                         onClick={handleClick}[m
+[32m+                       >[m
+[32m+                         {login.user.user && `${login.user.user.first_name}`}[m
+[32m+                       </Button>[m
+[32m+                       {renderMenu}[m
+[32m+                     </div>[m
+[32m+                   </>[m
+[32m+                 );[m
+[32m+               } else {[m
+[32m+                 return ([m
+[32m+                   <>[m
+[32m+                     {' '}[m
+[32m+                     <Button[m
+[32m+                       color="inherit"[m
+[32m+                       onClick={onToggleTopLoader}[m
+[32m+                       startIcon={<LockIcon />}[m
+[32m+                       component={Link}[m
+[32m+                       to="/login"[m
+[32m+                     >[m
+[32m+                       உள்நுழைய[m
+[32m+                     </Button>[m
+[32m+                     <Button[m
+[32m+                       color="inherit"[m
+[32m+                       onClick={onToggleTopLoader}[m
+[32m+                       startIcon={<AssignmentIndIcon />}[m
+[32m+                       component={Link}[m
+[32m+                       to="/register"[m
+[32m+                     >[m
+[32m+                       பதிவு செய்ய[m
+[32m+                     </Button>[m
+[32m+                   </>[m
+[32m+                 );[m
+[32m+               }[m
+[32m+             })()}[m
+            </div>[m
+  [m
+            {/* <div className={classes.sectionMobile}>[m
+[36m@@@ -462,87 -440,32 +515,117 @@@[m
+          <Toolbar[m
+            className={`${classes.sectionDesktop} ${classes.centerToolbar}`}[m
+          >[m
+[32m++<<<<<<< HEAD[m
+[32m +          [m
+[32m +          <div>[m
+[32m +          [m
+[32m +      [m
+[32m +          {MENUS.map((menu, index) => {[m
+[32m +         [m
+[32m +          return menu.submenu ? [m
+[32m +            <>[m
+[32m +            <ButtonGroup variant="contained" color="primary"  aria-label="split button">[m
+[32m +            <Button [m
+[32m +             component={Link}[m
+[32m +             className={classes.secMenu}[m
+[32m +             to={menu.link}[m
+[32m +            >{menu.menu}</Button>[m
+[32m +          <Button[m
+[32m +            color="primary"[m
+[32m +            size="small"[m
+[32m +            aria-controls={isMenuOpen ? 'split-button-menu' : undefined}[m
+[32m +            aria-expanded={isMenuOpen ? 'true' : undefined}[m
+[32m +            aria-label="select merge strategy"[m
+[32m +            aria-haspopup="menu"[m
+[32m +            className={classes.secMenu}[m
+[32m +            onClick={(e) => handleToggle(menu.menu, e)}[m
+[32m +           [m
+[32m +          >[m
+[32m +            <ArrowDropDownIcon />[m
+[32m++=======[m
+[32m+           {/* <Button color="inherit" component={Link} to="/new">[m
+[32m+             புதிய வெளியீடு[m
+[32m+           </Button> */}[m
+[32m+           <Button color="inherit" component={Link} to="/organic-foods">[m
+[32m+             இயற்கை உணவு[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/photo-frames">[m
+[32m+             படச்சட்டகம்[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/t-shirts">[m
+[32m+             சட்டை[m
+[32m+           </Button>[m
+[32m+ [m
+[32m+           <Button color="inherit" component={Link} to="/phone-cases">[m
+[32m+             கைபேசி உறை[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/mugs">[m
+[32m+             தேநீர் கோப்பை[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/stickers">[m
+[32m+             சுவரொட்டிகள்[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/others">[m
+[32m+             இதர[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+            </Button>[m
+[32m +        </ButtonGroup>[m
+[32m +        <Popper open={anchors[menu.menu]} anchorEl={anchorEl} role={undefined} placement='bottom-start' transition>[m
+[32m +          {({ TransitionProps, placement }) => ([m
+[32m +            <Grow[m
+[32m +              {...TransitionProps}[m
+[32m +              style={{[m
+[32m +                transformOrigin: placement === 'bottom' ? 'left top' : 'left bottom',[m
+[32m +              }}[m
+[32m +            >[m
+[32m +              <Paper className={classes.MenuPopup}>[m
+[32m +                <ClickAwayListener onClickAway={handleClose}>[m
+[32m +                  <MenuList id="split-button-menu">[m
+[32m +                    {menu.submenu.map((option, index1) => {[m
+[32m +                      [m
+[32m +                      return <MenuItem[m
+[32m +                        key={option.menu}[m
+[32m +                        component={Link}[m
+[32m +                        className={classes.subMenu}[m
+[32m +                        to={option.link}[m
+[32m +                        // disabled={index === 2}[m
+[32m +                        // selected={index === selectedIndex}[m
+[32m +                        onClick={(event) => handleMenuItemClick(menu.menu)}[m
+[32m +                      >[m
+[32m +                        {option.menu}[m
+[32m +                      </MenuItem>[m
+[32m +                    })}[m
+[32m +                  </MenuList>[m
+[32m +                </ClickAwayListener>[m
+[32m +              </Paper>[m
+[32m +            </Grow>[m
+[32m +          )}[m
+[32m +        </Popper>[m
+[32m +        </>[m
+[32m +          [m
+[32m +          [m
+[32m +                 [m
+[32m +         : [m
+[32m +            <>[m
+[32m +            <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">[m
+[32m +            <Button [m
+[32m +             component={Link}[m
+[32m +             className={classes.secMenu}[m
+[32m +             to={menu.link}[m
+[32m +            >{menu.menu}</Button>[m
+[32m +            </ButtonGroup>[m
+[32m +            </>[m
+[32m +          [m
+[32m +               [m
+[32m +[m
+[32m++<<<<<<< HEAD[m
+[32m +      [m
+[32m +          })}[m
+  [m
+[32m +</div>[m
+[32m +              <div style={{float:'right'}}>[m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+            <Button[m
+              color="inherit"[m
+              onClick={onToggleTopLoader}[m
+[36m@@@ -570,10 -490,6 +653,13 @@@[m
+            >[m
+              தொடர்புக்கு[m
+            </Button>[m
+[32m++<<<<<<< HEAD[m
+[32m +          [m
+[32m +          </div>[m
+[32m +[m
+[32m +          [m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+          </Toolbar>[m
+        </AppBar>[m
+  [m
+[1mdiff --cc server/raavanan/settings/development.py[m
+[1mindex 60512ad,d5c644d..0000000[m
+[1m--- a/server/raavanan/settings/development.py[m
+[1m+++ b/server/raavanan/settings/development.py[m
+[36m@@@ -35,9 -35,9 +35,13 @@@[m [mDATABASES = [m
+      # }[m
+      'default': {[m
+          'ENGINE': 'django.db.backends.postgresql_psycopg2',[m
+[32m++<<<<<<< HEAD[m
+[32m +        'NAME': 'raavananstore',[m
+[32m++=======[m
+[32m+         'NAME': 'Raavanan',[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+          'USER': 'postgres',[m
+[31m -        'PASSWORD': 'karthik1704',[m
+[32m +        'PASSWORD': 'postgres',[m
+          'HOST': 'localhost',[m
+          'PORT': '5432',[m
+      }[m
+[1mdiff --cc client/src/CONSTANTS.js[m
+[1mindex 498f44b,faf4f57..0000000[m
+[1m--- a/client/src/CONSTANTS.js[m
+[1m+++ b/client/src/CONSTANTS.js[m
+[36m@@@ -1,53 -1,9 +1,63 @@@[m
+[32m++<<<<<<< HEAD[m
+[32m +// export const API_URL = 'https://api.raavananstore.com/';[m
+[32m +//export const API_URL = 'http://api.raavananstore.com/';[m
+[32m +export const API_URL = 'http://127.0.0.1:8000/';[m
+[32m +// export const PAYTM_MID = 'GyzTqR94486284090859'; //Production[m
+[32m +export const PAYTM_MID = 'BapaHR15076620391870'; //Dev[m
+[32m +// export const ENV = 'PROD'[m
+[32m +export const ENV = 'ENV'[m
+[32m +// export const API_URL = 'http://192.168.1.11:8000/';[m
+[32m++=======[m
+[32m+ export const API_URL = 'https://api.raavananstore.com/';[m
+[32m+ //export const API_URL = 'http://api.raavananstore.com/';[m
+[32m+ //export const API_URL = 'http://127.0.0.1:8000/';[m
+[32m+ export const PAYTM_MID = 'GyzTqR94486284090859'; //Production[m
+[32m+ //export const PAYTM_MID = 'BapaHR15076620391870'; //Dev[m
+[32m+ export const ENV = 'PROD';[m
+[32m+ //export const ENV = 'ENV';[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  [m
+  // Test Commit[m
+[32m +[m
+[32m +export const MENUS = [[m
+[32m +    {[m
+[32m +        'menu' : 'இயற்கை உணவு',[m
+[32m +        'link' : 'organic-foods',[m
+[32m +        [m
+[32m +    },[m
+[32m +    {[m
+[32m +        'menu' : 'கைபேசி உறை',[m
+[32m +        'link' : 'phone-cases',[m
+[32m +        'submenu' : [[m
+[32m +            {[m
+[32m +                'menu' : 'தமிழ் தேசியம்',[m
+[32m +                'link' : 'tamil-desiyam-cases',[m
+[32m +            },[m
+[32m +            {[m
+[32m +                'menu' : 'தலைவர் பிரபாகரன்',[m
+[32m +                'link' : 'leader-prabhakaran-cases',[m
+[32m +            }[m
+[32m +        ][m
+[32m +    },[m
+[32m +    {[m
+[32m +        'menu' : 'படச்சட்டகம்',[m
+[32m +        'link' : 'photo-frames',[m
+[32m +        'link' : 'phone-cases',[m
+[32m +        'submenu' : [[m
+[32m +            {[m
+[32m +                'menu' : 'தமிழ் தேசியம்',[m
+[32m +                'link' : 'tamil-desiyam-photoframes',[m
+[32m +            },[m
+[32m +            {[m
+[32m +                'menu' : 'தலைவர் பிரபாகரன்',[m
+[32m +                'link' : 'leader-prabhakaran-photoframes',[m
+[32m +            }[m
+[32m +        ][m
+[32m +        [m
+[32m +    },[m
+[32m +    {[m
+[32m +        'menu' : 'கொசுவு சட்டைகள்',[m
+[32m +        'link' : 't-shirts',[m
+[32m +        [m
+[32m +    }[m
+[32m +][m
+[1mdiff --cc client/src/components/navbar/Navbar.js[m
+[1mindex 3fb240d,3b4cfba..0000000[m
+[1m--- a/client/src/components/navbar/Navbar.js[m
+[1m+++ b/client/src/components/navbar/Navbar.js[m
+[36m@@@ -23,18 -23,11 +23,22 @@@[m [mimport LocalOfferIcon from '@material-u[m
+  import LockIcon from '@material-ui/icons/Lock';[m
+  import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';[m
+  import Brightness4Icon from '@material-ui/icons/Brightness4';[m
+[31m -[m
+[32m +import ButtonGroup from '@material-ui/core/ButtonGroup';[m
+[32m +import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';[m
+[32m +import ClickAwayListener from '@material-ui/core/ClickAwayListener';[m
+[32m +import Grow from '@material-ui/core/Grow';[m
+[32m +import Paper from '@material-ui/core/Paper';[m
+[32m +import Popper from '@material-ui/core/Popper';[m
+[32m +[m
+[32m++<<<<<<< HEAD[m
+[32m +import MenuList from '@material-ui/core/MenuList';[m
+[32m +import {useSelector, useDispatch } from 'react-redux';[m
+[32m++=======[m
+[32m+ import { useSelector, useDispatch } from 'react-redux';[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  import { Link } from 'react-router-dom';[m
+  [m
+[31m -import { API_URL } from '../../CONSTANTS';[m
+[32m +import { API_URL, MENUS } from '../../CONSTANTS';[m
+  [m
+  import useDarkTheme from '../../hooks/useDarkTheme';[m
+  import useTopLoader from '../../hooks/useTopLoader';[m
+[36m@@@ -42,11 -35,10 +46,15 @@@[m
+  import AppDrawer from '../drawer/AppDrawer';[m
+  import { toggleAppDrawer } from '../../data/actions/appAction';[m
+  [m
+[31m- import RavananLogo from '../../asserts/raavanan_logo.png';[m
+[32m+ import RavananLogo from '../../asserts/raavanan logo png.png';[m
+  import { logoutUser } from '../../data/actions/loginActions';[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +import {useHistory} from 'react-router-dom';[m
+[32m +import { event } from 'react-ga';[m
+[32m++=======[m
+[32m+ import { useHistory } from 'react-router-dom';[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  const useStyles = makeStyles((theme) => ({[m
+    links: {[m
+      color: '#fff',[m
+[36m@@@ -123,44 -115,19 +131,47 @@@[m
+        display: 'none',[m
+      },[m
+    },[m
+[31m-   [m
+[32m+ [m
+    centerToolbar: {[m
+[32m++<<<<<<< HEAD[m
+[32m +    display: 'none',[m
+[32m +    [theme.breakpoints.up('lg')]: {[m
+[32m +      backgroundColor:'darkblue',[m
+[32m +     display: 'flex',[m
+[32m +    justifyContent: 'space-between'[m
+[32m +    },[m
+[32m +   [m
+[32m++=======[m
+[32m+     backgroundColor: 'darkslategrey',[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+    },[m
+    rightToolbar: {[m
+[31m-   display: 'flex',[m
+[31m- width: '100%',[m
+[31m- flexWrap: 'wrap',[m
+[31m- justifyContent: 'flex-end',[m
+[32m+     display: 'flex',[m
+[32m+     width: '100%',[m
+[32m+     flexWrap: 'wrap',[m
+[32m+     justifyContent: 'flex-end',[m
+    },[m
+[31m-   logoutBtn:{[m
+[31m-     [m
+[31m-     boxShadow:'none !important'[m
+[32m+   logoutBtn: {[m
+[32m+     boxShadow: 'none !important',[m
+    },[m
+[32m +  secMenu:{[m
+[32m +    background:'darkblue !important',[m
+[32m +    fontSize:'12px !important',[m
+[32m +    [m
+[32m +    [m
+[32m +  },[m
+[32m +  subMenu:{[m
+[32m +    background:'darkblue !important',[m
+[32m +    fontSize:'12px !important',[m
+[32m +    color:'white',[m
+[32m +    '&:hover': {[m
+[32m +      backgroundColor: "green !important",[m
+[32m +   },[m
+[32m +  },[m
+[32m +  MenuPopup:{[m
+[32m +    background:'darkblue !important',[m
+[32m +  }[m
+[32m +  [m
+  }));[m
+  [m
+  export default function Navbar() {[m
+[36m@@@ -188,35 -144,19 +199,40 @@@[m
+    const cart = useSelector((state) => state.cart);[m
+    const cartItems = cart.cartItems;[m
+    // console.log(state);[m
+[32m++<<<<<<< HEAD[m
+[32m +  // const isMenuOpen = Boolean(false);[m
+[32m +  const [isMenuOpen, setIsMenuOpen] = useState(false);[m
+[32m +  const [open, setOpen] = useState(false);[m
+[32m +[m
+[32m +  let history = useHistory()[m
+[32m++=======[m
+[32m+   const isMenuOpen = Boolean(anchorEl);[m
+[32m+   let history = useHistory();[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+    // const handleProfileMenuOpen = (event) => {[m
+    //   setAnchorEl(event.currentTarget);[m
+    // };[m
+  [m
+    const handleMenuClose = () => {[m
+      setAnchorEl(null);[m
+[32m +    setIsMenuOpen(false);[m
+    };[m
+[32m +  // const handleClick = (event) => {[m
+[32m +  //   setAnchorEl(event.currentTarget);[m
+[32m +  // };[m
+  [m
+[32m +  const handleClose = (event) => {[m
+[32m +    setAnchors(anchors_dict);[m
+[32m +    setAnchorEl(null);[m
+[32m +    setOpen(false);[m
+[32m +    [m
+[32m +    if (anchorRef.current && anchorRef.current.contains(event.target)) {[m
+[32m +      return;[m
+[32m +    }[m
+[32m +  };[m
+    const logout = () => {[m
+      // axios.post(logout_url, {[m
+[31m-       [m
+[32m+ [m
+      //   })[m
+      //   .then((response) => {[m
+      //     dispatch(logoutUser(response.data));[m
+[36m@@@ -285,33 -217,9 +293,36 @@@[m
+    );[m
+  [m
+    const handleClick = (event) => {[m
+[32m +    [m
+      setAnchorEl(event.currentTarget);[m
+[32m +    [m
+[32m +    [m
+    };[m
+[32m +  const handleProfileMenuClick = (event) => {[m
+[32m +    [m
+[32m +    setAnchorEl(event.currentTarget);[m
+[32m +    setIsMenuOpen(true);[m
+[32m +    [m
+[32m +  };[m
+[32m +[m
+[32m +  const handleMenuItemClick = (menu) => {[m
+[32m +    // setSelectedIndex(index);[m
+[32m +    [m
+[32m +    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));[m
+[32m +  };[m
+[32m +[m
+[32m +  const handleToggle = (menu, e) => {[m
+[32m +    console.log(e);[m
+[32m +    setAnchorEl(e.currentTarget);[m
+[32m +    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));[m
+[32m +    [m
+[32m +    // setOpen((prevOpen) => !prevOpen);[m
+[32m +  };[m
+[32m +[m
+[32m++<<<<<<< HEAD[m
+  [m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+    return ([m
+      <div className={classes.grow}>[m
+        <AppBar[m
+[36m@@@ -349,9 -331,8 +358,8 @@@[m
+                inputProps={{ 'aria-label': 'search' }}[m
+              />[m
+            </div>[m
+[31m -          {/* <div className={classes.grow} /> */}[m
+[32m +          <div className={classes.grow} />[m
+            <div className={`${classes.sectionDesktop}  ${classes.rightToolbar}`}>[m
+[31m-             [m
+              <Button[m
+                aria-label=" 4 product in cart"[m
+                color="inherit"[m
+[36m@@@ -362,56 -343,54 +370,102 @@@[m
+                    <ShoppingCartIcon />[m
+                  </Badge>[m
+                }[m
+[31m-               [m
+              >[m
+[31m -              கூடை[m
+[32m +              Cart[m
+              </Button>[m
+[32m++<<<<<<< HEAD[m
+[32m +           [m
+[32m +            [m
+[32m +   [m
+[32m +            {(()=> {[m
+[32m +          if (loggedIn) {[m
+[32m +            return ([m
+[32m +              <>[m
+[32m +              {/* {login.user} */}[m
+[32m +          <div>[m
+[32m +            [m
+[32m +       <Button aria-label=" 4 product in cart"[m
+[32m +              color="inherit" aria-haspopup="true" onClick={handleProfileMenuClick}>[m
+[32m +      [m
+[32m +      {login.user.user &&(`${login.user.user.first_name}`) }[m
+[32m +      </Button>[m
+[32m +      {renderMenu}[m
+[32m +      [m
+[32m +      [m
+[32m +    </div>[m
+[32m +              </>[m
+[32m +            )[m
+[32m +          } else {[m
+[32m +            return (<> <Button[m
+[32m +            color="inherit"[m
+[32m +            onClick={onToggleTopLoader}[m
+[32m +            startIcon={<LockIcon />}[m
+[32m +            component={Link}[m
+[32m +            to="/login"[m
+[32m +          >[m
+[32m +            Sign In [m
+[32m +          </Button>[m
+[32m +          <Button[m
+[32m +            color="inherit"[m
+[32m +            onClick={onToggleTopLoader}[m
+[32m +            startIcon={<AssignmentIndIcon />}[m
+[32m +            component={Link}[m
+[32m +            to="/register"[m
+[32m +          >[m
+[32m +            Sign Up[m
+[32m +          </Button></>)[m
+[32m +          }[m
+[32m +        })()}[m
+[32m +[m
+[32m +           [m
+[32m +[m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+  [m
+[32m+             {(() => {[m
+[32m+               if (loggedIn) {[m
+[32m+                 return ([m
+[32m+                   <>[m
+[32m+                     {/* {login.user} */}[m
+[32m+                     <div>[m
+[32m+                       <Button[m
+[32m+                         aria-label=" 4 product in cart"[m
+[32m+                         color="inherit"[m
+[32m+                         aria-haspopup="true"[m
+[32m+                         onClick={handleClick}[m
+[32m+                       >[m
+[32m+                         {login.user.user && `${login.user.user.first_name}`}[m
+[32m+                       </Button>[m
+[32m+                       {renderMenu}[m
+[32m+                     </div>[m
+[32m+                   </>[m
+[32m+                 );[m
+[32m+               } else {[m
+[32m+                 return ([m
+[32m+                   <>[m
+[32m+                     {' '}[m
+[32m+                     <Button[m
+[32m+                       color="inherit"[m
+[32m+                       onClick={onToggleTopLoader}[m
+[32m+                       startIcon={<LockIcon />}[m
+[32m+                       component={Link}[m
+[32m+                       to="/login"[m
+[32m+                     >[m
+[32m+                       உள்நுழைய[m
+[32m+                     </Button>[m
+[32m+                     <Button[m
+[32m+                       color="inherit"[m
+[32m+                       onClick={onToggleTopLoader}[m
+[32m+                       startIcon={<AssignmentIndIcon />}[m
+[32m+                       component={Link}[m
+[32m+                       to="/register"[m
+[32m+                     >[m
+[32m+                       பதிவு செய்ய[m
+[32m+                     </Button>[m
+[32m+                   </>[m
+[32m+                 );[m
+[32m+               }[m
+[32m+             })()}[m
+            </div>[m
+  [m
+            {/* <div className={classes.sectionMobile}>[m
+[36m@@@ -462,87 -440,32 +515,117 @@@[m
+          <Toolbar[m
+            className={`${classes.sectionDesktop} ${classes.centerToolbar}`}[m
+          >[m
+[32m++<<<<<<< HEAD[m
+[32m +          [m
+[32m +          <div>[m
+[32m +          [m
+[32m +      [m
+[32m +          {MENUS.map((menu, index) => {[m
+[32m +         [m
+[32m +          return menu.submenu ? [m
+[32m +            <>[m
+[32m +            <ButtonGroup variant="contained" color="primary"  aria-label="split button">[m
+[32m +            <Button [m
+[32m +             component={Link}[m
+[32m +             className={classes.secMenu}[m
+[32m +             to={menu.link}[m
+[32m +            >{menu.menu}</Button>[m
+[32m +          <Button[m
+[32m +            color="primary"[m
+[32m +            size="small"[m
+[32m +            aria-controls={isMenuOpen ? 'split-button-menu' : undefined}[m
+[32m +            aria-expanded={isMenuOpen ? 'true' : undefined}[m
+[32m +            aria-label="select merge strategy"[m
+[32m +            aria-haspopup="menu"[m
+[32m +            className={classes.secMenu}[m
+[32m +            onClick={(e) => handleToggle(menu.menu, e)}[m
+[32m +           [m
+[32m +          >[m
+[32m +            <ArrowDropDownIcon />[m
+[32m++=======[m
+[32m+           {/* <Button color="inherit" component={Link} to="/new">[m
+[32m+             புதிய வெளியீடு[m
+[32m+           </Button> */}[m
+[32m+           <Button color="inherit" component={Link} to="/organic-foods">[m
+[32m+             இயற்கை உணவு[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/photo-frames">[m
+[32m+             படச்சட்டகம்[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/t-shirts">[m
+[32m+             சட்டை[m
+[32m+           </Button>[m
+[32m+ [m
+[32m+           <Button color="inherit" component={Link} to="/phone-cases">[m
+[32m+             கைபேசி உறை[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/mugs">[m
+[32m+             தேநீர் கோப்பை[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/stickers">[m
+[32m+             சுவரொட்டிகள்[m
+[32m+           </Button>[m
+[32m+           <Button color="inherit" component={Link} to="/others">[m
+[32m+             இதர[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+            </Button>[m
+[32m +        </ButtonGroup>[m
+[32m +        <Popper open={anchors[menu.menu]} anchorEl={anchorEl} role={undefined} placement='bottom-start' transition>[m
+[32m +          {({ TransitionProps, placement }) => ([m
+[32m +            <Grow[m
+[32m +              {...TransitionProps}[m
+[32m +              style={{[m
+[32m +                transformOrigin: placement === 'bottom' ? 'left top' : 'left bottom',[m
+[32m +              }}[m
+[32m +            >[m
+[32m +              <Paper className={classes.MenuPopup}>[m
+[32m +                <ClickAwayListener onClickAway={handleClose}>[m
+[32m +                  <MenuList id="split-button-menu">[m
+[32m +                    {menu.submenu.map((option, index1) => {[m
+[32m +                      [m
+[32m +                      return <MenuItem[m
+[32m +                        key={option.menu}[m
+[32m +                        component={Link}[m
+[32m +                        className={classes.subMenu}[m
+[32m +                        to={option.link}[m
+[32m +                        // disabled={index === 2}[m
+[32m +                        // selected={index === selectedIndex}[m
+[32m +                        onClick={(event) => handleMenuItemClick(menu.menu)}[m
+[32m +                      >[m
+[32m +                        {option.menu}[m
+[32m +                      </MenuItem>[m
+[32m +                    })}[m
+[32m +                  </MenuList>[m
+[32m +                </ClickAwayListener>[m
+[32m +              </Paper>[m
+[32m +            </Grow>[m
+[32m +          )}[m
+[32m +        </Popper>[m
+[32m +        </>[m
+[32m +          [m
+[32m +          [m
+[32m +                 [m
+[32m +         : [m
+[32m +            <>[m
+[32m +            <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">[m
+[32m +            <Button [m
+[32m +             component={Link}[m
+[32m +             className={classes.secMenu}[m
+[32m +             to={menu.link}[m
+[32m +            >{menu.menu}</Button>[m
+[32m +            </ButtonGroup>[m
+[32m +            </>[m
+[32m +          [m
+[32m +               [m
+[32m +[m
+[32m++<<<<<<< HEAD[m
+[32m +      [m
+[32m +          })}[m
+  [m
+[32m +</div>[m
+[32m +              <div style={{float:'right'}}>[m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+            <Button[m
+              color="inherit"[m
+              onClick={onToggleTopLoader}[m
+[36m@@@ -570,10 -490,6 +653,13 @@@[m
+            >[m
+              தொடர்புக்கு[m
+            </Button>[m
+[32m++<<<<<<< HEAD[m
+[32m +          [m
+[32m +          </div>[m
+[32m +[m
+[32m +          [m
+[32m++=======[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+          </Toolbar>[m
+        </AppBar>[m
+  [m
+[1mdiff --cc server/raavanan/settings/development.py[m
+[1mindex 60512ad,d5c644d..0000000[m
+[1m--- a/server/raavanan/settings/development.py[m
+[1m+++ b/server/raavanan/settings/development.py[m
+[36m@@@ -35,9 -35,9 +35,13 @@@[m [mDATABASES = [m
+      # }[m
+      'default': {[m
+          'ENGINE': 'django.db.backends.postgresql_psycopg2',[m
+[32m++<<<<<<< HEAD[m
+[32m +        'NAME': 'raavananstore',[m
+[32m++=======[m
+[32m+         'NAME': 'Raavanan',[m
+[32m++>>>>>>> de8410144532acff2724c2801c52b01f7b6cf8ae[m
+          'USER': 'postgres',[m
+[31m -        'PASSWORD': 'karthik1704',[m
+[32m +        'PASSWORD': 'postgres',[m
+          'HOST': 'localhost',[m
+          'PORT': '5432',[m
+      }[m
