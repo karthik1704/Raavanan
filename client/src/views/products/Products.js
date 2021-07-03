@@ -29,11 +29,12 @@ const Products = () => {
   const { category } = useParams();
   const dispatch = useDispatch();
 
-  const filterUrl = `${API_URL}api/product/?category__slug=${category}&category__parent_category=`;
+  const filterUrl = `${API_URL}api/product/?category__slug=${category}`;
   const url = `${API_URL}api/product/`;
 
   useEffect(() => {
     dispatch(resetProduct([]));
+    
   }, [dispatch, category]);
 
   useEffect(() => {

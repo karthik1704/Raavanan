@@ -1,5 +1,6 @@
 import { PAYTM_MID } from '../../CONSTANTS';
 
+const RAZORPAY_KEY = 'rzp_test_gXfpQtcK0MGmMf'
 const CONFIG = {
     style: {
         bodyBackgroundColor: "#fafafb",

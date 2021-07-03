@@ -35,9 +35,9 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Raavanan',
+        'NAME': 'raavananstore',
         'USER': 'postgres',
-        'PASSWORD': 'karthik1704',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -53,6 +53,12 @@ PAYTM_WEBSITE = 'WEBSTAGING'
 TWILIO_ACCOUNT_SID = 'AC390b9fc4f6f5f7fd2ce146259b5f6ce9'
 TWILIO_AUTH_TOKEN = '0e4b1e56dca116cbf9e5c743a7249eb6'  
 TWILIO_NUMBER = '+14155238886'
+
+RAZORPAY_ID = 'rzp_test_gXfpQtcK0MGmMf'
+
+RAZORPAY_SECRET = 'pc2rU6IsBcnXs1ReaLg3VDGE'
+
+
 
 # Mail
 if DEBUG:

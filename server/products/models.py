@@ -32,6 +32,7 @@ class Category(MPTTModel):
             k = k.parent
         return ' -> '.join(full_path[::-1])
 
+    
 
     # def __str__(self) -> str:
 

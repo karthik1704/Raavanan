@@ -19,48 +19,56 @@ import requests
 from django.conf import settings
 from django.core import serializers
 from twilio.rest import Client 
+import razorpay
+
 # Create your views here.
-def paytm(order_id, customer_id, price):    
+def razorpay_transacation(order_id, customer_id, price):    
 
     # import checksum generation utility
     # You can get this utility from https://developer.paytm.com/docs/checksum/
-    paytmParams = dict()
 
-    paytmParams["body"] = {
-        "requestType": "Payment",
-        "mid": settings.M_ID,
-        "websiteName": settings.PAYTM_WEBSITE,
-        "orderId": order_id,
-        "callbackUrl": settings.PAYTM_CALL_BACK,
-        "txnAmount": {
-            "value": price,
-            "currency": "INR",
-        },
-        "userInfo": {
-            "custId": customer_id,
-        },
-    }
-
-    # Generate checksum by parameters we have in body
-    # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
-    checksum = paytmchecksum.generateSignature(
-        json.dumps(paytmParams["body"]), settings.M_KEY)
+    client = razorpay.Client(auth=(settings.RAZORPAY_ID, settings.RAZORPAY_SECRET))
+    v = "%.2f" % round(price,2)
+    response = client.order.create(dict(amount=float(v), currency='INR', receipt=str(order_id), notes={'customer_id': customer_id}))
     
-    paytmParams["head"] = {
-        "signature": checksum
-    }
 
-    post_data = json.dumps(paytmParams)
+    # paytmParams = dict()
 
-    # for Staging
-    # url = "https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=BapaHR15076620391870&orderId="+str(order_id)
-    url = settings.PAYTM_INITIATE_TRANSACTION+str(order_id)
+    # paytmParams["body"] = {
+    #     "requestType": "Payment",
+    #     "mid": settings.M_ID,
+    #     "websiteName": settings.PAYTM_WEBSITE,
+    #     "orderId": order_id,
+    #     "callbackUrl": settings.PAYTM_CALL_BACK,
+    #     "txnAmount": {
+    #         "value": price,
+    #         "currency": "INR",
+    #     },
+    #     "userInfo": {
+    #         "custId": customer_id,
+    #     },
+    # }
 
-    # for Production
-    # url = "https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId="+str(order_id)
-    response = requests.post(url, data=post_data, headers={
-                            "Content-type": "application/json"}).json()
-    print(response)
+    # # Generate checksum by parameters we have in body
+    # # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
+    # checksum = paytmchecksum.generateSignature(
+    #     json.dumps(paytmParams["body"]), settings.M_KEY)
+    
+    # paytmParams["head"] = {
+    #     "signature": checksum
+    # }
+
+    # post_data = json.dumps(paytmParams)
+
+    # # for Staging
+    # # url = "https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=BapaHR15076620391870&orderId="+str(order_id)
+    # url = settings.PAYTM_INITIATE_TRANSACTION+str(order_id)
+
+    # # for Production
+    # # url = "https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId="+str(order_id)
+    # response = requests.post(url, data=post_data, headers={
+    #                         "Content-type": "application/json"}).json()
+    
     return response
 
 def paytm_transaction_status(order_id, customer_id, total_price):
@@ -139,49 +147,73 @@ class OrderConfirmView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):        
-        if not request.data.get('ORDERID', False):
+        if not request.data.get('razorpayOrderId', False):
             return Response("Invalid Order ID", status=status.HTTP_400_BAD_REQUEST)
-        snippets = Order.objects.filter(id=request.data.get('ORDERID')).latest('created_at')
-        snippets.transaction_status = request.data.get('STATUS')
-        snippets.payment_id = request.data.get('TXNID')
-        redirect_url = settings.CLIENT_CALL_BACK+'/failure'
-        if request.data.get('STATUS') == 'TXN_SUCCESS':
-            snippets.order_status = 'Placed'
-            redirect_url = settings.CLIENT_CALL_BACK+'/success'
-        snippets.save()
-        details = "மொத்த விலை : "+ str(snippets.total_price)+"\n"
-        if request.data.get('STATUS') == 'TXN_SUCCESS':
-            
-            serializer = OrderSerializer(snippets, many=False)
-            
-            i =  1
-            for item in serializer.data['items']:
-                details += 'பொருள் '+str(i)+ ":"
-                prod = Product.objects.filter(id=item['product'])            
-                prod = serializers.serialize('json', prod) 
-                prod = json.loads(prod)
-                item['product'] = prod[0]['fields']
-                
-                item['product']['quantity'] = item['quantity']
-                
-                details+= 'பெயர் '+item['product']['name']+'\n'
-                details+= 'எண்ணிக்கை  '+str(item['product']['quantity'])+'\n'
-                i+=1
-            order_no = '#RAAV'+str(snippets.id)
-            # message = 'Hi, Your order number '+order_no+' has been successfully placed'
-            
-            client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN) 
-            template = """அன்பார்ந்த வணக்கங்கள் ! ராவணன் அங்காடியில் பொருள் வாங்கியமைக்கு மிக்க நன்றி  குறியீட்டு எண் : """+order_no+" விபரம்: "+details
-            
-            
-            # message = client.messages.create( 
-            #                             from_='whatsapp:'+settings.TWILIO_NUMBER,  
-            #                             body= template,
-            #                             to='whatsapp:+919750709506' )
-            # send_message(self.request.user.phone,  message)
-            Cart.objects.filter(user_id=snippets.user_id).delete()
+        
+        snippets = Order.objects.filter(payment_id=request.data.get('razorpayOrderId')).latest('created_at')
+        if not snippets:
+            redirect_url = settings.CLIENT_CALL_BACK+'/failure'            
+            return HttpResponseRedirect(redirect_to=redirect_url)
 
-        return HttpResponseRedirect(redirect_to=redirect_url)
+        client = razorpay.Client(auth = (settings.RAZORPAY_ID, settings.RAZORPAY_SECRET))
+        params_dict = {
+            'razorpay_order_id': request.data.get('razorpayOrderId', False),
+            'razorpay_payment_id': request.data.get('razorpayPaymentId', False),
+            'razorpay_signature': request.data.get('razorpaySignature', False)
+        }
+        try:
+            verification = client.utility.verify_payment_signature(params_dict)
+        
+        except:
+            status = 'failure'
+            snippets.transaction_status = 'TXN_FAILURE'
+            snippets.save()
+            return Response({'status' : status})
+
+        
+        snippets.transaction_status = 'TXN_SUCCESS'
+        # snippets.payment_id = request.data.get('TXNID')
+        
+        # if request.data.get('STATUS') == 'TXN_SUCCESS':
+        snippets.order_status = 'Placed'
+        status = 'success'
+        snippets.save()
+
+        details = "மொத்த விலை : "+ str(snippets.total_price)+"\n"
+
+        # if request.data.get('STATUS') == 'TXN_SUCCESS':
+            
+        serializer = OrderSerializer(snippets, many=False)
+        
+        i =  1
+        for item in serializer.data['items']:
+            details += 'பொருள் '+str(i)+ ":"
+            prod = Product.objects.filter(id=item['product'])            
+            prod = serializers.serialize('json', prod) 
+            prod = json.loads(prod)
+            item['product'] = prod[0]['fields']
+            
+            item['product']['quantity'] = item['quantity']
+            
+            details+= 'பெயர் '+item['product']['name']+'\n'
+            details+= 'எண்ணிக்கை  '+str(item['product']['quantity'])+'\n'
+            i+=1
+        order_no = '#RAAV'+str(snippets.id)
+        # message = 'Hi, Your order number '+order_no+' has been successfully placed'
+        
+        client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN) 
+        template = """அன்பார்ந்த வணக்கங்கள் ! ராவணன் அங்காடியில் பொருள் வாங்கியமைக்கு மிக்க நன்றி  குறியீட்டு எண் : """+order_no+" விபரம்: "+details
+        
+        
+        # message = client.messages.create( 
+        #                             from_='whatsapp:'+settings.TWILIO_NUMBER,  
+        #                             body= template,
+        #                             to='whatsapp:+919750709506' )
+        # send_message(self.request.user.phone,  message)
+        Cart.objects.filter(user_id=snippets.user_id).delete()
+
+        # return HttpResponseRedirect(redirect_to=redirect_url)
+        return Response({'status' : status})
         
 
 
@@ -196,7 +228,7 @@ class OrderView(APIView):
 
         return Response(serializer.data)
 
-    def post(self, request, format=None):
+    def post(self, request, format=None):        
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             
@@ -210,8 +242,9 @@ class OrderView(APIView):
             order = OrderSerializer.create(self, data)
             # create_id = Order.objects.create(data)
             
-            paytm_reponse = paytm(order.id, order.user_id, order.total_price)
-           
+            paytm_reponse = razorpay_transacation(order.id, order.user_id, order.total_price)
+            order.payment_id = paytm_reponse['id']
+            order.save()
             paytm_reponse['order_id'] = order.id
             paytm_reponse['price'] =  order.total_price
             return Response(paytm_reponse, status=status.HTTP_201_CREATED)

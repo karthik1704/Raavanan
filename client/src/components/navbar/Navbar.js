@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
-
+import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,11 +23,18 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LockIcon from '@material-ui/icons/Lock';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
 
-import { useSelector, useDispatch } from 'react-redux';
+import MenuList from '@material-ui/core/MenuList';
+import {useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { API_URL } from '../../CONSTANTS';
+import { API_URL, MENUS } from '../../CONSTANTS';
 
 import useDarkTheme from '../../hooks/useDarkTheme';
 import useTopLoader from '../../hooks/useTopLoader';
@@ -38,7 +45,8 @@ import { toggleAppDrawer } from '../../data/actions/appAction';
 import RavananLogo from '../../asserts/raavanan logo png.png';
 import { logoutUser } from '../../data/actions/loginActions';
 
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
+import { event } from 'react-ga';
 const useStyles = makeStyles((theme) => ({
   links: {
     color: '#fff',
@@ -65,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-
+    
     display: 'flex',
     flex: 1,
     [theme.breakpoints.up('sm')]: {
@@ -77,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
       // marginLeft: theme.spacing(3),
       width: 'auto',
       marginRight: 0,
-      marginBottom: '20px',
+      marginBottom:'20px'
     },
   },
   searchIcon: {
@@ -90,15 +98,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: 'inherit',
-    height: '40px',
+    color: 'inherit',  
+    height:'40px'  
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
-    width: '70%',
+    width: '70%',    
     [theme.breakpoints.up('md')]: {
       width: '50ch',
     },
@@ -115,27 +123,63 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-
+  
   centerToolbar: {
-    backgroundColor: 'darkslategrey',
+    display: 'none',
+    [theme.breakpoints.up('lg')]: {
+      backgroundColor:'darkblue',
+     display: 'flex',
+    justifyContent: 'space-between'
+    },
+   
   },
   rightToolbar: {
-    display: 'flex',
-    width: '100%',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end',
+  display: 'flex',
+width: '100%',
+flexWrap: 'wrap',
+justifyContent: 'flex-end',
   },
-  logoutBtn: {
-    boxShadow: 'none !important',
+  logoutBtn:{
+    
+    boxShadow:'none !important'
   },
+  secMenu:{
+    background:'darkblue !important',
+    fontSize:'12px !important',
+    
+    
+  },
+  subMenu:{
+    background:'darkblue !important',
+    fontSize:'12px !important',
+    color:'white',
+    '&:hover': {
+      backgroundColor: "green !important",
+   },
+  },
+  MenuPopup:{
+    background:'darkblue !important',
+  }
+  
 }));
 
 export default function Navbar() {
   const logout_url = `${API_URL}api/auth/logout/`;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  var anchors_dict = {}
+  MENUS.map((option) => {
+    if(option.submenu){
+      anchors_dict[option.menu] = false
+      
+    }
+    
+  })
+  const [anchors, setAnchors] = useState(anchors_dict);
+  
+  
   const [category, setCategory] = useState([]);
-
+  const anchorRef = React.useRef(null);
   const [theme, onToggleTheme] = useDarkTheme();
   const [loading, onToggleTopLoader] = useTopLoader();
   const dispatch = useDispatch();
@@ -144,28 +188,44 @@ export default function Navbar() {
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
   // console.log(state);
-  const isMenuOpen = Boolean(anchorEl);
-  let history = useHistory();
+  // const isMenuOpen = Boolean(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  let history = useHistory()
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setIsMenuOpen(false);
   };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
+  const handleClose = (event) => {
+    setAnchors(anchors_dict);
+    setAnchorEl(null);
+    setOpen(false);
+    
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+  };
   const logout = () => {
     // axios.post(logout_url, {
-
+      
     //   })
     //   .then((response) => {
     //     dispatch(logoutUser(response.data));
     //   }, (error) => {
     //     console.log(error);
     //   });
-    dispatch(logoutUser(''));
-
-    history.push('/');
+      dispatch(logoutUser(''));
+      
+      history.push("/")
   };
 
   // useEffect(() => {
@@ -176,20 +236,30 @@ export default function Navbar() {
   // }, []);
 
   useEffect(() => {
-    if (!login.loggedIn) return;
-
-    if (cartItems.length > 0) {
-      var carts = [];
-      for (var i = 0; i < cartItems.length; i++) {
+   
+    if(!login.loggedIn)
+      return;
+      
+    if(cartItems.length > 0){
+      var carts = []
+      for(var i=0;i<cartItems.length;i++){
         carts.push({
-          product: cartItems[i]['id'],
-          price: cartItems[i]['price_id'],
-          quantity: cartItems[i]['quantity'],
-        });
+          "product" : cartItems[i]['id'],
+          "price" : cartItems[i]['price_id'],
+          "quantity": cartItems[i]['quantity']
+        })
       }
-      axios.post(`${API_URL}api/sync_cart/`, carts).then((res) => {});
+      axios
+      .post(`${API_URL}api/sync_cart/`,carts)
+      .then((res) => {
+        
+      });
     }
+    
+      
+        
   }, [login, cartItems]);
+ 
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -202,23 +272,45 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem component={Link} to="/orders">
-        My Orders
-      </MenuItem>
+      <MenuItem  component={Link} to="/orders">My Orders</MenuItem>
       {/* <MenuItem  onClick={logout}>Log out</MenuItem> */}
-      <GoogleLogout
-        icon={false}
-        className={classes.logoutBtn}
-        clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
-        buttonText="Logout"
-        onLogoutSuccess={logout}
-      ></GoogleLogout>
+      <GoogleLogout icon={false} 
+      className={classes.logoutBtn}
+      clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
+      buttonText="Logout"
+      onLogoutSuccess={logout}
+    >
+    </GoogleLogout>
     </Menu>
   );
 
   const handleClick = (event) => {
+    
     setAnchorEl(event.currentTarget);
+    
+    
   };
+  const handleProfileMenuClick = (event) => {
+    
+    setAnchorEl(event.currentTarget);
+    setIsMenuOpen(true);
+    
+  };
+
+  const handleMenuItemClick = (menu) => {
+    // setSelectedIndex(index);
+    
+    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));
+  };
+
+  const handleToggle = (menu, e) => {
+    console.log(e);
+    setAnchorEl(e.currentTarget);
+    setAnchors(prevState => ({ ...prevState, [menu]: !anchors[menu] }));
+    
+    // setOpen((prevOpen) => !prevOpen);
+  };
+
 
   return (
     <div className={classes.grow}>
@@ -226,83 +318,7 @@ export default function Navbar() {
         position="static"
         color={theme === 'dark' ? 'inherit' : 'primary'}
       >
-        {/* <Toolbar className={classes.sectionDesktop}>
-          <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            component={Link}
-            to="/terms"
-          >
-            கொள்கைகள்
-          </Button>
-          <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            component={Link}
-            to="/about"
-          >
-            எங்களைப் பற்றி
-          </Button>
-          <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            component={Link}
-            to="/contact"
-          >
-            தொடர்புக்கு
-          </Button>
-        
-          <div className={classes.grow} />
-
-          {(()=> {
-          if (loggedIn) {
-            return (
-              <>
-              <Button
-            color="inherit"
-            onClick={logout}
-          
-          >
-            Log out 
-          </Button>
-          <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            
-            component={Link}
-            to="/orders"
-          >
-            
-            {`${login.user.user.first_name}`}
-          </Button>
-              </>
-            )
-          } else {
-            return (<> <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            startIcon={<LockIcon />}
-            component={Link}
-            to="/login"
-          >
-            உள்நுழைய 
-          </Button>
-          <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            startIcon={<AssignmentIndIcon />}
-            component={Link}
-            to="/register"
-          >
-            பதிவு செய்ய
-          </Button></>)
-          }
-        })()}
-          
-        
-        </Toolbar>
-        
-        */}
+       
         <Toolbar>
           <IconButton
             edge="start"
@@ -315,8 +331,10 @@ export default function Navbar() {
           </IconButton>
 
           <Link to="/">
-            <img src={RavananLogo} alt="logo" height="80px" width="80px" />
+            <img src={RavananLogo} alt="logo"  height="80px" width="80px" />
+          
           </Link>
+          
 
           <div className={`${classes.search} ${classes.sectionDesktop}`}>
             <div className={classes.searchIcon}>
@@ -331,8 +349,9 @@ export default function Navbar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          {/* <div className={classes.grow} /> */}
+          <div className={classes.grow} />
           <div className={`${classes.sectionDesktop}  ${classes.rightToolbar}`}>
+            
             <Button
               aria-label=" 4 product in cart"
               color="inherit"
@@ -343,54 +362,56 @@ export default function Navbar() {
                   <ShoppingCartIcon />
                 </Badge>
               }
+              
             >
-              கூடை
+              Cart
             </Button>
+           
+            
+   
+            {(()=> {
+          if (loggedIn) {
+            return (
+              <>
+              {/* {login.user} */}
+          <div>
+            
+       <Button aria-label=" 4 product in cart"
+              color="inherit" aria-haspopup="true" onClick={handleProfileMenuClick}>
+      
+      {login.user.user &&(`${login.user.user.first_name}`) }
+      </Button>
+      {renderMenu}
+      
+      
+    </div>
+              </>
+            )
+          } else {
+            return (<> <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            startIcon={<LockIcon />}
+            component={Link}
+            to="/login"
+          >
+            Sign In 
+          </Button>
+          <Button
+            color="inherit"
+            onClick={onToggleTopLoader}
+            startIcon={<AssignmentIndIcon />}
+            component={Link}
+            to="/register"
+          >
+            Sign Up
+          </Button></>)
+          }
+        })()}
 
-            {(() => {
-              if (loggedIn) {
-                return (
-                  <>
-                    {/* {login.user} */}
-                    <div>
-                      <Button
-                        aria-label=" 4 product in cart"
-                        color="inherit"
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                      >
-                        {login.user.user && `${login.user.user.first_name}`}
-                      </Button>
-                      {renderMenu}
-                    </div>
-                  </>
-                );
-              } else {
-                return (
-                  <>
-                    {' '}
-                    <Button
-                      color="inherit"
-                      onClick={onToggleTopLoader}
-                      startIcon={<LockIcon />}
-                      component={Link}
-                      to="/login"
-                    >
-                      உள்நுழைய
-                    </Button>
-                    <Button
-                      color="inherit"
-                      onClick={onToggleTopLoader}
-                      startIcon={<AssignmentIndIcon />}
-                      component={Link}
-                      to="/register"
-                    >
-                      பதிவு செய்ய
-                    </Button>
-                  </>
-                );
-              }
-            })()}
+           
+
+
           </div>
 
           {/* <div className={classes.sectionMobile}>
@@ -420,6 +441,7 @@ export default function Navbar() {
             </IconButton>
           </div>
          */}
+        
         </Toolbar>
         <Toolbar className={classes.sectionMobile}>
           <div className={classes.search}>
@@ -440,36 +462,92 @@ export default function Navbar() {
         <Toolbar
           className={`${classes.sectionDesktop} ${classes.centerToolbar}`}
         >
-          {/* <Button color="inherit" component={Link} to="/new">
-            புதிய வெளியீடு
-          </Button> */}
-          <Button color="inherit" component={Link} to="/organic-foods">
-            இயற்கை உணவு
+          
+          <div>
+          
+      
+          {MENUS.map((menu, index) => {
+         
+          return menu.submenu ? 
+            <>
+            <ButtonGroup variant="contained" color="primary"  aria-label="split button">
+            <Button 
+             component={Link}
+             className={classes.secMenu}
+             to={menu.link}
+            >{menu.menu}</Button>
+          <Button
+            color="primary"
+            size="small"
+            aria-controls={isMenuOpen ? 'split-button-menu' : undefined}
+            aria-expanded={isMenuOpen ? 'true' : undefined}
+            aria-label="select merge strategy"
+            aria-haspopup="menu"
+            className={classes.secMenu}
+            onClick={(e) => handleToggle(menu.menu, e)}
+           
+          >
+            <ArrowDropDownIcon />
           </Button>
-          <Button color="inherit" component={Link} to="/photo-frames">
-            படச்சட்டகம்
-          </Button>
-          <Button color="inherit" component={Link} to="/t-shirts">
-            சட்டை
-          </Button>
+        </ButtonGroup>
+        <Popper open={anchors[menu.menu]} anchorEl={anchorEl} role={undefined} placement='bottom-start' transition>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin: placement === 'bottom' ? 'left top' : 'left bottom',
+              }}
+            >
+              <Paper className={classes.MenuPopup}>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList id="split-button-menu">
+                    {menu.submenu.map((option, index1) => {
+                      
+                      return <MenuItem
+                        key={option.menu}
+                        component={Link}
+                        className={classes.subMenu}
+                        to={option.link}
+                        // disabled={index === 2}
+                        // selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(menu.menu)}
+                      >
+                        {option.menu}
+                      </MenuItem>
+                    })}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+        </>
+          
+          
+                 
+         : 
+            <>
+            <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
+            <Button 
+             component={Link}
+             className={classes.secMenu}
+             to={menu.link}
+            >{menu.menu}</Button>
+            </ButtonGroup>
+            </>
+          
+               
 
-          <Button color="inherit" component={Link} to="/phone-cases">
-            கைபேசி உறை
-          </Button>
-          <Button color="inherit" component={Link} to="/mugs">
-            தேநீர் கோப்பை
-          </Button>
-          <Button color="inherit" component={Link} to="/stickers">
-            சுவரொட்டிகள்
-          </Button>
-          <Button color="inherit" component={Link} to="/others">
-            இதர
-          </Button>
+      
+          })}
 
+</div>
+              <div style={{float:'right'}}>
           <Button
             color="inherit"
             onClick={onToggleTopLoader}
             component={Link}
+            className={classes.secMenu}
             to="/terms"
           >
             கொள்கைகள்
@@ -478,23 +556,29 @@ export default function Navbar() {
             color="inherit"
             onClick={onToggleTopLoader}
             component={Link}
+            className={classes.secMenu}
             to="/about"
           >
-            எங்களைப் பற்றி
+           எங்களைப் பற்றி
           </Button>
           <Button
             color="inherit"
             onClick={onToggleTopLoader}
+            className={classes.secMenu}
             component={Link}
             to="/contact"
           >
             தொடர்புக்கு
           </Button>
+          
+          </div>
+
+          
         </Toolbar>
       </AppBar>
 
       {/* {renderMenu} */}
-
+      
       <AppDrawer theme={theme} onToggleTheme={onToggleTheme} />
     </div>
   );

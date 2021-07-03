@@ -48,7 +48,7 @@ if(status == 'success'){
     <p id="message">
     Thank you, your order has been successfully placed.
     </p>
-    {/* <a href="/" id="contBtn">Continue Shopping</a> */}
+    <a href="/" id="contBtn">Continue Shopping</a>
     </div>
     </div>
     

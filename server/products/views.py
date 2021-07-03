@@ -17,13 +17,27 @@ class ProductViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend,filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category__slug', 'category__parent', 'category__parent__parent','slug']
+    # filterset_fields = ['category__slug', 'category__parent', 'category__parent__parent','slug']
     search_fields = ['product_name','category__name']
     ordering_fields = ['created_at']
     ordering = ['-created_at']
     lookup_fields = ('slug','pk')  
 
-    def retrieve(self, request, *args, **kwargs):
+    def get_queryset(self):
+        category_s = self.request.query_params.get('category__slug', None)
+        print(category_s)
+        cats = Category.objects.filter(slug = category_s)
+
+        
+        if category_s is not None:
+            categories = cats.get_descendants(include_self=True)
+            queryset = Product.objects.filter(category__in = categories)
+        else:
+            queryset = Product.objects.all()
+        print(len(queryset))
+        return queryset
+
+    def retrieve(self, request, *args, **kwargs):        
         ids = self.kwargs.get('pk', None)
         if ids is not None:                       
             if not ids.isnumeric() :
@@ -36,23 +50,18 @@ class ProductViewset(viewsets.ModelViewSet):
                 
         return super(ProductViewset, self).retrieve(request, *args, **kwargs)
 
+    # def get_queryset(self):
+    #     print(self.request.query_params)
+    #     ids = self.request.query_params.get('category__slug', None)
+    #     if ids is not None:
+    #         # ids = [int(x) for x in ids.split(',')]
+            
+    #         queryset = Product.objects.filter(category__parent_category__in=['phone-cases'])
+    #     else:
+    #          queryset = Product.objects.none()
+    #     return queryset
 
 
-
-class CustomProductsList(generics.ListAPIView):
-    queryset = Product.objects.none()
-    serializer_class=ProductSerializer
-
-    def get_queryset(self):
-        ids = self.request.query_params.get('ids', None)
-
-        if ids is not None:
-            ids = [int(x) for x in ids.split(',')]
-            queryset = Product.objects.filter(pk__in=ids)
-        else:
-             queryset = Product.objects.none()
-        return queryset
-  
 class CustomProductsList(generics.ListAPIView):
     queryset = Product.objects.none()
     serializer_class=ProductSerializer
