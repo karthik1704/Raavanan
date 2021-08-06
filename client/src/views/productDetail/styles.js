@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
+import makeStyles from '@material-ui/styles/makeStyles';
+import { green } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     margin: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '16px 0',
     },
   },
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 6,
     width: 500,
     height: 500,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 300,
       height: 300,
     },
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 6,
     width: 500,
     height: 500,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 300,
       height: 300,
     },

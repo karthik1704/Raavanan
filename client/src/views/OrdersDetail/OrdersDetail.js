@@ -15,7 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
+import withStyles from '@material-ui/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import Stepper from "@material-ui/core/Stepper";
@@ -33,7 +34,7 @@ import { API_URL } from '../../CONSTANTS';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '16px 0',
     },
     justifyContent: 'center'

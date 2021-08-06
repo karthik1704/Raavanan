@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { alpha } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -67,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -81,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
       width: 'auto',
       maxWidth: '50% !important',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       // marginLeft: theme.spacing(3),
       width: 'auto',
       marginRight: 0,
@@ -104,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '70%',
     [theme.breakpoints.up('md')]: {
@@ -303,7 +304,7 @@ export default function Navbar() {
             color="inherit"
             aria-label="open drawer"
             onClick={() => dispatch(toggleAppDrawer(true))}
-          >
+            size="large">
             <MenuIcon />
           </IconButton>
 

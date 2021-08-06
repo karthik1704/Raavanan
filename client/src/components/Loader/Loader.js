@@ -1,5 +1,5 @@
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   root: {

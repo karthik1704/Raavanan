@@ -8,13 +8,13 @@ import Icon from '@material-ui/core/Icon';
 import Chip from '@material-ui/core/Chip';
 import { addItem, removeItem } from '../../data/actions/cartActions';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 238,
     marginBottom: theme.spacing(0.5),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: 140,
     },
     [theme.breakpoints.up('sm')]: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5px',
     paddingTop: 10,
     paddingRight: 10,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 150,
       height: 150,
     },

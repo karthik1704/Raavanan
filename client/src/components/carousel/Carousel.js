@@ -1,6 +1,6 @@
 import { Slide } from 'react-slideshow-image';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 
 import CarouselImage1 from '../../asserts/images/banner1.jpg';
 import CarouselImage2 from '../../asserts/images/banner2.jpg';
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     height: 340,
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 120,
     },
     [theme.breakpoints.up('sm')]: {

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 
 // import InfiniteScroll from 'react-infinite-scroll-component';
 

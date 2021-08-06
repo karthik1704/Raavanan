@@ -14,7 +14,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import Container from '@material-ui/core/Container';
 import Header from "../../components/Header/Header";
 import GoogleLogin from 'react-google-login';

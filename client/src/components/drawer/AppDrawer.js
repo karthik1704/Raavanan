@@ -14,7 +14,7 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import SmartphoneRoundedIcon from '@material-ui/icons/SmartphoneRounded';
 
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { deepPurple } from '@material-ui/core/colors';
 
 import { useSelector, useDispatch } from 'react-redux';

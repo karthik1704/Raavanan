@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import { addItem } from '../../data/actions/cartActions';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
 import Badge from '@material-ui/core/Badge';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5px',
     paddingTop: 10,
     paddingRight: 10,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 150,
       height: 150,
     },
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5px',
     paddingTop: 10,
     paddingRight: 10,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 150,
       height: 150,
     },
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1px',
     fontWeight:'bold',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '0.6rem',
       fontWeight: 600,
     },
@@ -102,10 +102,10 @@ const ProductList = ({ products }) => {
   // products.map((product) => (
   //   console.log(product.price[0].price)
   // ))
-  return (
-    <>
-      {products.map((product, i) => {
-        return <Grid item xs={6} sm={4} md={3} xl={3} key={i}>
+  return <>
+    {products.map((product, i) => {
+      return (
+        <Grid item xs={6} sm={4} md={3} xl={3} key={i}>
           <Card className={classes.root}>
           
             <CardActionArea component={Link} to={`/product/${product.slug ? product.slug : product.id}`}>
@@ -114,7 +114,7 @@ const ProductList = ({ products }) => {
                          <Badge  anchorOrigin={{
                           vertical: 'top',
                           horizontal: 'left',
-                        }} color="primary" overlap="circle" badgeContent= {`${product.price[0].discount}%`}  variant="standard" className={classes.shapeCircle}>
+                        }} color="primary" overlap="circular" badgeContent= {`${product.price[0].discount}%`}  variant="standard" className={classes.shapeCircle}>
                              
                             </Badge>
                   )}
@@ -168,9 +168,9 @@ const ProductList = ({ products }) => {
             </CardActions>
           </Card>
         </Grid>
+      );
 })}
-    </>
-  );
+  </>;
 };
 
 export default ProductList;
