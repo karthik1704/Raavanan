@@ -106,11 +106,13 @@ export default function PaymentForm(props) {
                   
                   history.push('orderconfirmation/'+result.data.status)
               },
-              // prefill: {
-              //     name: "Soumya Dey",
-              //     email: "SoumyaDey@example.com",
-              //     contact: "9999999999",
-              // },
+              prefill: {
+                  name: "Raavanan",
+                  email: "order@raavananstore.com",
+                  contact: "9578225101",
+              },
+              
+              "readonly": { 'email': true, 'contact': true },
               // notes: {
               //     address: "Soumya Dey Corporate Office",
               // },
