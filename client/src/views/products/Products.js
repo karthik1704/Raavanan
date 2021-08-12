@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
-import makeStyles from '@material-ui/styles/makeStyles';
 
 // import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -18,11 +17,11 @@ import { Helmet } from 'react-helmet';
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 import ProductList from '../../components/productList/ProductList';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(1),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     marginTop: theme.spacing(1),
+//   },
+// }));
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
@@ -34,7 +33,6 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(resetProduct([]));
-    
   }, [dispatch, category]);
 
   useEffect(() => {
@@ -43,14 +41,17 @@ const Products = () => {
     });
   }, [dispatch, category, url, filterUrl]);
 
-  const classes = useStyles();
-
   return (
     <div>
       <Helmet>
         <title>இராவணன் அங்காடி | {category}</title>
       </Helmet>
-      <Grid container className={classes.root}>
+      <Grid
+        container
+        sx={{
+          marginTop: 1,
+        }}
+      >
         {products?.length !== 0 ? (
           <ProductList products={products} />
         ) : (

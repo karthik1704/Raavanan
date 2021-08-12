@@ -120,7 +120,7 @@ export default function ProductDetail() {
   const handleSizeChange = (e) => {
     setSize(e.target.value);
     productDetail.price
-      .filter((price) => price.types == e.target.value)
+      .filter((price) => price.types === e.target.value)
       .map((price) => {
         // setMrp(price.mrp);
         // setPrice(price.price);

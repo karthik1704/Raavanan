@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import useTopLoader from '../../hooks/useTopLoader';
 
 const Contact = () => {
-  const [loading, onToggleTopLoader] = useTopLoader();
+  const [, onToggleTopLoader] = useTopLoader();
 
   useEffect(() => {
     onToggleTopLoader(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

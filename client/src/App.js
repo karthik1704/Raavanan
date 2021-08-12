@@ -5,22 +5,19 @@ import {
   createTheme,
   ThemeProvider,
   StyledEngineProvider,
-  adaptV4Theme,
 } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Routes from './routes/Routes';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import useDarkTheme from './hooks/useDarkTheme';
 
 import Loader from './components/Loader/Loader';
 import Navbar from './components/navbar/Navbar';
-import Footer from './components/Footer/Footer';
 import NewFooter from './components/NewFooter/NewFooter';
-import useTopLoader from './hooks/useTopLoader';
 // import { dark, light } from './theme';
 
 import ReactGA from 'react-ga';
@@ -37,27 +34,23 @@ function App() {
   //const { dispatch } = useDispatch();
   const { dispatch } = store;
 
-  const darkTheme = createTheme(
-    adaptV4Theme({
-      palette: {
-        mode: 'dark',
-      },
-    })
-  );
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
 
-  const lightTheme = createTheme(
-    adaptV4Theme({
-      palette: {
-        primary: {
-          main: green[600],
-          // main: '#8bc34a'
-        },
+  const lightTheme = createTheme({
+    palette: {
+      primary: {
+        main: green[600],
+        // main: '#8bc34a'
       },
-    })
-  );
+    },
+  });
 
   useEffect(() => {
-    const self = this;
+    // const self = this;
 
     //console.log(self.props);
     axios.interceptors.request.use(
@@ -84,7 +77,7 @@ function App() {
         return response;
       },
       function (error) {
-        if (error.response.data.code == 'token_not_valid') {
+        if (error.response.data.code === 'token_not_valid') {
           localStorage.setItem('app_token', '');
           axios.defaults.headers.common['Authorization'] = '';
           //Promise.reject(error);
@@ -97,6 +90,7 @@ function App() {
         return Promise.reject(error);
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
