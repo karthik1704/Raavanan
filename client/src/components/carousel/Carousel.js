@@ -2,7 +2,9 @@ import Card from '@material-ui/core/Card';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import CarouselImage1 from '../../asserts/images/3.jpg';
+import CarouselImage1 from '../../asserts/images/banner1.jpg';
+import CarouselImage2 from '../../asserts/images/banner2.jpg';
+import CarouselImage3 from '../../asserts/images/banner3.jpg';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
@@ -42,7 +44,7 @@ const Carousel = () => {
                         
             <div className="each-slide">
               <div className={classes.media} style={{'height': '200px','width': '100%','backgroundSize': 'cover',
-    'backgroundRepeat': 'no-repeat','backgroundImage': `url(${image})`}}>
+    'backgroundRepeat': 'no-repeat','background-size': '100% 220px','background-position': 'center center','backgroundImage': `url(${image})`}}>
                 {/* <span>Slide 1</span> */}
               </div>
             </div>
