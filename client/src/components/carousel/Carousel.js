@@ -5,7 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import CarouselImage1 from '../../asserts/images/banner1.jpg';
 import CarouselImage2 from '../../asserts/images/banner2.jpg';
 import CarouselImage3 from '../../asserts/images/banner3.jpg';
-import 'react-slideshow-image/dist/styles.css';
+
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,7 @@ const Carousel = () => {
   const classes = useStyles();
   const slideImages = [CarouselImage1, CarouselImage2, CarouselImage3];
   return (
+
     <div className="slide-container">
       <Slide>
         {slideImages.map((image, idx) => (
@@ -49,6 +53,7 @@ const Carousel = () => {
         ))}
       </Slide>
     </div>
+
   );
 };
 

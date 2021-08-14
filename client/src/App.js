@@ -21,7 +21,7 @@ import useTopLoader from './hooks/useTopLoader';
 import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 import {store} from './data/store';
-import Logo from './asserts/raavanan logo.png';
+import Logo from './asserts/raavanan logo png.png';
 import axios from 'axios';
 import { toggleAppLoading } from './data/actions/appAction';
 import { logoutUser } from './data/actions/loginActions';
