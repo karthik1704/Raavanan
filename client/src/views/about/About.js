@@ -6,10 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const About = () => {
-  const [loading, onToggleTopLoader] = useTopLoader();
+  const [, onToggleTopLoader] = useTopLoader();
 
   useEffect(() => {
     onToggleTopLoader(false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
