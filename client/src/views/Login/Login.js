@@ -1,23 +1,26 @@
 import { useState } from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import MuiPhoneInput from 'material-ui-phone-number';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 
-import Container from '@material-ui/core/Container';
-import Header from '../../components/Header/Header';
+import MuiPhoneInput from 'material-ui-phone-number';
+
+import axios from 'axios';
 import GoogleLogin from 'react-google-login';
-import { API_URL } from '../../CONSTANTS';
+import { useSelector, useDispatch } from 'react-redux';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { useHistory } from 'react-router-dom';
+
+import Header from '../../components/Header/Header';
+import { API_URL } from '../../CONSTANTS';
 import { loginUser } from '../../data/actions/loginActions';
 
 import { Styled } from '@material-ui/core/styles';
