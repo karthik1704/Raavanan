@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import { useState, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -17,32 +15,37 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { addItem } from '../../data/actions/cartActions';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import StoreIcon from '@material-ui/icons/Store';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+//import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 
 // import green from '@material-ui/core/colors/green';
 
 import axios from 'axios';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-
-import { API_URL } from '../../CONSTANTS';
-
+import { addItem } from '../../data/actions/cartActions';
 import { Helmet } from 'react-helmet';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import { API_URL } from '../../CONSTANTS';
 import { fetchProductDetail } from '../../data/actions/productActions';
 
-import useStyles from './styles';
+import { styled } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+
+const RootDiv = styled('div')(({ theme }) => ({
+  margin: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    margin: '16px 0',
+  },
+}));
 
 export default function ProductDetail() {
   const { id } = useParams();
   const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [value, setValue] = useState('');
   const [size, setSize] = useState('');
   // const [price, setPrice] = useState('');
@@ -95,8 +98,8 @@ export default function ProductDetail() {
       }
     });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     //return () => dispatch(fetchProductDetail({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   // useEffect(() => {
@@ -124,8 +127,8 @@ export default function ProductDetail() {
       .map((price) => {
         // setMrp(price.mrp);
         // setPrice(price.price);
-        setValue(price);
         console.log(price);
+        setValue(price);
       });
   };
 
@@ -134,7 +137,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className={classes.root}>
+    <RootDiv>
       <Helmet>
         {`
         <title>
@@ -145,22 +148,35 @@ export default function ProductDetail() {
       {productDetail && (
         <div key={productDetail.id}>
           <Grid container spacing={10}>
-            <Grid item xs={12} md={6} lg={5} className={classes.center}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={5}
+              sx={{
+                display: 'flex',
+                justifyContent: 'conter',
+              }}
+            >
               <div>
                 <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}
-                  className={
-                    //productDetail.category &&
-                    // productDetail.category.name !== 'கைபேசி உறை'
-                    // ? classes.frameImage
-                    classes.productImage
-                  }
+                  sx={{
+                    pt: '6px',
+                    width: { sm: 300, md: 500 },
+                    height: { sm: 300, md: 500 },
+                  }}
                 />
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="h5" className={classes.title}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 600,
+                }}
+              >
                 {productDetail.name}
               </Typography>
               {/* <Typography variant="subtitle1">
@@ -276,7 +292,10 @@ export default function ProductDetail() {
                 <Button
                   color="secondary"
                   justifycontent="flex-end"
-                  className={classes.whatsappBtn}
+                  sx={{
+                    margin: 1,
+                    backgroundColor: green[500],
+                  }}
                   variant="contained"
                   startIcon={<AddShoppingCartIcon />}
                   onClick={(event) => {
@@ -373,7 +392,7 @@ export default function ProductDetail() {
           </Grid>
         </div>
       )}
-    </div>
+    </RootDiv>
   );
 }
 
