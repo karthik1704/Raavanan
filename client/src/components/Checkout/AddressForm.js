@@ -1,52 +1,43 @@
-import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import MuiPhoneInput from 'material-ui-phone-number';
-import { useState, useEffect } from 'react';
 
 export default function AddressForm(props) {
-  
-
-  
-   const mobile = props.address.mobile;
-  const setMobile = props.address.setMobile;  
+  const mobile = props.address.mobile;
+  const setMobile = props.address.setMobile;
   const name = props.address.name;
   const setName = props.address.setName;
-  const addressline1 = props.address.addressline1; 
-  const setAddressline1 = props.address.setAddressline1; 
-  const addressline2 = props.address.addressline2; 
-  const setAddressline2 = props.address.setAddressline2; 
-  const city = props.address.city; 
+  const addressline1 = props.address.addressline1;
+  const setAddressline1 = props.address.setAddressline1;
+  const addressline2 = props.address.addressline2;
+  const setAddressline2 = props.address.setAddressline2;
+  const city = props.address.city;
   const setCity = props.address.setCity;
-  const state = props.address.state; 
+  const state = props.address.state;
   const setState = props.address.setState;
-  const pincode = props.address.pincode; 
+  const pincode = props.address.pincode;
   const setPincode = props.address.setPincode;
 
   let mobileerror = props.address.mobileerror;
-  let setMobileerror = props.address.setMobileerror;   
+  let setMobileerror = props.address.setMobileerror;
+
   const handleMobileChange = (event) => {
-    setMobile(event);    
-    if(mobile.length != 12)
-    setMobileerror(true)
-    else
-    setMobileerror(false)
-    
-}
+    setMobile(event);
+    if (mobile.length !== 12) setMobileerror(true);
+    else setMobileerror(false);
+  };
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
-          variant="outlined"
-          margin="normal"
+            variant="outlined"
+            margin="normal"
             required
             id="name"
             autoFocus
@@ -55,9 +46,9 @@ export default function AddressForm(props) {
             fullWidth
             value={name}
             inputProps={{
-              maxlength :30,              
+              maxlength: 30,
             }}
-            onChange = {e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             className="Register_text"
             autoComplete="given-name"
           />
@@ -72,29 +63,32 @@ export default function AddressForm(props) {
             autoComplete="mobile"
           /> */}
           <MuiPhoneInput
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="phone"
-          label="Phone"
-          name="phone"
-          autoComplete="phone"          
-          className="Register_text"
-          defaultCountry='in'
-          onlyCountries={['in']}
-          
-          autoFormat = {false}
-          inputProps={{
-            maxlength :13,
-            autocomplete : false
-          }}
-          countryCodeEditable = {false}
-          onChange={handleMobileChange}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="phone"
+            label="Phone"
+            name="phone"
+            autoComplete="phone"
+            className="Register_text"
+            defaultCountry="in"
+            onlyCountries={['in']}
+            autoFormat={false}
+            inputProps={{
+              maxlength: 13,
+              autocomplete: false,
+            }}
+            countryCodeEditable={false}
+            onChange={handleMobileChange}
             value={mobile}
-            helperText={`${mobile.length < 13 && mobile.length >3 ? 'Invalid phone number' :''}`}
-            error = {mobileerror}           
-         /> 
+            helperText={`${
+              mobile.length < 13 && mobile.length > 3
+                ? 'Invalid phone number'
+                : ''
+            }`}
+            error={mobileerror}
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -104,10 +98,10 @@ export default function AddressForm(props) {
             label="Address line 1"
             fullWidth
             inputProps={{
-              maxlength :30,              
+              maxlength: 30,
             }}
             value={addressline1}
-            onChange = {e => setAddressline1(e.target.value)}
+            onChange={(e) => setAddressline1(e.target.value)}
             autoComplete="shipping address-line1"
           />
         </Grid>
@@ -118,10 +112,10 @@ export default function AddressForm(props) {
             label="Address line 2"
             fullWidth
             inputProps={{
-              maxlength :30,              
+              maxlength: 30,
             }}
             value={addressline2}
-            onChange = {e => setAddressline2(e.target.value)}
+            onChange={(e) => setAddressline2(e.target.value)}
             autoComplete="shipping address-line2"
           />
         </Grid>
@@ -134,20 +128,24 @@ export default function AddressForm(props) {
             fullWidth
             value={city}
             inputProps={{
-              maxlength :30,              
+              maxlength: 30,
             }}
-            onChange = {e => setCity(e.target.value)}
+            onChange={(e) => setCity(e.target.value)}
             autoComplete="shipping address-level2"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField id="state" name="state" label="State/Province/Region"
-          value={state}
-          onChange = {e => setState(e.target.value)}
-          inputProps={{
-            maxlength :30,              
-          }}
-           fullWidth />
+          <TextField
+            id="state"
+            name="state"
+            label="State/Province/Region"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            inputProps={{
+              maxlength: 30,
+            }}
+            fullWidth
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -158,9 +156,9 @@ export default function AddressForm(props) {
             fullWidth
             value={pincode}
             inputProps={{
-              maxlength :6,              
+              maxlength: 6,
             }}
-            onChange = {e => setPincode(e.target.value)}
+            onChange={(e) => setPincode(e.target.value)}
             autoComplete="shipping postal-code"
           />
         </Grid>
@@ -181,6 +179,6 @@ export default function AddressForm(props) {
           />
         </Grid> */}
       </Grid>
-    </React.Fragment>
+    </>
   );
 }
