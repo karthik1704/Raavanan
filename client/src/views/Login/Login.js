@@ -23,7 +23,7 @@ import Header from '../../components/Header/Header';
 import { API_URL } from '../../CONSTANTS';
 import { loginUser } from '../../data/actions/loginActions';
 
-import { Styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles';
 
 // function Copyright() {
 //   return (
@@ -38,7 +38,7 @@ import { Styled } from '@material-ui/core/styles';
 //   );
 // }
 
-const Div = Styled('div')(({ theme }) => ({
+const Div = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(8),
   display: 'flex',
   flexDirection: 'column',

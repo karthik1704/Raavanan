@@ -20,7 +20,7 @@ import Container from '@material-ui/core/Container';
 import Header from '../../components/Header/Header';
 import { API_URL } from '../../CONSTANTS';
 
-import { Styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -38,7 +38,7 @@ function Copyright() {
   );
 }
 
-const Div = Styled('div')(({ theme }) => ({
+const Div = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(8),
   display: 'flex',
   flexDirection: 'column',
