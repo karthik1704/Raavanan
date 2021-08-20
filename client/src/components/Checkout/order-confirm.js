@@ -8,7 +8,7 @@ import { clearItemFromCart } from '../../data/actions/cartActions';
 
 import './order-confirm.css';
 
-const Orderconfirm = ({}) => {
+const Orderconfirm = () => {
   const dispatch = useDispatch();
   // const [status,setStatus] = useState('');
   const order_confirm_url = `${API_URL}api/order_confirm/`;
