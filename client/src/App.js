@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import {
   createTheme,
   ThemeProvider,
   StyledEngineProvider,
-} from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
+} from '@mui/material/styles';
+import { green } from '@mui/material/colors';
 
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Routes from './routes/Routes';

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import CardHeader from '@mui/material/CardHeader';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
-// import makeStyles from '@material-ui/styles/makeStyles';
-import { styled } from '@material-ui/core/styles';
+// import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';

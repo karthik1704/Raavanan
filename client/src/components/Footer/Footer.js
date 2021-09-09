@@ -1,10 +1,10 @@
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 const Root = styled('footer')(({ theme }) => ({
   maxWidth: '100vw',

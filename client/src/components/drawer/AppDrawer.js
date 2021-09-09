@@ -1,23 +1,23 @@
 import { useState } from 'react';
 
-//import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Collapse from '@material-ui/core/Collapse';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Typography from '@material-ui/core/Typography';
-import Switch from '@material-ui/core/Switch';
+//import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
 
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
 
-//import { deepPurple } from '@material-ui/core/colors';
+//import { deepPurple } from '@mui/material/colors';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -25,7 +25,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { MENUS } from '../../CONSTANTS';
 import { toggleAppDrawer } from '../../data/actions/appAction';
 
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 const RootDiv = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -160,6 +160,7 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
                     {menu.submenu.map((option, index1) => {
                       return (
                         <ListItem
+                          key={option.menu}
                           button
                           sx={{
                             paddingLeft: 4,

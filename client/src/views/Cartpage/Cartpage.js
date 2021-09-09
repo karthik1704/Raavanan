@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 
 import axios from 'axios';
 import { createSelector } from 'reselect';
@@ -14,8 +14,8 @@ import CartItem from '../../components/cart-item/cart-item';
 import './Cartpage.css';
 
 // import {selectCartItems} from '../Cartpage/cart.selectors'
-// import Link from '@material-ui/core/Link';
-// import Typography from '@material-ui/core/Typography';
+// import Link from '@mui/material/Link';
+// import Typography from '@mui/material/Typography';
 // function Copyright() {
 //   return (
 //     <Typography variant="body2" color="textSecondary" align="center">
@@ -29,7 +29,7 @@ import './Cartpage.css';
 //   );
 // }
 
-// import makeStyles from '@material-ui/styles/makeStyles';
+// import makeStyles from '@mui/styles/makeStyles';
 // const useStyles = makeStyles((theme) => ({
 //   paper: {
 //     marginTop: theme.spacing(8),

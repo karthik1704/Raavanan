@@ -1,10 +1,10 @@
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom';
 
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 const RootDiv = styled('div')(({ theme }) => ({
   flexGrow: 1,

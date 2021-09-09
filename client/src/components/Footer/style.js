@@ -1,4 +1,4 @@
-// import makeStyles from '@material-ui/styles/makeStyles';
+// import makeStyles from '@mui/styles/makeStyles';
 
 // // eslint-disable-next-line import/prefer-default-export
 // export const useStyles = makeStyles((theme) => ({

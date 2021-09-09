@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Check from '@material-ui/icons/Check';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Check from '@mui/icons-material/Check';
 import StepConnector, {
   stepConnectorClasses,
-} from '@material-ui/core/StepConnector';
+} from '@mui/material/StepConnector';
 
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ import { useDispatch } from 'react-redux';
 import CartItem from '../../components/Checkout/cart-item';
 import { API_URL } from '../../CONSTANTS';
 
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import './Orders.css';
 
 const RootDiv = styled('div')(({ theme }) => ({

@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-// import StoreIcon from '@material-ui/icons/Store';
-//import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+// import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+// import StoreIcon from '@mui/icons-material/Store';
+//import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
-// import green from '@material-ui/core/colors/green';
+// import green from '@mui/material/colors/green';
 
 import axios from 'axios';
 import { addItem } from '../../data/actions/cartActions';
@@ -32,8 +32,8 @@ import { useParams } from 'react-router-dom';
 import { API_URL } from '../../CONSTANTS';
 import { fetchProductDetail } from '../../data/actions/productActions';
 
-import { styled } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
+import { styled } from '@mui/material/styles';
+import { green } from '@mui/material/colors';
 
 const RootDiv = styled('div')(({ theme }) => ({
   margin: theme.spacing(2),

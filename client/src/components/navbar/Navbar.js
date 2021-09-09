@@ -2,35 +2,35 @@
 import { useState, useEffect, useRef } from 'react';
 
 import axios from 'axios';
-import { styled, alpha } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Box from '@material-ui/core/Box';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuList from '@material-ui/core/MenuList';
-import SearchIcon from '@material-ui/icons/Search';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Box from '@mui/material/Box';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grow from '@mui/material/Grow';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuList from '@mui/material/MenuList';
+import SearchIcon from '@mui/icons-material/Search';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
 
-// import AccountCircle from '@material-ui/icons/AccountCircle';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
 import { GoogleLogout } from 'react-google-login';
-import MenuIcon from '@material-ui/icons/Menu';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import LockIcon from '@material-ui/icons/Lock';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import MenuIcon from '@mui/icons-material/Menu';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import LockIcon from '@mui/icons-material/Lock';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -56,10 +56,10 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up('xs')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
-    maxWidth: '50% !important',
+    maxWidth: '100% !important',
   },
   [theme.breakpoints.down('md')]: {
     // marginLeft: theme.spacing(3),
@@ -365,7 +365,7 @@ export default function Navbar() {
             <img src={RavananLogo} alt="logo" height="80px" width="80px" />
           </Link>
 
-          <Search>
+          <Search sx={{ display: { xs: 'none', sm: 'flex' } }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -379,8 +379,8 @@ export default function Navbar() {
           <Box
             sx={{
               display: {
-                sm: 'none',
-                md: 'flex',
+                xs: 'none',
+                sm: 'flex',
               },
               width: '100%',
               flexWrap: 'wrap',
@@ -474,7 +474,7 @@ export default function Navbar() {
           </div>
          */}
         </Toolbar>
-        <Toolbar sx={{ display: { sm: 'flex', md: 'none' } }}>
+        <Toolbar sx={{ display: { xs: 'flex', sm: 'none' } }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

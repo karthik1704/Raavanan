@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Chip from '@material-ui/core/Chip';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Chip from '@mui/material/Chip';
 import { addItem, removeItem } from '../../data/actions/cartActions';
 import { useDispatch } from 'react-redux';
 
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 const ChipDiv = styled('div')(({ theme }) => ({
   display: 'flex',

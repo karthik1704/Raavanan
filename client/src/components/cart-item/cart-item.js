@@ -1,11 +1,11 @@
-// import Link from '@material-ui/core/Link';
+// import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import Chip from '@material-ui/core/Chip';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Icon from '@mui/material/Icon';
+import Chip from '@mui/material/Chip';
 import { addItem, removeItem } from '../../data/actions/cartActions';
 import { useDispatch } from 'react-redux';
 
