@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,14 +9,19 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 import MuiPhoneInput from 'material-ui-phone-number';
 
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
-import { useSelector, useDispatch } from 'react-redux';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+// import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { Link as RouterLink } from 'react-router-dom';
+
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import Header from '../../components/Header/Header';
 import { API_URL } from '../../CONSTANTS';
@@ -64,52 +68,45 @@ const Div = styled('div')(({ theme }) => ({
 //     margin: theme.spacing(3, 0, 2),
 //   },
 // }));
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+const schema = yup.object().shape({
+  phone: yup
+    .string()
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('Please enter Phonenumber'),
+  password: yup.string().required('Please enter password'),
+});
 
 export default function Login() {
-  const [mobile, setMobile] = useState('');
-  const [password, setPassword] = useState('');
-  const [mobileerror, setMobileerror] = useState(false);
-  const [passworderror, setPassworderror] = useState(false);
-  const cart = useSelector((state) => state.cart);
-  const login = useSelector((state) => state.login);
+  const { handleSubmit, control } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  // const cart = useSelector((state) => state.cart);
+  // const login = useSelector((state) => state.login);
   const dispatch = useDispatch();
-  let history = useHistory();
+
   const login_url = `${API_URL}api/auth/login/`;
   const social_login_url = `${API_URL}api/auth/google/`;
-  const sync_url = `${API_URL}api/carts/sync_cart/`;
-  const handleSubmit = (e) => {
-    if (passworderror && mobile.length !== 13) return;
+
+  // const sync_url = `${API_URL}api/carts/sync_cart/`;
+
+  const handleLoginSubmit = ({ phone, password }) => {
+    if (phone.length !== 13) return;
     axios
       .post(login_url, {
-        phone: mobile.substring(3),
-        password: password,
+        phone: phone.substring(3),
+        password,
       })
-      .then(
-        (response) => {
-          dispatch(loginUser(response.data));
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      .then((response) => {
+        dispatch(loginUser(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const handleMobileChange = (event) => {
-    setMobile(event);
-
-    if (mobile.length !== 12) setMobileerror(true);
-    else setMobileerror(false);
-  };
-
-  const handlePasswordChange = (event) => {
-    const password = event.target.value;
-    setPassword(password);
-    if (password.length > 0 && password.length < 8) setPassworderror(true);
-    else setPassworderror(false);
-  };
-  const call_redirect = (url) => {
-    history.push(url);
-  };
   const responseGoogle = (response) => {
     console.log(response);
     if (!('profileObj' in response)) {
@@ -147,41 +144,68 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <ValidatorForm
+          <Box
+            component="form"
             // ref="form"
-            onSubmit={handleSubmit}
-            onError={(errors) => console.log(errors)}
+            onSubmit={handleSubmit(handleLoginSubmit)}
           >
-            <MuiPhoneInput
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="phone"
-              label="Phone"
+            <Controller
               name="phone"
-              // autoComplete="phone"
-              autoFocus
-              className="Register_text"
-              defaultCountry="in"
-              onlyCountries={['in']}
-              //disableCountryCode = {true}
-              //disableDropdown = {true}
-              autoFormat={false}
-              inputProps={{
-                maxlength: 13,
-                autocomplete: false,
-              }}
-              countryCodeEditable={false}
-              onChange={handleMobileChange}
-              value={mobile}
-              helperText={`${
-                mobile.length < 13 && mobile.length > 3
-                  ? 'Invalid phone number'
-                  : ''
-              }`}
-              error={mobileerror}
+              defaultValue=""
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <MuiPhoneInput
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone"
+                  name="phone"
+                  // autoComplete="phone"
+                  autoFocus
+                  className="Register_text"
+                  defaultCountry="in"
+                  onlyCountries={['in']}
+                  //disableCountryCode = {true}
+                  //disableDropdown = {true}
+                  autoFormat={false}
+                  inputProps={{
+                    maxLength: 13,
+                    autoComplete: 'false',
+                  }}
+                  countryCodeEditable="false"
+                  helperText={error && error.message}
+                  error={error && true}
+                  {...field}
+                />
+              )}
             />
+
+            <Controller
+              name="password"
+              defaultValue=""
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  inputProps={{
+                    maxLength: 13,
+                    autoComplete: 'false',
+                  }}
+                  autoComplete="false"
+                  helperText={error && error.message}
+                  error={error && true}
+                  {...field}
+                />
+              )}
+            />
+
             {/* <TextField
             variant="outlined"
             margin="normal"
@@ -193,31 +217,7 @@ export default function Login() {
             autoComplete="email"
             autoFocus
           /> */}
-            <TextValidator
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              inputProps={{
-                maxlength: 20,
-                autocomplete: false,
-              }}
-              autoComplete={false}
-              onChange={handlePasswordChange}
-              value={password}
-              validators={['required']}
-              errorMessages={['Password is required']}
-              helperText={`${
-                password.length < 8 && password.length > 0
-                  ? 'Password should be minimum 8 characters'
-                  : ''
-              }`}
-              error={passworderror}
-            />
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -263,22 +263,26 @@ export default function Login() {
             <Grid container>
               <Grid item xs>
                 <Link
+                  component={RouterLink}
                   variant="body2"
-                  onClick={() => call_redirect('/Forgetpassword')}
+                  underline="none"
+                  to="/Forgetpassword"
                 >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
                 <Link
-                  onClick={() => call_redirect('/register')}
+                  component={RouterLink}
                   variant="body2"
+                  underline="none"
+                  to="/register"
                 >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
-          </ValidatorForm>
+          </Box>
         </Div>
         {/* <Box mt={8}>
         <Copyright />
