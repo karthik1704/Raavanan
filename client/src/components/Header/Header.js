@@ -1,8 +1,9 @@
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
 
@@ -84,7 +85,10 @@ export default function Header({ title, subtitle }) {
             >
               <HeaderTitle>{title}</HeaderTitle>
               <Link
+                component={RouterLink}
                 to="/"
+                underscore="hover"
+                color="textPrimary"
                 sx={{
                   color: 'white !important',
                   textDecoration: 'none',
