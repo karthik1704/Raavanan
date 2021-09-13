@@ -68,7 +68,7 @@ const Div = styled('div')(({ theme }) => ({
 //     margin: theme.spacing(3, 0, 2),
 //   },
 // }));
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const schema = yup.object().shape({
   phone: yup
@@ -157,7 +157,6 @@ export default function Login() {
                 <MuiPhoneInput
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   id="phone"
                   label="Phone"
@@ -166,12 +165,11 @@ export default function Login() {
                   autoFocus
                   className="Register_text"
                   defaultCountry="in"
-                  onlyCountries={['in']}
                   //disableCountryCode = {true}
                   //disableDropdown = {true}
                   autoFormat={false}
                   inputProps={{
-                    maxLength: 13,
+                    maxLength: 20,
                     autoComplete: 'false',
                   }}
                   countryCodeEditable="false"
@@ -190,7 +188,6 @@ export default function Login() {
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="Password"
                   type="password"

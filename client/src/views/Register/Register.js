@@ -276,7 +276,6 @@ export default function Register() {
                 <MuiPhoneInput
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="Phone"
                   autoFocus
@@ -306,12 +305,11 @@ export default function Register() {
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="Email Address"
                   autoComplete="email"
                   className="Register_text"
-                  error={error}
+                  error={error && true}
                   helperText={error && error.message}
                   {...field}
                 />
@@ -325,7 +323,6 @@ export default function Register() {
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="First Name"
                   type="text"
@@ -333,7 +330,7 @@ export default function Register() {
                     maxLength: 20,
                   }}
                   autoComplete="first_name"
-                  error={error}
+                  error={error && true}
                   helperText={error && error.message}
                   {...field}
                 />
@@ -347,7 +344,6 @@ export default function Register() {
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="Last Name"
                   type="text"
@@ -355,7 +351,7 @@ export default function Register() {
                     maxLength: 20,
                   }}
                   autoComplete="first_name"
-                  error={error}
+                  error={error && true}
                   helperText={error && error.message}
                   {...field}
                 />
@@ -370,7 +366,6 @@ export default function Register() {
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="Password"
                   type="password"
@@ -379,7 +374,7 @@ export default function Register() {
                     autoComplete: 'false',
                   }}
                   helperText={error && error.message}
-                  error={error}
+                  error={error && true}
                 />
               )}
             />
@@ -391,7 +386,6 @@ export default function Register() {
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   label="Confirm Password"
                   type="password"
@@ -409,7 +403,6 @@ export default function Register() {
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 inputProps={{
                   maxLength: 6,
                 }}
@@ -453,19 +446,18 @@ export default function Register() {
               defaultValue={false}
               control={control}
               render={({
-                field: { onChange, value, ref },
+                field: { onChange, value, ref, ...rest },
                 fieldState: { error },
               }) => (
-                <FormControl required error={error && true} variant="standard">
+                <FormControl error={error && true} variant="standard">
                   <FormGroup>
                     <FormControlLabel
-                      sx={{ pointerEvents: 'none' }}
                       control={
                         <Checkbox
                           checked={value}
                           onChange={(e) => onChange(e.target.checked)}
-                          inputRef={ref}
                           color="secondary"
+                          {...rest}
                         />
                       }
                       label={
@@ -518,18 +510,12 @@ export default function Register() {
               </Button>
             )}
 
-            <Grid container>
-              <Grid item xs>
-                <Link
-                  component={RouterLink}
-                  underline="hover"
-                  color="textPrimary"
-                  to="/Forgetpassword"
-                  variant="body2"
-                >
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid
+              container
+              sx={{
+                justifyContent: 'end',
+              }}
+            >
               <Grid item>
                 <Link
                   component={RouterLink}
