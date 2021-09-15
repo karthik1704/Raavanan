@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(1),
   },
+  fullWidth : {
+    maxWidth : '100%'
+  },
+  maxWidthLg : {
+    maxWidth : '100%'
+  }
 }));
 
 const Home = () => {
@@ -37,7 +43,7 @@ const Home = () => {
 
   const classes = useStyles();
   return (
-    <div>
+    <div className={classes.fullWidth}>
       <div>
         <Carousel />
       </div>

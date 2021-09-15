@@ -92,18 +92,22 @@ const useStyles = makeStyles((theme) => ({
     left: '6%',
     display: 'contents',
   },
+  mrp : {
+    textDecoration:'line-through',
+    fontSize : '11px',
+    // fontWeight: '300'
+    
+  }
   
 }));
 
 const ProductList = ({ products }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // console.log(products);
-  // products.map((product) => (
-  //   console.log(product.price[0].price)
-  // ))
+  
   return (
     <>
+    
       {products.map((product, i) => {
         return <Grid item xs={6} sm={4} md={3} xl={3} key={i}>
           <Card className={classes.root}>
@@ -147,9 +151,17 @@ const ProductList = ({ products }) => {
                   color="textPrimary"
                   className={classes.price} 
                 >
-                  {product['price'].length > 0 &&(
-                     `₹ ${product.price[0].price}`
-                  )} 
+                  
+                  
+                  
+                  
+                   {product['price'].length > 0 &&(
+                    <span> ₹ {product.price[0].price} - &nbsp;
+                    <span className={classes.mrp}>
+                    ₹ {product.price[0].mrp}
+                    </span>
+                    </span>
+                 )} 
                   
                  {/* ₹{product.price[0].id} */}
                   
@@ -159,9 +171,7 @@ const ProductList = ({ products }) => {
 
             <CardActions className={classes.cardButtons}>
               
-              {/* <IconButton aria-label="add to favorites">
-                <FavoriteBorderOutlinedIcon />
-              </IconButton> */}
+              
               <Button color="primary" className={classes.cartBtn}  justifycontent="center" startIcon={<AddShoppingCartIcon />} onClick={() => dispatch(addItem({...product, price : product.price[0].id}))}>
                 கூடை
               </Button>
@@ -169,6 +179,7 @@ const ProductList = ({ products }) => {
           </Card>
         </Grid>
 })}
+
     </>
   );
 };

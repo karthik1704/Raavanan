@@ -22,9 +22,10 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 // import StoreIcon from '@material-ui/icons/Store';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-
+import "react-image-gallery/styles/css/image-gallery.css";
+// import "~react-image-gallery/styles/css/image-gallery.css";
 // import green from '@material-ui/core/colors/green';
-
+import ImageGallery from 'react-image-gallery';
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -44,6 +45,7 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [value, setValue] = useState('');
+  const [images, setImages] = useState([]);
   const [size, setSize] = useState('');
   // const [price, setPrice] = useState('');
   const [type, setType] = useState('');
@@ -93,6 +95,22 @@ export default function ProductDetail() {
       if (res.data.price) {
         setValue(res.data.price[0]);
       }
+      let localimages = []
+      if(res.data.imageurl){
+        localimages.push({
+          original : res.data.imageurl,
+          thumbnail : res.data.imageurl
+        })
+      }
+      
+      if(res.data.image.length > 0){
+        let image = res.data.image.map((img)=>  ({original : img.image,thumbnail : img.image}))
+        
+        localimages = localimages.concat(image)
+        
+      }
+      setImages(localimages)
+        
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,7 +143,7 @@ export default function ProductDetail() {
         // setMrp(price.mrp);
         // setPrice(price.price);
         setValue(price);
-        console.log(price);
+      
       });
   };
 
@@ -133,6 +151,22 @@ export default function ProductDetail() {
     return <div />;
   }
 
+  // const images1 = [
+  //   {
+  //     original: 'http://127.0.0.1:8000/media/product/mh_2.jpg',
+  //     thumbnail: 'http://127.0.0.1:8000/media/product/mh_2.jpg',
+  //     // originalClass  : 'productImage'
+  //   },
+  //   {
+  //     original: 'https://picsum.photos/id/1015/1000/600/',
+  //     thumbnail: 'https://picsum.photos/id/1015/250/150/',
+  //   },
+  //   {
+  //     original: 'https://picsum.photos/id/1019/1000/600/',
+  //     thumbnail: 'https://picsum.photos/id/1019/250/150/',
+  //   },
+  // ];
+  
   return (
     <div className={classes.root}>
       <Helmet>
@@ -144,22 +178,22 @@ export default function ProductDetail() {
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
-          <Grid container spacing={10}>
+          <Grid container >
             <Grid item xs={12} md={6} lg={5} className={classes.center}>
               <div>
-                <img
+                {/* <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}
                   className={
-                    //productDetail.category &&
-                    // productDetail.category.name !== 'கைபேசி உறை'
-                    // ? classes.frameImage
+                    
                     classes.productImage
                   }
-                />
+                /> */}
+                <ImageGallery items={images} thumbnailPosition={'left'} showFullscreenButton={false} showPlayButton={false} autoPlay={false}
+                showNav={false} style={{maxHeight:'300px'}}/>
               </div>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} className={classes.rightGrid}>
               <Typography variant="h5" className={classes.title}>
                 {productDetail.name}
               </Typography>

@@ -5,7 +5,7 @@ import green from '@material-ui/core/colors/green';
 const useStyles = makeStyles((theme) => ({
   loading: {
     display: 'flex',
-    justifyContent: 'conter',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   center:{
     display: 'flex',
-    justifyContent: 'conter',
+    justifyContent: 'center',
     
   },
   frameImage: {
@@ -48,8 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontWeight : 600,
-  }
-  
+  },
+  rightGrid : {
+    padding:'10px'
+  },
+
 }));
 
 export default useStyles;

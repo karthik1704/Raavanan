@@ -1,17 +1,25 @@
 import { useEffect } from 'react';
 
 import useTopLoader from '../../hooks/useTopLoader';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+
+  paper: {
+    padding: theme.spacing(3),
+    
+  },
+}));
 const Terms = () => {
   // eslint-disable-next-line no-unused-vars
   const [loading, onToggleTopLoader] = useTopLoader();
-
+  const classes = useStyles();
   useEffect(() => {
     onToggleTopLoader(false);
   }, []);
   return (
     <>
-    <div>
+    <div className={classes.paper}>
       <h4> Privacy Policy </h4>
       <p>
       Thank you for using our site. These Privacy Policies describe how we handle personal information collected from you on our site. By using our site you agree to the procedures described in these policies.
@@ -58,7 +66,7 @@ Email :{' '}
 
 
     </div>
-    <div>
+    <div className={classes.paper}>
       <h4> தனியுரிமைக் கொள்கைகள் : </h4>
       <p>
         எங்களது தளத்தை பயன்படுத்துவதற்கு உங்களுக்கு நன்றி கூறிக் கொள்கிறோம்.
