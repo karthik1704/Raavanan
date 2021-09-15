@@ -11,7 +11,12 @@ from .serializers import CategorySerializer, PriceDetailSerializer, ProductSeria
 from .models import Category, Price, Product
 from django.conf import settings
 
+from rest_framework.pagination import PageNumberPagination
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 # Create your views here.
 class ProductViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -22,10 +27,11 @@ class ProductViewset(viewsets.ModelViewSet):
     ordering_fields = ['created_at']
     ordering = ['-created_at']
     lookup_fields = ('slug','pk')  
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         category_s = self.request.query_params.get('category__slug', None)
-        print(category_s)
+        
         cats = Category.objects.filter(slug = category_s)
 
         
@@ -34,7 +40,7 @@ class ProductViewset(viewsets.ModelViewSet):
             queryset = Product.objects.filter(category__in = categories)
         else:
             queryset = Product.objects.all()
-        print(len(queryset))
+        
         return queryset
 
     def retrieve(self, request, *args, **kwargs):        
@@ -81,10 +87,11 @@ class CustomProductsList(generics.ListAPIView):
     
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.filter(level=0)
+    queryset = Category.objects.filter(level=0).order_by('id')
+    
     serializer_class = CategorySerializer
-    filterset_fields = ['slug', 'parent']
-
+    filterset_fields = ['id','slug', 'parent']
+    ordering = ('id')
 
 
 class PriceDetailView(RetrieveAPIView):
