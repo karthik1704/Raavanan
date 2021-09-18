@@ -1,6 +1,6 @@
-import { PAYTM_MID } from '../../CONSTANTS';
+// import { PAYTM_MID } from '../../CONSTANTS';
 
-const RAZORPAY_KEY = 'rzp_test_6AgTLWADecFtHj'
+const RAZORPAY_KEY = 'rzp_live_fziEmBlBY8pNRO'
 const CONFIG = {
     style: {
         bodyBackgroundColor: "#fafafb",
@@ -28,7 +28,7 @@ const CONFIG = {
         // }
     },
     merchant: {
-        mid: PAYTM_MID,
+        // mid: PAYTM_MID,
         name: "Raavanan",
         // logo: "/static/media/raavanan logo.07b03d7b.png",
         logo: "/static/media/raavananlogo.png",

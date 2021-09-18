@@ -190,7 +190,7 @@ const checkout=() => {
     <>
       <Header title="Cart" subtitle="Home" />
 
-      <Grid container spacing={3}>
+      <Grid container  style={{padding: '10px'}}>
         <Grid item xs={12} sm={12} md={8}>
           <div>
             <div>
@@ -206,7 +206,7 @@ const checkout=() => {
              
               ))
             
-            : <h4 class="Product_Text"> Your cart is empty</h4> 
+            : <h4 className="Product_Text"> Your cart is empty</h4> 
       }
             
             

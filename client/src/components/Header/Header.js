@@ -55,7 +55,7 @@ export default function Header({ title, subtitle }) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid  spacing={3}>
         <Grid item xs={12}>
           <div>
             <Paper className={classes.paper}>

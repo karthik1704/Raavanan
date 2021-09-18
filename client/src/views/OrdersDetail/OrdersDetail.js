@@ -276,7 +276,7 @@ const OrdersDetail = () => {
              
               ))
             
-            : <h4 class="Product_Text"> Your cart is empty</h4> 
+            : <h4 className="Product_Text"> Your cart is empty</h4> 
       }
             
           </div>
@@ -289,7 +289,7 @@ const OrdersDetail = () => {
              
             </>
             
-            : <h4 class="Product_Text">The URL you have entered is not correct</h4> 
+            : <h4 className="Product_Text">The URL you have entered is not correct</h4> 
       }
       </Grid>
     </div>

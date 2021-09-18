@@ -1,16 +1,24 @@
 import { useEffect } from 'react';
 
 import useTopLoader from '../../hooks/useTopLoader';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+
+  paper: {
+    padding: theme.spacing(3),
+    
+  },
+}));
 const Contact = () => {
   const [loading, onToggleTopLoader] = useTopLoader();
-
+  const classes = useStyles();
   useEffect(() => {
     onToggleTopLoader(false);
   }, []);
 
   return (
-    <div>
+    <div className={classes.paper}>
       <h4>தொடர்புக்கு :</h4>
       <p>
         வணக்கம் ! இன்பத் தமிழ் நம் உயிருக்கு நேர் !<br />

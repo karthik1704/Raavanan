@@ -29,13 +29,14 @@ import { useStyles } from './AppStyle';
 
 
 
+
 function App() {
   const classes = useStyles();
   const [theme] = useDarkTheme();
   const { loading } = useSelector((state) => state.appUi);
   //const { dispatch } = useDispatch();
   const {dispatch} = store;
-
+  
   const darkTheme = createMuiTheme({
     palette: {
       type: 'dark',
@@ -74,19 +75,31 @@ function App() {
       dispatch(toggleAppLoading(false));
       return response;
     }, function (error) {
-      if(error.response.data.code == "token_not_valid"){
+      
+      // if(!error.response)
+      // return;
+      if (error.response.status === 401 ) {
+        
+        localStorage.setItem("app_token", '');
+        axios.defaults.headers.common['Authorization'] = '';
+        dispatch(logoutUser(''));
+              // Router.push('/');
+             window.location.reload(); 
+               return Promise.reject(error);
+           }
+    //   if(error.response.data.code == "token_not_valid"){
     
-      localStorage.setItem("app_token", '');
-      axios.defaults.headers.common['Authorization'] = '';
-      //Promise.reject(error);
-      dispatch(logoutUser(''));
-    <Redirect to="/" />
+    //   localStorage.setItem("app_token", '');
+    //   axios.defaults.headers.common['Authorization'] = '';
+    //   //Promise.reject(error);
+    // //   dispatch(logoutUser(''));
+    // // <Redirect to="/" />
     
-      //window.location.href = '/login'
-      return Promise.reject(error);
+    //   //window.location.href = '/login'
+    //   return Promise.reject(error);
       
       
-    }
+    // }
       return Promise.reject(error);
     });
   }, []);
@@ -116,13 +129,13 @@ function App() {
         
       </Helmet>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <Router>
+        <Router >
           <Paper>
             {loading && <Loader />}
             <Navbar />
-            <Container className={classes.root}>
+            <div className={classes.root}>
               <Routes />
-            </Container>
+            </div>
             <NewFooter />
           </Paper>
         </Router>

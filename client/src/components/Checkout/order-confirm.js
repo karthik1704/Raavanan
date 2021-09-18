@@ -31,10 +31,10 @@ const handleclearItemFromCart = () =>  {
 if(status == 'success'){
   return (
 
-    <div class="col-rt-12">
-    <div class="Scriptcontent">
+    <div className="col-rt-12">
+    <div className="Scriptcontent">
     
-    <div id="card" class="animated fadeIn">
+    <div id="card" className="animated fadeIn">
     <div id="upper-side">
     
     
@@ -59,10 +59,10 @@ if(status == 'success'){
 else if(status == 'failure' || status == 'pending'){
   return (
 
-    <div class="col-rt-12">
-    <div class="Scriptcontent">
+    <div className="col-rt-12">
+    <div className="Scriptcontent">
     
-    <div id="card" class="animated fadeIn">
+    <div id="card" className="animated fadeIn">
     <div id="upper-side">
     
     
@@ -87,10 +87,10 @@ else if(status == 'failure' || status == 'pending'){
 }
 else{
   return (
-  <div class="col-rt-12">
-    <div class="Scriptcontent">
+  <div className="col-rt-12">
+    <div className="Scriptcontent">
     
-    <div id="card" class="animated fadeIn">
+    <div id="card" className="animated fadeIn">
     
     <div id="lower-side">
     <p id="message">

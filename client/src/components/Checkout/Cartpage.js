@@ -141,7 +141,7 @@ const checkout=() => {
              
               ))
             
-            : <h4 class="Product_Text"> Your cart is empty</h4> 
+            : <h4 className="Product_Text"> Your cart is empty</h4> 
       }
             
           </div>

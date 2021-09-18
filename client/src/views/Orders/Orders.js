@@ -136,7 +136,7 @@ const Orders = () => {
              
               ))
             
-            : <h4 class="Product_Text"> You have not ordered anything</h4> 
+            : <h4 className="Product_Text"> You have not ordered anything</h4> 
       }
       </Grid>
     </div>
