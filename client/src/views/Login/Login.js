@@ -165,6 +165,7 @@ export default function Login() {
                   autoFocus
                   className="Register_text"
                   defaultCountry="in"
+                  onlyCountries={['in']}
                   //disableCountryCode = {true}
                   //disableDropdown = {true}
                   autoFormat={false}
