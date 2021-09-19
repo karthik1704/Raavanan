@@ -69,11 +69,12 @@ export default function FixedContainer() {
                 <div className="Footer_First_block">
                   <h5 className="first_block_title">எங்களைப் பற்றி</h5>
                   <p className="first_block_description">
-                    சங்கம் வைத்து வளர்த்த மாமதுரையில் தமது முதன்மைக் கிளையைக்
-                    கொண்டு செயலாற்றி வருகிறது.மிகச் சிறந்த ஒரு இணையதள அங்காடியை
-                    தமிழில் தமிழகத்தில் உருவாக்கிக் காட்டவேண்டும் என்பதே இராவணன்
-                    அங்காடியின் மேலான நோக்கம். இது ஒரு தமிழ்நாட்டுத் தயாரிப்பு
-                    என்று முழங்குவதில் நிகரற்ற பெருமை கொள்கிறது எமது குழு.
+                    சங்கம் வைத்து தமிழ் வளர்த்த மாமதுரையில் தமது முதன்மைக்
+                    கிளையைக் கொண்டு செயலாற்றி வருகிறது.மிகச் சிறந்த ஒரு இணையதள
+                    அங்காடியை தமிழில் தமிழகத்தில் உருவாக்கிக் காட்டவேண்டும்
+                    என்பதே இராவணன் அங்காடியின் மேலான நோக்கம். இது ஒரு
+                    தமிழ்நாட்டுத் தயாரிப்பு என்று முழங்குவதில் நிகரற்ற பெருமை
+                    கொள்கிறது எமது குழு.
                   </p>
                 </div>
               </Grid>
@@ -82,9 +83,6 @@ export default function FixedContainer() {
                 <div className="Footer_First_block">
                   <h5 className="first_block_title">Contacts</h5>
                   <ul className="first_block_list">
-                    {/* <li>Natureraise Technologies Pvt Ltd, No:19,4th Cross,Opp BIEC, Madarvara, Tumkur Road, Bangalore,karnataka-562162 
-           </li> */}
-
                     <li>தொலைபேசி/பகிரி : +91-7871003935</li>
                     <li> மின்னஞ்சல் : care@raavananstore.com</li>
                   </ul>
@@ -94,7 +92,7 @@ export default function FixedContainer() {
                 <div className="Footer_First_block">
                   <h5 className="first_block_title">Subscribe</h5>
                   <p className="first_block_description">
-                    எந்த ஒரு சமூக வலைத்தலங்களிலும் இராவணன் அங்காடியின்
+                    எந்த ஒரு சமூக வலைத்தளங்களிலும் இராவணன் அங்காடியின்
                     பக்கங்களில் குறுஞ்செய்தி அனுப்பியும் தொடர்பு கொள்ளலாம்.
                   </p>
                 </div>

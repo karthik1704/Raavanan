@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
@@ -14,7 +14,6 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useSelector, useDispatch } from 'react-redux';
-import makeStyles from '@mui/styles/makeStyles';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -24,114 +23,26 @@ import Cartpage from '../../components/Checkout/Cartpage';
 import AddressForm from '../../components/Checkout/AddressForm';
 import PaymentForm from '../../components/Checkout/PaymentForm';
 // import Review from '../../components/Checkout/Review';
+
+import { styled } from '@mui/material/styles';
 import './Checkout.css';
 
 import { API_URL } from '../../CONSTANTS';
 
+const styledLayout = styled('main')(({ theme }) => ({
+  width: 'auto',
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+    width: 600,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+}));
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    [theme.breakpoints.down('md')]: {
-      margin: '16px 0',
-    },
-  },
-  card: {
-    display: 'flex',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-    },
-    // [theme.breakpoints.up('md')]: {
-    //   flexDirection: 'row',
-    // },
-  },
-  header: {
-    display: 'flex',
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-    },
-  },
-  center: {
-    display: 'flex',
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  },
-  image: {
-    height: 115,
-    width: 60,
-    [theme.breakpoints.down('md')]: {
-      width: 50,
-    },
-  },
-  grow: {
-    flex: 1,
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  orderForm: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-      [theme.breakpoints.down('md')]: {
-        width: 'auto',
-      },
-    },
-  },
-  nameForm: {
-    display: 'flex',
-    flexDirection: 'row',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-    },
-  },
-  btnSize: {
-    width: '40%',
-    [theme.breakpoints.down('md')]: {
-      width: 'auto',
-    },
-  },
-  layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-}));
 
 const steps = ['Address', 'Review your order', 'Payment'];
 
@@ -203,7 +114,7 @@ const Addresses = (props) => {
           </Accordion>
         ))
       ) : (
-        <h4 class="Product_Text"> No Saved Address</h4>
+        <h4 className="Product_Text"> No Saved Address</h4>
       )}
     </>
   );
@@ -224,8 +135,7 @@ const Checkout = () => {
   // const [price, setPrice] = useState(0);
   // const { id } = useParams();
   // const { state } = useLocation();
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [addressId, setAddressId] = useState('');
@@ -423,8 +333,13 @@ const Checkout = () => {
 
   return (
     <div>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
+      <styledLayout>
+        <Paper
+          sx={{
+            my: { sm: 6, md: 3 },
+            p: { sm: 3, md: 2 },
+          }}
+        >
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
@@ -461,12 +376,20 @@ const Checkout = () => {
                     variant="contained"
                     color="primary"
                     onClick={() => setCreateAddress(true)}
-                    className={classes.button}
+                    sx={{
+                      marginTop: 3,
+                      marginLeft: 1,
+                    }}
                   >
                     Add New Address
                   </Button>
                 )}
-                <div className={classes.buttons}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                  }}
+                >
                   {activeStep !== 0 ||
                     (createAddress && (
                       <Button
@@ -492,13 +415,13 @@ const Checkout = () => {
                       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
                   )}
-                </div>
+                </Box>
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
         {/* <Copyright /> */}
-      </main>
+      </styledLayout>
       <Snackbar
         open={open}
         autoHideDuration={6000}

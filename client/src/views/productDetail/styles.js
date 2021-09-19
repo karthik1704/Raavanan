@@ -4,12 +4,12 @@
 // const useStyles = makeStyles((theme) => ({
 //   loading: {
 //     display: 'flex',
-//     justifyContent: 'conter',
+//     justifyContent: 'center',
 //     alignItems: 'center',
 //   },
 //   root: {
 //     margin: theme.spacing(2),
-//     [theme.breakpoints.down('md')]: {
+//     [theme.breakpoints.down('sm')]: {
 //       margin: '16px 0',
 //     },
 //   },
@@ -17,20 +17,21 @@
 //     paddingTop: 6,
 //     width: 500,
 //     height: 500,
-//     [theme.breakpoints.down('md')]: {
+//     [theme.breakpoints.down('sm')]: {
 //       width: 300,
 //       height: 300,
 //     },
 //   },
-//   center: {
+//   center:{
 //     display: 'flex',
-//     justifyContent: 'conter',
+//     justifyContent: 'center',
+
 //   },
 //   frameImage: {
 //     paddingTop: 6,
 //     width: 500,
 //     height: 500,
-//     [theme.breakpoints.down('md')]: {
+//     [theme.breakpoints.down('sm')]: {
 //       width: 300,
 //       height: 300,
 //     },
@@ -45,8 +46,12 @@
 //     backgroundColor: green[500],
 //   },
 //   title: {
-//     fontWeight: 600,
+//     fontWeight : 600,
 //   },
+//   rightGrid : {
+//     padding:'10px'
+//   },
+
 // }));
 
 // export default useStyles;

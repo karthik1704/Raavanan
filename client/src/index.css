@@ -12,5 +12,5 @@ body {
 }
 .MuiButton-textPrimary:hover{
   border-color: #43a047 !important;
-  background: None !important;
+  background: #43a047 !important;
 }

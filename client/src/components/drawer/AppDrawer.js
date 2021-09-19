@@ -16,6 +16,11 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
+import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 
 //import { deepPurple } from '@mui/material/colors';
 
@@ -26,6 +31,7 @@ import { MENUS } from '../../CONSTANTS';
 import { toggleAppDrawer } from '../../data/actions/appAction';
 
 import { styled } from '@mui/material/styles';
+import './drawer.css';
 
 const RootDiv = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -53,7 +59,7 @@ const RootDiv = styled('div')(({ theme }) => ({
 //   },
 // }));
 
-const AppDrawer = ({ theme, onToggleTheme }) => {
+const AppDrawer = ({ theme, onToggleTheme, category }) => {
   const { appDrawerOpen } = useSelector((state) => state.appUi);
   const dispatch = useDispatch();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -62,9 +68,9 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
   const loggedIn = login.loggedIn;
 
   var anchors_dict = {};
-  MENUS.map((option) => {
-    if (option.submenu) {
-      anchors_dict[option.menu] = true;
+  category.map((option) => {
+    if (option.children.length > 0) {
+      anchors_dict[option.name] = true;
     }
   });
   const [anchors, setAnchors] = useState(anchors_dict);
@@ -107,7 +113,7 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
         className={classes.purple}>S</Avatar>
         <Typography variant="body1">SRBN Loves N! </Typography> */}
         <Typography>வணக்கம் !</Typography>
-        {(() => {
+        {/* {(()=> {
           if (loggedIn) {
             return (
               <>
@@ -119,9 +125,9 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
               <>
                 <Button color="primary">உள்நுழை</Button>
               </>
-            );
-          }
-        })()}
+          )
+        }
+      })()} */}
       </RootDiv>
 
       <Divider />
@@ -131,13 +137,13 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
         // onKeyDown={(e) => toggleDrawer(false, e)}
       >
         <List>
-          {MENUS.map((menu, index) => {
-            return menu.submenu ? (
+          {category.map((menu, index) => {
+            return menu.children.length > 0 ? (
               //     <ListItem button component={Link} to={menu.link}>
               //    <ListItemIcon>
               //      <NewReleasesIcon />
               //    </ListItemIcon>
-              //    <ListItemText primary={menu.menu} />
+              //    <ListItemText primary={menu.name} />
               //  </ListItem>
               <>
                 <ListItem>
@@ -146,33 +152,30 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
                   </ListItemIcon>
                   <ListItemText
                     button
-                    primary={menu.menu}
-                    onClick={() => handleParentClick(menu.link)}
+                    primary={menu.name}
+                    onClick={() => handleParentClick(menu.slug)}
                   />
-                  {anchors[menu.menu] ? (
-                    <ExpandLess onClick={() => handleClick(menu.menu)} />
+                  {anchors[menu.name] ? (
+                    <ExpandLess onClick={() => handleClick(menu.name)} />
                   ) : (
-                    <ExpandMore onClick={() => handleClick(menu.menu)} />
+                    <ExpandMore onClick={() => handleClick(menu.name)} />
                   )}
                 </ListItem>
-                <Collapse in={anchors[menu.menu]} timeout="auto" unmountOnExit>
+                <Collapse in={anchors[menu.name]} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
-                    {menu.submenu.map((option, index1) => {
+                    {menu.children.map((option, index1) => {
                       return (
                         <ListItem
-                          key={option.menu}
                           button
-                          sx={{
-                            paddingLeft: 4,
-                          }}
+                          sx={{ pl: 4 }}
                           component={Link}
-                          to={option.link}
+                          to={option.slug}
                           onClick={(e) => toggleDrawer(false, e)}
                         >
                           <ListItemIcon>
                             <StarBorder />
                           </ListItemIcon>
-                          <ListItemText primary={option.menu} />
+                          <ListItemText primary={option.name} />
                         </ListItem>
                       );
                     })}
@@ -180,11 +183,11 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
                 </Collapse>
               </>
             ) : (
-              <ListItem button component={Link} to={menu.link}>
+              <ListItem button component={Link} to={menu.slug}>
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary={menu.menu} />
+                <ListItemText primary={menu.name} />
               </ListItem>
             );
           })}

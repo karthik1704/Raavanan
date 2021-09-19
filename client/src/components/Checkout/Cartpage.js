@@ -115,7 +115,7 @@ export default function Cartpage() {
             {prodList.length > 0 ? (
               prodList.map((product) => <CartItem product={product} />)
             ) : (
-              <h4 class="Product_Text"> Your cart is empty</h4>
+              <h4 className="Product_Text"> Your cart is empty</h4>
             )}
           </div>
         </Grid>

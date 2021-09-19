@@ -18,10 +18,11 @@ import FormLabel from '@mui/material/FormLabel';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 // import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 // import StoreIcon from '@mui/icons-material/Store';
-//import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { green } from '@mui/material/colors';
 
-// import green from '@mui/material/colors/green';
-
+import 'react-image-gallery/styles/css/image-gallery.css';
+import ImageGallery from 'react-image-gallery';
 import axios from 'axios';
 import { addItem } from '../../data/actions/cartActions';
 import { Helmet } from 'react-helmet';
@@ -33,7 +34,6 @@ import { API_URL } from '../../CONSTANTS';
 import { fetchProductDetail } from '../../data/actions/productActions';
 
 import { styled } from '@mui/material/styles';
-import { green } from '@mui/material/colors';
 
 const RootDiv = styled('div')(({ theme }) => ({
   margin: theme.spacing(2),
@@ -47,6 +47,7 @@ export default function ProductDetail() {
   const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
+  const [images, setImages] = useState([]);
   const [size, setSize] = useState('');
   // const [price, setPrice] = useState('');
   const [type, setType] = useState('');
@@ -96,6 +97,23 @@ export default function ProductDetail() {
       if (res.data.price) {
         setValue(res.data.price[0]);
       }
+      let localimages = [];
+      if (res.data.imageurl) {
+        localimages.push({
+          original: res.data.imageurl,
+          thumbnail: res.data.imageurl,
+        });
+      }
+
+      if (res.data.image.length > 0) {
+        let image = res.data.image.map((img) => ({
+          original: img.image,
+          thumbnail: img.image,
+        }));
+
+        localimages = localimages.concat(image);
+      }
+      setImages(localimages);
     });
 
     //return () => dispatch(fetchProductDetail({}));
@@ -127,7 +145,6 @@ export default function ProductDetail() {
       .map((price) => {
         // setMrp(price.mrp);
         // setPrice(price.price);
-        console.log(price);
         setValue(price);
       });
   };
@@ -135,6 +152,22 @@ export default function ProductDetail() {
   if (Object.keys(productDetail).length === 0) {
     return <div />;
   }
+
+  // const images1 = [
+  //   {
+  //     original: 'http://127.0.0.1:8000/media/product/mh_2.jpg',
+  //     thumbnail: 'http://127.0.0.1:8000/media/product/mh_2.jpg',
+  //     // originalClass  : 'productImage'
+  //   },
+  //   {
+  //     original: 'https://picsum.photos/id/1015/1000/600/',
+  //     thumbnail: 'https://picsum.photos/id/1015/250/150/',
+  //   },
+  //   {
+  //     original: 'https://picsum.photos/id/1019/1000/600/',
+  //     thumbnail: 'https://picsum.photos/id/1019/250/150/',
+  //   },
+  // ];
 
   return (
     <RootDiv>
@@ -147,7 +180,7 @@ export default function ProductDetail() {
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
-          <Grid container spacing={10}>
+          <Grid container>
             <Grid
               item
               xs={12}
@@ -155,28 +188,31 @@ export default function ProductDetail() {
               lg={5}
               sx={{
                 display: 'flex',
-                justifyContent: 'conter',
+                justifyContent: 'center',
               }}
             >
               <div>
-                <img
+                {/* <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}
-                  sx={{
-                    pt: '6px',
-                    width: { sm: 300, md: 500 },
-                    height: { sm: 300, md: 500 },
-                  }}
+                  className={
+                    
+                    classes.productImage
+                  }
+                /> */}
+                <ImageGallery
+                  items={images}
+                  thumbnailPosition={'left'}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  autoPlay={false}
+                  showNav={false}
+                  style={{ maxHeight: '300px' }}
                 />
               </div>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 600,
-                }}
-              >
+            <Grid item xs={12} md={6} sx={{ p: '10px' }}>
+              <Typography variant="h5" sx={{ fontWeight: 600 }}>
                 {productDetail.name}
               </Typography>
               {/* <Typography variant="subtitle1">
@@ -290,12 +326,12 @@ export default function ProductDetail() {
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
                 <Button
-                  color="secondary"
-                  justifycontent="flex-end"
                   sx={{
-                    margin: 1,
+                    m: 1,
                     backgroundColor: green[500],
                   }}
+                  color="secondary"
+                  justifycontent="flex-end"
                   variant="contained"
                   startIcon={<AddShoppingCartIcon />}
                   onClick={(event) => {

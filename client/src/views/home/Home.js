@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import axios from 'axios';
@@ -11,7 +12,6 @@ import { API_URL } from '../../CONSTANTS';
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 
 import useTopLoader from '../../hooks/useTopLoader';
-
 import Carousel from '../../components/carousel/Carousel';
 import ProductList from '../../components/productList/ProductList';
 
@@ -19,6 +19,12 @@ import ProductList from '../../components/productList/ProductList';
 //   root: {
 //     marginTop: theme.spacing(1),
 //   },
+//   fullWidth : {
+//     maxWidth : '100%'
+//   },
+//   maxWidthLg : {
+//     maxWidth : '100%'
+//   }
 // }));
 
 const Home = () => {
@@ -36,14 +42,14 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Box sx={{ maxWidth: '100%' }}>
       <div>
         <Carousel />
       </div>
       <Grid container sx={{ marginTop: 1 }}>
         <ProductList products={products} />
       </Grid>
-    </div>
+    </Box>
   );
 };
 

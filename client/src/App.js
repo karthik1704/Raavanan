@@ -8,7 +8,7 @@ import {
 } from '@mui/material/styles';
 import { green } from '@mui/material/colors';
 
-import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes/Routes';
 
 import { useSelector } from 'react-redux';
@@ -77,20 +77,31 @@ function App() {
         return response;
       },
       function (error) {
-        if (error.response.data.code === 'token_not_valid') {
+        // if(!error.response)
+        // return;
+        if (error.response.status === 401) {
           localStorage.setItem('app_token', '');
           axios.defaults.headers.common['Authorization'] = '';
-          //Promise.reject(error);
           dispatch(logoutUser(''));
-          <Redirect to="/" />;
-
-          //window.location.href = '/login'
+          // Router.push('/');
+          window.location.reload();
           return Promise.reject(error);
         }
+        //   if(error.response.data.code == "token_not_valid"){
+
+        //   localStorage.setItem("app_token", '');
+        //   axios.defaults.headers.common['Authorization'] = '';
+        //   //Promise.reject(error);
+        // //   dispatch(logoutUser(''));
+        // // <Redirect to="/" />
+
+        //   //window.location.href = '/login'
+        //   return Promise.reject(error);
+
+        // }
         return Promise.reject(error);
       }
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

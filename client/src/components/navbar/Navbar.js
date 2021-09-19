@@ -38,12 +38,12 @@ import { Link, useHistory } from 'react-router-dom';
 import useDarkTheme from '../../hooks/useDarkTheme';
 import useTopLoader from '../../hooks/useTopLoader';
 
-import { API_URL, MENUS } from '../../CONSTANTS';
+import { API_URL } from '../../CONSTANTS';
 import AppDrawer from '../drawer/AppDrawer';
 import { toggleAppDrawer } from '../../data/actions/appAction';
+import { logoutUser } from '../../data/actions/loginActions';
 
 import RavananLogo from '../../asserts/raavanan logo png.png';
-import { logoutUser } from '../../data/actions/loginActions';
 
 import { event } from 'react-ga';
 
@@ -93,126 +93,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-// const useStyles = makeStyles((theme) => ({
-//   links: {
-//     color: '#fff',
-//     textDecoration: 'none',
-//   },
-//   grow: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     display: 'none',
-//     [theme.breakpoints.up('sm')]: {
-//       display: 'block',
-//     },
-//   },
-//   search: {
-//     position: 'relative',
-//     borderRadius: theme.shape.borderRadius,
-//     backgroundColor: alpha(theme.palette.common.white, 0.15),
-//     '&:hover': {
-//       backgroundColor: alpha(theme.palette.common.white, 0.25),
-//     },
-//     marginRight: theme.spacing(2),
-//     marginLeft: 0,
-
-//     display: 'flex',
-//     flex: 1,
-//     [theme.breakpoints.up('sm')]: {
-//       marginLeft: theme.spacing(3),
-//       width: 'auto',
-//       maxWidth: '50% !important',
-//     },
-//     [theme.breakpoints.down('md')]: {
-//       // marginLeft: theme.spacing(3),
-//       width: 'auto',
-//       marginRight: 0,
-//       marginBottom: '20px',
-//     },
-//   },
-//   searchIcon: {
-//     padding: theme.spacing(0, 2),
-//     height: '100%',
-//     position: 'absolute',
-//     pointerEvents: 'none',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   inputRoot: {
-//     color: 'inherit',
-//     height: '40px',
-//   },
-//   inputInput: {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '70%',
-//     [theme.breakpoints.up('md')]: {
-//       width: '50ch',
-//     },
-//   },
-//   sectionDesktop: {
-//     display: 'none',
-//     [theme.breakpoints.up('lg')]: {
-//       display: 'flex',
-//     },
-//   },
-//   sectionMobile: {
-//     display: 'flex',
-//     [theme.breakpoints.up('lg')]: {
-//       display: 'none',
-//     },
-//   },
-
-//   centerToolbar: {
-//     display: 'none',
-//     [theme.breakpoints.up('lg')]: {
-//       backgroundColor: 'darkblue',
-//       display: 'flex',
-//       justifyContent: 'space-between',
-//     },
-//   },
-//   rightToolbar: {
-//     display: 'flex',
-//     width: '100%',
-//     flexWrap: 'wrap',
-//     justifyContent: 'flex-end',
-//   },
-//   logoutBtn: {
-//     boxShadow: 'none !important',
-//   },
-//   secMenu: {
-//     background: 'darkblue !important',
-//     fontSize: '12px !important',
-//   },
-//   subMenu: {
-//     background: 'darkblue !important',
-//     fontSize: '12px !important',
-//     color: 'white',
-//     '&:hover': {
-//       backgroundColor: 'green !important',
-//     },
-//   },
-//   MenuPopup: {
-//     background: 'darkblue !important',
-//   },
-// }));
-
 export default function Navbar() {
   const logout_url = `${API_URL}api/auth/logout/`;
   const [anchorEl, setAnchorEl] = useState(null);
   var anchors_dict = {};
-  MENUS.map((option) => {
-    if (option.submenu) {
-      anchors_dict[option.menu] = false;
-    }
-  });
+
   const [anchors, setAnchors] = useState(anchors_dict);
 
   const [category, setCategory] = useState([]);
@@ -265,19 +150,29 @@ export default function Navbar() {
     history.push('/');
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_URL}api/category/`)
-  //     .then((res) => setCategory(res.data.results));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${API_URL}api/category/`)
+      .then((res) => setCategory(res.data.results));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    var anchors_dict = {};
+    category.map((option) => {
+      if (option.children) {
+        anchors_dict[option.name] = false;
+      }
+    });
+    setAnchors(anchors_dict);
+  }, [category]);
 
   useEffect(() => {
     if (!login.loggedIn) return;
 
     if (cartItems.length > 0) {
       var carts = [];
-      for (let i = 0; i < cartItems.length; i++) {
+      for (var i = 0; i < cartItems.length; i++) {
         carts.push({
           product: cartItems[i]['id'],
           price: cartItems[i]['price_id'],
@@ -300,7 +195,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem component={Link} to="/orders">
-        My Orders
+        அடைவுகள்
       </MenuItem>
       {/* <MenuItem  onClick={logout}>Log out</MenuItem> */}
       <GoogleLogout
@@ -309,7 +204,7 @@ export default function Navbar() {
         }}
         icon={false}
         clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
-        buttonText="Logout"
+        buttonText="வெளியேறு"
         onLogoutSuccess={logout}
       ></GoogleLogout>
     </Menu>
@@ -330,7 +225,6 @@ export default function Navbar() {
   };
 
   const handleToggle = (menu, e) => {
-    console.log(e);
     setAnchorEl(e.currentTarget);
     setAnchors((prevState) => ({ ...prevState, [menu]: !anchors[menu] }));
 
@@ -341,7 +235,10 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        color={theme === 'dark' ? 'inherit' : 'primary'}
+        // color={theme === 'dark' ? 'inherit' : 'primary'}
+        sx={{
+          background: '#131921',
+        }}
       >
         <Toolbar>
           <IconButton
@@ -361,8 +258,8 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
 
-          <Link to="/">
-            <img src={RavananLogo} alt="logo" height="80px" width="80px" />
+          <Link to="/" style={{ width: '100%', textAlign: 'center' }}>
+            <img src={RavananLogo} alt="logo" height="40px" width="200px" />
           </Link>
 
           <Search sx={{ display: { xs: 'none', sm: 'flex' } }}>
@@ -388,6 +285,7 @@ export default function Navbar() {
             }}
           >
             <Button
+              sx={{ fontSize: '12px !important' }}
               aria-label={`${cartItems.length} product in cart`}
               color="inherit"
               component={Link}
@@ -398,7 +296,7 @@ export default function Navbar() {
                 </Badge>
               }
             >
-              Cart
+              கூடை
             </Button>
 
             {(() => {
@@ -408,12 +306,27 @@ export default function Navbar() {
                     {/* {login.user} */}
                     <div>
                       <Button
+                        sx={{
+                          fontSize: '12px !important',
+                          fontWeight: '400',
+                          marginTop: '2px',
+                        }}
                         aria-label=" 4 product in cart"
                         color="inherit"
                         aria-haspopup="true"
                         onClick={handleProfileMenuClick}
                       >
                         {login.user.user && `${login.user.user.first_name}`}
+                        <span className="MuiButton-label">
+                          <svg
+                            className="MuiSvgIcon-root"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <path d="M7 10l5 5 5-5z"></path>
+                          </svg>
+                        </span>
                       </Button>
                       {renderMenu}
                     </div>
@@ -422,57 +335,114 @@ export default function Navbar() {
               } else {
                 return (
                   <>
+                    {' '}
                     <Button
                       color="inherit"
+                      sx={{ fontSize: '12px !important' }}
                       onClick={onToggleTopLoader}
                       startIcon={<LockIcon />}
                       component={Link}
                       to="/login"
                     >
-                      Sign In
+                      உள் நுழைய
                     </Button>
                     <Button
                       color="inherit"
                       onClick={onToggleTopLoader}
+                      sx={{ fontSize: '12px !important' }}
                       startIcon={<AssignmentIndIcon />}
                       component={Link}
                       to="/register"
                     >
-                      Sign Up
+                      பதிய
                     </Button>
                   </>
                 );
               }
             })()}
           </Box>
-
-          {/* <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show 4 new Favorite"
-              color="inherit"
-              disabled
-            >
-              <Badge badgeContent={0} color="secondary">
-                <FavoriteIcon />
-              </Badge>
-            </IconButton>
-
-            <IconButton
-              aria-label=" 4 product in cart"
-              color="inherit"
-              disabled
-            >
-              <Badge badgeContent={0} color="secondary">
+        </Toolbar>
+        <Toolbar
+          sx={{
+            display: {
+              sm: 'flex',
+              lg: 'none',
+            },
+            textAlign: 'center',
+          }}
+          // className={`${classes.sectionMobile} ${classes.centeroptionbar} `}
+        >
+          <Button
+            aria-label=" 4 product in cart"
+            color="inherit"
+            sx={{ fontSize: '12px !important' }}
+            component={Link}
+            to="/CartPage"
+            startIcon={
+              <Badge badgeContent={cartItems.length} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
-            </IconButton>
-            <IconButton aria-label=" Offers" color="inherit" disabled>
-              <Badge badgeContent={0} color="secondary">
-                <LocalOfferIcon />
-              </Badge>
-            </IconButton>
-          </div>
-         */}
+            }
+          >
+            கூடை
+          </Button>
+
+          {(() => {
+            if (loggedIn) {
+              return (
+                <>
+                  {/* {login.user} */}
+
+                  <Button
+                    sx={{ fontSize: '12px !important' }}
+                    color="inherit"
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuClick}
+                    style={{ fontWeight: '400', marginTop: '2px' }}
+                  >
+                    {login.user.user && `${login.user.user.first_name}`}
+                    <span className="MuiButton-label">
+                      <svg
+                        className="MuiSvgIcon-root"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path d="M7 10l5 5 5-5z"></path>
+                      </svg>
+                    </span>
+                  </Button>
+                  {renderMenu}
+                </>
+              );
+            } else {
+              return (
+                <>
+                  {' '}
+                  <Button
+                    color="inherit"
+                    onClick={onToggleTopLoader}
+                    sx={{ fontSize: '12px !important' }}
+                    startIcon={<LockIcon />}
+                    component={Link}
+                    to="/login"
+                  >
+                    உள் நுழைய
+                  </Button>
+                  <Button
+                    color="inherit"
+                    onClick={onToggleTopLoader}
+                    sx={{ fontSize: '12px !important' }}
+                    startIcon={<AssignmentIndIcon />}
+                    component={Link}
+                    to="/register"
+                  >
+                    பதிய
+                  </Button>
+                </>
+              );
+            }
+          })()}
         </Toolbar>
         <Toolbar sx={{ display: { xs: 'flex', sm: 'none' } }}>
           <Search>
@@ -494,8 +464,8 @@ export default function Navbar() {
           }}
         >
           <div>
-            {MENUS.map((menu, index) => {
-              return menu.submenu ? (
+            {category.map((menu, index) => {
+              return menu.children.length > 0 ? (
                 <>
                   <ButtonGroup
                     variant="contained"
@@ -503,20 +473,16 @@ export default function Navbar() {
                     aria-label="split button"
                   >
                     <Button
+                      component={Link}
                       sx={{
-                        background: 'darkblue !important',
+                        background: '#232f3e !important',
                         fontSize: '12px !important',
                       }}
-                      component={Link}
-                      to={menu.link}
+                      to={`/${menu.slug}`}
                     >
-                      {menu.menu}
+                      {menu.name}
                     </Button>
                     <Button
-                      sx={{
-                        background: 'darkblue !important',
-                        fontSize: '12px !important',
-                      }}
                       color="primary"
                       size="small"
                       aria-controls={
@@ -525,13 +491,17 @@ export default function Navbar() {
                       aria-expanded={isMenuOpen ? 'true' : undefined}
                       aria-label="select merge strategy"
                       aria-haspopup="menu"
-                      onClick={(e) => handleToggle(menu.menu, e)}
+                      sx={{
+                        background: '#232f3e !important',
+                        fontSize: '12px !important',
+                      }}
+                      onClick={(e) => handleToggle(menu.name, e)}
                     >
                       <ArrowDropDownIcon />
                     </Button>
                   </ButtonGroup>
                   <Popper
-                    open={anchors[menu.menu]}
+                    open={anchors[menu.name]}
                     anchorEl={anchorEl}
                     role={undefined}
                     placement="bottom-start"
@@ -545,34 +515,30 @@ export default function Navbar() {
                             placement === 'bottom' ? 'left top' : 'left bottom',
                         }}
                       >
-                        <Paper
-                          sx={{
-                            background: 'darkblue !important',
-                          }}
-                        >
+                        <Paper sx={{ background: '#232f3e !important' }}>
                           <ClickAwayListener onClickAway={handleClose}>
                             <MenuList id="split-button-menu">
-                              {menu.submenu.map((option, index1) => {
+                              {menu.children.map((option, index1) => {
                                 return (
                                   <MenuItem
                                     sx={{
-                                      background: 'darkblue !important',
+                                      background: '#232f3e !important',
                                       fontSize: '12px !important',
                                       color: 'white',
                                       '&:hover': {
                                         backgroundColor: 'green !important',
                                       },
                                     }}
-                                    key={option.menu}
+                                    key={option.name}
                                     component={Link}
-                                    to={option.link}
+                                    to={`/${option.slug}`}
                                     // disabled={index === 2}
                                     // selected={index === selectedIndex}
                                     onClick={(event) =>
-                                      handleMenuItemClick(menu.menu)
+                                      handleMenuItemClick(menu.name)
                                     }
                                   >
-                                    {option.menu}
+                                    {option.name}
                                   </MenuItem>
                                 );
                               })}
@@ -592,14 +558,15 @@ export default function Navbar() {
                     aria-label="split button"
                   >
                     <Button
+                      component={Link}
                       sx={{
-                        background: 'darkblue !important',
+                        background: '#232f3e !important',
                         fontSize: '12px !important',
                       }}
-                      component={Link}
-                      to={menu.link}
+                      //  to={menu.link}
+                      to={`/${menu.slug}`}
                     >
-                      {menu.menu}
+                      {menu.name}
                     </Button>
                   </ButtonGroup>
                 </>
@@ -608,13 +575,13 @@ export default function Navbar() {
           </div>
           <div style={{ float: 'right' }}>
             <Button
-              sx={{
-                background: 'darkblue !important',
-                fontSize: '12px !important',
-              }}
               color="inherit"
               onClick={onToggleTopLoader}
               component={Link}
+              sx={{
+                background: '#232f3e !important',
+                fontSize: '12px !important',
+              }}
               to="/terms"
             >
               கொள்கைகள்
@@ -624,7 +591,7 @@ export default function Navbar() {
               onClick={onToggleTopLoader}
               component={Link}
               sx={{
-                background: 'darkblue !important',
+                background: '#232f3e !important',
                 fontSize: '12px !important',
               }}
               to="/about"
@@ -635,7 +602,7 @@ export default function Navbar() {
               color="inherit"
               onClick={onToggleTopLoader}
               sx={{
-                background: 'darkblue !important',
+                background: '#232f3e !important',
                 fontSize: '12px !important',
               }}
               component={Link}
@@ -649,7 +616,11 @@ export default function Navbar() {
 
       {/* {renderMenu} */}
 
-      <AppDrawer theme={theme} onToggleTheme={onToggleTheme} />
+      <AppDrawer
+        theme={theme}
+        onToggleTheme={onToggleTheme}
+        category={category}
+      />
     </Box>
   );
 }

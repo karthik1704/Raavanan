@@ -109,23 +109,18 @@ const Orders = () => {
                 ></CardHeader>
 
                 <CardContent>
-                  <Typography align="center" gutterBottom>
+                  <Typography sx={{ textAlign: 'center' }} gutterBottom>
                     <strong>No of Items Ordered :</strong> {order.items.length}
                   </Typography>
 
-                  <Typography align="center" gutterBottom>
+                  <Typography sx={{ textAlign: 'center' }} gutterBottom>
                     <strong>Total Price:</strong> ₹ {order.total_price}
                   </Typography>
-                  <Typography align="center" gutterBottom>
+                  <Typography sx={{ textAlign: 'center' }} gutterBottom>
                     <strong>Status :</strong> {order.order_status}
                   </Typography>
                 </CardContent>
-                <CardActions
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                  }}
-                >
+                <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
                   <Button
                     size="small"
                     sx={{
@@ -145,7 +140,7 @@ const Orders = () => {
             </Grid>
           ))
         ) : (
-          <h4 class="Product_Text"> You have not ordered anything</h4>
+          <h4 className="Product_Text"> You have not ordered anything</h4>
         )}
       </Grid>
     </Div>

@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
-
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { API_URL } from '../../CONSTANTS';
 import { clearItemFromCart } from '../../data/actions/cartActions';
-
+import { API_URL } from '../../CONSTANTS';
 import './order-confirm.css';
 
 const Orderconfirm = () => {
@@ -23,9 +21,9 @@ const Orderconfirm = () => {
 
   if (status === 'success') {
     return (
-      <div class="col-rt-12">
-        <div class="Scriptcontent">
-          <div id="card" class="animated fadeIn">
+      <div className="col-rt-12">
+        <div className="Scriptcontent">
+          <div id="card" className="animated fadeIn">
             <div id="upper-side">
               <h3 id="status">Success</h3>
             </div>
@@ -43,9 +41,9 @@ const Orderconfirm = () => {
     );
   } else if (status === 'failure' || status === 'pending') {
     return (
-      <div class="col-rt-12">
-        <div class="Scriptcontent">
-          <div id="card" class="animated fadeIn">
+      <div className="col-rt-12">
+        <div className="Scriptcontent">
+          <div id="card" className="animated fadeIn">
             <div id="upper-side">
               <h3 id="status">FAILURE</h3>
             </div>
@@ -62,9 +60,9 @@ const Orderconfirm = () => {
     );
   } else {
     return (
-      <div class="col-rt-12">
-        <div class="Scriptcontent">
-          <div id="card" class="animated fadeIn">
+      <div className="col-rt-12">
+        <div className="Scriptcontent">
+          <div id="card" className="animated fadeIn">
             <div id="lower-side">
               <p id="message">We are fetching the order status</p>
               {/* <a href="/" id="contBtn">Continue Shopping</a> */}

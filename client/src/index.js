@@ -17,28 +17,7 @@ const {dispatch} = store;
 ReactGA.initialize('G-LH9KB8TXPW');
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('app_token');
 
-// axios.interceptors.response.use((response) => {
-//  // console.log(response)
-//   //return response;
-//   return response
-// }, (error) => {
-  
-//   if(error.response.data.code == "token_not_valid"){
-    
-//      localStorage.setItem("app_token", '');
-//      axios.defaults.headers.common['Authorization'] = '';
-//     //Promise.reject(error);
-//     dispatch(logoutUser(''));
-//    //<Redirect to="/" />
-   
-//       //return window.location.href = '/login'
-//     return Promise.reject(error);
-    
-    
-//   }
-  
-//   return Promise.reject(error.message);
-// });
+
 
 ReactDOM.render(
   <StrictMode>

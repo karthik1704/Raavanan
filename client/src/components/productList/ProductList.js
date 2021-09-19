@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -24,87 +25,9 @@ const CenterContent = styled('div')(({ theme }) => ({
 
 const Img = styled('img')('');
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     // maxWidth: 238,
-//     margin: theme.spacing(0.5),
-//     // [theme.breakpoints.down('sm')]: {
-//     //   maxWidth: 140,
-//     // },
-//     // [theme.breakpoints.up('sm')]: {
-//     //   minWidth: 180,
-//     // },
-//   },
-//   media: {
-//     marginTop: '5px',
-//     paddingTop: 10,
-//     paddingRight: 10,
-//     [theme.breakpoints.down('md')]: {
-//       width: 150,
-//       height: 150,
-//     },
-//     width: 200,
-//     height: 200,
-//   },
-//   frameImage: {
-//     marginTop: '5px',
-//     paddingTop: 10,
-//     paddingRight: 10,
-//     [theme.breakpoints.down('md')]: {
-//       width: 150,
-//       height: 150,
-//     },
-//     width: 200,
-//     height: 200,
-//   },
-//   center: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     margin: '0 auto',
-//   },
-//   content: {
-//     padding: '0.5rem auto',
-//   },
-//   title: {
-//     textAlign: 'center',
-//     fontSize: '12px',
-//     marginBottom: '1px',
-//     fontWeight: 'bold',
-
-//     [theme.breakpoints.down('md')]: {
-//       fontSize: '0.6rem',
-//       fontWeight: 600,
-//     },
-//   },
-//   price: {
-//     textAlign: 'center',
-//     fontWeight: 500,
-//     fontSize: '13px',
-//   },
-//   cardButtons: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//   },
-//   cartBtn: {
-//     color: 'white',
-//     background: '#43a047',
-//     paddingLeft: '10px',
-//     fontSize: '10px',
-//   },
-//   shapeCircle: {
-//     borderRadius: '50%',
-//     left: '6%',
-//     display: 'contents',
-//   },
-// }));
-
 const ProductList = ({ products }) => {
   const dispatch = useDispatch();
-  // console.log(products);
-  // products.map((product) => (
-  //   console.log(product.price[0].price)
-  // ))
+
   return (
     <>
       {products.map((product, i) => {
@@ -175,16 +98,29 @@ const ProductList = ({ products }) => {
                     {product.name.split('|')[0]}
                   </Typography>
                   <Typography
-                    variant="subtitle1"
-                    color="textPrimary"
                     sx={{
                       textAlign: 'center',
                       fontWeight: 500,
                       fontSize: '13px',
                     }}
+                    variant="subtitle1"
+                    color="textPrimary"
                   >
-                    {product['price'].length > 0 &&
-                      `₹ ${product.price[0].price}`}
+                    {product['price'].length > 0 && (
+                      <span>
+                        {' '}
+                        ₹ {product.price[0].price} - &nbsp;
+                        <Box
+                          component="span"
+                          sx={{
+                            textDecoration: 'line-through',
+                            fontSize: '11px',
+                          }}
+                        >
+                          ₹ {product.price[0].mrp}
+                        </Box>
+                      </span>
+                    )}
 
                     {/* ₹{product.price[0].id} */}
                   </Typography>
@@ -192,17 +128,14 @@ const ProductList = ({ products }) => {
               </CardActionArea>
 
               <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                {/* <IconButton aria-label="add to favorites">
-                <FavoriteBorderOutlinedIcon />
-              </IconButton> */}
                 <Button
-                  color="primary"
                   sx={{
                     color: 'white',
                     background: '#43a047',
                     paddingLeft: '10px',
                     fontSize: '10px',
                   }}
+                  color="primary"
                   justifycontent="center"
                   startIcon={<AddShoppingCartIcon />}
                   onClick={() =>
