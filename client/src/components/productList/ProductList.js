@@ -67,15 +67,15 @@ const ProductList = ({ products }) => {
                     alt={product.name}
                     sx={{
                       mt: '5px',
-                      pt: 10,
-                      pr: 10,
+                      pt: 1.2,
+                      pr: 1.2,
                       width: {
                         sm: '100px',
-                        md: 200,
+                        md: '200px',
                       },
                       height: {
                         sm: '100px',
-                        md: 200,
+                        md: '200px',
                       },
                     }}
                   />

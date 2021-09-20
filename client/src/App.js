@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import {
@@ -130,7 +132,7 @@ function App() {
             <Paper>
               {loading && <Loader />}
               <Navbar />
-              <Container
+              <Box
                 sx={{
                   minHeight: {
                     sm: '100vh',
@@ -139,7 +141,7 @@ function App() {
                 }}
               >
                 <Routes />
-              </Container>
+              </Box>
               <NewFooter />
             </Paper>
           </Router>

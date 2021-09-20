@@ -459,7 +459,8 @@ export default function Navbar() {
         <Toolbar
           sx={{
             display: { sm: 'none', md: 'flex' },
-            backgroundColor: 'darkblue',
+            backgroundColor: '#232f3e',
+            minHeight: '40px !important',
             justifyContent: 'space-between',
           }}
         >

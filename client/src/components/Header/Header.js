@@ -76,10 +76,10 @@ export default function Header({ title, subtitle }) {
             <Paper
               sx={{
                 padding: 2,
+                mt: 2,
                 textAlign: 'center',
                 color: 'white',
                 background: '#43a047',
-                marginTop: 10,
                 justifyContent: 'center',
               }}
             >

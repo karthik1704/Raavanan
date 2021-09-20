@@ -46,7 +46,7 @@ const Home = () => {
       <div>
         <Carousel />
       </div>
-      <Grid container sx={{ marginTop: 1 }}>
+      <Grid container sx={{ mt: 1 }}>
         <ProductList products={products} />
       </Grid>
     </Box>
