@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import {
   createTheme,
