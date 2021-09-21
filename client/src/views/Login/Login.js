@@ -1,13 +1,16 @@
+import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import GoogleIcon from '@mui/icons-material/Google';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
@@ -16,7 +19,6 @@ import MuiPhoneInput from 'material-ui-phone-number';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
-// import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -75,7 +77,10 @@ const schema = yup.object().shape({
     .string()
     .matches(phoneRegExp, 'Phone number is not valid')
     .required('Please enter Phonenumber'),
-  password: yup.string().required('Please enter password'),
+  password: yup
+    .string()
+    .min(8, 'Password min 8 characters')
+    .required('Please enter password'),
 });
 
 export default function Login() {
@@ -144,11 +149,7 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            // ref="form"
-            onSubmit={handleSubmit(handleLoginSubmit)}
-          >
+          <Box component="form" onSubmit={handleSubmit(handleLoginSubmit)}>
             <Controller
               name="phone"
               defaultValue=""
@@ -226,16 +227,13 @@ export default function Login() {
               variant="contained"
               color="primary"
               sx={{
-                margin: (theme) => theme.spacing(3, 0, 2),
+                margin: (theme) => theme.spacing(1, 0, 2),
               }}
             >
               Sign In
             </Button>
+            <Divider variant="middle">or</Divider>
             <Grid container>
-              <Grid item xs>
-                {' '}
-              </Grid>
-
               <Grid item xs>
                 <GoogleLogin
                   clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
@@ -243,6 +241,21 @@ export default function Login() {
                   onSuccess={responseGoogle}
                   onFailure={responseGoogle}
                   isSignedIn={true}
+                  render={(renderProps) => (
+                    <Button
+                      sx={{
+                        margin: (theme) => theme.spacing(1, 0, 1),
+                      }}
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                      fullWidth
+                      variant="outlined"
+                      color="primary"
+                      startIcon={<GoogleIcon />}
+                    >
+                      Login with Google
+                    </Button>
+                  )}
                   scopes={[
                     'email',
                     'profile',
@@ -252,9 +265,6 @@ export default function Login() {
                   ]}
                   cookiePolicy={'single_host_origin'}
                 />
-              </Grid>
-              <Grid item xs>
-                {' '}
               </Grid>
             </Grid>
             <br></br>
