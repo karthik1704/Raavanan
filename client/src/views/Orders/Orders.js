@@ -93,8 +93,7 @@ const Orders = () => {
       <Grid container spacing={3}>
         {orders.length > 0 ? (
           orders.map((order) => (
-            <Grid item xs={12} sm={4}>
-              {/* <Paper className={classes.paper}> */}
+            <Grid item xs={12} sm={4} key={order.id}>
               <Card>
                 <CardHeader
                   sx={{
