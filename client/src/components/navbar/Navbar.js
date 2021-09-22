@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import { useState, useEffect, useRef } from 'react';
+import { Fragment, useState, useEffect, useRef } from 'react';
 
 import axios from 'axios';
 import { styled, alpha } from '@mui/material/styles';
@@ -244,7 +244,7 @@ export default function Navbar() {
           <IconButton
             edge="start"
             sx={{
-              mr: 2,
+              mr: { md: 2 },
               display: {
                 sm: 'block',
                 md: 'none',
@@ -368,6 +368,9 @@ export default function Navbar() {
               sm: 'flex',
               lg: 'none',
             },
+            justifyContent: {
+              sm: 'center',
+            },
             textAlign: 'center',
           }}
           // className={`${classes.sectionMobile} ${classes.centeroptionbar} `}
@@ -458,7 +461,7 @@ export default function Navbar() {
 
         <Toolbar
           sx={{
-            display: { sm: 'none', md: 'flex' },
+            display: { xs: 'none', sm: 'none', md: 'flex' },
             backgroundColor: '#232f3e',
             minHeight: '40px !important',
             justifyContent: 'space-between',
@@ -467,7 +470,7 @@ export default function Navbar() {
           <div>
             {category.map((menu, index) => {
               return menu.children.length > 0 ? (
-                <>
+                <Fragment key={index}>
                   <ButtonGroup
                     variant="contained"
                     color="primary"
@@ -549,9 +552,9 @@ export default function Navbar() {
                       </Grow>
                     )}
                   </Popper>
-                </>
+                </Fragment>
               ) : (
-                <>
+                <Fragment key={index}>
                   <ButtonGroup
                     variant="contained"
                     color="primary"
@@ -570,7 +573,7 @@ export default function Navbar() {
                       {menu.name}
                     </Button>
                   </ButtonGroup>
-                </>
+                </Fragment>
               );
             })}
           </div>
