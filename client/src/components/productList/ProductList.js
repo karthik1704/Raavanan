@@ -70,11 +70,11 @@ const ProductList = ({ products }) => {
                       pt: 1.2,
                       pr: 1.2,
                       width: {
-                        sm: '100px',
+                        xs: '150px',
                         md: '200px',
                       },
                       height: {
-                        sm: '100px',
+                        xs: '150px',
                         md: '200px',
                       },
                     }}
