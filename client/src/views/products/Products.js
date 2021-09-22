@@ -88,7 +88,7 @@ const Products = () => {
         <title>இராவணன் அங்காடி | {category}</title>
       </Helmet>
       <Grid container sx={{ mt: 1 }}>
-        <Grid item xs={0} sm={0} md={3} xl={3}></Grid>
+        <Grid item md={3} xl={3}></Grid>
         <Grid item xs={12} sm={12} md={9} xl={9}>
           {/* {products?.length !== 0 ? (
           <ProductList products={products} />
