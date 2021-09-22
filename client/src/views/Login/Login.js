@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -87,7 +89,11 @@ export default function Login() {
   const { handleSubmit, control } = useForm({
     resolver: yupResolver(schema),
   });
-
+  const [error, setError] = useState({
+    field: null,
+    detail: null,
+    non_field_errors: null,
+  });
   // const cart = useSelector((state) => state.cart);
   // const login = useSelector((state) => state.login);
   const dispatch = useDispatch();
@@ -98,6 +104,13 @@ export default function Login() {
   // const sync_url = `${API_URL}api/carts/sync_cart/`;
 
   const handleLoginSubmit = ({ phone, password }) => {
+    error &&
+      setError({
+        field: null,
+        detail: null,
+        non_field_errors: null,
+      });
+
     if (phone.length !== 13) return;
     axios
       .post(login_url, {
@@ -123,14 +136,24 @@ export default function Login() {
         code: response['googleId'],
         id_token: response['tokenId'],
       })
-      .then(
-        (response) => {
-          dispatch(loginUser(response.data));
-        },
-        (error) => {
-          console.log(error);
+      .then((response) => {
+        dispatch(loginUser(response.data));
+      })
+      .catch((err) => {
+        if (err.data === undefined) {
+          setError({
+            ...error,
+            detail: 'Something Went Wrong, Please try again',
+          });
+        } else if (err.data.non_field_errors) {
+          setError({
+            ...error,
+            detail: 'Email or Password incorrect',
+          });
+        } else {
+          setError(err.data);
         }
-      );
+      });
   };
   return (
     <>
@@ -149,6 +172,7 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {error.detail && <Alert severity="error">{error?.detail}</Alert>}
           <Box component="form" onSubmit={handleSubmit(handleLoginSubmit)}>
             <Controller
               name="phone"
