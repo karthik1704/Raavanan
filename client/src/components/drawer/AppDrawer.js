@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 //import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -145,7 +145,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
               //    </ListItemIcon>
               //    <ListItemText primary={menu.name} />
               //  </ListItem>
-              <>
+              <Fragment key={index}>
                 <ListItem>
                   <ListItemIcon>
                     <InboxIcon />
@@ -170,6 +170,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
                           sx={{ pl: 4 }}
                           component={Link}
                           to={option.slug}
+                          key={index1}
                           onClick={(e) => toggleDrawer(false, e)}
                         >
                           <ListItemIcon>
@@ -181,9 +182,9 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
                     })}
                   </List>
                 </Collapse>
-              </>
+              </Fragment>
             ) : (
-              <ListItem button component={Link} to={menu.slug}>
+              <ListItem key={index} button component={Link} to={menu.slug}>
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
