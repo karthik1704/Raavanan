@@ -70,7 +70,7 @@ const SubTitle = styled('p')(({ theme }) => ({
 export default function Header({ title, subtitle }) {
   return (
     <RootDiv>
-      <Grid spacing={3}>
+      <Grid>
         <Grid item xs={12}>
           <div>
             <Paper
