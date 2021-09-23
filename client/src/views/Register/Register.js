@@ -74,7 +74,8 @@ function Alert(props) {
 //   });
 // }, [dispatch, category, url, filterUrl]);
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+// const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const schema = yup.object().shape({
   first_name: yup.string().required('First name required*'),
@@ -197,11 +198,12 @@ export default function Register() {
         dispatch(loginUser(response.data));
       })
       .catch((err) => {
-        for (let i in err.response.data) {
-          setError(error.response.data[i]);
-          setOpen(true);
-          break;
-        }
+        // for (let i in err.response.data) {
+        //   setError(error.response.data[i]);
+        //   setOpen(true);
+        //   break;
+        // }
+        console.log(err);
       });
   };
 
@@ -375,6 +377,7 @@ export default function Register() {
                   }}
                   helperText={error && error.message}
                   error={error && true}
+                  {...field}
                 />
               )}
             />
@@ -395,6 +398,7 @@ export default function Register() {
                   }}
                   helperText={error && error.message}
                   error={error && true}
+                  {...field}
                 />
               )}
             />
