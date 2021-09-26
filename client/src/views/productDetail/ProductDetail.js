@@ -1,51 +1,89 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import { useState, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-// import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+// import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+// import StoreIcon from '@mui/icons-material/Store';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { green } from '@mui/material/colors';
 
-// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-// import StoreIcon from '@material-ui/icons/Store';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-
-// import green from '@material-ui/core/colors/green';
-
+import 'react-image-gallery/styles/css/image-gallery.css';
+import ImageGallery from 'react-image-gallery';
 import axios from 'axios';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-
-import { API_URL } from '../../CONSTANTS';
-
+import { addItem } from '../../data/actions/cartActions';
 import { Helmet } from 'react-helmet';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import { API_URL } from '../../CONSTANTS';
 import { fetchProductDetail } from '../../data/actions/productActions';
 
-import useStyles from './styles';
+import { styled } from '@mui/material/styles';
 
-const ProductDetail = () => {
+const RootDiv = styled('div')(({ theme }) => ({
+  margin: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    margin: '16px 0',
+  },
+}));
+
+export default function ProductDetail() {
   const { id } = useParams();
   const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [value, setValue] = useState('');
+  const [images, setImages] = useState([]);
   const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
+  // const [price, setPrice] = useState('');
+  const [type, setType] = useState('');
   const [mrp, setMrp] = useState('');
+  const login = useSelector((state) => state.login);
+  const loggedIn = login.loggedIn;
+  const cart = useSelector((state) => state.cart);
+  const cartItems = cart.cartItems;
+
+  const handleAddItemtoCart = (product_id) => {
+    dispatch(
+      addItem({
+        id: productDetail.id,
+        price: value.id,
+        material: productDetail.material,
+      })
+    );
+  };
+
+  // useEffect(() => {
+  //   var carts = []
+  //   for(var i=0;i<cartItems.length;i++){
+  //     carts.push({
+  //       "product" : cartItems[i]['id'],
+  //       "price" : cartItems[i]['price_id'],
+  //       "quantity": cartItems[i]['quantity']
+  //     })
+  //   }
+  // axios.post(`${API_URL}api/sync_cart/`, carts)
+  //   .then((response) => {
+  //  console.log(response);
+  //   }, (error) => {
+  //     console.log(error);
+
+  //   });
+  // }, [cartItems]);
 
   useEffect(() => {
     // fetch(`http://localhost:8000/api/product/${id}`)
@@ -53,89 +91,135 @@ const ProductDetail = () => {
     //   .then((data) => dispatch(fetchProductDetail(data)))
     //   .catch((err) => console.log(err));
 
-    axios
-      .get(`${API_URL}api/product/${id}`)
-      .then((res) => {
-        console.log(res);
-        dispatch(fetchProductDetail(res.data))
+    axios.get(`${API_URL}api/product/${id}`).then((res) => {
+      dispatch(fetchProductDetail(res.data));
+
+      if (res.data.price) {
+        setValue(res.data.price[0]);
       }
-      );
-    
+      let localimages = [];
+      if (res.data.imageurl) {
+        localimages.push({
+          original: res.data.imageurl,
+          thumbnail: res.data.imageurl,
+        });
+      }
+
+      if (res.data.image.length > 0) {
+        let image = res.data.image.map((img) => ({
+          original: img.image,
+          thumbnail: img.image,
+        }));
+
+        localimages = localimages.concat(image);
+      }
+      setImages(localimages);
+    });
+
+    //return () => dispatch(fetchProductDetail({}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => dispatch(fetchProductDetail({}));
   }, [dispatch]);
 
-  useEffect(() => {
-    if (productDetail.materials) {
-      setValue(productDetail.materials[0].material_name);
-    }
-    setSize('12*10');
-  }, [productDetail]);
+  // useEffect(() => {
+  //   if (productDetail.materials) {
+  //     setValue(productDetail.materials[0].material_name);
+  //   }
+  //   setSize('12*10');
+  // }, [productDetail]);
 
-  useEffect(() => {
-    if (size === '12*10' || size === '') {
-      setMrp(649);
-      setPrice(499);
-    } else if (size === '10*15') {
-      setMrp(799);
-      setPrice(599);
-    } else if (size === '12*18') {
-      setMrp(1099);
-      setPrice(799);
-    } else if (size === '20*16') {
-      setMrp(1399);
-      setPrice(999);
-    } else if (size === '20*30') {
-      setMrp(2499);
-      setPrice(1999);
-    } else if (size === '24*36') {
-      setMrp(3000);
-      setPrice(2499);
-    }
-  }, [size]);
+  // useEffect(() => {
+  //   console.log("use effect")
+  //   if(!productDetail)
+  //     return
+  //   console.log(productDetail)
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
+  // }, [size]);
+
+  // const handleChange = (e) => {
+  //   setValue(e.target.value);
+  // };
   const handleSizeChange = (e) => {
     setSize(e.target.value);
+    productDetail.price
+      .filter((price) => price.types === e.target.value)
+      .map((price) => {
+        // setMrp(price.mrp);
+        // setPrice(price.price);
+        setValue(price);
+      });
   };
 
   if (Object.keys(productDetail).length === 0) {
     return <div />;
   }
 
+  // const images1 = [
+  //   {
+  //     original: 'http://127.0.0.1:8000/media/product/mh_2.jpg',
+  //     thumbnail: 'http://127.0.0.1:8000/media/product/mh_2.jpg',
+  //     // originalClass  : 'productImage'
+  //   },
+  //   {
+  //     original: 'https://picsum.photos/id/1015/1000/600/',
+  //     thumbnail: 'https://picsum.photos/id/1015/250/150/',
+  //   },
+  //   {
+  //     original: 'https://picsum.photos/id/1019/1000/600/',
+  //     thumbnail: 'https://picsum.photos/id/1019/250/150/',
+  //   },
+  // ];
+
   return (
-    <div className={classes.root}>
+    <RootDiv>
       <Helmet>
+        {`
         <title>
           இராவணன் அங்காடி | {ProductDetail && productDetail.product_name}
         </title>
+`}
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
-          <Grid container spacing={10}>
-            <Grid item xs={12} md={6} lg={5} className={classes.center}>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={5}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               <div>
-                <img
+                {/* <img
                   src={productDetail.imageurl}
                   alt={productDetail.name}
                   className={
-                    productDetail.category &&
-                    productDetail.category.name !== 'கைபேசி உறை'
-                      ? classes.frameImage
-                      : classes.productImage
+                    
+                    classes.productImage
                   }
+                /> */}
+                <ImageGallery
+                  items={images}
+                  thumbnailPosition={'left'}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  autoPlay={false}
+                  showNav={false}
+                  style={{ maxHeight: '300px' }}
                 />
               </div>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h5">{productDetail.product_name}</Typography>
+            <Grid item xs={12} md={6} sx={{ p: '10px' }}>
+              <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                {productDetail.name}
+              </Typography>
               {/* <Typography variant="subtitle1">
                 category: {product.category}
               </Typography> */}
               <Divider />
-              {productDetail.category &&
+              {/* {productDetail.category &&
                 productDetail.category.name !== 'படச்சட்டகம்' && (
                   <>
                     {productDetail.category &&
@@ -198,77 +282,65 @@ const ProductDetail = () => {
                       </>
                     )}
                   </>
-                )}
+                )} */}
 
-              {productDetail.category &&
-                productDetail.category.name === 'படச்சட்டகம்' && (
-                  <>
-                    <Typography variant="subtitle1">
-                      அதிகபட்ச விற்பனை விலை: ₹ <del>{mrp}</del>
-                    </Typography>
-                    <Typography variant="subtitle1">
-                      தற்போதைய விலை: ₹ <b>{price}</b>
-                    </Typography>
-                    <Divider />
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend" color="secondary">
-                        அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
-                      </FormLabel>
-                      <RadioGroup
-                        row
-                        aria-label="position"
-                        name="position"
-                        defaultValue="12*10"
-                        onChange={handleSizeChange}
-                      >
-                        <FormControlLabel
-                          value="12*10"
-                          control={<Radio color="primary" />}
-                          label="12*10"
-                          labelPlacement="end"
-                        />
-                        <FormControlLabel
-                          value="10*15"
-                          control={<Radio color="primary" />}
-                          label="10*15"
-                          labelPlacement="end"
-                        />
+              {/* {productDetail.category &&
+                productDetail.category.name === 'படச்சட்டகம்' && ( */}
+              <>
+                <Typography variant="subtitle1">
+                  அதிகபட்ச விற்பனை விலை: ₹ <del>{value.mrp}</del>
+                </Typography>
+                <Typography variant="subtitle1">
+                  தற்போதைய விலை: ₹ <b>{value.price}</b>
+                </Typography>
+                <Divider />
+                <FormControl component="fieldset">
+                  {productDetail.price.length > 1 && (
+                    <FormLabel component="legend" color="secondary">
+                      அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
+                    </FormLabel>
+                  )}
 
+                  <RadioGroup
+                    row
+                    aria-label="position"
+                    name="position"
+                    defaultValue={productDetail.price[0].types}
+                    onChange={handleSizeChange}
+                  >
+                    {productDetail.price
+                      .filter((price) => price.types !== null)
+                      .map((price) => (
                         <FormControlLabel
-                          value="12*18"
+                          value={price.types}
                           control={<Radio color="primary" />}
-                          label="12*18"
+                          label={price.types}
                           labelPlacement="end"
                         />
-
-                        <FormControlLabel
-                          value="20*16"
-                          control={<Radio color="primary" />}
-                          label="20*16"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          value="20*30"
-                          control={<Radio color="primary" />}
-                          label="20*30"
-                          labelPlacement="end"
-                        />
-
-                        <FormControlLabel
-                          value="24*36"
-                          control={<Radio color="primary" />}
-                          label="24*36"
-                          labelPlacement="end"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </>
-                )}
+                      ))}
+                  </RadioGroup>
+                </FormControl>
+              </>
+              {/* )} */}
 
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
                 <Button
+                  sx={{
+                    m: 1,
+                    backgroundColor: green[500],
+                  }}
+                  color="secondary"
+                  justifycontent="flex-end"
+                  variant="contained"
+                  startIcon={<AddShoppingCartIcon />}
+                  onClick={(event) => {
+                    handleAddItemtoCart(productDetail.id);
+                  }}
+                >
+                  கூடை
+                </Button>
+                {/* <Button
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
                   className={classes.whatsappBtn}
@@ -283,7 +355,7 @@ const ProductDetail = () => {
                   }}
                 >
                   பொருளை வாங்க
-                </Button>
+                </Button> */}
 
                 {/* <div className={classes.buttons}>
                   <Button
@@ -343,8 +415,7 @@ const ProductDetail = () => {
                   <TableRow>
                     <TableCell>வகை </TableCell>
                     <TableCell>
-                      {productDetail.category &&
-                        productDetail.category.name}
+                      {productDetail.category && productDetail.category.name}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -357,8 +428,8 @@ const ProductDetail = () => {
           </Grid>
         </div>
       )}
-    </div>
+    </RootDiv>
   );
-};
+}
 
-export default ProductDetail;
+//export default ProductDetail;

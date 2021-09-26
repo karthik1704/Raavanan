@@ -12,7 +12,7 @@
 .Product_Image_Container
 {
     height: 150px;
-    width: 170px;
+    /* width: 170px; */
     overflow: hidden;
 }
 .Product_Image_Container img{

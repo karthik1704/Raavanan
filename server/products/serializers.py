@@ -3,7 +3,7 @@ from rest_framework import  serializers
 
 from rest_framework_recursive.fields import RecursiveField
 
-from .models import Price, Product, ProductImage, ProductMaterial , Category, Size
+from .models import Price, Product, ProductImage, ProductMaterial , Category
 
 
 # Create your views here.
@@ -40,18 +40,11 @@ class ProductMaterialSerializer(serializers.ModelSerializer):
         model = ProductMaterial
         fields = ['id','material_name']
 
-class ProductSizeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Size
-        fields = '__all__'
-
 class ProductPriceSerializer(serializers.ModelSerializer):
     material = ProductMaterialSerializer(many=True)
-    size = ProductSizeSerializer()
     class Meta:
         model = Price
-        fields = ['id', 'types', 'material', 'size','mrp', 'discount', 'price']
+        fields = ['id', 'types', 'material', 'mrp', 'discount', 'price']
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
@@ -63,6 +56,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields=[
             'id',
             'name',
+            'slug',
             'price',
             'brand',
             'manufacturer',
@@ -77,6 +71,10 @@ class ProductSerializer(serializers.ModelSerializer):
             'created_at',
 
         ]
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
  
 
 class PriceDetailSerializer(serializers.ModelSerializer):

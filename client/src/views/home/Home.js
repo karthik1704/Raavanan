@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 import axios from 'axios';
 
@@ -12,19 +12,24 @@ import { API_URL } from '../../CONSTANTS';
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 
 import useTopLoader from '../../hooks/useTopLoader';
-
 import Carousel from '../../components/carousel/Carousel';
 import ProductList from '../../components/productList/ProductList';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(1),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     marginTop: theme.spacing(1),
+//   },
+//   fullWidth : {
+//     maxWidth : '100%'
+//   },
+//   maxWidthLg : {
+//     maxWidth : '100%'
+//   }
+// }));
 
 const Home = () => {
   const { products } = useSelector((state) => state.products);
-  const [loading, onToggleTopLoader] = useTopLoader();
+  const [, onToggleTopLoader] = useTopLoader();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,18 +38,18 @@ const Home = () => {
       onToggleTopLoader(false);
       return dispatch(fetchProduct(res.data.results));
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  const classes = useStyles();
   return (
-    <div>
+    <Box sx={{ maxWidth: '100%' }}>
       <div>
         <Carousel />
       </div>
-      <Grid container className={classes.root}>
+      <Grid container sx={{ mt: 1 }}>
         <ProductList products={products} />
       </Grid>
-    </div>
+    </Box>
   );
 };
 

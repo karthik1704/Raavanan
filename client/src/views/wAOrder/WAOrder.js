@@ -3,92 +3,128 @@ import { useParams, useLocation } from 'react-router-dom';
 
 import axois from 'axios';
 
-import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
-import { makeStyles } from '@material-ui/core/styles';
-
+import { styled } from '@mui/material/styles';
 import { API_URL } from '../../CONSTANTS';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-      margin: '16px 0',
-    },
+const Header = styled('div')(({ theme }) => ({
+  display: 'flex',
+}));
+
+const Image = styled('img')(({ theme }) => ({
+  height: 115,
+  width: 60,
+  [theme.breakpoints.down('md')]: {
+    width: 50,
   },
-  card: {
-    display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
-    // [theme.breakpoints.up('md')]: {
-    //   flexDirection: 'row',
-    // },
-  },
-  header: {
-    display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-    },
-  },
-  center: {
-    display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  },
-  image: {
-    height: 115,
-    width: 60,
-    [theme.breakpoints.down('sm')]: {
-      width: 50,
-    },
-  },
-  grow: {
-    flex: 1,
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  orderForm: {
+}));
+
+const CenterContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.down('md')]: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-      [theme.breakpoints.down('sm')]: {
-        width: 'auto',
-      },
-    },
-  },
-  nameForm: {
-    display: 'flex',
-    flexDirection: 'row',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
-  },
-  btnSize: {
-    width: '40%',
-    [theme.breakpoints.down('sm')]: {
+const Grow = styled('div')(({ theme }) => ({
+  display: 'flex',
+}));
+
+const Form = styled('form')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+
+  '& .MuiTextField-root': {
+    margin: theme.spacing(1),
+    width: '25ch',
+    [theme.breakpoints.down('md')]: {
       width: 'auto',
     },
   },
 }));
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     margin: theme.spacing(2),
+//     [theme.breakpoints.down('md')]: {
+//       margin: '16px 0',
+//     },
+//   },
+//   card: {
+//     display: 'flex',
+//     [theme.breakpoints.down('md')]: {
+//       flexDirection: 'column',
+//     },
+//     // [theme.breakpoints.up('md')]: {
+//     //   flexDirection: 'row',
+//     // },
+//   },
+//   header: {
+//     display: 'flex',
+//     [theme.breakpoints.down('md')]: {
+//       display: 'flex',
+//     },
+//   },
+//   center: {
+//     display: 'flex',
+//     [theme.breakpoints.down('md')]: {
+//       display: 'flex',
+//       flexDirection: 'column',
+//       justifyContent: 'center',
+//       alignItems: 'center',
+//     },
+//   },
+//   image: {
+//     height: 115,
+//     width: 60,
+//     [theme.breakpoints.down('md')]: {
+//       width: 50,
+//     },
+//   },
+//   grow: {
+//     flex: 1,
+//   },
+//   margin: {
+//     margin: theme.spacing(1),
+//   },
+//   orderForm: {
+//     display: 'flex',
+//     flexDirection: 'column',
+
+//     '& .MuiTextField-root': {
+//       margin: theme.spacing(1),
+//       width: '25ch',
+//       [theme.breakpoints.down('md')]: {
+//         width: 'auto',
+//       },
+//     },
+//   },
+//   nameForm: {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     [theme.breakpoints.down('md')]: {
+//       flexDirection: 'column',
+//     },
+//   },
+//   btnSize: {
+//     width: '40%',
+//     [theme.breakpoints.down('md')]: {
+//       width: 'auto',
+//     },
+//   },
+// }));
 
 const WAOrder = (props) => {
   const [message, setMessage] = useState({});
@@ -113,6 +149,7 @@ const WAOrder = (props) => {
     } else {
       setPrice(product.price);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   const handleQuantity = (e) => {
@@ -160,11 +197,7 @@ ${
     : OtherProductPrice
 }
 
-${
-  product.category && product.category.name === 'கைபேசி உறை'
-    ? phonecase
-    : ''
-}
+${product.category && product.category.name === 'கைபேசி உறை' ? phonecase : ''}
 
 வாடிக்கையாளர் தகவல்
 =======================
@@ -184,18 +217,26 @@ ${
     window.open(WALINK);
   };
 
-  const classes = useStyles();
   return (
     <div>
-      <Grid container className={classes.root} spacing={2}>
+      <Grid
+        container
+        sx={{
+          margin: { sm: '16px 0', md: 2 },
+        }}
+        spacing={2}
+      >
         <Grid item xs={12}>
-          <Card className={classes.card}>
-            <div className={classes.header}>
-              <img
-                className={classes.image}
-                src={product.imageurl}
-                alt={product.product_name}
-              />
+          <Card
+            sx={{
+              display: 'flex',
+              flexDirection: {
+                sm: 'column',
+              },
+            }}
+          >
+            <Header>
+              <Image src={product.imageurl} alt={product.product_name} />
               <CardContent>
                 <Typography component="h5" variant="h5">
                   {product.product_name}
@@ -204,23 +245,21 @@ ${
                   விலை:{' '}
                   <strong>
                     ₹{' '}
-                    {product.category &&
-                    product.category.name === 'படச்சட்டகம்'
+                    {product.category && product.category.name === 'படச்சட்டகம்'
                       ? state.price
                       : price}{' '}
                   </strong>
                 </Typography>
-                {product.category &&
-                  product.category.name === 'படச்சட்டகம்' && (
-                    <Typography variant="subtitle1" color="textSecondary">
-                      அளவு: {state.size}
-                    </Typography>
-                  )}
+                {product.category && product.category.name === 'படச்சட்டகம்' && (
+                  <Typography variant="subtitle1" color="textSecondary">
+                    அளவு: {state.size}
+                  </Typography>
+                )}
               </CardContent>
-            </div>
-            <div className={classes.grow} />
+            </Header>
+            <Grow />
 
-            <div className={classes.center}>
+            <CenterContent>
               <CardContent>
                 <TextField
                   id="Quantity"
@@ -238,27 +277,33 @@ ${
                 <Typography> மொத்த விலை </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   ₹{' '}
-                  {product.category &&
-                  product.category.name === 'படச்சட்டகம்'
+                  {product.category && product.category.name === 'படச்சட்டகம்'
                     ? state.price * quantity
                     : price * quantity}
                 </Typography>
               </CardContent>
-            </div>
+            </CenterContent>
           </Card>
         </Grid>
       </Grid>
-      <Grid container className={classes.root} sapcing={2}>
+      <Grid
+        container
+        sx={{
+          margin: { sm: '16px 0', md: 2 },
+        }}
+        sapcing={2}
+      >
         <Grid item xs={12}>
           <Card>
             <CardHeader title="தங்களது கோரிக்கை விவரங்களைப் பூர்த்தி செய்யவும்" />
             <CardContent>
-              <form
-                onSubmit={sendMessage}
-                className={clsx(classes.orderForm)}
-                validate="true"
-              >
-                <FormControl className={classes.nameForm}>
+              <Form onSubmit={sendMessage} validate="true">
+                <FormControl
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { sm: 'column', md: 'row' },
+                  }}
+                >
                   <TextField
                     id="first-name"
                     label="பெயர்"
@@ -276,20 +321,19 @@ ${
                     required
                   />
                 </FormControl>
-                {product.category &&
-                  product.category.name === 'கைபேசி உறை' && (
-                    <FormControl>
-                      <TextField
-                        id="extra"
-                        label="கைபேசி வகை"
-                        name="mobile"
-                        variant="outlined"
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                      />
-                    </FormControl>
-                  )}
+                {product.category && product.category.name === 'கைபேசி உறை' && (
+                  <FormControl>
+                    <TextField
+                      id="extra"
+                      label="கைபேசி வகை"
+                      name="mobile"
+                      variant="outlined"
+                      onChange={handleChange}
+                      required
+                      fullWidth
+                    />
+                  </FormControl>
+                )}
                 <TextField
                   id="address"
                   label="முகவரி"
@@ -326,12 +370,14 @@ ${
                   variant="contained"
                   type="submit"
                   size="medium"
-                  className={classes.btnSize}
+                  sx={{
+                    width: { sm: 'auto', md: '40%' },
+                  }}
                 >
                   {' '}
                   பொருளை வாங்க{' '}
                 </Button>
-              </form>
+              </Form>
             </CardContent>
           </Card>
         </Grid>

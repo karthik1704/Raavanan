@@ -1,73 +1,112 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link as RouterLink } from 'react-router-dom';
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {Link} from 'react-router-dom'
+import { styled } from '@mui/material/styles';
 
-  
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    '& > svg': {
-        margin: theme.spacing(2),
-      },
+const RootDiv = styled('div')(({ theme }) => ({
+  flexGrow: 1,
+  '& > svg': {
+    margin: theme.spacing(2),
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: 'white',
-    background: '#43a047',
-    marginTop: 10,
-    justifyContent: 'center',
-  },
-  Header_title: {
-    fontSize: 24,
-    margin: 0,
-    fontWeight: 'bold',
-    paddingBottom:10
-  },
-  Sub_title:
-  {
-      margin: 0,
-      display: "flex",
-      justifyContent:'center',
-      alignItems:'center',
-      fontSize:20
-  },
-  
-  Home_Icon:
-  {
-      color:'white !important',
- 
-  },
-  Home_Navigate:
-  {
-    color:'white !important',
-    textDecoration:'none'
-  }
 }));
 
-export default function Header({ title, subtitle }) {
-  const classes = useStyles();
+const HeaderTitle = styled('p')(({ theme }) => ({
+  fontSize: 24,
+  margin: 0,
+  fontWeight: 'bold',
+  paddingBottom: 10,
+}));
 
+const SubTitle = styled('p')(({ theme }) => ({
+  margin: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: 20,
+}));
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//     '& > svg': {
+//       margin: theme.spacing(2),
+//     },
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'center',
+//     color: 'white',
+//     background: '#43a047',
+//     marginTop: 10,
+//     justifyContent: 'center',
+//   },
+//   Header_title: {
+//     fontSize: 24,
+//     margin: 0,
+//     fontWeight: 'bold',
+//     paddingBottom: 10,
+//   },
+//   Sub_title: {
+//     margin: 0,
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     fontSize: 20,
+//   },
+
+//   Home_Icon: {
+//     color: 'white !important',
+//   },
+//   Home_Navigate: {
+//     color: 'white !important',
+//     textDecoration: 'none',
+//   },
+// }));
+
+export default function Header({ title, subtitle }) {
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
+    <RootDiv>
+      <Grid>
         <Grid item xs={12}>
           <div>
-            <Paper className={classes.paper}>
-              <p className={classes.Header_title}>{title}</p>
-              <Link to="/" className={classes.Home_Navigate}>
-              <p className={classes.Sub_title}><ArrowBackIcon className={classes.Home_Icon} />{subtitle}</p>
-
+            <Paper
+              sx={{
+                padding: 2,
+                mt: 2,
+                textAlign: 'center',
+                color: 'white',
+                background: '#43a047',
+                justifyContent: 'center',
+              }}
+            >
+              <HeaderTitle>{title}</HeaderTitle>
+              <Link
+                component={RouterLink}
+                to="/"
+                underscore="hover"
+                color="textPrimary"
+                sx={{
+                  color: 'white !important',
+                  textDecoration: 'none',
+                }}
+              >
+                <SubTitle>
+                  <ArrowBackIcon
+                    sx={{
+                      color: 'white !important',
+                    }}
+                  />
+                  {subtitle}
+                </SubTitle>
               </Link>
             </Paper>
           </div>
         </Grid>
       </Grid>
-    </div>
+    </RootDiv>
   );
 }

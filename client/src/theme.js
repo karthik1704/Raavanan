@@ -1,13 +1,13 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+import { createTheme, adaptV4Theme } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
-export const dark = createMuiTheme({
+export const dark = createTheme(adaptV4Theme({
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       main: red[500],
     },
   },
-});
+}));
 
-export const light = createMuiTheme({});
+export const light = createTheme(adaptV4Theme({}));

@@ -7,6 +7,7 @@ from products.models import Price
 class CartListSerializer(serializers.ListSerializer):
 
     def create(self, validated_data):
+        
         carts = [Cart(**item) for item in validated_data]
         return Cart.objects.bulk_create(carts)
 
@@ -14,9 +15,9 @@ class CartListSerializer(serializers.ListSerializer):
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        list_serializer_class = CartListSerializer
+        # list_serializer_class = CartListSerializer
         fields = ('id', 'product',  'price', 'quantity')
-        read_only_fields = ('quantity',)
+        # read_only_fields = ('quantity',)
 
 class CartUpdateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=False)
@@ -24,6 +25,7 @@ class CartUpdateSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('id', 'product',  'price', 'quantity')
         read_only_fields = ('quantity',)
+
 
 
 class CartQuantityUpdateSerializer(serializers.ModelSerializer):

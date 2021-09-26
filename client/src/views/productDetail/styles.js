@@ -1,50 +1,57 @@
-import { makeStyles } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
+// import makeStyles from '@mui/styles/makeStyles';
+// import { green } from '@mui/material/colors';
 
-const useStyles = makeStyles((theme) => ({
-  loading: {
-    display: 'flex',
-    justifyContent: 'conter',
-    alignItems: 'center',
-  },
-  root: {
-    margin: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-      margin: '16px 0',
-    },
-  },
-  productImage: {
-    paddingTop: 6,
-    width: 500,
-    height: 500,
-    [theme.breakpoints.down('sm')]: {
-      width: 300,
-      height: 300,
-    },
-  },
-  center:{
-    display: 'flex',
-    justifyContent: 'conter',
-    
-  },
-  frameImage: {
-    paddingTop: 6,
-    width: 500,
-    height: 500,
-    [theme.breakpoints.down('sm')]: {
-      width: 300,
-      height: 300,
-    },
-  },
-  buttons: {
-    margin: theme.spacing(1),
-    display: 'flex',
-    justifyContent: 'space-evenly',
-  },
-  whatsappBtn: {
-    margin: theme.spacing(1),
-    backgroundColor: green[500],
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   loading: {
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   root: {
+//     margin: theme.spacing(2),
+//     [theme.breakpoints.down('sm')]: {
+//       margin: '16px 0',
+//     },
+//   },
+//   productImage: {
+//     paddingTop: 6,
+//     width: 500,
+//     height: 500,
+//     [theme.breakpoints.down('sm')]: {
+//       width: 300,
+//       height: 300,
+//     },
+//   },
+//   center:{
+//     display: 'flex',
+//     justifyContent: 'center',
 
-export default useStyles;
+//   },
+//   frameImage: {
+//     paddingTop: 6,
+//     width: 500,
+//     height: 500,
+//     [theme.breakpoints.down('sm')]: {
+//       width: 300,
+//       height: 300,
+//     },
+//   },
+//   buttons: {
+//     margin: theme.spacing(1),
+//     display: 'flex',
+//     justifyContent: 'space-evenly',
+//   },
+//   whatsappBtn: {
+//     margin: theme.spacing(1),
+//     backgroundColor: green[500],
+//   },
+//   title: {
+//     fontWeight : 600,
+//   },
+//   rightGrid : {
+//     padding:'10px'
+//   },
+
+// }));
+
+// export default useStyles;

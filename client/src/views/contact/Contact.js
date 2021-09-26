@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
+import Box from '@mui/material/Box';
 
 import useTopLoader from '../../hooks/useTopLoader';
 
 const Contact = () => {
-  const [loading, onToggleTopLoader] = useTopLoader();
+  const [, onToggleTopLoader] = useTopLoader();
 
   useEffect(() => {
     onToggleTopLoader(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <Box sx={{ p: 3 }}>
       <h4>தொடர்புக்கு :</h4>
       <p>
         வணக்கம் ! இன்பத் தமிழ் நம் உயிருக்கு நேர் !<br />
@@ -30,7 +32,7 @@ const Contact = () => {
         மற்றபடி எந்த ஒரு சமூக வலைத்தலங்களிலும் இராவணன் அங்காடியின் பக்கங்களில்
         குறுஞ்செய்தி அனுப்பியும் தொடர்பு கொள்ளலாம்.{' '}
       </p>
-    </div>
+    </Box>
   );
 };
 

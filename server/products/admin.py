@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from mptt.admin import MPTTModelAdmin
 
-from .models import Category, Price, Product, ProductMaterial, ProductImage, Size
+from .models import Category, Price, Product, ProductMaterial, ProductImage
 
 # Register your models here.
 # class CategoryAdmin(admin.StackedInline):
@@ -26,4 +26,3 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, MPTTModelAdmin)
 admin.site.register(ProductMaterial)
-admin.site.register(Size)

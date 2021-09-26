@@ -1,16 +1,22 @@
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@mui/material/LinearProgress';
+//import makeStyles from '@mui/styles/makeStyles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    zIndex: 1000,
-    //position: 'fixed',
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     zIndex: 1000,
+//     //position: 'fixed',
+//   },
+// }));
 
 const Loader = () => {
-  const classes = useStyles();
-  return <LinearProgress className={classes.root} color="secondary" />;
+  return (
+    <LinearProgress
+      sx={{
+        zIndex: 1000,
+      }}
+      color="secondary"
+    />
+  );
 };
 
 export default Loader;

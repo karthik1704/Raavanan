@@ -1,48 +1,90 @@
-//import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Typography from '@material-ui/core/Typography';
-import Switch from '@material-ui/core/Switch';
+import { Fragment, useState } from 'react';
 
-import EmojiFoodBeverageIcon from '@material-ui/icons/EmojiFoodBeverage';
-import FilterFramesIcon from '@material-ui/icons/FilterFrames';
-import LocalMallIcon from '@material-ui/icons/LocalMall';
-import NewReleasesIcon from '@material-ui/icons/NewReleases';
-import SmartphoneRoundedIcon from '@material-ui/icons/SmartphoneRounded';
+//import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
+import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
+
+//import { deepPurple } from '@mui/material/colors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
+import { MENUS } from '../../CONSTANTS';
 import { toggleAppDrawer } from '../../data/actions/appAction';
-import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
+import { styled } from '@mui/material/styles';
+import './drawer.css';
 
-  purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+const RootDiv = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  '& > *': {
+    margin: theme.spacing(1),
   },
 }));
 
-const AppDrawer = ({ theme, onToggleTheme }) => {
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     '& > *': {
+//       margin: theme.spacing(1),
+//     },
+//   },
+
+//   purple: {
+//     color: theme.palette.getContrastText(deepPurple[500]),
+//     backgroundColor: deepPurple[500],
+//   },
+//   nested: {
+//     paddingLeft: theme.spacing(4),
+//   },
+// }));
+
+const AppDrawer = ({ theme, onToggleTheme, category }) => {
   const { appDrawerOpen } = useSelector((state) => state.appUi);
   const dispatch = useDispatch();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const classes = useStyles();
+  const login = useSelector((state) => state.login);
+
+  const loggedIn = login.loggedIn;
+
+  var anchors_dict = {};
+  category.map((option) => {
+    if (option.children.length > 0) {
+      anchors_dict[option.name] = true;
+    }
+  });
+  const [anchors, setAnchors] = useState(anchors_dict);
+  let history = useHistory();
+
+  const handleClick = (menu) => {
+    setAnchors((prevState) => ({ ...prevState, [menu]: !anchors[menu] }));
+  };
+
+  const handleParentClick = (menu) => {
+    // setOpen(!open);
+    history.push(menu);
+    dispatch(toggleAppDrawer(false));
+  };
 
   const toggleDrawer = (open, event) => {
     if (
@@ -64,78 +106,94 @@ const AppDrawer = ({ theme, onToggleTheme }) => {
       onClose={(e) => toggleDrawer(false, e)}
       onOpen={(e) => toggleDrawer(true, e)}
     >
-      <div className={classes.root}>
-        {/* <Avatar className={classes.purple}>S</Avatar>
+      <RootDiv>
+        {/* <Avatar
+          sx={{color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],}}
+        className={classes.purple}>S</Avatar>
         <Typography variant="body1">SRBN Loves N! </Typography> */}
         <Typography>வணக்கம் !</Typography>
-        <Button color="primary" disabled>
-          உள்நுழை
-        </Button>
-      </div>
+        {/* {(()=> {
+          if (loggedIn) {
+            return (
+              <>
+                <Button color="primary">Logout</Button>
+              </>
+            );
+          } else {
+            return (
+              <>
+                <Button color="primary">உள்நுழை</Button>
+              </>
+          )
+        }
+      })()} */}
+      </RootDiv>
 
       <Divider />
       <div
         role="presentation"
-        onClick={(e) => toggleDrawer(false, e)}
-        onKeyDown={(e) => toggleDrawer(false, e)}
+        // onClick={(e) => toggleDrawer(false, e)}
+        // onKeyDown={(e) => toggleDrawer(false, e)}
       >
         <List>
-          <ListItem button component={Link} to="/organic-foods">
-            <ListItemIcon>
-              <NewReleasesIcon />
-            </ListItemIcon>
-            <ListItemText primary="இயற்கை உணவு" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/photo-frames">
-            <ListItemIcon>
-              <FilterFramesIcon />
-            </ListItemIcon>
-            <ListItemText primary="படச்சட்டகம்" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/t-shirts">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="சட்டை" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/pillows">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="தலையணை" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/phone-cases">
-            <ListItemIcon>
-              <SmartphoneRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="கைபேசி உறை" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/mugs">
-            <ListItemIcon>
-              <EmojiFoodBeverageIcon />
-            </ListItemIcon>
-            <ListItemText primary="தேநீர் கோப்பை" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/stickers">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="சுவரொட்டிகள்" />
-          </ListItem>
-
-          <ListItem button component={Link} to="/others">
-            <ListItemIcon>
-              <LocalMallIcon />
-            </ListItemIcon>
-            <ListItemText primary="இதர" />
-          </ListItem>
+          {category.map((menu, index) => {
+            return menu.children.length > 0 ? (
+              //     <ListItem button component={Link} to={menu.link}>
+              //    <ListItemIcon>
+              //      <NewReleasesIcon />
+              //    </ListItemIcon>
+              //    <ListItemText primary={menu.name} />
+              //  </ListItem>
+              <Fragment key={index}>
+                <ListItem>
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    button
+                    primary={menu.name}
+                    onClick={() => handleParentClick(menu.slug)}
+                  />
+                  {anchors[menu.name] ? (
+                    <ExpandLess onClick={() => handleClick(menu.name)} />
+                  ) : (
+                    <ExpandMore onClick={() => handleClick(menu.name)} />
+                  )}
+                </ListItem>
+                <Collapse in={anchors[menu.name]} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {menu.children.map((option, index1) => {
+                      return (
+                        <ListItem
+                          button
+                          sx={{ pl: 4 }}
+                          component={Link}
+                          to={option.slug}
+                          key={index1}
+                          onClick={(e) => toggleDrawer(false, e)}
+                        >
+                          <ListItemIcon>
+                            <StarBorder />
+                          </ListItemIcon>
+                          <ListItemText primary={option.name} />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Collapse>
+              </Fragment>
+            ) : (
+              <ListItem key={index} button component={Link} to={menu.slug}>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary={menu.name} />
+              </ListItem>
+            );
+          })}
         </List>
+
         <Divider />
         <List>
           <ListItem button component={Link} to="/terms">
