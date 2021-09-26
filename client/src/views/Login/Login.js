@@ -121,7 +121,19 @@ export default function Login() {
         dispatch(loginUser(response.data));
       })
       .catch((err) => {
-        console.log(err);
+        if (err.data === undefined) {
+          setError({
+            ...error,
+            detail: 'Something Went Wrong, Please try again',
+          });
+        } else if (err.data.non_field_errors) {
+          setError({
+            ...error,
+            detail: 'Email or Password incorrect',
+          });
+        } else {
+          setError(err.data);
+        }
       });
   };
 
@@ -140,19 +152,7 @@ export default function Login() {
         dispatch(loginUser(response.data));
       })
       .catch((err) => {
-        if (err.data === undefined) {
-          setError({
-            ...error,
-            detail: 'Something Went Wrong, Please try again',
-          });
-        } else if (err.data.non_field_errors) {
-          setError({
-            ...error,
-            detail: 'Email or Password incorrect',
-          });
-        } else {
-          setError(err.data);
-        }
+        console.log(err);
       });
   };
   return (
