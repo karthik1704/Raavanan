@@ -1,49 +1,51 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import { useState, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-// import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import { addItem } from '../../data/actions/cartActions';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-// import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-// import StoreIcon from '@material-ui/icons/Store';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import "react-image-gallery/styles/css/image-gallery.css";
-// import "~react-image-gallery/styles/css/image-gallery.css";
-// import green from '@material-ui/core/colors/green';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+// import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+// import StoreIcon from '@mui/icons-material/Store';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { green } from '@mui/material/colors';
+
+import 'react-image-gallery/styles/css/image-gallery.css';
 import ImageGallery from 'react-image-gallery';
 import axios from 'axios';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-
-import { API_URL } from '../../CONSTANTS';
-
+import { addItem } from '../../data/actions/cartActions';
 import { Helmet } from 'react-helmet';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import { API_URL } from '../../CONSTANTS';
 import { fetchProductDetail } from '../../data/actions/productActions';
 
-import useStyles from './styles';
+import { styled } from '@mui/material/styles';
+
+const RootDiv = styled('div')(({ theme }) => ({
+  margin: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    margin: '16px 0',
+  },
+}));
 
 export default function ProductDetail() {
   const { id } = useParams();
   const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [value, setValue] = useState('');
   const [images, setImages] = useState([]);
   const [size, setSize] = useState('');
@@ -95,26 +97,27 @@ export default function ProductDetail() {
       if (res.data.price) {
         setValue(res.data.price[0]);
       }
-      let localimages = []
-      if(res.data.imageurl){
+      let localimages = [];
+      if (res.data.imageurl) {
         localimages.push({
-          original : res.data.imageurl,
-          thumbnail : res.data.imageurl
-        })
+          original: res.data.imageurl,
+          thumbnail: res.data.imageurl,
+        });
       }
-      
-      if(res.data.image.length > 0){
-        let image = res.data.image.map((img)=>  ({original : img.image,thumbnail : img.image}))
-        
-        localimages = localimages.concat(image)
-        
+
+      if (res.data.image.length > 0) {
+        let image = res.data.image.map((img) => ({
+          original: img.image,
+          thumbnail: img.image,
+        }));
+
+        localimages = localimages.concat(image);
       }
-      setImages(localimages)
-        
+      setImages(localimages);
     });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     //return () => dispatch(fetchProductDetail({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   // useEffect(() => {
@@ -138,12 +141,11 @@ export default function ProductDetail() {
   const handleSizeChange = (e) => {
     setSize(e.target.value);
     productDetail.price
-      .filter((price) => price.types == e.target.value)
+      .filter((price) => price.types === e.target.value)
       .map((price) => {
         // setMrp(price.mrp);
         // setPrice(price.price);
         setValue(price);
-      
       });
   };
 
@@ -166,9 +168,9 @@ export default function ProductDetail() {
   //     thumbnail: 'https://picsum.photos/id/1019/250/150/',
   //   },
   // ];
-  
+
   return (
-    <div className={classes.root}>
+    <RootDiv>
       <Helmet>
         {`
         <title>
@@ -178,8 +180,17 @@ export default function ProductDetail() {
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
-          <Grid container >
-            <Grid item xs={12} md={6} lg={5} className={classes.center}>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={5}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               <div>
                 {/* <img
                   src={productDetail.imageurl}
@@ -189,12 +200,19 @@ export default function ProductDetail() {
                     classes.productImage
                   }
                 /> */}
-                <ImageGallery items={images} thumbnailPosition={'left'} showFullscreenButton={false} showPlayButton={false} autoPlay={false}
-                showNav={false} style={{maxHeight:'300px'}}/>
+                <ImageGallery
+                  items={images}
+                  thumbnailPosition={'left'}
+                  showFullscreenButton={false}
+                  showPlayButton={false}
+                  autoPlay={false}
+                  showNav={false}
+                  style={{ maxHeight: '300px' }}
+                />
               </div>
             </Grid>
-            <Grid item xs={12} md={6} className={classes.rightGrid}>
-              <Typography variant="h5" className={classes.title}>
+            <Grid item xs={12} md={6} sx={{ p: '10px' }}>
+              <Typography variant="h5" sx={{ fontWeight: 600 }}>
                 {productDetail.name}
               </Typography>
               {/* <Typography variant="subtitle1">
@@ -308,9 +326,12 @@ export default function ProductDetail() {
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
                 <Button
+                  sx={{
+                    m: 1,
+                    backgroundColor: green[500],
+                  }}
                   color="secondary"
                   justifycontent="flex-end"
-                  className={classes.whatsappBtn}
                   variant="contained"
                   startIcon={<AddShoppingCartIcon />}
                   onClick={(event) => {
@@ -407,7 +428,7 @@ export default function ProductDetail() {
           </Grid>
         </div>
       )}
-    </div>
+    </RootDiv>
   );
 }
 

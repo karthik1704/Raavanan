@@ -28,10 +28,7 @@ def razorpay_transacation(order_id, customer_id, price):
     # You can get this utility from https://developer.paytm.com/docs/checksum/
 
     client = razorpay.Client(auth=(settings.RAZORPAY_ID, settings.RAZORPAY_SECRET))
-    # v = "%.2f" % round(price,2)
-    v= str(int(price))+'00'
-    
-    
+    v = "%.2f" % round(price,2)
     response = client.order.create(dict(amount=float(v), currency='INR', receipt=str(order_id), notes={'customer_id': customer_id}))
     
 

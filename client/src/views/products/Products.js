@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
@@ -18,11 +17,11 @@ import { Helmet } from 'react-helmet';
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 import ProductList from '../../components/productList/ProductList';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(1),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     marginTop: theme.spacing(1),
+//   },
+// }));
 
 const Products = () => {
   const { products } = useSelector((state) => state.products);
@@ -31,8 +30,10 @@ const Products = () => {
   const [hasMore, setHasMore] = useState(true);
   const dispatch = useDispatch();
 
-  const filterUrl =`${API_URL}api/product/?category__slug=${category}`;
-  const [nextUrl, setNextUrl] = useState(`${API_URL}api/product/?category__slug=${category}`);
+  const filterUrl = `${API_URL}api/product/?category__slug=${category}`;
+  const [nextUrl, setNextUrl] = useState(
+    `${API_URL}api/product/?category__slug=${category}`
+  );
   const url = `${API_URL}api/product/`;
 
   useEffect(() => {
@@ -41,95 +42,84 @@ const Products = () => {
     setCount(0);
     setHasMore(true);
     setNextUrl('');
-    
   }, [dispatch, category]);
 
   const fetchMoreData = () => {
-    
     // if(!nextUrl)
     //   return false
     axios.get(nextUrl).then((res) => {
-      console.log('res')
-      console.log(res)
-      
+      console.log('res');
+      console.log(res);
+
       // setCount(res.data.count);
-      if(res.data.next!=null){
-        console.log('if')
+      if (res.data.next != null) {
+        console.log('if');
         console.log(res.data.next);
         setNextUrl(res.data.next);
-        setHasMore(true); 
-      } 
-      else{
-        console.log('else')
+        setHasMore(true);
+      } else {
+        console.log('else');
         setNextUrl('');
-        setHasMore(false); 
-      }   
-        
-       dispatch(fetchProduct(res.data.results));
+        setHasMore(false);
+      }
+
+      dispatch(fetchProduct(res.data.results));
     });
   };
 
   useEffect(() => {
     axios.get(category === 'new' ? url : filterUrl).then((res) => {
       setCount(res.data.count);
-      if(res.data.next!=null){
-        console.log(res.data.next)
+      if (res.data.next != null) {
+        console.log(res.data.next);
         setNextUrl(res.data.next);
-        setHasMore(true); 
-      } 
-      else{
+        setHasMore(true);
+      } else {
         setNextUrl('');
-        setHasMore(false); 
-      }   
+        setHasMore(false);
+      }
       return dispatch(fetchProduct(res.data.results));
     });
   }, [dispatch, category, url, filterUrl]);
-
-  const classes = useStyles();
 
   return (
     <div>
       <Helmet>
         <title>இராவணன் அங்காடி | {category}</title>
       </Helmet>
-      <Grid container className={classes.root}>
-      <Grid item xs={0} sm={0} md={3} xl={3}>
-        
-    </Grid>
-    <Grid item xs={12} sm={12} md={9} xl={9}>
-    
-        {/* {products?.length !== 0 ? (
+      <Grid container sx={{ mt: 1 }}>
+        <Grid item md={3} xl={3}></Grid>
+        <Grid item xs={12} sm={12} md={9} xl={9}>
+          {/* {products?.length !== 0 ? (
           <ProductList products={products} />
         ) : (
           <Typography>விரைவில்...</Typography>
         )} */}
 
-
-
-<InfiniteScroll
-          dataLength={products.length}
-          next={fetchMoreData}
-          hasMore={hasMore}
-          loader={<div style={{textAlign:'center'}}><img src={ripple}  height="40px" width="40px" /></div>}
-          
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          {/* {this.state.items.map((i, index) => (
+          <InfiniteScroll
+            dataLength={products.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={
+              <div style={{ textAlign: 'center' }}>
+                <img src={ripple} alt="loading" height="40px" width="40px" />
+              </div>
+            }
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {/* {this.state.items.map((i, index) => (
             <div key={index}>
               div - #{index}
             </div>
           ))} */}
-          <Grid container className={classes.root}>
-           <ProductList products={products} />
-           </Grid>
-        </InfiniteScroll>
-
-
-        
+            <Grid container sx={{ mt: 1 }}>
+              <ProductList products={products} />
+            </Grid>
+          </InfiniteScroll>
         </Grid>
       </Grid>
     </div>

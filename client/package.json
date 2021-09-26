@@ -3,33 +3,39 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.2",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@hookform/resolvers": "^2.8.0",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/lab": "^5.0.0-alpha.46",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.21.0",
+    "axios": "^0.21.4",
     "clsx": "^1.1.1",
     "material-ui-phone-number": "^2.2.6",
     "paytm-blink-checkout-react": "0.0.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-ga": "^3.3.0",
     "react-google-login": "^5.2.2",
     "react-helmet": "^6.1.0",
-    "react-infinite-scroll-component": "^5.1.0",
-    "react-material-ui-form-validator": "^2.1.1",
+    "react-hook-form": "^7.15.2",
+    "react-image-gallery": "^1.2.7",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.0",
+    "react-scripts": "^4.0.3",
     "react-slideshow-image": "^3.4.6",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,7 +44,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

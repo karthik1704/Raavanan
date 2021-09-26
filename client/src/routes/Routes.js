@@ -1,4 +1,4 @@
-import { Switch, Route, BrowserRouter,Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ReactGA from 'react-ga';
 import { useSelector } from 'react-redux';
@@ -20,19 +20,12 @@ import Orderconfirm from '../components/Checkout/order-confirm';
 import Orders from '../views/Orders/Orders';
 import OrdersDetail from '../views/OrdersDetail/OrdersDetail';
 
-
-
-
-
 const Router = () => {
   const login = useSelector((state) => state.login);
   const loggedIn = login.loggedIn;
-  
-  return (
-   
-    <Switch>
-      
 
+  return (
+    <Switch>
       <Route
         path="/"
         render={(props) => {
@@ -41,8 +34,7 @@ const Router = () => {
         }}
         exact
       />
-     
-    
+
       <Route path="/about" exact>
         <About />
       </Route>
@@ -53,28 +45,16 @@ const Router = () => {
         <Login />
       </Route> */}
       <Route
-            exact
-            path='/login'
-            render={() =>
-              loggedIn ? (
-                <Redirect to='/' />
-              ) : (
-                <Login />
-              )
-            }
-          />
-      
+        exact
+        path="/login"
+        render={() => (loggedIn ? <Redirect to="/" /> : <Login />)}
+      />
+
       <Route
-            exact
-            path='/register'
-            render={() =>
-              loggedIn ? (
-                <Redirect to='/' />
-              ) : (
-                <Register />
-              )
-            }
-          />
+        exact
+        path="/register"
+        render={() => (loggedIn ? <Redirect to="/" /> : <Register />)}
+      />
       <Route path="/Otpverification" exact>
         <Otpverification />
       </Route>
@@ -91,48 +71,30 @@ const Router = () => {
         <OrdersDetail />
       </Route>
       <Route
-            exact
-            path='/orderconfirmation/:status'
-            render={() =>
-              loggedIn ? (
-                <Orderconfirm />
-              ) : (
-                <Redirect to='/login' />
-              )
-            }
-            />
+        exact
+        path="/orderconfirmation/:status"
+        render={() => (loggedIn ? <Orderconfirm /> : <Redirect to="/login" />)}
+      />
       <Route
-            exact
-            path='/checkout'
-            render={() =>
-              loggedIn ? (
-                <Checkout />
-                
-              ) : (
-                <Redirect to='/login' />
-              )
-            }
-          />
-     
-     
+        exact
+        path="/checkout"
+        render={() => (loggedIn ? <Checkout /> : <Redirect to="/login" />)}
+      />
+
       <Route path="/terms" exact>
         <Terms />
       </Route>
       <Route path="/:category" exact>
         <Products />
       </Route>
-      
+
       <Route path="/:id/waorder" exact>
         <WAOrder />
       </Route>
-      <Route
-            exact
-            path='/terms'>
-            
-            <Terms />
-            </Route>
-   
-      
+      <Route exact path="/terms">
+        <Terms />
+      </Route>
+
       <Route
         path="/product/:id"
         render={(props) => {
@@ -141,9 +103,7 @@ const Router = () => {
         }}
         exact
       />
-   
     </Switch>
- 
   );
 };
 
