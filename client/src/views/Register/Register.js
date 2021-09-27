@@ -113,6 +113,12 @@ export default function Register() {
 
   const dispatch = useDispatch();
 
+  const [formError, setFormError] = useState({
+    field: null,
+    detail: null,
+    non_field_errors: null,
+  });
+
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpVerfied, setIsOtpVerified] = useState(false);
@@ -182,6 +188,13 @@ export default function Register() {
     password1,
     password2,
   }) => {
+    formError &&
+      setFormError({
+        field: null,
+        detail: null,
+        non_field_errors: null,
+      });
+
     axios
       .post(registration_url, {
         email,
@@ -198,12 +211,19 @@ export default function Register() {
         dispatch(loginUser(response.data));
       })
       .catch((err) => {
-        // for (let i in err.response.data) {
-        //   setError(error.response.data[i]);
-        //   setOpen(true);
-        //   break;
-        // }
-        console.log(err);
+        if (err.data === undefined) {
+          setFormError({
+            ...error,
+            detail: 'Something Went Wrong, Please try again',
+          });
+        } else if (err.data.non_field_errors) {
+          setFormError({
+            ...error,
+            detail: 'Something Went Wrong, Please try again',
+          });
+        } else {
+          setFormError(err.data);
+        }
       });
   };
 
@@ -269,6 +289,10 @@ export default function Register() {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
+          {formError.detail && (
+            <Alert severity="error">{formError?.detail}</Alert>
+          )}
+
           <Box component="form" onSubmit={handleSubmit(handleRegisterSubmit)}>
             <Controller
               name="phone"
