@@ -87,11 +87,25 @@ class CustomProductsList(generics.ListAPIView):
     
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.filter(level=0).order_by('id')
+    queryset = Category.objects.filter(level=0).order_by('order_value')
+    # queryset = Category.objects.all()
     
     serializer_class = CategorySerializer
-    filterset_fields = ['id','slug', 'parent']
-    ordering = ('id')
+    # filterset_fields = ['id','slug', 'parent','order_value', 'imageurl']
+    ordering = ('order_value')
+
+    # def retrieve(self, request, *args, **kwargs):        
+    #     ids = self.kwargs.get('pk', None)
+    #     if ids is not None:                       
+    #         if not ids.isnumeric() :
+    #             queryset = Category.objects.filter(slug=ids)                
+    #             if queryset:
+    #                 serializer = CategrySerializer(queryset[0], many=False)                       
+    #                 item = serializer.data.copy()
+    #                 item['imageurl'] = '%s%s' % (self.request._current_scheme_host,  item['imageurl'])                    
+    #                 return Response(item)
+                
+        # return super(ProductViewset, self).retrieve(request, *args, **kwargs)
 
 
 class PriceDetailView(RetrieveAPIView):

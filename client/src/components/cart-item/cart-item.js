@@ -1,4 +1,5 @@
 // import Link from '@mui/material/Link';
+import  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
@@ -6,7 +7,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/material/Icon';
 import Chip from '@mui/material/Chip';
-import { addItem, removeItem } from '../../data/actions/cartActions';
+import TextField from '@mui/material/TextField';
+import { addItem, removeItem, addOtherInfo } from '../../data/actions/cartActions';
 import { useDispatch } from 'react-redux';
 
 // const useStyles = makeStyles((theme) => ({
@@ -49,6 +51,7 @@ import { useDispatch } from 'react-redux';
 // }));
 
 const CartItem = ({ product }) => {
+  const [otherinfo, setOtherInfo] = useState(''); 
   const dispatch = useDispatch();
   // const cart = useSelector((state) => state.cart);
   // const cartItems = cart.cartItems;
@@ -56,6 +59,24 @@ const CartItem = ({ product }) => {
   const handleAddItemtoCart = (product) => {
     dispatch(addItem({ id: product.id, price: product.price.id }));
   };
+
+  useEffect(() => {
+    
+    
+      dispatch(addOtherInfo({ id: product.id, price: product.price.id, otherinfo:otherinfo }));
+  }, [otherinfo])
+
+  // const handleOtherInfo = (event,product) => {
+    
+  //   setOtherInfo(event.target.value, );
+            
+  // //   setTimeout(function() { //Start the timer
+  // //     console.log(product.otherinfo)
+  // //   console.log(otherinfo)
+  // //     // this.setState({render: true}) //After 1 second, set render to true
+  // // }, 3000)
+  //   // dispatch(addOtherInfo({ id: product.id, price: product.price.id, otherinfo:otherinfo }));
+  // };
 
   const handleRemoveItemtoCart = (product) => {
     dispatch(removeItem({ id: product.id, price: product.price.id }));
@@ -141,6 +162,24 @@ const CartItem = ({ product }) => {
               <h4>Total: ₹ {product.total}</h4>
             </div>
           </Grid>
+          {product.other_information && 
+          <Grid item xs={12} sm={12} md={12} className="Product_Text_Margin" 
+           sx={{
+            textAlign:'center'
+          }}>           
+            <TextField
+          required
+          id="otherinfo"
+          label={product.other_information}
+          max
+          defaultValue=''
+          value={otherinfo}
+          onChange={(event) => {             
+            setOtherInfo(event.target.value );
+          }}
+        />
+          </Grid>
+        }
         </Grid>
       </Grid>
     </Paper>

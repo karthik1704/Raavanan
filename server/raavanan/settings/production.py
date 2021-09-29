@@ -6,11 +6,13 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.1.11','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.11','127.0.0.1','raavananstore.com','216.158.231.190','api.raavananstore.com']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://192.168.1.12:3000',
+    'https://www.raavananstore.com',
+    'https://raavananstore.com'
 ]
 
 # Database
@@ -38,6 +40,9 @@ TWILIO_ACCOUNT_SID = 'AC390b9fc4f6f5f7fd2ce146259b5f6ce9'
 TWILIO_AUTH_TOKEN = '0e4b1e56dca116cbf9e5c743a7249eb6'  
 TWILIO_NUMBER = '+14155238886'
 
+RAZORPAY_ID = 'rzp_live_fziEmBlBY8pNRO'
+
+RAZORPAY_SECRET = '1PZz2ei5HtnvvUmR2vtetIwu'
 
 # Mail
 

@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -87,7 +87,9 @@ ROOT_URLCONF = 'raavanan.urls'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://192.168.1.12:3000',
+    'http://192.168.1.12:3000', 
+    'https://www.raavananstore.com',
+    'https://raavananstore.com',
 ]
 
 TEMPLATES = [
@@ -213,7 +215,7 @@ JWT_AUTH_COOKIE = 'raavanan-auth'
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 

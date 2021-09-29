@@ -12,14 +12,14 @@ class ParentCategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        fields = ['id','name', 'slug','parent']
+        fields = ['id','name', 'slug','parent','order_value','imageurl']
 
 class CategorySerializer(serializers.ModelSerializer):
     children = RecursiveField(many=True)
     parent = ParentCategorySerializer()
     class Meta:
         model = Category
-        fields = ['id','name', 'slug', 'parent', 'children']
+        fields = ['id','name', 'slug', 'parent', 'children','order_value','imageurl']
 
 # CategorySerializer._declared_fields['children'] = CategorySerializer(
 #     many=True,
@@ -69,7 +69,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'materials',
             'image',
             'created_at',
-
+            'other_information'
         ]
         lookup_field = 'slug'
         extra_kwargs = {

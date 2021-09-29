@@ -39,6 +39,14 @@ const RootDiv = styled('div')(({ theme }) => ({
   '& > *': {
     margin: theme.spacing(1),
   },
+  padding:'10px'
+  
+}));
+
+const SwipeableDrawer1 = styled('div')(({ theme }) => ({
+  backgroundColor: '#232f3e !important',
+            color: 'white !important',
+  
 }));
 
 // const useStyles = makeStyles((theme) => ({
@@ -58,6 +66,8 @@ const RootDiv = styled('div')(({ theme }) => ({
 //     paddingLeft: theme.spacing(4),
 //   },
 // }));
+
+
 
 const AppDrawer = ({ theme, onToggleTheme, category }) => {
   const { appDrawerOpen } = useSelector((state) => state.appUi);
@@ -105,7 +115,9 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
       open={appDrawerOpen}
       onClose={(e) => toggleDrawer(false, e)}
       onOpen={(e) => toggleDrawer(true, e)}
+      
     >
+      <SwipeableDrawer1>
       <RootDiv>
         {/* <Avatar
           sx={{color: theme.palette.getContrastText(deepPurple[500]),
@@ -148,7 +160,8 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
               <Fragment key={index}>
                 <ListItem>
                   <ListItemIcon>
-                    <InboxIcon />
+                    {/* <InboxIcon /> */}
+                    <img src={menu.imageurl} style={{width : '20px', height:'20px'}}/>
                   </ListItemIcon>
                   <ListItemText
                     button
@@ -186,7 +199,8 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
             ) : (
               <ListItem key={index} button component={Link} to={menu.slug}>
                 <ListItemIcon>
-                  <InboxIcon />
+                  {/* <InboxIcon /> */}
+                  <img src={menu.imageurl} style={{width : '20px', height:'20px'}}/>
                 </ListItemIcon>
                 <ListItemText primary={menu.name} />
               </ListItem>
@@ -210,7 +224,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
         </List>
       </div>
       <Divider />
-      <List>
+      {/* <List>
         <ListItem>
           <ListItemText primary="இருண்ட பயன்முறை" />
           <Switch
@@ -220,7 +234,8 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
         </ListItem>
-      </List>
+      </List> */}
+      </SwipeableDrawer1>
     </SwipeableDrawer>
   );
 };
