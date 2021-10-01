@@ -91,6 +91,7 @@ export default function Cartpage() {
           quantity: prod.quantity,
           price: price,
           total: prod.quantity * price.price,
+          otherinfo: prod.otherinfo,
         };
         prods.push(product);
       });
@@ -113,7 +114,7 @@ export default function Cartpage() {
               <h3 className="Order_title">PRODUCTS</h3>
             </div>
             {prodList.length > 0 ? (
-              prodList.map((product) => <CartItem product={product} />)
+              prodList.map((product, index) => <CartItem product={product} key={index} />)
             ) : (
               <h4 className="Product_Text"> Your cart is empty</h4>
             )}

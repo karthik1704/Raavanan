@@ -95,10 +95,9 @@ class PhoneNumberConfirmView(GenericAPIView):
     permission_classes = (AllowAny,)
     throttle_scope = 'dj_rest_auth'
     def post(self, request, *args, **kwargs):
-        print("opt")
-        print( request.data)
+        
         serializer = self.get_serializer(data = request.data)
-        print(serializer)
+        
         serializer.is_valid(raise_exception=True)
      
         data = serializer.save()

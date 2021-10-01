@@ -8,79 +8,49 @@ import { createSelector } from 'reselect';
 import { API_URL } from '../../CONSTANTS';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import Header from '../../components/Header/Header';
 import CartItem from '../../components/cart-item/cart-item';
 import './Cartpage.css';
 
-// import {selectCartItems} from '../Cartpage/cart.selectors'
-// import Link from '@mui/material/Link';
-// import Typography from '@mui/material/Typography';
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
-// import makeStyles from '@mui/styles/makeStyles';
-// const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     marginTop: theme.spacing(8),
-//     display: 'flex',
-//     flexDirection: 'column',
-//     alignItems: 'center',
-//   },
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: '#43a047',
-//   },
-//   form: {
-//     width: '100%', // Fix IE 11 issue.
-//     marginTop: theme.spacing(1),
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2),
-//   },
-//   padding_bottom: {
-//     paddingBottom: 10,
-//   },
-// }));
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const selectCartItems = createSelector(
   (state) => state.cart,
   (cart) => cart.cartItems
 );
 
-export default function Cartpage() {
+const Cartpage = () => {
   // const classes = useStyles();
   // const cart = useSelector((state) => state.cart);
   // const cartItems = selectCartItems();
   const login = useSelector((state) => state.login);
   const loggedIn = login.loggedIn;
+  const [open, setOpen] = useState(false);
+  
+  const [error, setError] = useState(false);
+  
   // const cartItems = useSelector(selectCartItems)
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
   const [prodList, setProdList] = useState([]);
   const [total, setTotal] = useState(0);
   let history = useHistory();
+  
+  let error_occured = false;
   const dispatch = useDispatch();
-  // console.log(selectCartItems);
-  //   const get_prods = (myArray) => {
-  //     const promises = myArray.map(async (myValue) => {
-  //         return {
-  //             id: "my_id",
-  //             myValue: await service.getByValue(myValue)
-  //         }
-  //     });
-  //     return Promise.all(promises);
-  // }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  }
 
   useEffect(() => {
     var cart_ids = [];
@@ -91,8 +61,7 @@ export default function Cartpage() {
     // var myArray = ['a', 1, 'a', 2, '1'];
     var cart_ids = cart_ids.filter((v, i, a) => a.indexOf(v) === i);
     cart_ids = cart_ids.join(',');
-    console.log(cartItems);
-    console.log(cart_ids);
+    
     if (cart_ids.length < 1) return;
     axios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
       var prod = res.data;
@@ -111,7 +80,7 @@ export default function Cartpage() {
           ...product,
           quantity: prod.quantity,
           price: price,
-          total: prod.quantity * price.price,
+          total: prod.quantity * price.price          
         };
         prods.push(product);
       });
@@ -136,32 +105,44 @@ export default function Cartpage() {
     });
   }, [cartItems, dispatch]);
 
-  const checkout = () => {
-    history.push('/checkout');
-  };
+  const executeAllLongRunningTasks = async () => {
+    error_occured = false
+    return await Promise.all(
 
-  // useEffect(() => {
+      prodList.map((product, index) => {
+      
+      if(product.other_information){
+        let existingCartItem = cartItems.find(
+          (cartItem) =>
+            cartItem.id == product.id &&
+            cartItem.price_id == product.price.id
+        )
+          
+        if(!existingCartItem.otherinfo){
+          
+          error_occured = true
+          setError(product.other_information);
+          setOpen(true);
+          
+          
+        }
+      }
+      
+    })
 
-  //   if(!login.loggedIn)
-  //     return;
+    )
+}
 
-  //   if(cartItems.length > 0){
-  //     var carts = []
-  //     for(var i=0;i<cartItems.length;i++){
-  //       carts.push({
-  //         "product" : cartItems[i]['id'],
-  //         "price" : cartItems[i]['price_id']['id'],
-  //         "quantity": cartItems[i]['quantity']
-  //       })
-  //     }
-  //     axios
-  //     .post(`${API_URL}api/sync_cart/`,carts)
-  //     .then((res) => {
 
-  //     });
-  //   }
-
-  // }, [login]);
+  const checkout=()=>{
+    
+    const tasks = executeAllLongRunningTasks();
+    if(!error_occured)
+      history.push('/checkout')
+    
+  }
+  
+  
 
   return (
     <>
@@ -174,9 +155,9 @@ export default function Cartpage() {
               <h3 className="Order_title">PRODUCTS</h3>
             </div>
             {prodList.length > 0 ? (
-              prodList.map((product) => (
+              prodList.map((product, index) => (
                 // var prod = {...product,''}
-                <CartItem product={product} />
+                <CartItem product={product} key={index} />
               ))
             ) : (
               <h4 className="Product_Text"> Your cart is empty</h4>
@@ -201,6 +182,10 @@ export default function Cartpage() {
                 fullWidth
                 variant="contained"
                 color="primary"
+                inputProps={{
+                  maxLength: 30,
+                  autoComplete: 'false',
+                }}
                 sx={{
                   margin: (theme) => theme.spacing(3, 0, 2),
                 }}
@@ -212,6 +197,39 @@ export default function Cartpage() {
           </div>
         </Grid>
       </Grid>
+      <Snackbar
+        // key={messageInfo ? messageInfo.key : undefined}
+        open={open}
+        autoHideDuration={6000}        
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        onClose={handleClose}
+        // TransitionProps={{ onExited: handleClose }}
+        // message={error}
+        // action={
+        //   <React.Fragment>
+            
+        //     {/* <Button color="secondary" size="small" onClick={handleClose}>
+        //       UNDO
+        //     </Button> */}
+        //     {/* <IconButton
+        //       aria-label="close"
+        //       color="inherit"
+        //       sx={{ p: 0.5 }}
+        //       onClick={handleClose}
+        //     >
+        //       <CloseIcon />
+        //     </IconButton> */}
+        //   </React.Fragment>
+          
+        // }
+        >
+          
+          <Alert severity="error" onClose={handleClose}>
+          {error}
+        </Alert>
+        
+        </Snackbar>
     </>
   );
 }
+export default  Cartpage;

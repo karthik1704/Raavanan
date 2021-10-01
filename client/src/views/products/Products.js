@@ -71,7 +71,7 @@ const Products = () => {
     axios.get(category === 'new' ? url : filterUrl).then((res) => {
       setCount(res.data.count);
       if (res.data.next != null) {
-        console.log(res.data.next);
+        
         setNextUrl(res.data.next);
         setHasMore(true);
       } else {

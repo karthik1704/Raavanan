@@ -226,7 +226,7 @@ class CartSyncView(APIView):
             user = self.request.user           
             # serializer.validated_data['user'] = self.request.user
             data = serializer.validated_data            
-            print(data)
+            
             carts  = Cart.objects.filter(user=self.request.user)
             non_deletable_ids = []
             for item in data:
@@ -244,7 +244,7 @@ class CartSyncView(APIView):
                         break
                 if not found :
                     Cart.objects.create(product=item['product'],user_id = item['user_id'].id, price_id=item['price'].id, quantity=item['quantity'])
-            print(non_deletable_ids)   
+             
             for cart in carts:
                 if cart.id not in non_deletable_ids:
                     cart.delete()
