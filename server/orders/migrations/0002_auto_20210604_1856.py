@@ -13,52 +13,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='orderitem',
-            name='extra',
-        ),
-        migrations.RemoveField(
-            model_name='orderitem',
-            name='user',
-        ),
-        migrations.AddField(
-            model_name='order',
-            name='address',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='addresses.address'),
-        ),
-        migrations.AddField(
-            model_name='order',
-            name='extra',
-            field=models.CharField(blank=True, max_length=80, null=True),
-        ),
-        migrations.AddField(
-            model_name='order',
-            name='order_status',
-            field=models.CharField(choices=[('Processing', 'Processing'), ('Placed', 'Placed'), ('In transit', 'In transit'), ('Delivered', 'Delivered'), ('Cancelled', 'Cancelled')], default='Processing', max_length=40),
-        ),
-        migrations.AddField(
-            model_name='order',
-            name='transaction_status',
-            field=models.CharField(choices=[('Waiting', 'Waiting'), ('PENDING', 'PENDING'), ('TXN_SUCCESS', 'TXN_SUCCESS'), ('TXN_FAILURE', 'TXN_FAILURE')], default='Waiting', max_length=40),
-        ),
-        migrations.AddField(
-            model_name='orderitem',
-            name='price',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='products.price'),
-        ),
-        migrations.AddField(
-            model_name='orderitem',
-            name='quantity',
-            field=models.IntegerField(null=True),
-        ),
-        migrations.AlterField(
-            model_name='orderitem',
-            name='order',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='orders.order'),
-        ),
-        migrations.AlterField(
-            model_name='orderitem',
-            name='product',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='products.product'),
-        ),
+        
+        
+       
     ]

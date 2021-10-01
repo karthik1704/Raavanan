@@ -199,7 +199,7 @@ class CustomPasswordResetSerializer(serializers.Serializer):
             res = conn.getresponse()
             data = res.read()
 
-            print(data.decode("utf-8"))
+            
 
     def save(self):
 
@@ -252,7 +252,7 @@ class PhonePassowordResetSerializer(serializers.Serializer):
         
         res = send_otp(mobile,otp)
         data = res.read()
-        print(data.decode('utf-8'))
+        
 
 
 class OTPVerifySerializer(serializers.Serializer):
@@ -340,7 +340,7 @@ class PhoneRegisterVerifySerializer(serializers.Serializer):
         
         res = send_otp(mobile,otp)
         data = res.read()
-        print(data.decode('utf-8'))
+        
 
 class PhoneRegisterConfirmSerializer(serializers.Serializer):
 

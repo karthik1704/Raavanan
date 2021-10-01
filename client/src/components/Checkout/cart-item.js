@@ -119,6 +119,20 @@ const CartItem = ({ product }) => {
               <h4>Total: ₹ {product.total}</h4>
             </div>
           </Grid>
+
+          {product.other_information && 
+          <Grid item xs={12} sm={12} md={12} className="Product_Text_Margin" 
+           sx={{
+            textAlign:'center'
+          }}>           
+            
+        <div>
+              <h4>{product.otherinfo}</h4>
+            </div>
+          </Grid>
+        }
+
+
         </Grid>
       </Grid>
     </Paper>

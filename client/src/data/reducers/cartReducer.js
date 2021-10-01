@@ -1,5 +1,6 @@
 import CartActionTypes from '../../views/Cartpage/cart.types';
-import { addItemToCart, removeItemFromCart } from '../../views/Cartpage/cart.utils';
+import { addItemToCart, removeItemFromCart, addOtherInfo } from '../../views/Cartpage/cart.utils';
+
 
 const INITIAL_STATE = {
  // hidden: true,
@@ -9,10 +10,7 @@ const INITIAL_STATE = {
 const cartReducer = (state = INITIAL_STATE, action) => {  
   switch (action.type) {
     
-    case CartActionTypes.ADD_ITEM: 
-    
-    console.log('ss')
-    console.log(action.payload)     
+    case CartActionTypes.ADD_ITEM:         
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload)
@@ -26,6 +24,11 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: []
+      };
+      case CartActionTypes.ADD_OTHER_INFO:        
+      return {
+        ...state,
+        cartItems: addOtherInfo(state.cartItems, action.payload)
       };
       
     default:

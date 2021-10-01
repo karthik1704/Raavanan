@@ -15,6 +15,8 @@ class ProductMaterial(models.Model):
 class Category(MPTTModel):
     name = models.CharField(max_length=60)
     slug = models.SlugField()
+    order_value = models.IntegerField(blank=True, null=True)
+    imageurl = models.ImageField(upload_to=f'categories/', blank=True, null=True)
     parent = TreeForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='children')
 
     class Meta:
@@ -32,6 +34,7 @@ class Category(MPTTModel):
             k = k.parent
         return ' -> '.join(full_path[::-1])
 
+    
     
 
     # def __str__(self) -> str:
@@ -56,6 +59,7 @@ class Product(models.Model):
     description = models.TextField()
     imageurl = models.ImageField(upload_to=f'product/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    other_information = models.CharField(blank=True, null=True, max_length=200)
 
 
     def __str__(self):

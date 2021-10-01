@@ -40,22 +40,13 @@ const styledLayout = styled('main')(({ theme }) => ({
   },
 }));
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const steps = ['Address', 'Review your order', 'Payment'];
 
 const Addresses = (props) => {
-  console.log(props);
-
-  // props.addresses.map((address) => {
-  //   // obj[address.id] = false
-  //   address['checked'] = false;
-
-  // })
-
-  console.log(props.addresses);
 
   const checked = props.checked;
   const setChecked = props.setChecked;
@@ -208,12 +199,13 @@ const Checkout = () => {
         return <Cartpage />;
       case 2:
         var items = [];
-        console.log(cartItems);
+        
         cartItems.map((prod) =>
           items.push({
             quantity: prod.quantity,
             product: prod.id,
             price: prod.price_id,
+            extra : prod.otherinfo
           })
         );
         var order = {
@@ -235,8 +227,7 @@ const Checkout = () => {
   }
 
   const handleNext = () => {
-    if (activeStep === 0) {
-      console.log(checked);
+    if (activeStep === 0) {      
       if (!createAddress) {
         if (checked.length < 1) {
           setError('Please select one address');
@@ -302,7 +293,7 @@ const Checkout = () => {
             .then(
               (response) => {
                 //dispatch(loginUser(response.data));
-                console.log(response);
+                
                 setAddressId(response.data.id);
               },
               (error) => {

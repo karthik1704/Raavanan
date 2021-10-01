@@ -45,6 +45,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product,on_delete=models.DO_NOTHING,null=True)
     price = models.ForeignKey(Price,on_delete=models.DO_NOTHING, null=True)
     quantity = models.IntegerField(null=True)
+    extra = models.CharField(max_length=80, null=True, blank=True)
     
    
     def __str__(self):

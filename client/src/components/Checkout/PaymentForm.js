@@ -53,7 +53,7 @@ export default function PaymentForm(props) {
           }
             axios.post(order_create_url, props.order)
           .then((response) => { 
-            console.log(response);  
+            // console.log(response);  
             // setResult(response);
             displayRazorpay(response);                     
             // CONFIG.data.amount = response.data.price;
@@ -82,7 +82,7 @@ export default function PaymentForm(props) {
               return;
           }
           
-          console.log(result.data)
+          
           const { amount, id: order_id, currency } = result.data;
   
           const options = {

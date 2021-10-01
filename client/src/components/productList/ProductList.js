@@ -90,9 +90,11 @@ const ProductList = ({ products }) => {
                     color="textPrimary"
                     sx={{
                       textAlign: 'center',
-                      fontSize: { sm: '0.6rem', md: '12px' },
+                      // fontSize: { sm: '0.6rem', md: '12px' },
                       marginBottom: '1px',
-                      fontWeight: { sm: 600, md: 'bold' },
+                      // fontWeight: { sm: 600, md: 'bold' },
+                      fontWeight: 'bold',
+                      fontSize: '12px',
                     }}
                   >
                     {product.name.split('|')[0]}

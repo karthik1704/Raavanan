@@ -26,9 +26,9 @@ import { API_URL } from '../../CONSTANTS';
 
 import { styled } from '@mui/material/styles';
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">

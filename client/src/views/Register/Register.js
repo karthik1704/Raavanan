@@ -1,6 +1,5 @@
 /* eslint-disable no-unreachable */
-import { useState } from 'react';
-
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -44,9 +43,9 @@ const RootDiv = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }));
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // const useStyles = makeStyles((theme) => ({
 //   paper: {
