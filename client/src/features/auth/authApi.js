@@ -67,10 +67,20 @@ export const authApi = createApi({
         method: 'DELETE',
       }),
     }),
+
+    // Google Login
+    googleLogin: builder.mutation({
+      query: (credentials) => ({
+        url: 'api/auth/google/',
+        method: 'POST',
+        data: credentials,
+      }),
+    }),
   }),
 });
 
 export const {
+  useGoogleLoginMutation,
   useLoginMutation,
   useRegisterMutation,
   useChangePasswordMutation,
