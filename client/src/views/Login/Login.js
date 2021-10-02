@@ -18,9 +18,7 @@ import TextField from '@mui/material/TextField';
 
 import MuiPhoneInput from 'material-ui-phone-number';
 
-import axios from 'axios';
 import GoogleLogin from 'react-google-login';
-import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -28,8 +26,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import Header from '../../components/Header/Header';
-import { API_URL } from '../../CONSTANTS';
-import { loginUser } from '../../data/actions/loginActions';
+import {
+  useLoginMutation,
+  useGoogleLoginMutation,
+} from '../../features/auth/authApi';
 
 import { styled } from '@mui/material/styles';
 
@@ -94,16 +94,11 @@ export default function Login() {
     detail: null,
     non_field_errors: null,
   });
-  // const cart = useSelector((state) => state.cart);
-  // const login = useSelector((state) => state.login);
-  const dispatch = useDispatch();
 
-  const login_url = `${API_URL}api/auth/login/`;
-  const social_login_url = `${API_URL}api/auth/google/`;
+  const [login] = useLoginMutation();
+  const [googleLogin] = useGoogleLoginMutation();
 
-  // const sync_url = `${API_URL}api/carts/sync_cart/`;
-
-  const handleLoginSubmit = ({ phone, password }) => {
+  const handleLoginSubmit = async ({ phone, password }) => {
     error &&
       setError({
         field: null,
@@ -112,49 +107,45 @@ export default function Login() {
       });
 
     if (phone.length !== 13) return;
-    axios
-      .post(login_url, {
+    try {
+      await login({
         phone: phone.substring(3),
         password,
-      })
-      .then((response) => {
-        dispatch(loginUser(response.data));
-      })
-      .catch((err) => {
-        if (err.data === undefined) {
-          setError({
-            ...error,
-            detail: 'Something Went Wrong, Please try again',
-          });
-        } else if (err.data.non_field_errors) {
-          setError({
-            ...error,
-            detail: 'Email or Password incorrect',
-          });
-        } else {
-          setError(err.data);
-        }
-      });
+      }).unwrap();
+    } catch (err) {
+      if (err.data === undefined) {
+        setError({
+          ...error,
+          detail: 'Something Went Wrong, Please try again',
+        });
+      } else if (err.data.non_field_errors) {
+        setError({
+          ...error,
+          detail: 'Email or Password incorrect',
+        });
+      } else {
+        setError(err.data);
+      }
+    }
   };
 
-  const responseGoogle = (response) => {
+  const responseGoogle = async (response) => {
     console.log(response);
     if (!('profileObj' in response)) {
       return;
     }
-    axios
-      .post(social_login_url, {
+
+    try {
+      await googleLogin({
         access_token: response['accessToken'],
         code: response['googleId'],
         id_token: response['tokenId'],
-      })
-      .then((response) => {
-        dispatch(loginUser(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }).unwarp();
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <>
       <Header title="Login Here" subtitle="Home" />

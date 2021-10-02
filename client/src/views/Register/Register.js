@@ -23,7 +23,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,7 +30,8 @@ import * as yup from 'yup';
 
 import { API_URL } from '../../CONSTANTS';
 import Header from '../../components/Header/Header';
-import { loginUser } from '../../data/actions/loginActions';
+
+import { useRegisterMutation } from '../../features/auth/authApi';
 
 import { styled } from '@mui/material/styles';
 import './Register.css';
@@ -110,13 +110,13 @@ export default function Register() {
     resolver: yupResolver(schema),
   });
 
-  const dispatch = useDispatch();
-
   const [formError, setFormError] = useState({
     field: null,
     detail: null,
     non_field_errors: null,
   });
+
+  const [register] = useRegisterMutation();
 
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -127,7 +127,6 @@ export default function Register() {
   const [otperrortext, setOtperrortext] = useState('');
   //const [isOtpResent, setIsOtpResent] = useState(false);
 
-  const registration_url = `${API_URL}api/auth/registration/`;
   const otp_url = `${API_URL}api/auth/phone/verify/otp/`;
   const otp_verify_url = `${API_URL}api/auth/phone/verify/otp/confirm/`;
   const otp_resend_url = `${API_URL}api/auth/phone/resend/`;
@@ -179,7 +178,7 @@ export default function Register() {
     // end of unreachable code
   };
 
-  const registeruser = ({
+  const registeruser = async ({
     email,
     phone,
     first_name,
@@ -194,8 +193,8 @@ export default function Register() {
         non_field_errors: null,
       });
 
-    axios
-      .post(registration_url, {
+    try {
+      await register({
         email,
         phone: phone.substring(3),
         first_name,
@@ -204,26 +203,22 @@ export default function Register() {
         password2,
         birth_year: '',
         country: '',
-      })
-      .then((response) => {
-        // console.log(response);
-        dispatch(loginUser(response.data));
-      })
-      .catch((err) => {
-        if (err.data === undefined) {
-          setFormError({
-            ...error,
-            detail: 'Something Went Wrong, Please try again',
-          });
-        } else if (err.data.non_field_errors) {
-          setFormError({
-            ...error,
-            detail: 'Something Went Wrong, Please try again',
-          });
-        } else {
-          setFormError(err.data);
-        }
-      });
+      }).unwrap();
+    } catch (err) {
+      if (err.data === undefined) {
+        setFormError({
+          ...error,
+          detail: 'Something Went Wrong, Please try again',
+        });
+      } else if (err.data.non_field_errors) {
+        setFormError({
+          ...error,
+          detail: 'Something Went Wrong, Please try again',
+        });
+      } else {
+        setFormError(err.data);
+      }
+    }
   };
 
   const handleOtpChange = (event) => {
