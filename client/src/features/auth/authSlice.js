@@ -30,6 +30,11 @@ export const authSlice = createSlice({
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
     },
+
+    refreshAccessToken: (state, { payload }) => {
+      state.access_token = payload.access;
+      localStorage.setItem('access_token', payload.access_token);
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -65,6 +70,6 @@ export const authSlice = createSlice({
 
 const { actions, reducer } = authSlice;
 
-export const { loginUser, logoutUser } = actions;
+export const { loginUser, logoutUser, refreshAccessToken } = actions;
 
 export default reducer;
