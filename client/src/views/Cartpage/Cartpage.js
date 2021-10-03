@@ -14,7 +14,6 @@ import Header from '../../components/Header/Header';
 import CartItem from '../../components/cart-item/cart-item';
 import './Cartpage.css';
 
-
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -31,16 +30,16 @@ const Cartpage = () => {
   const login = useSelector((state) => state.login);
   const loggedIn = login.loggedIn;
   const [open, setOpen] = useState(false);
-  
+
   const [error, setError] = useState(false);
-  
+
   // const cartItems = useSelector(selectCartItems)
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
   const [prodList, setProdList] = useState([]);
   const [total, setTotal] = useState(0);
   let history = useHistory();
-  
+
   let error_occured = false;
   const dispatch = useDispatch();
 
@@ -50,7 +49,7 @@ const Cartpage = () => {
     }
 
     setOpen(false);
-  }
+  };
 
   useEffect(() => {
     var cart_ids = [];
@@ -61,7 +60,7 @@ const Cartpage = () => {
     // var myArray = ['a', 1, 'a', 2, '1'];
     var cart_ids = cart_ids.filter((v, i, a) => a.indexOf(v) === i);
     cart_ids = cart_ids.join(',');
-    
+
     if (cart_ids.length < 1) return;
     axios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
       var prod = res.data;
@@ -80,7 +79,7 @@ const Cartpage = () => {
           ...product,
           quantity: prod.quantity,
           price: price,
-          total: prod.quantity * price.price          
+          total: prod.quantity * price.price,
         };
         prods.push(product);
       });
@@ -106,43 +105,30 @@ const Cartpage = () => {
   }, [cartItems, dispatch]);
 
   const executeAllLongRunningTasks = async () => {
-    error_occured = false
+    error_occured = false;
     return await Promise.all(
-
       prodList.map((product, index) => {
-      
-      if(product.other_information){
-        let existingCartItem = cartItems.find(
-          (cartItem) =>
-            cartItem.id == product.id &&
-            cartItem.price_id == product.price.id
-        )
-          
-        if(!existingCartItem.otherinfo){
-          
-          error_occured = true
-          setError(product.other_information);
-          setOpen(true);
-          
-          
+        if (product.other_information) {
+          let existingCartItem = cartItems.find(
+            (cartItem) =>
+              cartItem.id === product.id &&
+              cartItem.price_id === product.price.id
+          );
+
+          if (!existingCartItem.otherinfo) {
+            error_occured = true;
+            setError(product.other_information);
+            setOpen(true);
+          }
         }
-      }
-      
-    })
+      })
+    );
+  };
 
-    )
-}
-
-
-  const checkout=()=>{
-    
+  const checkout = () => {
     const tasks = executeAllLongRunningTasks();
-    if(!error_occured)
-      history.push('/checkout')
-    
-  }
-  
-  
+    if (!error_occured) history.push('/checkout');
+  };
 
   return (
     <>
@@ -200,14 +186,14 @@ const Cartpage = () => {
       <Snackbar
         // key={messageInfo ? messageInfo.key : undefined}
         open={open}
-        autoHideDuration={6000}        
+        autoHideDuration={6000}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         onClose={handleClose}
         // TransitionProps={{ onExited: handleClose }}
         // message={error}
         // action={
         //   <React.Fragment>
-            
+
         //     {/* <Button color="secondary" size="small" onClick={handleClose}>
         //       UNDO
         //     </Button> */}
@@ -220,16 +206,14 @@ const Cartpage = () => {
         //       <CloseIcon />
         //     </IconButton> */}
         //   </React.Fragment>
-          
+
         // }
-        >
-          
-          <Alert severity="error" onClose={handleClose}>
+      >
+        <Alert severity="error" onClose={handleClose}>
           {error}
         </Alert>
-        
-        </Snackbar>
+      </Snackbar>
     </>
   );
-}
-export default  Cartpage;
+};
+export default Cartpage;
