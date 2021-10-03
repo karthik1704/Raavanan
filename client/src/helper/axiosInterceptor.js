@@ -44,7 +44,7 @@ myAxios.interceptors.response.use(
         })
         .catch((error) => {
           logoutUser();
-          return Promise.reject(error);
+          // return Promise.reject(error);
         });
     }
     return Promise.reject(error);
