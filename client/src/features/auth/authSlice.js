@@ -65,6 +65,18 @@ export const authSlice = createSlice({
         localStorage.setItem('refresh_token', payload.refresh_token);
       }
     );
+    builder.addMatcher(
+      authApi.endpoints.googleLogin.matchFulfilled,
+      (state, { payload }) => {
+        state.isAuthenticated = true;
+        state.access_token = payload.access_token;
+        state.user = payload.user;
+
+        // Store in Local Storage
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('access_token', payload.access_token);
+      }
+    );
   },
 });
 
