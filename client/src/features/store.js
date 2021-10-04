@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 // Slice Reducers imports
 import authReducer from './auth/authSlice';
+import appDrawerReducer from './appDrawer/appDrawerSlice';
 import themeReducer from './theme/themeSlice';
 
 // API Reducers imports
@@ -11,6 +12,7 @@ const store = configureStore({
   reducer: {
     //Add Slice Reducers here
     auth: authReducer,
+    appDrawer: appDrawerReducer,
     theme: themeReducer,
 
     // Add API Reducers here
