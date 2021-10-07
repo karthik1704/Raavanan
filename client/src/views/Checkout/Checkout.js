@@ -47,7 +47,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const steps = ['Address', 'Review your order', 'Payment'];
 
 const Addresses = (props) => {
-
   const checked = props.checked;
   const setChecked = props.setChecked;
   // console.log('state')
@@ -130,7 +129,7 @@ const Checkout = () => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [addressId, setAddressId] = useState('');
-  const address_create_url = `${API_URL}api/address/`;
+  const address_create_url = `${API_URL}address/`;
 
   const [addresses, setAddresses] = useState([]);
   const [createAddress, setCreateAddress] = useState(false);
@@ -199,13 +198,13 @@ const Checkout = () => {
         return <Cartpage />;
       case 2:
         var items = [];
-        
+
         cartItems.map((prod) =>
           items.push({
             quantity: prod.quantity,
             product: prod.id,
             price: prod.price_id,
-            extra : prod.otherinfo
+            extra: prod.otherinfo,
           })
         );
         var order = {
@@ -227,7 +226,7 @@ const Checkout = () => {
   }
 
   const handleNext = () => {
-    if (activeStep === 0) {      
+    if (activeStep === 0) {
       if (!createAddress) {
         if (checked.length < 1) {
           setError('Please select one address');
@@ -293,7 +292,7 @@ const Checkout = () => {
             .then(
               (response) => {
                 //dispatch(loginUser(response.data));
-                
+
                 setAddressId(response.data.id);
               },
               (error) => {
