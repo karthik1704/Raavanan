@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 //import makeStyles from '@mui/styles/makeStyles';
 import { useState, useEffect, useLayoutEffect } from 'react';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from '../../CONSTANTS';
 import Container from '@mui/material/Container';
@@ -114,7 +114,9 @@ export default function Cartpage() {
               <h3 className="Order_title">PRODUCTS</h3>
             </div>
             {prodList.length > 0 ? (
-              prodList.map((product, index) => <CartItem product={product} key={index} />)
+              prodList.map((product, index) => (
+                <CartItem product={product} key={index} />
+              ))
             ) : (
               <h4 className="Product_Text"> Your cart is empty</h4>
             )}

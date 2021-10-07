@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 import axios from 'axios';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { API_URL } from '../../CONSTANTS';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
