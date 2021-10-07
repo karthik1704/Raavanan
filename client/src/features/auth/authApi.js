@@ -71,7 +71,7 @@ export const authApi = createApi({
     // Google Login
     googleLogin: builder.mutation({
       query: (credentials) => ({
-        url: 'api/auth/google/',
+        url: 'auth/google/',
         method: 'POST',
         data: credentials,
       }),

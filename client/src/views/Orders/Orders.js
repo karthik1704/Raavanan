@@ -70,7 +70,7 @@ const Div = styled('div')(({ theme }) => ({
 const Orders = () => {
   const dispatch = useDispatch();
   const [orders, setOrders] = useState([]);
-  const orders_url = `${API_URL}api/orders/`;
+  const orders_url = `${API_URL}orders/`;
   let history = useHistory();
   console.log(orders);
   useEffect(() => {

@@ -27,8 +27,8 @@ const Cartpage = () => {
   // const classes = useStyles();
   // const cart = useSelector((state) => state.cart);
   // const cartItems = selectCartItems();
-  const login = useSelector((state) => state.login);
-  const loggedIn = login.loggedIn;
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const [open, setOpen] = useState(false);
 
   const [error, setError] = useState(false);
@@ -62,7 +62,7 @@ const Cartpage = () => {
     cart_ids = cart_ids.join(',');
 
     if (cart_ids.length < 1) return;
-    axios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
+    axios.get(`${API_URL}custom/products/?ids=${cart_ids}`).then((res) => {
       var prod = res.data;
       // prod.filter()
 
@@ -142,7 +142,6 @@ const Cartpage = () => {
             </div>
             {prodList.length > 0 ? (
               prodList.map((product, index) => (
-                // var prod = {...product,''}
                 <CartItem product={product} key={index} />
               ))
             ) : (

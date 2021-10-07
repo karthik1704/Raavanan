@@ -33,6 +33,8 @@ import { useParams } from 'react-router-dom';
 import { API_URL } from '../../CONSTANTS';
 import { fetchProductDetail } from '../../data/actions/productActions';
 
+import { useGetProductDetailQuery } from '../../features/product/productApi';
+
 import { styled } from '@mui/material/styles';
 
 const RootDiv = styled('div')(({ theme }) => ({
@@ -52,8 +54,9 @@ export default function ProductDetail() {
   // const [price, setPrice] = useState('');
   const [type, setType] = useState('');
   const [mrp, setMrp] = useState('');
-  const login = useSelector((state) => state.login);
-  const loggedIn = login.loggedIn;
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
 
@@ -76,7 +79,7 @@ export default function ProductDetail() {
   //       "quantity": cartItems[i]['quantity']
   //     })
   //   }
-  // axios.post(`${API_URL}api/sync_cart/`, carts)
+  // axios.post(`${API_URL}sync_cart/`, carts)
   //   .then((response) => {
   //  console.log(response);
   //   }, (error) => {
@@ -91,7 +94,7 @@ export default function ProductDetail() {
     //   .then((data) => dispatch(fetchProductDetail(data)))
     //   .catch((err) => console.log(err));
 
-    axios.get(`${API_URL}api/product/${id}`).then((res) => {
+    axios.get(`${API_URL}product/${id}`).then((res) => {
       dispatch(fetchProductDetail(res.data));
 
       if (res.data.price) {
@@ -142,11 +145,11 @@ export default function ProductDetail() {
     setSize(e.target.value);
     productDetail.price
       .filter((price) => price.types === e.target.value)
-      .map((price) => {
+      .map((price) =>
         // setMrp(price.mrp);
         // setPrice(price.price);
-        setValue(price);
-      });
+        setValue(price)
+      );
   };
 
   if (Object.keys(productDetail).length === 0) {

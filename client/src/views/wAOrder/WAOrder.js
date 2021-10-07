@@ -136,9 +136,7 @@ const WAOrder = (props) => {
 
   console.log(state);
   useEffect(() => {
-    axois
-      .get(`${API_URL}api/product/${id}`)
-      .then((res) => setProduct(res.data));
+    axois.get(`${API_URL}product/${id}`).then((res) => setProduct(res.data));
   }, [id]);
 
   useEffect(() => {

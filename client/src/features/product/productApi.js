@@ -12,13 +12,13 @@ export const productApi = createApi({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: () => ({
-        url: 'api/product/',
+        url: 'product/',
         method: 'GET',
       }),
     }),
     getProductDetail: builder.query({
       query: (slug) => ({
-        url: `api/product/${slug}`,
+        url: `product/${slug}`,
         method: 'GET',
       }),
     }),

@@ -184,7 +184,7 @@ const OrdersDetail = () => {
   const dispatch = useDispatch();
   const [order, setOrder] = useState({});
   const { id } = useParams();
-  const orders_url = `${API_URL}api/order_detail/`;
+  const orders_url = `${API_URL}order_detail/`;
   // eslint-disable-next-line no-unused-vars
   let history = useHistory();
   const [prodList, setProdList] = useState([]);

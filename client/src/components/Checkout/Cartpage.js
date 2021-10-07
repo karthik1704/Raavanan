@@ -74,7 +74,7 @@ export default function Cartpage() {
     cart_ids = cart_ids.join(',');
 
     if (cart_ids.length < 1) return;
-    axios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
+    axios.get(`${API_URL}custom/products/?ids=${cart_ids}`).then((res) => {
       var prod = res.data;
       // prod.filter()
 

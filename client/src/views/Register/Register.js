@@ -127,9 +127,9 @@ export default function Register() {
   const [otperrortext, setOtperrortext] = useState('');
   //const [isOtpResent, setIsOtpResent] = useState(false);
 
-  const otp_url = `${API_URL}api/auth/phone/verify/otp/`;
-  const otp_verify_url = `${API_URL}api/auth/phone/verify/otp/confirm/`;
-  const otp_resend_url = `${API_URL}api/auth/phone/resend/`;
+  const otp_url = `${API_URL}auth/phone/verify/otp/`;
+  const otp_verify_url = `${API_URL}auth/phone/verify/otp/confirm/`;
+  const otp_resend_url = `${API_URL}auth/phone/resend/`;
 
   const handleRegisterSubmit = (data) => {
     if (data.phone.length !== 13) return;

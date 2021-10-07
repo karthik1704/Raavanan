@@ -130,9 +130,9 @@ export default function Forgetpassword() {
   const [otperror, setOtperror] = useState(false);
   const [otperrortext, setOtperrortext] = useState('');
 
-  const otp_url = `${API_URL}api/auth/password/reset/phone/`;
-  const otp_verify_url = `${API_URL}api/auth/password/reset/phone/verify/`;
-  const passwordResetConfrimUrl = `${API_URL}api/auth/password/reset/confirm/`;
+  const otp_url = `${API_URL}auth/password/reset/phone/`;
+  const otp_verify_url = `${API_URL}auth/password/reset/phone/verify/`;
+  const passwordResetConfrimUrl = `${API_URL}auth/password/reset/confirm/`;
 
   const handleOtpChange = (event) => {
     const otp = event.target.value;
