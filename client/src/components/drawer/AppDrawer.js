@@ -39,14 +39,12 @@ const RootDiv = styled('div')(({ theme }) => ({
   '& > *': {
     margin: theme.spacing(1),
   },
-  padding:'10px'
-  
+  padding: '10px',
 }));
 
 const SwipeableDrawer1 = styled('div')(({ theme }) => ({
   backgroundColor: '#232f3e !important',
-            color: 'white !important',
-  
+  color: 'white !important',
 }));
 
 // const useStyles = makeStyles((theme) => ({
@@ -67,15 +65,11 @@ const SwipeableDrawer1 = styled('div')(({ theme }) => ({
 //   },
 // }));
 
-
-
 const AppDrawer = ({ theme, onToggleTheme, category }) => {
-  const { appDrawerOpen } = useSelector((state) => state.appUi);
+  const { drawerOpen } = useSelector((state) => state.appDrawer);
   const dispatch = useDispatch();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const login = useSelector((state) => state.login);
-
-  const loggedIn = login.loggedIn;
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   var anchors_dict = {};
   category.map((option) => {
@@ -112,21 +106,20 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
       disableBackdropTransition={!iOS}
       disableDiscovery={iOS}
       anchor="left"
-      open={appDrawerOpen}
+      open={drawerOpen}
       onClose={(e) => toggleDrawer(false, e)}
       onOpen={(e) => toggleDrawer(true, e)}
-      
     >
       <SwipeableDrawer1>
-      <RootDiv>
-        {/* <Avatar
+        <RootDiv>
+          {/* <Avatar
           sx={{color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],}}
         className={classes.purple}>S</Avatar>
         <Typography variant="body1">SRBN Loves N! </Typography> */}
-        <Typography>வணக்கம் !</Typography>
-        {/* {(()=> {
-          if (loggedIn) {
+          <Typography>வணக்கம் !</Typography>
+          {/* {(()=> {
+          if (isAuthenticated) {
             return (
               <>
                 <Button color="primary">Logout</Button>
@@ -140,91 +133,108 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
           )
         }
       })()} */}
-      </RootDiv>
-
-      <Divider />
-      <div
-        role="presentation"
-        // onClick={(e) => toggleDrawer(false, e)}
-        // onKeyDown={(e) => toggleDrawer(false, e)}
-      >
-        <List>
-          {category.map((menu, index) => {
-            return menu.children.length > 0 ? (
-              //     <ListItem button component={Link} to={menu.link}>
-              //    <ListItemIcon>
-              //      <NewReleasesIcon />
-              //    </ListItemIcon>
-              //    <ListItemText primary={menu.name} />
-              //  </ListItem>
-              <Fragment key={index}>
-                <ListItem>
-                  <ListItemIcon>
-                    {/* <InboxIcon /> */}
-                    <img src={menu.imageurl} style={{width : '20px', height:'20px'}}/>
-                  </ListItemIcon>
-                  <ListItemText
-                    button
-                    primary={menu.name}
-                    onClick={() => handleParentClick(menu.slug)}
-                  />
-                  {anchors[menu.name] ? (
-                    <ExpandLess onClick={() => handleClick(menu.name)} />
-                  ) : (
-                    <ExpandMore onClick={() => handleClick(menu.name)} />
-                  )}
-                </ListItem>
-                <Collapse in={anchors[menu.name]} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    {menu.children.map((option, index1) => {
-                      return (
-                        <ListItem
-                          button
-                          sx={{ pl: 4 }}
-                          component={Link}
-                          to={option.slug}
-                          key={index1}
-                          onClick={(e) => toggleDrawer(false, e)}
-                        >
-                          <ListItemIcon>
-                            <StarBorder />
-                          </ListItemIcon>
-                          <ListItemText primary={option.name} />
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </Collapse>
-              </Fragment>
-            ) : (
-              <ListItem key={index} button component={Link} to={menu.slug}>
-                <ListItemIcon>
-                  {/* <InboxIcon /> */}
-                  <img src={menu.imageurl} style={{width : '20px', height:'20px'}}/>
-                </ListItemIcon>
-                <ListItemText primary={menu.name} />
-              </ListItem>
-            );
-          })}
-        </List>
+        </RootDiv>
 
         <Divider />
-        <List>
-          <ListItem button component={Link} to="/terms">
-            <ListItemText primary="கொள்கைகள்" />
-          </ListItem>
+        <div
+          role="presentation"
+          // onClick={(e) => toggleDrawer(false, e)}
+          // onKeyDown={(e) => toggleDrawer(false, e)}
+        >
+          <List>
+            {category.map((menu) => {
+              return menu.children.length > 0 ? (
+                //     <ListItem button component={Link} to={menu.link}>
+                //    <ListItemIcon>
+                //      <NewReleasesIcon />
+                //    </ListItemIcon>
+                //    <ListItemText primary={menu.name} />
+                //  </ListItem>
+                <Fragment key={menu.slug}>
+                  <ListItem>
+                    <ListItemIcon>
+                      {/* <InboxIcon /> */}
+                      <img
+                        src={menu.imageurl}
+                        alt={menu.name}
+                        style={{ width: '20px', height: '20px' }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      button
+                      primary={menu.name}
+                      onClick={() => handleParentClick(menu.slug)}
+                    />
+                    {anchors[menu.name] ? (
+                      <ExpandLess onClick={() => handleClick(menu.name)} />
+                    ) : (
+                      <ExpandMore onClick={() => handleClick(menu.name)} />
+                    )}
+                  </ListItem>
+                  <Collapse
+                    in={anchors[menu.name]}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    <List component="div" disablePadding>
+                      {menu.children.map((option) => {
+                        return (
+                          <ListItem
+                            button
+                            sx={{ pl: 4 }}
+                            component={Link}
+                            to={option.slug}
+                            key={option.slug}
+                            onClick={(e) => toggleDrawer(false, e)}
+                          >
+                            <ListItemIcon>
+                              <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary={option.name} />
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </Collapse>
+                </Fragment>
+              ) : (
+                <ListItem
+                  key={menu.slug}
+                  button
+                  component={Link}
+                  to={menu.slug}
+                >
+                  <ListItemIcon>
+                    {/* <InboxIcon /> */}
+                    <img
+                      src={menu.imageurl}
+                      alt={menu.name}
+                      style={{ width: '20px', height: '20px' }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={menu.name} />
+                </ListItem>
+              );
+            })}
+          </List>
 
-          <ListItem button component={Link} to="/about">
-            <ListItemText primary="எங்களைப் பற்றி" />
-          </ListItem>
+          <Divider />
+          <List>
+            <ListItem button component={Link} to="/terms">
+              <ListItemText primary="கொள்கைகள்" />
+            </ListItem>
 
-          <ListItem button component={Link} to="/contact">
-            <ListItemText primary="தொடர்புக்கு" />
-          </ListItem>
-        </List>
-      </div>
-      <Divider />
-      {/* <List>
+            <ListItem button component={Link} to="/about">
+              <ListItemText primary="எங்களைப் பற்றி" />
+            </ListItem>
+
+            <ListItem button component={Link} to="/contact">
+              <ListItemText primary="தொடர்புக்கு" />
+            </ListItem>
+          </List>
+        </div>
+        <Divider />
+        {/* <List>
         <ListItem>
           <ListItemText primary="இருண்ட பயன்முறை" />
           <Switch

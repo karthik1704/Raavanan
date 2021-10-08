@@ -1,17 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleAppLoading } from '../data/actions/appAction';
+
+import { toggleLoader } from '../features/loader/loaderSlice';
 
 const useTopLoader = () => {
-  const { loading } = useSelector((state) => state.appUi);
+  const { topLoader } = useSelector((state) => state.loader);
   const dispatch = useDispatch();
 
   const onToggleTopLoader = (loader) => {
     setTimeout(() => {
-      dispatch(toggleAppLoading(loader));
+      dispatch(toggleLoader(loader));
     }, 500);
   };
 
-  return [loading, onToggleTopLoader];
+  return [topLoader, onToggleTopLoader];
 };
 
 export default useTopLoader;
