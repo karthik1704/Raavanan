@@ -21,8 +21,7 @@ import Orders from '../views/Orders/Orders';
 import OrdersDetail from '../views/OrdersDetail/OrdersDetail';
 
 const Router = () => {
-  const login = useSelector((state) => state.login);
-  const loggedIn = login.loggedIn;
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <Switch>
@@ -47,13 +46,13 @@ const Router = () => {
       <Route
         exact
         path="/login"
-        render={() => (loggedIn ? <Redirect to="/" /> : <Login />)}
+        render={() => (isAuthenticated ? <Redirect to="/" /> : <Login />)}
       />
 
       <Route
         exact
         path="/register"
-        render={() => (loggedIn ? <Redirect to="/" /> : <Register />)}
+        render={() => (isAuthenticated ? <Redirect to="/" /> : <Register />)}
       />
       <Route path="/Otpverification" exact>
         <Otpverification />
@@ -73,12 +72,16 @@ const Router = () => {
       <Route
         exact
         path="/orderconfirmation/:status"
-        render={() => (loggedIn ? <Orderconfirm /> : <Redirect to="/login" />)}
+        render={() =>
+          isAuthenticated ? <Orderconfirm /> : <Redirect to="/login" />
+        }
       />
       <Route
         exact
         path="/checkout"
-        render={() => (loggedIn ? <Checkout /> : <Redirect to="/login" />)}
+        render={() =>
+          isAuthenticated ? <Checkout /> : <Redirect to="/login" />
+        }
       />
 
       <Route path="/terms" exact>
