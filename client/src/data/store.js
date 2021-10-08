@@ -12,32 +12,29 @@
 
 // export default store;
 
-import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import rootReducer from './reducers';
-import { composeWithDevTools   } from 'redux-devtools-extension';
+//import { composeWithDevTools } from 'redux-devtools-extension';
 const persistConfig = {
   key: 'root',
   storage: storage,
   //whitelist: ['login',] ,// which reducer want to store
-  blacklist:['products']
+  blacklist: ['products'],
 };
 
 const pReducer = persistReducer(persistConfig, rootReducer);
 // const middleware = applyMiddleware(thunk, logger);
 // const store = createStore(pReducer, middleware);
 
-
-const store = createStore(pReducer, composeWithDevTools(
-  applyMiddleware(thunk, logger),
+const store = createStore(
+  pReducer,
+  applyMiddleware(thunk)
   // other store enhancers if any
-));
-
-
+);
 
 const persistor = persistStore(store);
 export { persistor, store };
