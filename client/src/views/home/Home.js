@@ -17,7 +17,7 @@ import ProductList from '../../components/productList/ProductList';
 const Home = () => {
   const [, onToggleTopLoader] = useTopLoader();
 
-  const { data, isLoading } = useGetProductsQuery();
+  const { data, isLoading } = useGetProductsQuery({ slug: null, page: null });
 
   useEffect(() => {
     onToggleTopLoader(isLoading);
