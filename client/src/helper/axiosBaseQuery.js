@@ -4,9 +4,10 @@ const axiosBaseQuery = ({ baseUrl } = { baseUrl: '' }) => async ({
   url,
   method,
   data,
+  params,
 }) => {
   try {
-    const result = await myAxios({ url: baseUrl + url, method, data });
+    const result = await myAxios({ url: baseUrl + url, method, data, params });
     return { data: result.data };
   } catch (axiosError) {
     let err = axiosError;
