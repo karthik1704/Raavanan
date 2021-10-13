@@ -17,6 +17,8 @@ import { Helmet } from 'react-helmet';
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 import ProductList from '../../components/productList/ProductList';
 
+import { useGetProductsQuery } from '../../features/product/productApi';
+
 // const useStyles = makeStyles((theme) => ({
 //   root: {
 //     marginTop: theme.spacing(1),
@@ -24,63 +26,47 @@ import ProductList from '../../components/productList/ProductList';
 // }));
 
 const Products = () => {
-  const { products } = useSelector((state) => state.products);
   const { category } = useParams();
   const [count, setCount] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const dispatch = useDispatch();
 
-  const filterUrl = `${API_URL}api/product/?category__slug=${category}`;
-  const [nextUrl, setNextUrl] = useState(
-    `${API_URL}api/product/?category__slug=${category}`
-  );
-  const url = `${API_URL}api/product/`;
+  const [page, setPage] = useState(null);
+
+  const { data: products, isLoading } = useGetProductsQuery({
+    slug: category,
+    page,
+  });
 
   useEffect(() => {
-    dispatch(resetProduct([]));
-    // setFilterUrl(`${API_URL}api/product/?category__slug=${category}`);
     setCount(0);
     setHasMore(true);
-    setNextUrl('');
-  }, [dispatch, category]);
+    setPage(null);
+  }, [category]);
 
   const fetchMoreData = () => {
-    // if(!nextUrl)
-    //   return false
-    axios.get(nextUrl).then((res) => {
-      console.log('res');
-      console.log(res);
-
-      // setCount(res.data.count);
-      if (res.data.next != null) {
-        console.log('if');
-        console.log(res.data.next);
-        setNextUrl(res.data.next);
-        setHasMore(true);
-      } else {
-        console.log('else');
-        setNextUrl('');
-        setHasMore(false);
-      }
-
-      dispatch(fetchProduct(res.data.results));
-    });
+    if (products.next !== null) {
+      console.log('if');
+      console.log(products.next.slice(-1));
+      setPage(products.next.slice(-1));
+      setHasMore(true);
+    } else {
+      setPage(null);
+      setHasMore(false);
+    }
   };
 
-  useEffect(() => {
-    axios.get(category === 'new' ? url : filterUrl).then((res) => {
-      setCount(res.data.count);
-      if (res.data.next != null) {
-        
-        setNextUrl(res.data.next);
-        setHasMore(true);
-      } else {
-        setNextUrl('');
-        setHasMore(false);
-      }
-      return dispatch(fetchProduct(res.data.results));
-    });
-  }, [dispatch, category, url, filterUrl]);
+  // useEffect(() => {
+  //   if (products) {
+  //     if (products.next != null) {
+  //       setPage(products.next.slice(-1));
+  //       setHasMore(true);
+  //     } else {
+  //       setPage(null);
+  //       setHasMore(false);
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div>
@@ -95,31 +81,32 @@ const Products = () => {
         ) : (
           <Typography>விரைவில்...</Typography>
         )} */}
-
-          <InfiniteScroll
-            dataLength={products.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={
-              <div style={{ textAlign: 'center' }}>
-                <img src={ripple} alt="loading" height="40px" width="40px" />
-              </div>
-            }
-            endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>Yay! You have seen it all</b>
-              </p>
-            }
-          >
-            {/* {this.state.items.map((i, index) => (
+          {products && (
+            <InfiniteScroll
+              dataLength={products?.results?.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={
+                <div style={{ textAlign: 'center' }}>
+                  <img src={ripple} alt="loading" height="40px" width="40px" />
+                </div>
+              }
+              endMessage={
+                <p style={{ textAlign: 'center' }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              {/* {this.state.items.map((i, index) => (
             <div key={index}>
               div - #{index}
             </div>
           ))} */}
-            <Grid container sx={{ mt: 1 }}>
-              <ProductList products={products} />
-            </Grid>
-          </InfiniteScroll>
+              <Grid container sx={{ mt: 1 }}>
+                <ProductList products={products?.results} />
+              </Grid>
+            </InfiniteScroll>
+          )}
         </Grid>
       </Grid>
     </div>
