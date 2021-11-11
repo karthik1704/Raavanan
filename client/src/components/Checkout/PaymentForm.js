@@ -106,6 +106,10 @@ export default function PaymentForm(props) {
                   
                   history.push('orderconfirmation/'+result.data.status)
               },
+              prefill: {
+                "email": "care@raavananstore.com",
+                "contact": "7871003935"
+           },
               // prefill: {
               //     name: "Soumya Dey",
               //     email: "SoumyaDey@example.com",
