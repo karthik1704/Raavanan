@@ -9,7 +9,7 @@ import { Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
 import axios from 'axios';
-
+import ReactGA from 'react-ga';
 import { API_URL } from '../../CONSTANTS';
 
 import { Helmet } from 'react-helmet';
@@ -48,17 +48,15 @@ const Products = () => {
     // if(!nextUrl)
     //   return false
     axios.get(nextUrl).then((res) => {
-      console.log('res');
-      console.log(res);
+      
 
       // setCount(res.data.count);
       if (res.data.next != null) {
-        console.log('if');
-        console.log(res.data.next);
+        
         setNextUrl(res.data.next);
         setHasMore(true);
       } else {
-        console.log('else');
+        
         setNextUrl('');
         setHasMore(false);
       }
@@ -68,6 +66,8 @@ const Products = () => {
   };
 
   useEffect(() => {
+    
+    ReactGA.pageview(window.location.pathname + window.location.search);
     axios.get(category === 'new' ? url : filterUrl).then((res) => {
       setCount(res.data.count);
       if (res.data.next != null) {

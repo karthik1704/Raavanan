@@ -29,6 +29,9 @@ import axios from 'axios';
 import { toggleAppLoading } from './data/actions/appAction';
 import { logoutUser } from './data/actions/loginActions';
 
+
+ReactGA.initialize('G-783HZEMX30');
+
 function App() {
   const [theme] = useDarkTheme();
   const { loading } = useSelector((state) => state.appUi);
@@ -105,10 +108,11 @@ function App() {
     );
   }, []);
 
-  useEffect(() => {
-    ReactGA.initialize('G-LH9KB8TXPW');
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
+  // useEffect(() => {
+  //   // console.log('app.js')
+  //   // ReactGA.initialize('G-LH9KB8TXPW');
+  //   // ReactGA.pageview(window.location.pathname + window.location.search);
+  // }, []);
 
   return (
     <>

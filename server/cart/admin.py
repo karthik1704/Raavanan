@@ -9,6 +9,6 @@ from .models import Cart
 
 class CartAdmin(admin.ModelAdmin):
     #inlines = (CartItemAdmin,)
-    list_display = ('id', )
+    list_display = ('id','user','product','quantity' )
 
 admin.site.register(Cart, CartAdmin)
