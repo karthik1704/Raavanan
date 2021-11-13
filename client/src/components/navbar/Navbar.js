@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
@@ -272,8 +273,8 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
 
-          <Link to="/" style={{ width: '100%', textAlign: 'center' }}>
-            <img src={RavananLogo} alt="logo" height="40px" width="200px" />
+          <Link to="/" style={{ textAlign: 'center' }}>
+            <img src={RavananLogo} alt="logo" height="40px" width="150px" />
           </Link>
 
           <Search sx={{ display: { xs: 'none', sm: 'flex' } }}>
@@ -285,9 +286,32 @@ export default function Navbar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
-
           <Box
+            sx={{
+              flexGrow: 1,
+              display: {
+                xs: 'flex',
+                sm: 'none',
+                md: 'none',
+              },
+            }}
+          />
+          <IconButton
+            sx={{
+              fontSize: '12px !important',
+              display: { xs: 'flex', sm: 'none' },
+            }}
+            aria-label={`${cartItems.length} product in cart`}
+            color="inherit"
+            component={Link}
+            to="/CartPage"
+          >
+            <Badge badgeContent={cartItems.length} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+
+          <Toolbar
             sx={{
               display: {
                 xs: 'none',
@@ -318,29 +342,18 @@ export default function Navbar() {
                 return (
                   <>
                     <div>
-                      <Button
-                        sx={{
-                          fontSize: '12px !important',
-                          fontWeight: '400',
-                          marginTop: '2px',
-                        }}
-                        aria-label=" 4 product in cart"
+                      <IconButton
+                        sx={{ fontSize: '12px !important' }}
+                        aria-label="profile"
                         color="inherit"
                         aria-haspopup="true"
                         onClick={handleProfileMenuClick}
+                        style={{ fontWeight: '400', marginTop: '2px' }}
                       >
-                        {user && `${user.first_name}`}
-                        <span className="MuiButton-label">
-                          <svg
-                            className="MuiSvgIcon-root"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                          >
-                            <path d="M7 10l5 5 5-5z"></path>
-                          </svg>
-                        </span>
-                      </Button>
+                        <Avatar alt={user?.first_name} src={user?.avatar}>
+                          {user && user.first_name[0]}
+                        </Avatar>
+                      </IconButton>
                       {renderMenu}
                     </div>
                   </>
@@ -373,94 +386,9 @@ export default function Navbar() {
                 );
               }
             })()}
-          </Box>
+          </Toolbar>
         </Toolbar>
-        <Toolbar
-          sx={{
-            display: {
-              sm: 'flex',
-              lg: 'none',
-            },
-            justifyContent: {
-              sm: 'center',
-            },
-            textAlign: 'center',
-            // justifyContent: 'center',
-          }}
-          // className={`${classes.sectionMobile} ${classes.centeroptionbar} `}
-        >
-          <Button
-            aria-label=" 4 product in cart"
-            color="inherit"
-            sx={{ fontSize: '12px !important' }}
-            component={Link}
-            to="/CartPage"
-            startIcon={
-              <Badge badgeContent={cartItems.length} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            }
-          >
-            கூடை
-          </Button>
 
-          {(() => {
-            if (loggedIn) {
-              return (
-                <>
-                  {/* {login.user} */}
-
-                  <Button
-                    sx={{ fontSize: '12px !important' }}
-                    color="inherit"
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuClick}
-                    style={{ fontWeight: '400', marginTop: '2px' }}
-                  >
-                    {user && `${user.first_name}`}
-                    <span className="MuiButton-label">
-                      <svg
-                        className="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path d="M7 10l5 5 5-5z"></path>
-                      </svg>
-                    </span>
-                  </Button>
-                  {renderMenu}
-                </>
-              );
-            } else {
-              return (
-                <>
-                  {' '}
-                  <Button
-                    color="inherit"
-                    onClick={onToggleTopLoader}
-                    sx={{ fontSize: '12px !important' }}
-                    startIcon={<LockIcon />}
-                    component={Link}
-                    to="/login"
-                  >
-                    உள் நுழைய
-                  </Button>
-                  <Button
-                    color="inherit"
-                    onClick={onToggleTopLoader}
-                    sx={{ fontSize: '12px !important' }}
-                    startIcon={<AssignmentIndIcon />}
-                    component={Link}
-                    to="/register"
-                  >
-                    பதிய
-                  </Button>
-                </>
-              );
-            }
-          })()}
-        </Toolbar>
         <Toolbar
           sx={{ display: { xs: 'flex', sm: 'none' }, justifyContent: 'center' }}
         >
