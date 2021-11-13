@@ -29,9 +29,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
+    original = serializers.ReadOnlyField(source='image')
+    thumbnail = serializers.ReadOnlyField(source='image')
     class Meta:
         model = ProductImage
-        fields = ['id','image']
+        fields = ['id','image', 'original' , 'thumbnail']
 
 
 
