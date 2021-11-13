@@ -11,7 +11,7 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes/Routes';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import useDarkTheme from './hooks/useDarkTheme';
 
@@ -21,7 +21,7 @@ import NewFooter from './components/NewFooter/NewFooter';
 
 import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
-import { store } from './data/store';
+import store from './features/store';
 import Logo from './asserts/raavanan logo.png';
 import axios from 'axios';
 // import { toggleAppLoading } from './data/actions/appAction';
@@ -32,10 +32,12 @@ import { logoutUser } from './features/auth/authSlice';
 
 import { getThemeByName } from './theme';
 
+ReactGA.initialize('G-783HZEMX30');
+
 function App() {
   const [mode] = useDarkTheme();
   const { topLoader } = useSelector((state) => state.loader);
-  const { dispatch } = useDispatch();
+  const { dispatch } = store;
 
   const theme = useMemo(() => createTheme(getThemeByName(mode)), [mode]);
 
@@ -91,10 +93,11 @@ function App() {
   //   );
   // }, []);
 
-  useEffect(() => {
-    ReactGA.initialize('G-LH9KB8TXPW');
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
+  // useEffect(() => {
+  //   // console.log('app.js')
+  //   // ReactGA.initialize('G-LH9KB8TXPW');
+  //   // ReactGA.pageview(window.location.pathname + window.location.search);
+  // }, []);
 
   return (
     <>

@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import { addItem, removeItem, addOtherInfo } from '../../data/actions/cartActions';
 import { useDispatch } from 'react-redux';
-
+import { useDebouncedCallback } from 'use-debounce';
 // const useStyles = makeStyles((theme) => ({
 //   root: {
 //     maxWidth: 238,
@@ -53,6 +53,7 @@ import { useDispatch } from 'react-redux';
 const CartItem = ({ product }) => {
   const [otherinfo, setOtherInfo] = useState(''); 
   const dispatch = useDispatch();
+  
   // const cart = useSelector((state) => state.cart);
   // const cartItems = cart.cartItems;
 
@@ -60,12 +61,24 @@ const CartItem = ({ product }) => {
     dispatch(addItem({ id: product.id, price: product.price.id }));
   };
 
+  const debounced = useDebouncedCallback(
+    // function
+    (value) => {
+      setOtherInfo(value);
+    },
+    // delay in ms
+    1000
+  );
+
+
   useEffect(() => {
     
     
       dispatch(addOtherInfo({ id: product.id, price: product.price.id, otherinfo:otherinfo }));
   }, [otherinfo])
 
+
+  
   // const handleOtherInfo = (event,product) => {
     
   //   setOtherInfo(event.target.value, );
@@ -170,12 +183,13 @@ const CartItem = ({ product }) => {
             <TextField
           required
           id="otherinfo"
-          label={product.other_information}
+          placeholder={product.other_information}
           max
           defaultValue=''
-          value={otherinfo}
+          // value={otherinfo}
           onChange={(event) => {             
-            setOtherInfo(event.target.value );
+            // setOtherInfo(event.target.value );
+            debounced(event.target.value)
           }}
         />
           </Grid>

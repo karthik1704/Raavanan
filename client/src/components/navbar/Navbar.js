@@ -49,7 +49,8 @@ import { logoutUser } from '../../features/auth/authSlice';
 
 import RavananLogo from '../../asserts/raavanan logo png.png';
 import truck from '../../asserts/images/delivery-truck.png';
-import { event } from 'react-ga';
+// import { event } from 'react-ga';
+import ReactGA from 'react-ga';
 import './navbar.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -157,6 +158,11 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    console.log('calling api');
+    console.log('navbar');
+    console.log(ReactGA);
+    console.log(window.location.pathname + window.location.search);
+    ReactGA.pageview(window.location.pathname + window.location.search);
     axios
       .get(`${API_URL}category/`)
       .then((res) => setCategory(res.data.results));

@@ -106,6 +106,10 @@ export default function PaymentForm(props) {
 
         history.push('orderconfirmation/' + result.data.status);
       },
+      prefill: {
+        email: 'care@raavananstore.com',
+        contact: '7871003935',
+      },
       // prefill: {
       //     name: "Soumya Dey",
       //     email: "SoumyaDey@example.com",
@@ -129,7 +133,7 @@ export default function PaymentForm(props) {
   //  'txnToken': '955cd766f0d04d8f98ec9b4509eec51d1617899713464',
   //  'isPromoCodeValid': false, 'authenticated': false}}
   const InjectedComponent = injectCheckout(Test);
-  if (Object.keys(config).length != 0) {
+  if (Object.keys(config).length !== 0) {
     return <CircularProgress />;
   } else {
     return <CircularProgress />;

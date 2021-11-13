@@ -1,29 +1,19 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Grid from '@mui/material/Grid';
-import { Typography } from '@mui/material';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
-import axios from 'axios';
-
-import { API_URL } from '../../CONSTANTS';
+import ReactGA from 'react-ga';
 
 import { Helmet } from 'react-helmet';
 
-import { fetchProduct, resetProduct } from '../../data/actions/productActions';
 import ProductList from '../../components/productList/ProductList';
 
 import { useGetProductsQuery } from '../../features/product/productApi';
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     marginTop: theme.spacing(1),
-//   },
-// }));
 
 const Products = () => {
   const { category } = useParams();
@@ -39,6 +29,8 @@ const Products = () => {
   });
 
   useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+
     setCount(0);
     setHasMore(true);
     setPage(null);
@@ -55,18 +47,6 @@ const Products = () => {
       setHasMore(false);
     }
   };
-
-  // useEffect(() => {
-  //   if (products) {
-  //     if (products.next != null) {
-  //       setPage(products.next.slice(-1));
-  //       setHasMore(true);
-  //     } else {
-  //       setPage(null);
-  //       setHasMore(false);
-  //     }
-  //   }
-  // }, []);
 
   return (
     <div>
