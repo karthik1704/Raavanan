@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './Orders.css';
 
@@ -71,7 +71,7 @@ const Orders = () => {
   const dispatch = useDispatch();
   const [orders, setOrders] = useState([]);
   const orders_url = `${API_URL}orders/`;
-  let history = useHistory();
+  let navigate = useNavigate();
   console.log(orders);
   useEffect(() => {
     axios.get(orders_url).then((res) => {
@@ -86,7 +86,7 @@ const Orders = () => {
   }, [dispatch]);
 
   const callOrderDetail = (order_code) => {
-    history.push('/orderdetail/RAAV' + order_code + '/');
+    navigate('/orderdetail/RAAV' + order_code + '/');
   };
   return (
     <Div>

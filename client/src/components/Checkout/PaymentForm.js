@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -32,7 +32,7 @@ export default function PaymentForm(props) {
   const [config, setConfig] = useState({});
   // const [result,setResult] = useState({});
   const [error, setError] = useState('');
-  let history = useHistory();
+  let navigate = useNavigate();
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -104,7 +104,7 @@ export default function PaymentForm(props) {
 
         // alert(result.data.status);
 
-        history.push('orderconfirmation/' + result.data.status);
+        navigate('orderconfirmation/' + result.data.status);
       },
       prefill: {
         email: 'care@raavananstore.com',

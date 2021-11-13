@@ -25,7 +25,7 @@ import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 //import { deepPurple } from '@mui/material/colors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { MENUS } from '../../CONSTANTS';
 import { toggleAppDrawer } from '../../data/actions/appAction';
@@ -78,7 +78,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
     }
   });
   const [anchors, setAnchors] = useState(anchors_dict);
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const handleClick = (menu) => {
     setAnchors((prevState) => ({ ...prevState, [menu]: !anchors[menu] }));
@@ -86,7 +86,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
 
   const handleParentClick = (menu) => {
     // setOpen(!open);
-    history.push(menu);
+    navigate(menu);
     dispatch(toggleAppDrawer(false));
   };
 

@@ -35,7 +35,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Grid from '@mui/material/Grid';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import useDarkTheme from '../../hooks/useDarkTheme';
 import useTopLoader from '../../hooks/useTopLoader';
@@ -130,7 +130,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
-  let history = useHistory();
+  let navigate = useNavigate();
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
@@ -155,7 +155,7 @@ export default function Navbar() {
 
   const logout = () => {
     dispatch(logoutUser(''));
-    history.push('/');
+    navigate('/');
   };
 
   useEffect(() => {
@@ -528,7 +528,7 @@ export default function Navbar() {
                 background: '#232f3e !important',
                 fontSize: '12px !important',
               }}
-              to="/terms"
+              to="terms"
             >
               கொள்கைகள்
             </Button>
@@ -540,7 +540,7 @@ export default function Navbar() {
                 background: '#232f3e !important',
                 fontSize: '12px !important',
               }}
-              to="/about"
+              to="about"
             >
               எங்களைப் பற்றி
             </Button>
@@ -552,7 +552,7 @@ export default function Navbar() {
                 fontSize: '12px !important',
               }}
               component={Link}
-              to="/contact"
+              to="contact"
             >
               தொடர்புக்கு
             </Button>
@@ -606,6 +606,7 @@ export default function Navbar() {
               }}
               className="blink_me"
               // to="/terms"
+              to="."
             >
               <img src={truck} alt="truck icon" />
               &nbsp; தமிழ்நாடு முழுவதும் தூதஞ்சல் இலவசம்

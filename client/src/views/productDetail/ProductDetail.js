@@ -46,7 +46,7 @@ const RootDiv = styled('div')(({ theme }) => ({
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const { productDetail } = useSelector((state) => state.products);
+  // const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const [images, setImages] = useState([]);
@@ -56,6 +56,14 @@ export default function ProductDetail() {
   const [mrp, setMrp] = useState('');
 
   const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const {
+    data: productDetail,
+    isLoading,
+    isFetching,
+  } = useGetProductDetailQuery(id);
+
+  console.log(productDetail);
 
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
@@ -88,40 +96,40 @@ export default function ProductDetail() {
   //   });
   // }, [cartItems]);
 
-  useEffect(() => {
-    // fetch(`http://localhost:8000/api/product/${id}`)
-    //   .then((res) => res.json())
-    //   .then((data) => dispatch(fetchProductDetail(data)))
-    //   .catch((err) => console.log(err));
+  // useEffect(() => {
+  //   // fetch(`http://localhost:8000/api/product/${id}`)
+  //   //   .then((res) => res.json())
+  //   //   .then((data) => dispatch(fetchProductDetail(data)))
+  //   //   .catch((err) => console.log(err));
 
-    axios.get(`${API_URL}product/${id}`).then((res) => {
-      dispatch(fetchProductDetail(res.data));
+  //   axios.get(`${API_URL}product/${id}`).then((res) => {
+  //     dispatch(fetchProductDetail(res.data));
 
-      if (res.data.price) {
-        setValue(res.data.price[0]);
-      }
-      let localimages = [];
-      if (res.data.imageurl) {
-        localimages.push({
-          original: res.data.imageurl,
-          thumbnail: res.data.imageurl,
-        });
-      }
+  //     if (res.data.price) {
+  //       setValue(res.data.price[0]);
+  //     }
+  //     let localimages = [];
+  //     if (res.data.imageurl) {
+  //       localimages.push({
+  //         original: res.data.imageurl,
+  //         thumbnail: res.data.imageurl,
+  //       });
+  //     }
 
-      if (res.data.image.length > 0) {
-        let image = res.data.image.map((img) => ({
-          original: img.image,
-          thumbnail: img.image,
-        }));
+  //     if (res.data.image.length > 0) {
+  //       let image = res.data.image.map((img) => ({
+  //         original: img.image,
+  //         thumbnail: img.image,
+  //       }));
 
-        localimages = localimages.concat(image);
-      }
-      setImages(localimages);
-    });
+  //       localimages = localimages.concat(image);
+  //     }
+  //     setImages(localimages);
+  //   });
 
-    //return () => dispatch(fetchProductDetail({}));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  //return () => dispatch(fetchProductDetail({}));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [dispatch]);
 
   // useEffect(() => {
   //   if (productDetail.materials) {
@@ -152,9 +160,9 @@ export default function ProductDetail() {
       );
   };
 
-  if (Object.keys(productDetail).length === 0) {
-    return <div />;
-  }
+  // if (Object.keys(productDetail).length === 0) {
+  //   return <div />;
+  // }
 
   // const images1 = [
   //   {

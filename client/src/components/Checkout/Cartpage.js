@@ -17,7 +17,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Icon from '@mui/material/Icon';
 import Header from '../../components/Header/Header';
 import CartItem from '../../components/Checkout/cart-item';
@@ -60,7 +60,7 @@ export default function Cartpage() {
   const cartItems = cart.cartItems;
   const [prodList, setProdList] = useState([]);
   const [total, setTotal] = useState(0);
-  let history = useHistory();
+  let navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function Cartpage() {
   }, [cartItems, dispatch]);
 
   const checkout = () => {
-    history.push('/checkout');
+    navigate('/checkout');
   };
 
   return (

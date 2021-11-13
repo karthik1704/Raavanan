@@ -7,7 +7,7 @@ import axios from 'axios';
 import { createSelector } from '@reduxjs/toolkit';
 import { API_URL } from '../../CONSTANTS';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Header from '../../components/Header/Header';
@@ -38,7 +38,7 @@ const Cartpage = () => {
   const cartItems = cart.cartItems;
   const [prodList, setProdList] = useState([]);
   const [total, setTotal] = useState(0);
-  let history = useHistory();
+  let navigate = useNavigate();
 
   let error_occured = false;
   const dispatch = useDispatch();
@@ -127,7 +127,7 @@ const Cartpage = () => {
 
   const checkout = () => {
     const tasks = executeAllLongRunningTasks();
-    if (!error_occured) history.push('/checkout');
+    if (!error_occured) navigate('/checkout');
   };
 
   return (

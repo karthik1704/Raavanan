@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react';
 
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import {
   createTheme,
@@ -8,16 +7,13 @@ import {
   StyledEngineProvider,
 } from '@mui/material/styles';
 
-import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './routes/Routes';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
 
 import { useSelector } from 'react-redux';
 
 import useDarkTheme from './hooks/useDarkTheme';
-
 import Loader from './components/Loader/Loader';
-import Navbar from './components/navbar/Navbar';
-import NewFooter from './components/NewFooter/NewFooter';
 
 import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
@@ -116,23 +112,12 @@ function App() {
       </Helmet>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <Router>
-            <Paper>
+          <BrowserRouter>
+            <Paper component="main">
               {topLoader && <Loader />}
-              <Navbar />
-              <Box
-                sx={{
-                  minHeight: {
-                    sm: '100vh',
-                    md: '53vh',
-                  },
-                }}
-              >
-                <Routes />
-              </Box>
-              <NewFooter />
+              <AppRoutes />
             </Paper>
-          </Router>
+          </BrowserRouter>
         </ThemeProvider>
       </StyledEngineProvider>
     </>
