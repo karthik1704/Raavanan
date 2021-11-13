@@ -32,6 +32,7 @@
     "react-slideshow-image": "^3.4.6",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
+    "use-debounce": "^7.0.1",
     "yup": "^0.32.9"
   },
   "scripts": {
