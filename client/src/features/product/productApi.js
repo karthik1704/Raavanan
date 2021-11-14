@@ -24,24 +24,7 @@ export const productApi = createApi({
       query: (slug) => ({
         url: `product/${slug}`,
         method: 'GET',
-        transformResponse: (response) => {
-          if (response.data.imageurl) {
-            response.data.image.push({
-              original: response.data.imageurl,
-              thumbnail: response.data.imageurl,
-            });
-          }
-
-          if (response.data.image.length > 0) {
-            let image = response.data.image.map((img) =>
-              response.data.image.push({
-                original: img.image,
-                thumbnail: img.image,
-              })
-            );
-          }
-          return response.data;
-        },
+        // transformResponse: (response) => response.data,
       }),
     }),
   }),
