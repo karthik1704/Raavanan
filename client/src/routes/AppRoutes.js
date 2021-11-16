@@ -22,6 +22,8 @@ import OrdersDetail from '../views/OrdersDetail/OrdersDetail';
 
 import AppLayout from '../Layout/AppLayout';
 import AuthLayout from '../Layout/AuthLayout';
+import PageNotFound from '../views/PageNotFound/PageNotFound';
+import { Suspense } from 'react';
 
 function RequireAuth({ children }) {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -39,6 +41,7 @@ function RequireAuth({ children }) {
 }
 
 const AppRoutes = () => {
+  let location = useLocation();
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
@@ -50,9 +53,30 @@ const AppRoutes = () => {
           }}
         /> */}
         <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="terms" element={<Terms />} />
+        <Route
+          path="about"
+          element={
+            <Suspense>
+              <About />
+            </Suspense>
+          }
+        />
+        <Route
+          path="contact"
+          element={
+            <Suspense>
+              <Contact />
+            </Suspense>
+          }
+        />
+        <Route
+          path="terms"
+          element={
+            <Suspense>
+              <Terms />
+            </Suspense>
+          }
+        />
         <Route path="Cartpage" element={<Cartpage />} />
 
         <Route
@@ -68,7 +92,7 @@ const AppRoutes = () => {
 
         <Route path=":id/waorder" element={<WAOrder />} />
         <Route path="orders" element={<Orders />}>
-          <Route path="orderdetail/:id" element={<OrdersDetail />} />
+          <Route path=":id" element={<OrdersDetail />} />
         </Route>
         <Route
           path="/checkout"
@@ -78,24 +102,45 @@ const AppRoutes = () => {
             </RequireAuth>
           }
         />
+
+        <Route
+          path="/orderconfirmation/:status"
+          element={
+            <RequireAuth>
+              <Orderconfirm />
+            </RequireAuth>
+          }
+        />
       </Route>
       <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={
+            <Suspense>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Suspense>
+              <Register />
+            </Suspense>
+          }
+        />
         <Route path="Otpverification" element={<Otpverification />} />
-        <Route path="Forgetpassword" element={<Forgetpassword />} />
+        <Route
+          path="Forgetpassword"
+          element={
+            <Suspense>
+              <Forgetpassword />
+            </Suspense>
+          }
+        />
       </Route>
 
-      <Route
-        path="/orderconfirmation/:status"
-        element={
-          <RequireAuth>
-            <Orderconfirm />
-          </RequireAuth>
-        }
-      />
-
-      <Route path="*" element={<div>Hi, page not found</div>} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
