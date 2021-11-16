@@ -22,7 +22,7 @@ import MuiPhoneInput from 'material-ui-phone-number';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import axios from 'axios';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -117,6 +117,7 @@ export default function Register() {
   });
 
   const [register] = useRegisterMutation();
+  let navigate = useNavigate();
 
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -178,14 +179,7 @@ export default function Register() {
     // end of unreachable code
   };
 
-  const registeruser = async ({
-    email,
-    phone,
-    first_name,
-    last_name,
-    password1,
-    password2,
-  }) => {
+  const registeruser = async ({ phone, ...rest }) => {
     formError &&
       setFormError({
         field: null,
@@ -195,20 +189,22 @@ export default function Register() {
 
     try {
       await register({
-        email,
         phone: phone.substring(3),
-        first_name,
-        last_name,
-        password1,
-        password2,
+        ...rest,
         birth_year: '',
         country: '',
       }).unwrap();
+      navigate('/', { replace: true });
     } catch (err) {
       if (err.data === undefined) {
         setFormError({
           ...error,
           detail: 'Something Went Wrong, Please try again',
+        });
+      } else if (err.data.email) {
+        setError({
+          ...error,
+          detail: err.data?.email,
         });
       } else if (err.data.non_field_errors) {
         setFormError({

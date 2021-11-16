@@ -19,7 +19,7 @@ import TextField from '@mui/material/TextField';
 import MuiPhoneInput from 'material-ui-phone-number';
 
 import GoogleLogin from 'react-google-login';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -95,6 +95,11 @@ export default function Login() {
     non_field_errors: null,
   });
 
+  let navigate = useNavigate();
+  let location = useLocation();
+  console.log(location);
+  let from = location.state?.from?.pathname || '/';
+
   const [login] = useLoginMutation();
   const [googleLogin] = useGoogleLoginMutation();
 
@@ -112,6 +117,7 @@ export default function Login() {
         phone: phone.substring(3),
         password,
       }).unwrap();
+      navigate(from, { replace: true });
     } catch (err) {
       if (err.data === undefined) {
         setError({
@@ -140,7 +146,8 @@ export default function Login() {
         access_token: response['accessToken'],
         code: response['googleId'],
         id_token: response['tokenId'],
-      }).unwarp();
+      }).unwrap();
+      navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
     }
