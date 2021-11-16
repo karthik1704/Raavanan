@@ -3,6 +3,39 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import MuiPhoneInput from 'material-ui-phone-number';
 
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+
+const Addresschema = yup.object().shape({
+  name: yup.string().required('First name required*'),
+  addressline1: yup.string().required('Address Line1 required*'),
+  addressline2: yup.string().required('Address Line1 required*'),
+  phone: yup
+    .string()
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('Please enter Phonenumber'),
+ b b 
+  
+  password1: yup
+    .string()
+    .trim('Should be startwith letters or numbers')
+    .required('Password required*')
+    .min(8, 'Password must be at least 8 characters'),
+  password2: yup
+    .string()
+    .trim('Should be startwith letters or numbers')
+    .oneOf([yup.ref('password1'), null], 'Passwords must match')
+    .required('Confrim password required*')
+    .min(8, 'Confrim password must be at least 8 characters'),
+  terms: yup
+    .boolean()
+    .oneOf([true], 'You must accept the terms and conditions')
+    .required('You must accept the terms and conditions'),
+});
+
 export default function AddressForm(props) {
   const mobile = props.address.mobile;
   const setMobile = props.address.setMobile;
