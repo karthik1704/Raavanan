@@ -22,6 +22,7 @@ import { API_URL } from '../../CONSTANTS';
 
 import { styled } from '@mui/material/styles';
 import './Orders.css';
+import { useGetOrderDetailQuery } from '../../features/orders/orderApi';
 
 const RootDiv = styled('div')(({ theme }) => ({
   margin: theme.spacing(2),
@@ -186,10 +187,16 @@ const OrdersDetail = () => {
   const { id } = useParams();
   const orders_url = `${API_URL}order_detail/`;
   // eslint-disable-next-line no-unused-vars
-  let navigate = useNavigate();
   const [prodList, setProdList] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
   const steps = ['Placed', 'Shipped', 'Delivered'];
+
+  const {
+    data: orderDetail,
+    isLoading,
+    isFetching,
+    error,
+  } = useGetOrderDetailQuery(id);
 
   useEffect(() => {
     axios.get(`${orders_url}${id}/`).then(
@@ -216,9 +223,6 @@ const OrdersDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  // const callOrderDetail = () => {
-  //   navigate('/order_detail');
-  // };
   return (
     <RootDiv>
       <Grid container spacing={3}>
