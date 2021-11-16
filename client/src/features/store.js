@@ -14,6 +14,7 @@ import { productApi } from './product/productApi';
 import cartReducer from '../data/reducers/cartReducer';
 
 import logger from 'redux-logger';
+import { orderApi } from './orders/orderApi';
 
 const store = configureStore({
   reducer: {
@@ -27,13 +28,15 @@ const store = configureStore({
     // Add API Reducers here
     [authApi.reducerPath]: authApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     // Add Api reducer middleware here
     getDefaultMiddleware().concat(
       logger,
       authApi.middleware,
-      productApi.middleware
+      productApi.middleware,
+      orderApi.middleware
     ),
 });
 

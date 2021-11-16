@@ -12,13 +12,13 @@ export const cartApi = createApi({
   endpoints: (builder) => ({
     getCart: builder.query({
       query: () => ({
-        url: 'api/cart/',
+        url: 'carts/',
         method: 'GET',
       }),
     }),
     addToCart: builder.mutation({
       query: (data) => ({
-        url: `api/`,
+        url: `carts/`,
         method: 'POST',
         data,
       }),
@@ -26,4 +26,4 @@ export const cartApi = createApi({
   }),
 });
 
-export const {} = cartApi;
+export const { useGetCartQuery, useAddToCartMutation } = cartApi;
