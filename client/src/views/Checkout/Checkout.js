@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
 import MuiAlert from '@mui/material/Alert';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -13,7 +12,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -27,7 +26,11 @@ import PaymentForm from '../../components/Checkout/PaymentForm';
 import { styled } from '@mui/material/styles';
 import './Checkout.css';
 
-import { API_URL } from '../../CONSTANTS';
+import {
+  useGetAddressesQuery,
+  useCreateAddressMutation,
+  useUpdateAddressMutation,
+} from '../../features/address/addressApi';
 
 const styledLayout = styled('main')(({ theme }) => ({
   width: 'auto',
@@ -65,7 +68,7 @@ const Addresses = (props) => {
   return (
     <>
       {props.addresses.length > 0 ? (
-        props.addresses.map((address) => (
+        props.addresses.results.map((address) => (
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -129,12 +132,20 @@ const Checkout = () => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [addressId, setAddressId] = useState('');
-  const address_create_url = `${API_URL}address/`;
 
-  const [addresses, setAddresses] = useState([]);
+  const { data: addresses, isLoading: isGetAddress } = useGetAddressesQuery();
+  const [
+    createAddressApi,
+    { isLoading: isCreateAddress, data: createdData },
+  ] = useCreateAddressMutation();
+  const [
+    updateAddress,
+    { isLoading: isUpdateAddress, data: updatedData },
+  ] = useUpdateAddressMutation();
+
+  //const [addresses, setAddresses] = useState([]);
   const [createAddress, setCreateAddress] = useState(false);
   const [checked, setChecked] = useState([]);
-  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const cartItems = cart.cartItems;
   const handleClose = (event, reason) => {
@@ -146,24 +157,17 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    axios.get(address_create_url).then((res) => {
-      // return dispatch(fetchProduct(res.data.results));
-      setAddresses(res.data.results);
-      console.log(res);
-      if (res.data.results.length > 0) {
-        setCreateAddress(false);
-      }
-      //setAddressId(res.data.results[0].id)
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+    if (addresses.results.length > 0) {
+      setCreateAddress(false);
+    }
+  }, [addresses]);
 
   function getStepContent(step) {
     switch (step) {
       case 0: {
         if (createAddress) {
           console.log('wss');
-          var address = {
+          const address = {
             mobile: mobile,
             setMobile: setMobile,
             mobileerror: mobileerror,
@@ -225,7 +229,7 @@ const Checkout = () => {
     }
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep === 0) {
       if (!createAddress) {
         if (checked.length < 1) {
@@ -251,8 +255,8 @@ const Checkout = () => {
 
         console.log(addressId);
         if (addressId) {
-          axios
-            .put(`${address_create_url}${addressId}/`, {
+          try {
+            await updateAddress({
               phone: mobile.substring(3),
               name: name,
               address1: addressline1,
@@ -262,23 +266,18 @@ const Checkout = () => {
               postal: pincode,
               country: 'India',
               id: addressId,
-            })
-            .then(
-              (response) => {
-                //dispatch(loginUser(response.data));
-                console.log(response);
-                setAddressId(response.data.id);
-              },
-              (error) => {
-                console.log(error);
-                setError('Unable to update address');
-                setOpen(true);
-                return;
-              }
-            );
+            }).unwrap();
+            console.log(updatedData);
+            setAddressId(updatedData.id);
+          } catch (error) {
+            console.log(error);
+            setError('Unable to update address');
+            setOpen(true);
+            return;
+          }
         } else {
-          axios
-            .post(address_create_url, {
+          try {
+            await createAddressApi({
               phone: mobile.substring(3),
               name: name,
               address1: addressline1,
@@ -288,20 +287,15 @@ const Checkout = () => {
               postal: pincode,
               country: 'India',
               id: addressId,
-            })
-            .then(
-              (response) => {
-                //dispatch(loginUser(response.data));
+            });
 
-                setAddressId(response.data.id);
-              },
-              (error) => {
-                console.log(error);
-                setError('Unable to update address');
-                setOpen(true);
-                return;
-              }
-            );
+            setAddressId(createdData.id);
+          } catch (error) {
+            console.log(error);
+            setError('Unable to update address');
+            setOpen(true);
+            return;
+          }
         }
       }
     }
@@ -315,11 +309,6 @@ const Checkout = () => {
     }
     setActiveStep(activeStep - 1);
   };
-  // useEffect(() => {
-  //   axois
-  //     .get(`${API_URL}api/product/${id}`)
-  //     .then((res) => setProduct(res.data));
-  // }, [id]);
 
   return (
     <div>
