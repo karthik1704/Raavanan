@@ -10,30 +10,20 @@ import * as yup from 'yup';
 const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const Addresschema = yup.object().shape({
-  name: yup.string().required('First name required*'),
-  addressline1: yup.string().required('Address Line1 required*'),
-  addressline2: yup.string().required('Address Line1 required*'),
+  name: yup.string().required('Name required*'),
+  address1: yup.string().required('Address Line1 required*'),
+  address2: yup.string(),
   phone: yup
     .string()
     .matches(phoneRegExp, 'Phone number is not valid')
     .required('Please enter Phonenumber'),
- b b 
-  
-  password1: yup
-    .string()
-    .trim('Should be startwith letters or numbers')
-    .required('Password required*')
-    .min(8, 'Password must be at least 8 characters'),
-  password2: yup
-    .string()
-    .trim('Should be startwith letters or numbers')
-    .oneOf([yup.ref('password1'), null], 'Passwords must match')
-    .required('Confrim password required*')
-    .min(8, 'Confrim password must be at least 8 characters'),
-  terms: yup
-    .boolean()
-    .oneOf([true], 'You must accept the terms and conditions')
-    .required('You must accept the terms and conditions'),
+
+  city: yup.string().required('City required*'),
+  state: yup.string().required('State required*'),
+  postal: yup
+    .number()
+    .min(6, '6 digit postal code required')
+    .required('Postal code required*'),
 });
 
 export default function AddressForm(props) {
