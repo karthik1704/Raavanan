@@ -1,16 +1,16 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import RAZORPAY_KEY from './merchant-config';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
-import { API_URL, ENV } from '../../CONSTANTS';
+
+import { useSelector } from 'react-redux';
+
+import RAZORPAY_KEY from './merchant-config';
 import logo from '../../asserts/raavanan logo.png';
 
 import {
@@ -19,6 +19,11 @@ import {
   injectCheckout,
 } from 'paytm-blink-checkout-react';
 
+import {
+  useConfrimOrderMutation,
+  usePlaceOrderMutation,
+} from '../../features/orders/orderApi';
+
 function Test(props) {
   const checkoutJsInstance = props.checkoutJsInstance;
   return (
@@ -26,13 +31,17 @@ function Test(props) {
   );
 }
 export default function PaymentForm(props) {
-  const dispatch = useDispatch();
-  const order_create_url = `${API_URL}orders/`;
-  const order_cofirm_url = `${API_URL}order_confirm/`;
+  const [placeOrder, { isLoading: orderLoading }] = usePlaceOrderMutation();
+  const [
+    confrimOrder,
+    { isLoading: confrimOrderLoading, data: confrimOrderData },
+  ] = useConfrimOrderMutation();
+
   const [config, setConfig] = useState({});
   // const [result,setResult] = useState({});
   const [error, setError] = useState('');
   let navigate = useNavigate();
+
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -53,27 +62,28 @@ export default function PaymentForm(props) {
       setError('Razorpay SDK failed to load. Are you online?');
       return;
     }
-    axios.post(order_create_url, props.order).then(
-      (response) => {
+
+    placeOrder(props.order)
+      .unwrap()
+      .then((payload) => {
         // console.log(response);
         // setResult(response);
-        displayRazorpay(response);
+        displayRazorpay(payload);
         // CONFIG.data.amount = response.data.price;
         // CONFIG.data.token = response.data.body.txnToken;
         // CONFIG.data.orderId = response.data.order_id;
 
         // setConfig(CONFIG);
         // return <PaymentForm paytmdata={response}/>;
-      },
-      (error) => {
+      })
+      .catch((error) => {
         console.log(error);
 
         setError('Unable to process payment, Please try again later');
         // setOpen(true);
         return;
-      }
-    );
-  }, [dispatch]);
+      });
+  }, []);
 
   async function displayRazorpay(result) {
     // const result = await axios.post("http://localhost:5000/payment/orders");
@@ -100,11 +110,13 @@ export default function PaymentForm(props) {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post(order_cofirm_url, data);
+        await confrimOrder(data);
 
         // alert(result.data.status);
 
-        navigate('orderconfirmation/' + result.data.status);
+        navigate(`orderconfirmation/ + ${confrimOrderData.status}`, {
+          replace: true,
+        });
       },
       prefill: {
         email: 'care@raavananstore.com',
@@ -133,6 +145,7 @@ export default function PaymentForm(props) {
   //  'txnToken': '955cd766f0d04d8f98ec9b4509eec51d1617899713464',
   //  'isPromoCodeValid': false, 'authenticated': false}}
   const InjectedComponent = injectCheckout(Test);
+
   if (Object.keys(config).length !== 0) {
     return <CircularProgress />;
   } else {
