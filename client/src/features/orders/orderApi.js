@@ -7,6 +7,7 @@ export const orderApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL || process.env.REACT_APP_API_URL,
   }),
+  tagTypes: ['Order'],
   endpoints: (builder) => ({
     getOrder: builder.query({
       query: () => ({
@@ -20,7 +21,28 @@ export const orderApi = createApi({
         method: 'GET',
       }),
     }),
+    // Mutations
+    placeOrder: builder.mutation({
+      query: (data) => ({
+        query: 'orders/',
+        method: 'POST',
+        data,
+      }),
+    }),
+
+    confrimOrder: builder.mutation({
+      query: (data) => ({
+        query: 'order_confirm/',
+        method: 'POST',
+        data,
+      }),
+    }),
   }),
 });
 
-export const { useGetOrderQuery, useGetOrderDetailQuery } = orderApi;
+export const {
+  useGetOrderQuery,
+  useGetOrderDetailQuery,
+  usePlaceOrderMutation,
+  useConfrimOrderMutation,
+} = orderApi;
