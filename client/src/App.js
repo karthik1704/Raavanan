@@ -26,7 +26,7 @@ import axios from 'axios';
 import { toggleLoader } from './features/loader/loaderSlice';
 import { logoutUser } from './features/auth/authSlice';
 
-import { getThemeByName } from './theme';
+import { getDesignTokens } from './theme/theme';
 
 ReactGA.initialize('G-783HZEMX30');
 
@@ -35,7 +35,7 @@ function App() {
   const { topLoader } = useSelector((state) => state.loader);
   const { dispatch } = store;
 
-  const theme = useMemo(() => createTheme(getThemeByName(mode)), [mode]);
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   // const { dispatch } = store;
 
