@@ -6,8 +6,8 @@ export const getDesignTokens = (mode) => ({
     // Light Theme
     ...(mode === 'light' && {
       primary: {
-        ...green,
-        // main: green[600],
+        //...green,
+        main: green[600],
         // main: '#8bc34a'
       },
     }),
