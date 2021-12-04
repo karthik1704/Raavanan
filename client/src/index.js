@@ -18,24 +18,29 @@ ReactGA.initialize('G-LH9KB8TXPW');
 //   'app_token'
 // );
 
-// ReactDOM.render(
+// React 18
+const container = document.getElementById('root');
+
+if (!container) throw new Error('Could not found the root element');
+
+const root = ReactDOM.createRoot(container);
+
+// root.render(
 //   <StrictMode>
 //     <Provider store={store}>
 //       <PersistGate loading={null} persistor={persistor}>
 //         <App />
 //       </PersistGate>
 //     </Provider>
-//   </StrictMode>,
-//   document.getElementById('root')
+//   </StrictMode>
 // );
 
-ReactDOM.render(
+root.render(
   <StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
