@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
@@ -10,6 +10,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -17,6 +18,8 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 import MuiPhoneInput from 'material-ui-phone-number';
+
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import GoogleLogin from 'react-google-login';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
@@ -30,6 +33,8 @@ import {
   useLoginMutation,
   useGoogleLoginMutation,
 } from '../../features/auth/authApi';
+
+import { toggleLoader } from '../../features/loader/loaderSlice';
 
 import { styled } from '@mui/material/styles';
 
@@ -47,32 +52,14 @@ import { styled } from '@mui/material/styles';
 // }
 
 const Div = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(8),
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
 }));
 
-// const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     marginTop: theme.spacing(8),
-//     display: 'flex',
-//     flexDirection: 'column',
-//     alignItems: 'center',
-//   },
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: '#43a047',
-//   },
-//   form: {
-//     width: '100%', // Fix IE 11 issue.
-//     marginTop: theme.spacing(1),
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2),
-//   },
-// }));
-const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+const phoneRegExp =
+  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const schema = yup.object().shape({
   phone: yup
@@ -155,21 +142,43 @@ export default function Login() {
 
   return (
     <>
-      <Header title="Login Here" subtitle="Home" />
-      <Container component="main" maxWidth="xs">
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          minHeight: '100vh',
+        }}
+      >
         <CssBaseline />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <IconButton
+            sx={{ mr: 1 }}
+            aria-label="Go Back"
+            component={RouterLink}
+            to=".."
+          >
+            {' '}
+            <ArrowBackIcon />{' '}
+          </IconButton>
+          <Typography component="h1" variant="h3">
+            SignIn
+          </Typography>
+        </Box>
         <Div>
-          <Avatar
+          {/* <Avatar
             sx={{
               margin: 1,
               backgroundColor: '#43a047',
             }}
           >
             <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
+          </Avatar> */}
+
           {error.detail && <Alert severity="error">{error?.detail}</Alert>}
           <Box component="form" onSubmit={handleSubmit(handleLoginSubmit)}>
             <Controller
