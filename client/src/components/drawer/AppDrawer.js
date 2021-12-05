@@ -28,7 +28,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { MENUS } from '../../CONSTANTS';
-import { toggleAppDrawer } from '../../data/actions/appAction';
+import { toggleDrawer } from '../../features/appDrawer/appDrawerSlice';
 
 import { styled } from '@mui/material/styles';
 import './drawer.css';
@@ -87,10 +87,10 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
   const handleParentClick = (menu) => {
     // setOpen(!open);
     navigate(menu);
-    dispatch(toggleAppDrawer(false));
+    dispatch(toggleDrawer(false));
   };
 
-  const toggleDrawer = (open, event) => {
+  const handleToggleDrawer = (open) => (event) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
@@ -98,7 +98,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
       return;
     }
 
-    dispatch(toggleAppDrawer(open));
+    dispatch(toggleDrawer(open));
   };
 
   return (
@@ -107,8 +107,8 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
       disableDiscovery={iOS}
       anchor="left"
       open={drawerOpen}
-      onClose={(e) => toggleDrawer(false, e)}
-      onOpen={(e) => toggleDrawer(true, e)}
+      onClose={handleToggleDrawer(false)}
+      onOpen={handleToggleDrawer(true)}
     >
       <SwipeableDrawer1>
         <RootDiv>
