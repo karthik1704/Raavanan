@@ -26,12 +26,13 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
 import { API_URL } from '../../CONSTANTS';
 import Header from '../../components/Header/Header';
 
 import { useRegisterMutation } from '../../features/auth/authApi';
+
+import { registrationSchema } from '../../schema/registrationSchema';
 
 import { styled } from '@mui/material/styles';
 import './Register.css';
@@ -73,41 +74,9 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 //   });
 // }, [dispatch, category, url, filterUrl]);
 
-// const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const schema = yup.object().shape({
-  first_name: yup.string().required('First name required*'),
-  last_name: yup.string().required('Last name required*'),
-  phone: yup
-    .string()
-    .matches(phoneRegExp, 'Phone number is not valid')
-    .required('Please enter Phonenumber'),
-
-  email: yup
-    .string()
-    .required('Email address required*')
-    .email('Please enter vaild e-mail'),
-  password1: yup
-    .string()
-    .trim('Should be startwith letters or numbers')
-    .required('Password required*')
-    .min(8, 'Password must be at least 8 characters'),
-  password2: yup
-    .string()
-    .trim('Should be startwith letters or numbers')
-    .oneOf([yup.ref('password1'), null], 'Passwords must match')
-    .required('Confrim password required*')
-    .min(8, 'Confrim password must be at least 8 characters'),
-  terms: yup
-    .boolean()
-    .oneOf([true], 'You must accept the terms and conditions')
-    .required('You must accept the terms and conditions'),
-});
-
 export default function Register() {
   const { handleSubmit, control, getValues } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(registrationSchema),
   });
 
   const [formError, setFormError] = useState({

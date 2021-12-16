@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
+// MUI
 import Alert from '@mui/material/Alert';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,7 +12,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import GoogleIcon from '@mui/icons-material/Google';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -24,32 +23,20 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import GoogleLogin from 'react-google-login';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 
+// RHF
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
-import Header from '../../components/Header/Header';
+//RTK
 import {
   useLoginMutation,
   useGoogleLoginMutation,
 } from '../../features/auth/authApi';
-
 import { toggleLoader } from '../../features/loader/loaderSlice';
 
-import { styled } from '@mui/material/styles';
+import { loginSchema } from '../../schema/loginSchema';
 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import { styled } from '@mui/material/styles';
 
 const Div = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -58,23 +45,9 @@ const Div = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const schema = yup.object().shape({
-  phone: yup
-    .string()
-    .matches(phoneRegExp, 'Phone number is not valid')
-    .required('Please enter Phonenumber'),
-  password: yup
-    .string()
-    .min(8, 'Password min 8 characters')
-    .required('Please enter password'),
-});
-
 export default function Login() {
   const { handleSubmit, control } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
   const [error, setError] = useState({
     field: null,
@@ -89,6 +62,8 @@ export default function Login() {
 
   const [login] = useLoginMutation();
   const [googleLogin] = useGoogleLoginMutation();
+
+  useEffect(() => null, []);
 
   const handleLoginSubmit = async ({ phone, password }) => {
     error &&
