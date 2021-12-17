@@ -13,6 +13,9 @@ import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
+// Temp fix caused by cra v5 --> fix in 5.0.1 relese
+window.process = {};
+
 ReactGA.initialize('G-LH9KB8TXPW');
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem(
 //   'app_token'
