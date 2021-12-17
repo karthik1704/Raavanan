@@ -1,20 +1,16 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import ReactGA from 'react-ga';
 import { useSelector } from 'react-redux';
-import About from '../views/about/About';
-import Contact from '../views/contact/Contact';
+
 import Home from '../views/home/Home';
 import Products from '../views/products/Products';
-import Terms from '../views/terms/Terms';
 import ProductDetail from '../views/productDetail/ProductDetail';
 import WAOrder from '../views/wAOrder/WAOrder';
 import Checkout from '../views/Checkout/Checkout';
 
-import Login from '../views/Login/Login';
-import Register from '../views/Register/Register';
 import Otpverification from '../views/Otpverification/Otpverification';
-import Forgetpassword from '../views/Forgetpassword/Forgetpassword';
 import Cartpage from '../views/Cartpage/Cartpage';
 import Orderconfirm from '../components/Checkout/order-confirm';
 import Orders from '../views/Orders/Orders';
@@ -23,7 +19,15 @@ import OrdersDetail from '../views/OrdersDetail/OrdersDetail';
 import AppLayout from '../Layout/AppLayout';
 import AuthLayout from '../Layout/AuthLayout';
 import PageNotFound from '../views/PageNotFound/PageNotFound';
-import { Suspense } from 'react';
+
+const About = lazy(() => import('../views/about/About'));
+const Contact = lazy(() => import('../views/contact/Contact'));
+const Terms = lazy(() => import('../views/terms/Terms'));
+const Login = lazy(() => import('../views/Login/Login'));
+const Register = lazy(() => import('../views/Register/Register'));
+const Forgetpassword = lazy(() =>
+  import('../views/Forgetpassword/Forgetpassword')
+);
 
 function RequireAuth({ children }) {
   const { isAuthenticated } = useSelector((state) => state.auth);
