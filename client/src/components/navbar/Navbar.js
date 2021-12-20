@@ -135,6 +135,11 @@ export default function Navbar() {
   //   setAnchorEl(event.currentTarget);
   // };
 
+  // Show Top Loader when menu clicked
+  const showTopLoader = () => {
+    onToggleTopLoader(true);
+  };
+
   const handleMenuClose = () => {
     setAnchorEl(null);
     setIsMenuOpen(false);
@@ -365,7 +370,7 @@ export default function Navbar() {
                     <Button
                       color="inherit"
                       sx={{ fontSize: '12px !important' }}
-                      onClick={onToggleTopLoader}
+                      onClick={showTopLoader}
                       startIcon={<LockIcon />}
                       component={Link}
                       to="/login"
@@ -374,7 +379,7 @@ export default function Navbar() {
                     </Button>
                     <Button
                       color="inherit"
-                      onClick={onToggleTopLoader}
+                      onClick={showTopLoader}
                       sx={{ fontSize: '12px !important' }}
                       startIcon={<AssignmentIndIcon />}
                       component={Link}
@@ -522,7 +527,7 @@ export default function Navbar() {
             })} */}
             <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               component={Link}
               sx={{
                 background: '#232f3e !important',
@@ -534,7 +539,7 @@ export default function Navbar() {
             </Button>
             <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               component={Link}
               sx={{
                 background: '#232f3e !important',
@@ -546,7 +551,7 @@ export default function Navbar() {
             </Button>
             <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               sx={{
                 background: '#232f3e !important',
                 fontSize: '12px !important',
@@ -561,7 +566,7 @@ export default function Navbar() {
           <div style={{ float: 'right' }}>
             {/* <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               component={Link}
               sx={{
                 background: '#232f3e !important',
@@ -573,7 +578,7 @@ export default function Navbar() {
             </Button>
             <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               component={Link}
               sx={{
                 background: '#232f3e !important',
@@ -585,7 +590,7 @@ export default function Navbar() {
             </Button>
             <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               sx={{
                 background: '#232f3e !important',
                 fontSize: '12px !important',
@@ -597,7 +602,7 @@ export default function Navbar() {
             </Button> */}
             <Button
               color="inherit"
-              onClick={onToggleTopLoader}
+              onClick={showTopLoader}
               component={Link}
               // className={classes.secMenu}
               sx={{
