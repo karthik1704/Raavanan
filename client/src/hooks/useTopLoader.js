@@ -7,9 +7,7 @@ const useTopLoader = () => {
   const dispatch = useDispatch();
 
   const onToggleTopLoader = (loader) => {
-    setTimeout(() => {
-      dispatch(toggleLoader(loader));
-    }, 500);
+    dispatch(toggleLoader(loader));
   };
 
   return [topLoader, onToggleTopLoader];
