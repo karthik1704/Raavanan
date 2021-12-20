@@ -24,9 +24,6 @@ export const selectCartItems = createSelector(
 );
 
 const Cartpage = () => {
-  // const classes = useStyles();
-  // const cart = useSelector((state) => state.cart);
-  // const cartItems = selectCartItems();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [open, setOpen] = useState(false);
@@ -58,7 +55,7 @@ const Cartpage = () => {
 
     cartItems.map((product) => cart_ids.push(product.id));
     // var myArray = ['a', 1, 'a', 2, '1'];
-    var cart_ids = cart_ids.filter((v, i, a) => a.indexOf(v) === i);
+    cart_ids = cart_ids.filter((v, i, a) => a.indexOf(v) === i);
     cart_ids = cart_ids.join(',');
 
     if (cart_ids.length < 1) return;
@@ -167,10 +164,6 @@ const Cartpage = () => {
                 fullWidth
                 variant="contained"
                 color="primary"
-                inputProps={{
-                  maxLength: 30,
-                  autoComplete: 'false',
-                }}
                 sx={{
                   margin: (theme) => theme.spacing(3, 0, 2),
                 }}
