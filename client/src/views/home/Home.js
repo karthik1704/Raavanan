@@ -1,36 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 // MUI
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 // RTK
+import { useDispatch } from 'react-redux';
 import { useGetProductsQuery } from '../../features/product/productApi';
-
-// Custom hooks
-import useTopLoader from '../../hooks/useTopLoader';
+import { toggleLoader } from '../../features/loader/loaderSlice';
 
 // Compoents
 import Carousel from '../../components/carousel/Carousel';
 import ProductList from '../../components/productList/ProductList';
 
 const Home = () => {
-  const [, onToggleTopLoader] = useTopLoader();
-
   const { data, isLoading } = useGetProductsQuery({ slug: null, page: null });
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onToggleTopLoader(isLoading);
-  }, [isLoading]);
+    dispatch(toggleLoader(isLoading));
+  }, [dispatch, isLoading]);
 
   return (
     <Box sx={{ maxWidth: '100%' }}>
       <div>
         <Carousel />
       </div>
-      <Grid container sx={{ mt: 1 }}>
-        {data && <ProductList products={data?.results} />}
-      </Grid>
+      <Suspense fallback={'Loading...'}>
+        <Grid container sx={{ mt: 1 }}>
+          {data && <ProductList products={data?.results} />}
+        </Grid>
+      </Suspense>
     </Box>
   );
 };
