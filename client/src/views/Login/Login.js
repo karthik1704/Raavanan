@@ -63,8 +63,6 @@ export default function Login() {
   const [login] = useLoginMutation();
   const [googleLogin] = useGoogleLoginMutation();
 
-  useEffect(() => null, []);
-
   const handleLoginSubmit = async ({ phone, password }) => {
     error &&
       setError({
@@ -145,15 +143,6 @@ export default function Login() {
           </Typography>
         </Box>
         <Div>
-          {/* <Avatar
-            sx={{
-              margin: 1,
-              backgroundColor: '#43a047',
-            }}
-          >
-            <LockOutlinedIcon />
-          </Avatar> */}
-
           {error.detail && <Alert severity="error">{error?.detail}</Alert>}
           <Box component="form" onSubmit={handleSubmit(handleLoginSubmit)}>
             <Controller
@@ -203,7 +192,6 @@ export default function Login() {
                     maxLength: 13,
                     autoComplete: 'false',
                   }}
-                  autoComplete="false"
                   helperText={error && error.message}
                   error={error && true}
                   {...field}
