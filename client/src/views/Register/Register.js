@@ -1,5 +1,6 @@
 /* eslint-disable no-unreachable */
 import React, { useState } from 'react';
+
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,6 +13,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
@@ -20,6 +22,7 @@ import Typography from '@mui/material/Typography';
 import MuiPhoneInput from 'material-ui-phone-number';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import axios from 'axios';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -38,7 +41,7 @@ import { styled } from '@mui/material/styles';
 import './Register.css';
 
 const RootDiv = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(8),
+  marginTop: theme.spacing(1),
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -231,23 +234,36 @@ export default function Register() {
 
   return (
     <>
-      <Header title="Create Account" subtitle="Home" />
-
-      <Container component="main" maxWidth="xs">
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          minHeight: '100vh',
+        }}
+      >
         <CssBaseline />
 
-        <RootDiv>
-          <Avatar
-            sx={{
-              margin: 1,
-              backgroundColor: '#43a047',
-            }}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <IconButton
+            sx={{ mr: 1 }}
+            aria-label="Go Back"
+            component={RouterLink}
+            to=".."
           >
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Register
+            {' '}
+            <ArrowBackIcon />{' '}
+          </IconButton>
+          <Typography component="h1" variant="h4">
+            Create Account
           </Typography>
+        </Box>
+
+        <RootDiv>
           {formError.detail && (
             <Alert severity="error">{formError?.detail}</Alert>
           )}
