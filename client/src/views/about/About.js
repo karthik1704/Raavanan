@@ -15,7 +15,7 @@ const About = () => {
   }, []);
 
   return (
-    <Grid spacing={3} sx={{ p: 3 }}>
+    <Grid container spacing={3} sx={{ p: 3 }}>
       <Grid item xs={12}>
         <Typography component="h4" variant="h6">
           எங்களைப் பற்றி
