@@ -116,7 +116,13 @@ const AppRoutes = () => {
           }
         />
       </Route>
-      <Route element={<AuthLayout />}>
+      <Route
+        element={
+          <Suspense>
+            <AuthLayout />
+          </Suspense>
+        }
+      >
         <Route
           path="/login"
           element={
