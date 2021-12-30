@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
-import ReactGA from 'react-ga';
 import { useSelector } from 'react-redux';
 
 import Home from '../views/home/Home';
@@ -49,13 +48,6 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        {/* <Route
-          index
-          render={(props) => {
-            ReactGA.pageview(props.location.pathname);
-            return <Home />;
-          }}
-        /> */}
         <Route index element={<Home />} />
         <Route
           path="about"

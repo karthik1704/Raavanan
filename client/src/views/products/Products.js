@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
-import ReactGA from 'react-ga';
 
 import { Helmet } from 'react-helmet';
 
@@ -29,8 +28,6 @@ const Products = () => {
   });
 
   useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-
     setCount(0);
     setHasMore(true);
     setPage(null);
