@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import useDarkTheme from './hooks/useDarkTheme';
 import Loader from './components/Loader/Loader';
 
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import store from './features/store';
 import Logo from './asserts/raavanan logo.png';
@@ -89,11 +89,12 @@ function App() {
   //   );
   // }, []);
 
-  // useEffect(() => {
-  //   // console.log('app.js')
-  //   // ReactGA.initialize('G-LH9KB8TXPW');
-  //   // ReactGA.pageview(window.location.pathname + window.location.search);
-  // }, []);
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: window.location.pathname + window.location.search,
+    });
+  }, []);
 
   return (
     <>

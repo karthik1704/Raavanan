@@ -6,17 +6,17 @@ import store from './features/store';
 // import { store, persistor } from './data/store';
 // import { PersistGate } from 'redux-persist/integration/react';
 // import axios from 'axios';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
-// Temp fix caused by cra v5 --> fix in 5.0.1 relese
+// Temp fix , bug caused by cra v5 --> fix in 5.0.1 relese
 window.process = {};
 
-ReactGA.initialize('G-LH9KB8TXPW');
+ReactGA.initialize('G-783HZEMX30');
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem(
 //   'app_token'
 // );
