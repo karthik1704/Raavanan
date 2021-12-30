@@ -46,7 +46,7 @@ const RootDiv = styled('div')(({ theme }) => ({
 
 export default function ProductDetail() {
   const { id } = useParams();
-  // const { productDetail } = useSelector((state) => state.products);
+  const { productDetail } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const [images, setImages] = useState([]);
@@ -57,11 +57,11 @@ export default function ProductDetail() {
 
   const { isAuthenticated } = useSelector((state) => state.auth);
 
-  const {
-    data: productDetail,
-    isLoading,
-    isFetching,
-  } = useGetProductDetailQuery(id);
+  // const {
+  //   data: productDetail,
+  //   isLoading,
+  //   isFetching,
+  // } = useGetProductDetailQuery(id);
 
   console.log(productDetail);
 
@@ -78,73 +78,72 @@ export default function ProductDetail() {
     );
   };
 
-  // useEffect(() => {
-  //   var carts = []
-  //   for(var i=0;i<cartItems.length;i++){
-  //     carts.push({
-  //       "product" : cartItems[i]['id'],
-  //       "price" : cartItems[i]['price_id'],
-  //       "quantity": cartItems[i]['quantity']
-  //     })
-  //   }
-  // axios.post(`${API_URL}sync_cart/`, carts)
-  //   .then((response) => {
-  //  console.log(response);
-  //   }, (error) => {
-  //     console.log(error);
+  useEffect(() => {
+    var carts = [];
+    for (var i = 0; i < cartItems.length; i++) {
+      carts.push({
+        product: cartItems[i]['id'],
+        price: cartItems[i]['price_id'],
+        quantity: cartItems[i]['quantity'],
+      });
+    }
+    axios.post(`${API_URL}sync_cart/`, carts).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [cartItems]);
 
-  //   });
-  // }, [cartItems]);
+  useEffect(() => {
+    // fetch(`http://localhost:8000/api/product/${id}`)
+    //   .then((res) => res.json())
+    //   .then((data) => dispatch(fetchProductDetail(data)))
+    //   .catch((err) => console.log(err));
 
-  // useEffect(() => {
-  //   // fetch(`http://localhost:8000/api/product/${id}`)
-  //   //   .then((res) => res.json())
-  //   //   .then((data) => dispatch(fetchProductDetail(data)))
-  //   //   .catch((err) => console.log(err));
+    axios.get(`${API_URL}product/${id}`).then((res) => {
+      dispatch(fetchProductDetail(res.data));
 
-  //   axios.get(`${API_URL}product/${id}`).then((res) => {
-  //     dispatch(fetchProductDetail(res.data));
+      if (res.data.price) {
+        setValue(res.data.price[0]);
+      }
+      let localimages = [];
+      if (res.data.imageurl) {
+        localimages.push({
+          original: res.data.imageurl,
+          thumbnail: res.data.imageurl,
+        });
+      }
 
-  //     if (res.data.price) {
-  //       setValue(res.data.price[0]);
-  //     }
-  //     let localimages = [];
-  //     if (res.data.imageurl) {
-  //       localimages.push({
-  //         original: res.data.imageurl,
-  //         thumbnail: res.data.imageurl,
-  //       });
-  //     }
+      if (res.data.image.length > 0) {
+        let image = res.data.image.map((img) => ({
+          original: img.image,
+          thumbnail: img.image,
+        }));
 
-  //     if (res.data.image.length > 0) {
-  //       let image = res.data.image.map((img) => ({
-  //         original: img.image,
-  //         thumbnail: img.image,
-  //       }));
+        localimages = localimages.concat(image);
+      }
+      setImages(localimages);
+    });
 
-  //       localimages = localimages.concat(image);
-  //     }
-  //     setImages(localimages);
-  //   });
+    return () => dispatch(fetchProductDetail({}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
-  //return () => dispatch(fetchProductDetail({}));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [dispatch]);
+  useEffect(() => {
+    if (productDetail.materials) {
+      setValue(productDetail.materials[0].material_name);
+    }
+    setSize('12*10');
+  }, [productDetail]);
 
-  // useEffect(() => {
-  //   if (productDetail.materials) {
-  //     setValue(productDetail.materials[0].material_name);
-  //   }
-  //   setSize('12*10');
-  // }, [productDetail]);
-
-  // useEffect(() => {
-  //   console.log("use effect")
-  //   if(!productDetail)
-  //     return
-  //   console.log(productDetail)
-
-  // }, [size]);
+  useEffect(() => {
+    console.log('use effect');
+    if (!productDetail) return;
+    console.log(productDetail);
+  }, [size]);
 
   // const handleChange = (e) => {
   //   setValue(e.target.value);
@@ -160,9 +159,9 @@ export default function ProductDetail() {
       );
   };
 
-  // if (Object.keys(productDetail).length === 0) {
-  //   return <div />;
-  // }
+  if (Object.keys(productDetail).length === 0) {
+    return <div />;
+  }
 
   // const images1 = [
   //   {
@@ -183,11 +182,23 @@ export default function ProductDetail() {
   return (
     <RootDiv>
       <Helmet>
-        {`
         <title>
-          இராவணன் அங்காடி | {ProductDetail && productDetail.product_name}
+          {`
+          இராவணன் அங்காடி | ${productDetail && productDetail.name} `}
         </title>
-`}
+        <meta
+          property="og:title"
+          content={productDetail && productDetail.name}
+        />
+
+        <meta
+          property="og:image"
+          content={productDetail && productDetail.imageurl}
+        />
+        <meta
+          property="og:description"
+          content={productDetail && productDetail.description}
+        />
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>
@@ -323,6 +334,7 @@ export default function ProductDetail() {
                       .filter((price) => price.types !== null)
                       .map((price) => (
                         <FormControlLabel
+                          key={price.id}
                           value={price.types}
                           control={<Radio color="primary" />}
                           label={price.types}

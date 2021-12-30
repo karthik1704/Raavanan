@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
+import { Helmet } from 'react-helmet';
+
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 import axios from 'axios';
+
 import { createSelector } from '@reduxjs/toolkit';
 import { API_URL } from '../../CONSTANTS';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+
 import Header from '../../components/Header/Header';
 import CartItem from '../../components/cart-item/cart-item';
 import './Cartpage.css';
@@ -129,6 +133,9 @@ const Cartpage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>இராவணன் அங்காடி | Cart </title>
+      </Helmet>
       <Header title="Cart" subtitle="Home" />
 
       <Grid container style={{ padding: '10px' }}>

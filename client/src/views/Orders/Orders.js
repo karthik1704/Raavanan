@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -25,61 +27,70 @@ const Orders = () => {
   const { data: orders, isLoading, isFetching, error } = useGetOrderQuery();
 
   return (
-    <Div>
-      <Grid container spacing={3}>
-        {orders ? (
-          orders.map((order) => (
-            <Grid item xs={12} sm={4} key={order.id}>
-              <Card>
-                <CardHeader
-                  sx={{
-                    padding: 2,
-                    textAlign: 'center',
-                    background: '#43a047',
-                    color: 'white',
-                    fontSize: '14px',
-                  }}
-                  title={'#RAAV' + order.id}
-                  subheader={new Date(order.created_at).toDateString()}
-                ></CardHeader>
+    <>
+      <Helmet>
+        <title>இராவணன் அங்காடி | தனியுரிமைக் கொள்கைகள் </title>
+      </Helmet>
 
-                <CardContent>
-                  <Typography sx={{ textAlign: 'center' }} gutterBottom>
-                    <strong>No of Items Ordered :</strong> {order.items.length}
-                  </Typography>
-
-                  <Typography sx={{ textAlign: 'center' }} gutterBottom>
-                    <strong>Total Price:</strong> ₹ {order.total_price}
-                  </Typography>
-                  <Typography sx={{ textAlign: 'center' }} gutterBottom>
-                    <strong>Status :</strong> {order.order_status}
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button
-                    size="small"
+      <Div>
+        <Grid container spacing={3}>
+          {orders ? (
+            orders.map((order) => (
+              <Grid item xs={12} sm={4} key={order.id}>
+                <Card>
+                  <CardHeader
                     sx={{
-                      padding: 1,
+                      padding: 2,
                       textAlign: 'center',
                       background: '#43a047',
                       color: 'white',
-                      display: 'flex',
-                      justifyContent: 'center',
+                      fontSize: '14px',
                     }}
-                    component={Link}
-                    to={`/RAAV${order.id}`}
+                    title={'#RAAV' + order.id}
+                    subheader={new Date(order.created_at).toDateString()}
+                  ></CardHeader>
+
+                  <CardContent>
+                    <Typography sx={{ textAlign: 'center' }} gutterBottom>
+                      <strong>No of Items Ordered :</strong>{' '}
+                      {order.items.length}
+                    </Typography>
+
+                    <Typography sx={{ textAlign: 'center' }} gutterBottom>
+                      <strong>Total Price:</strong> ₹ {order.total_price}
+                    </Typography>
+                    <Typography sx={{ textAlign: 'center' }} gutterBottom>
+                      <strong>Status :</strong> {order.order_status}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{ display: 'flex', justifyContent: 'center' }}
                   >
-                    View Details
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))
-        ) : (
-          <h4 className="Product_Text"> You have not ordered anything</h4>
-        )}
-      </Grid>
-    </Div>
+                    <Button
+                      size="small"
+                      sx={{
+                        padding: 1,
+                        textAlign: 'center',
+                        background: '#43a047',
+                        color: 'white',
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                      component={Link}
+                      to={`/RAAV${order.id}`}
+                    >
+                      View Details
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <h4 className="Product_Text"> You have not ordered anything</h4>
+          )}
+        </Grid>
+      </Div>
+    </>
   );
 };
 

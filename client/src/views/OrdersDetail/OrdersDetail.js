@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { Helmet } from 'react-helmet';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -224,83 +227,88 @@ const OrdersDetail = () => {
   }, [dispatch]);
 
   return (
-    <RootDiv>
-      <Grid container spacing={3}>
-        {order.id ? (
-          <>
-            <Grid item xs={12} sm={6}>
-              <Paper
-                sx={{
-                  fontSize: '14px',
-                  padding: 2,
-                  textAlign: 'center',
-                }}
-              >
-                <Card>
-                  <CardHeader
-                    sx={{
-                      padding: 2,
-                      textAlign: 'center',
-                      background: '#43a047',
-                      color: 'white',
-                      fontSize: '14px',
-                    }}
-                    title="Delivery Address"
-                    // subheader="September 14, 2016"
-                  ></CardHeader>
-                  <CardContent>
-                    <b>
-                      {order.address.name} - {order.address.phone}
-                    </b>
-                    <br></br>
-                    {order.address.address2}, {order.address.address1}
-                    <br></br>
-                    {order.address.city},<br></br>
-                    {order.address.state} - {order.address.postal}
-                  </CardContent>
-                </Card>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Paper
-                sx={{
-                  fontSize: '14 px',
-                  padding: 2,
-                  textAlign: 'center',
-                }}
-              >
-                <Card>
-                  <CardHeader
-                    sx={{
-                      padding: 2,
-                      textAlign: 'center',
-                      background: '#43a047',
-                      color: 'white',
-                      fontSize: '14px',
-                    }}
-                    title="Delivery Status"
-                    // subheader={new Date(order.created_at).toDateString()}
-                  ></CardHeader>
-                </Card>
-                <Stepper
-                  alternativeLabel
-                  activeStep={activeStep}
-                  connector={<QontoConnector />}
-                >
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel StepIconComponent={QontoStepIcon}>
-                        {label}
-                      </StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              </Paper>
-            </Grid>
+    <>
+      <Helmet>
+        <title>இராவணன் அங்காடி | Order Detail </title>
+      </Helmet>
 
-            <Grid item xs={12} sm={12}>
-              {/* <Paper className={classes.paper}> */}
-              {/* <Card>
+      <RootDiv>
+        <Grid container spacing={3}>
+          {order.id ? (
+            <>
+              <Grid item xs={12} sm={6}>
+                <Paper
+                  sx={{
+                    fontSize: '14px',
+                    padding: 2,
+                    textAlign: 'center',
+                  }}
+                >
+                  <Card>
+                    <CardHeader
+                      sx={{
+                        padding: 2,
+                        textAlign: 'center',
+                        background: '#43a047',
+                        color: 'white',
+                        fontSize: '14px',
+                      }}
+                      title="Delivery Address"
+                      // subheader="September 14, 2016"
+                    ></CardHeader>
+                    <CardContent>
+                      <b>
+                        {order.address.name} - {order.address.phone}
+                      </b>
+                      <br></br>
+                      {order.address.address2}, {order.address.address1}
+                      <br></br>
+                      {order.address.city},<br></br>
+                      {order.address.state} - {order.address.postal}
+                    </CardContent>
+                  </Card>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Paper
+                  sx={{
+                    fontSize: '14 px',
+                    padding: 2,
+                    textAlign: 'center',
+                  }}
+                >
+                  <Card>
+                    <CardHeader
+                      sx={{
+                        padding: 2,
+                        textAlign: 'center',
+                        background: '#43a047',
+                        color: 'white',
+                        fontSize: '14px',
+                      }}
+                      title="Delivery Status"
+                      // subheader={new Date(order.created_at).toDateString()}
+                    ></CardHeader>
+                  </Card>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={activeStep}
+                    connector={<QontoConnector />}
+                  >
+                    {steps.map((label) => (
+                      <Step key={label}>
+                        <StepLabel StepIconComponent={QontoStepIcon}>
+                          {label}
+                        </StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} sm={12}>
+                {/* <Paper className={classes.paper}> */}
+                {/* <Card>
           <CardHeader className={classes.cardheader}
         
         title={"#RAAV"+order.id}
@@ -326,31 +334,32 @@ const OrdersDetail = () => {
       </CardActions>
     </Card>
     */}
-              {/* <Grid container spacing={12}> */}
-              <Grid item xs={12} sm={12} md={12}>
-                <div>
+                {/* <Grid container spacing={12}> */}
+                <Grid item xs={12} sm={12} md={12}>
                   <div>
-                    <h3 className="Order_title">PRODUCTS</h3>
+                    <div>
+                      <h3 className="Order_title">PRODUCTS</h3>
+                    </div>
+                    {prodList.length > 0 ? (
+                      prodList.map((product) => (
+                        <CartItem product={product['product']} />
+                      ))
+                    ) : (
+                      <h4 className="Product_Text"> Your cart is empty</h4>
+                    )}
                   </div>
-                  {prodList.length > 0 ? (
-                    prodList.map((product) => (
-                      <CartItem product={product['product']} />
-                    ))
-                  ) : (
-                    <h4 className="Product_Text"> Your cart is empty</h4>
-                  )}
-                </div>
+                </Grid>
               </Grid>
-            </Grid>
-            {/* </Grid> */}
-          </>
-        ) : (
-          <h4 className="Product_Text">
-            The URL you have entered is not correct
-          </h4>
-        )}
-      </Grid>
-    </RootDiv>
+              {/* </Grid> */}
+            </>
+          ) : (
+            <h4 className="Product_Text">
+              The URL you have entered is not correct
+            </h4>
+          )}
+        </Grid>
+      </RootDiv>
+    </>
   );
 };
 

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { Helmet } from 'react-helmet';
+
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -67,6 +69,9 @@ const Addresses = (props) => {
 
   return (
     <>
+      <Helmet>
+        <title>இராவணன் அங்காடி | Checkout </title>
+      </Helmet>
       {props.addresses.length > 0 ? (
         props.addresses.results.map((address) => (
           <Accordion>
@@ -134,14 +139,10 @@ const Checkout = () => {
   const [addressId, setAddressId] = useState('');
 
   const { data: addresses, isLoading: isGetAddress } = useGetAddressesQuery();
-  const [
-    createAddressApi,
-    { isLoading: isCreateAddress, data: createdData },
-  ] = useCreateAddressMutation();
-  const [
-    updateAddress,
-    { isLoading: isUpdateAddress, data: updatedData },
-  ] = useUpdateAddressMutation();
+  const [createAddressApi, { isLoading: isCreateAddress, data: createdData }] =
+    useCreateAddressMutation();
+  const [updateAddress, { isLoading: isUpdateAddress, data: updatedData }] =
+    useUpdateAddressMutation();
 
   //const [addresses, setAddresses] = useState([]);
   const [createAddress, setCreateAddress] = useState(false);

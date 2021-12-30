@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { Helmet } from 'react-helmet';
+
 // MUI
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -115,6 +117,9 @@ export default function Login() {
 
   return (
     <>
+      <Helmet>
+        <title>இராவணன் அங்காடி | Login</title>
+      </Helmet>
       <Container
         component="main"
         maxWidth="xs"

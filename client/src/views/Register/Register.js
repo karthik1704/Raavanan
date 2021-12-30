@@ -1,6 +1,7 @@
 /* eslint-disable no-unreachable */
 import React, { useState } from 'react';
 
+import { Helmet } from 'react-helmet';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -234,6 +235,9 @@ export default function Register() {
 
   return (
     <>
+      <Helmet>
+        <title>இராவணன் அங்காடி | தனியுரிமைக் கொள்கைகள் </title>
+      </Helmet>
       <Container
         component="main"
         maxWidth="xs"
