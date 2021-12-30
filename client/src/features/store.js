@@ -14,6 +14,7 @@ import { productApi } from './product/productApi';
 
 // in Future remove will be removed
 import cartReducer from '../data/reducers/cartReducer';
+import productReducer from '../data/reducers/productReducer';
 
 import logger from 'redux-logger';
 
@@ -25,6 +26,7 @@ const store = configureStore({
     loader: loaderReducer,
     theme: themeReducer,
     cart: cartReducer,
+    products: productReducer,
 
     // Add API Reducers here
     [authApi.reducerPath]: authApi.reducer,
