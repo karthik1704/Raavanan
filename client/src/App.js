@@ -21,16 +21,13 @@ import Navbar from './components/navbar/Navbar';
 import NewFooter from './components/NewFooter/NewFooter';
 // import { dark, light } from './theme';
 
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { store } from './data/store';
 import Logo from './asserts/raavanan logo.png';
 import axios from 'axios';
 import { toggleAppLoading } from './data/actions/appAction';
 import { logoutUser } from './data/actions/loginActions';
-
-
-ReactGA.initialize('G-783HZEMX30');
 
 function App() {
   const [theme] = useDarkTheme();
@@ -108,11 +105,12 @@ function App() {
     );
   }, []);
 
-  // useEffect(() => {
-  //   // console.log('app.js')
-  //   // ReactGA.initialize('G-LH9KB8TXPW');
-  //   // ReactGA.pageview(window.location.pathname + window.location.search);
-  // }, []);
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'page_view',
+      path: window.location.pathname + window.location.search,
+    });
+  }, []);
 
   return (
     <>
