@@ -107,8 +107,8 @@ function App() {
 
   useEffect(() => {
     ReactGA.send({
-      hitType: 'page_view',
-      path: window.location.pathname + window.location.search,
+      hitType: 'pageview',
+      page: window.location.pathname + window.location.search,
     });
   }, []);
 
