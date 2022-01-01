@@ -4,18 +4,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { store, persistor } from './data/store';
 import { PersistGate } from 'redux-persist/integration/react';
-// import customAxios from '../../navigation/NavigationService';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
-ReactGA.initialize('G-LH9KB8TXPW');
-// axios.defaults.headers.common['Authorization'] = localStorage.getItem(
-//   'app_token'
-// );
+ReactGA.initialize('G-783HZEMX30');
 
 ReactDOM.render(
   <StrictMode>

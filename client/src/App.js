@@ -20,15 +20,11 @@ import Loader from './components/Loader/Loader';
 import Navbar from './components/navbar/Navbar';
 import NewFooter from './components/NewFooter/NewFooter';
 // import { dark, light } from './theme';
-import { withRouter } from "react-router";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { store } from './data/store';
 import Logo from './asserts/raavanan logo.png';
 
-
-
-ReactGA.initialize('G-783HZEMX30');
 
 function App() {
   const [theme] = useDarkTheme();

@@ -1,6 +1,5 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import ReactGA from 'react-ga';
 import { useSelector } from 'react-redux';
 import About from '../views/about/About';
 import Contact from '../views/contact/Contact';
@@ -29,7 +28,7 @@ const Router = () => {
       <Route
         path="/"
         render={(props) => {
-          ReactGA.pageview(props.location.pathname);
+          // ReactGA.pageview(props.location.pathname);
           return <Home />;
         }}
         exact
@@ -98,7 +97,7 @@ const Router = () => {
       <Route
         path="/product/:id"
         render={(props) => {
-          ReactGA.pageview(props.location.pathname);
+          // ReactGA.pageview(props.location.pathname);
           return <ProductDetail />;
         }}
         exact

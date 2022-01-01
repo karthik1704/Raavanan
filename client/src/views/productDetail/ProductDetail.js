@@ -172,11 +172,21 @@ export default function ProductDetail() {
   return (
     <RootDiv>
       <Helmet>
-        {`
         <title>
-          இராவணன் அங்காடி | {ProductDetail && productDetail.product_name}
+          {` இராவணன் அங்காடி | ${productDetail && productDetail.name}`}
         </title>
-`}
+        <meta
+          property="og:title"
+          content={productDetail && productDetail.name}
+        />
+        <meta
+          property="og:image"
+          content={productDetail && productDetail.imageurl}
+        />
+        <meta
+          property="og:description"
+          content={productDetail && productDetail.description}
+        />
       </Helmet>
       {productDetail && (
         <div key={productDetail.id}>

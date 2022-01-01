@@ -34,7 +34,6 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Grid from '@mui/material/Grid';
 
-
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -48,9 +47,8 @@ import { logoutUser } from '../../data/actions/loginActions';
 
 import RavananLogo from '../../asserts/raavanan logo png.png';
 import truck from '../../asserts/images/delivery-truck.png';
-// import { event } from 'react-ga';
-import ReactGA from 'react-ga';
-import './navbar.css'
+
+import './navbar.css';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -89,7 +87,7 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: 'inherit',
   // color: theme.palette.text.secondary,
-  backgroundColor :'#131921',
+  backgroundColor: '#131921',
   height: 60,
   lineHeight: '60px',
 }));
@@ -133,7 +131,7 @@ export default function Navbar() {
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
-  
+
   const handleMenuClose = () => {
     setAnchorEl(null);
     setIsMenuOpen(false);
@@ -218,9 +216,9 @@ export default function Navbar() {
       <GoogleLogout
         sx={{
           boxShadow: 'none !important',
-          color:'black !important'
+          color: 'black !important',
         }}
-        className='logout'
+        className="logout"
         icon={false}
         clientId="968634425555-s10i7vv331eqcnbq7doe4o3acl6puv8f.apps.googleusercontent.com"
         buttonText="வெளியேறு"
@@ -391,7 +389,7 @@ export default function Navbar() {
               sm: 'center',
             },
             textAlign: 'center',
-            justifyContent:'center'
+            justifyContent: 'center',
           }}
           // className={`${classes.sectionMobile} ${classes.centeroptionbar} `}
         >
@@ -467,7 +465,9 @@ export default function Navbar() {
             }
           })()}
         </Toolbar>
-        <Toolbar sx={{ display: { xs: 'flex', sm: 'none' },justifyContent:'center' }}>
+        <Toolbar
+          sx={{ display: { xs: 'flex', sm: 'none' }, justifyContent: 'center' }}
+        >
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -632,9 +632,8 @@ export default function Navbar() {
             >
               தொடர்புக்கு
             </Button>
-          
           </div>
-         
+
           <div style={{ float: 'right' }}>
             {/* <Button
               color="inherit"
@@ -672,26 +671,24 @@ export default function Navbar() {
             >
               தொடர்புக்கு
             </Button> */}
-           <Button
-            color="inherit"
-            onClick={onToggleTopLoader}
-            component={Link}
-            // className={classes.secMenu}
-            sx={{
-              background: '#232f3e !important',
-              fontSize: '12px !important',
-            }}
-            className='blink_me'
-            // to="/terms"
-          >
-            <img src={truck} />&nbsp;
-            தமிழ்நாடு முழுவதும் தூதஞ்சல் இலவசம் 
-          </Button>
-         
-          
+            <Button
+              color="inherit"
+              onClick={onToggleTopLoader}
+              component={Link}
+              // className={classes.secMenu}
+              sx={{
+                background: '#232f3e !important',
+                fontSize: '12px !important',
+              }}
+              className="blink_me"
+              // to="/terms"
+            >
+              <img src={truck} />
+              &nbsp; தமிழ்நாடு முழுவதும் தூதஞ்சல் இலவசம்
+            </Button>
           </div>
         </Toolbar>
-        
+
         <Toolbar
           sx={{
             display: { xs: 'none', sm: 'none', md: 'flex' },
@@ -700,60 +697,59 @@ export default function Navbar() {
             justifyContent: 'space-between',
           }}
         >
- <div style={{width:'100%'}}>
-
- <Grid container spacing={0.1} >
-
-
- {category.map((menu, index) => {
-              return menu.children.length > 0 ? (
-                <Grid item xs={1.5} sm={1.5}>
-          
-                <Box
-                xs={3} sm={3}
-                  sx={{
-                    p: 1,                
-                    gap: 1,
-                  }}
-                  
-                >
-                  
-                    <Item  key={index} elevation={24} style={{
-                    display: 'flex',
-                  flexDirection: 'column',
-                alignItems: 'center',
-                height: 'auto',
-                  }}>
-                {/* <Fragment key={index} > */}
-                <img src={menu.imageurl} style={{width : '40px', height:'40px'}}/>
-                <span 
-                style={{
-                  
-                  lineHeight: '0px',
-                  
-                }}>
-                  
-                <Button
-                color="inherit"
-                      component={Link}
+          <div style={{ width: '100%' }}>
+            <Grid container spacing={0.1}>
+              {category.map((menu, index) => {
+                return menu.children.length > 0 ? (
+                  <Grid item xs={1.5} sm={1.5}>
+                    <Box
+                      xs={3}
+                      sm={3}
                       sx={{
-                        background: 'none !important',
-                        fontSize: '11px !important',
-                        padding: '0px !important',
-                        color:'white',
-                        marginTop:'2px',
-                        '&:hover': {
-                          // backgroundColor: '#131921 !important',
-                          color: 'yellow !important'
-                        },
+                        p: 1,
+                        gap: 1,
                       }}
-                      
-                      to={`/${menu.slug}`}
                     >
-                      {menu.name}
-                      </Button>
-                  {/* <img src="https://www.flaticon.com/" title="Flaticon"/> */}
-                  {/* <ButtonGroup
+                      <Item
+                        key={index}
+                        elevation={24}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          height: 'auto',
+                        }}
+                      >
+                        {/* <Fragment key={index} > */}
+                        <img
+                          src={menu.imageurl}
+                          style={{ width: '40px', height: '40px' }}
+                        />
+                        <span
+                          style={{
+                            lineHeight: '0px',
+                          }}
+                        >
+                          <Button
+                            color="inherit"
+                            component={Link}
+                            sx={{
+                              background: 'none !important',
+                              fontSize: '11px !important',
+                              padding: '0px !important',
+                              color: 'white',
+                              marginTop: '2px',
+                              '&:hover': {
+                                // backgroundColor: '#131921 !important',
+                                color: 'yellow !important',
+                              },
+                            }}
+                            to={`/${menu.slug}`}
+                          >
+                            {menu.name}
+                          </Button>
+                          {/* <img src="https://www.flaticon.com/" title="Flaticon"/> */}
+                          {/* <ButtonGroup
                     variant="contained"
                     color="primary"
                     aria-label="split button"
@@ -787,132 +783,134 @@ export default function Navbar() {
                     </Button>
                   </ButtonGroup>
                    */}
-                 <Button
-                       color="inherit"
-                      size="small"
-                      aria-controls={
-                        isMenuOpen ? 'split-button-menu' : undefined
-                      }
-                      aria-expanded={isMenuOpen ? 'true' : undefined}
-                      aria-label="select merge strategy"
-                      aria-haspopup="menu"
+                          <Button
+                            color="inherit"
+                            size="small"
+                            aria-controls={
+                              isMenuOpen ? 'split-button-menu' : undefined
+                            }
+                            aria-expanded={isMenuOpen ? 'true' : undefined}
+                            aria-label="select merge strategy"
+                            aria-haspopup="menu"
+                            sx={{
+                              background: 'none !important',
+                              fontSize: '11px !important',
+                              padding: '0px !important',
+                              color: 'white',
+                              marginTop: '2px',
+                              minWidth: '20px',
+                              '&:hover': {
+                                color: 'yellow !important',
+                              },
+                            }}
+                            onClick={(e) => handleToggle(menu.name, e)}
+                          >
+                            <ArrowDropDownIcon />
+                          </Button>
+                        </span>
+                        <Popper
+                          open={anchors[menu.name]}
+                          anchorEl={anchorEl}
+                          role={undefined}
+                          placement="bottom-start"
+                          transition
+                        >
+                          {({ TransitionProps, placement }) => (
+                            <Grow
+                              {...TransitionProps}
+                              style={{
+                                transformOrigin:
+                                  placement === 'bottom'
+                                    ? 'left top'
+                                    : 'left bottom',
+                              }}
+                            >
+                              <Paper sx={{ background: '#232f3e !important' }}>
+                                <ClickAwayListener onClickAway={handleClose}>
+                                  <MenuList id="split-button-menu">
+                                    {menu.children.map((option, index1) => {
+                                      return (
+                                        <MenuItem
+                                          sx={{
+                                            background: '#232f3e !important',
+                                            fontSize: '12px !important',
+                                            color: 'white',
+                                            '&:hover': {
+                                              color: 'yellow !important',
+                                            },
+                                          }}
+                                          key={option.name}
+                                          component={Link}
+                                          to={`/${option.slug}`}
+                                          // disabled={index === 2}
+                                          // selected={index === selectedIndex}
+                                          onClick={(event) =>
+                                            handleMenuItemClick(menu.name)
+                                          }
+                                        >
+                                          {option.name}
+                                        </MenuItem>
+                                      );
+                                    })}
+                                  </MenuList>
+                                </ClickAwayListener>
+                              </Paper>
+                            </Grow>
+                          )}
+                        </Popper>
+                        {/* </Fragment> */}
+                      </Item>
+                    </Box>
+                  </Grid>
+                ) : (
+                  <Grid item xs={1.5} sm={1.5}>
+                    <Box
+                      xs={3}
+                      sm={3}
                       sx={{
-                        background: 'none !important',
-                        fontSize: '11px !important',
-                        padding: '0px !important',
-                        color:'white',
-                        marginTop:'2px',
-                        minWidth: '20px',
-                        '&:hover': {                         
-                          color: 'yellow !important'
-                        },
+                        p: 1,
+                        gap: 1,
                       }}
-                      onClick={(e) => handleToggle(menu.name, e)}
                     >
-                      <ArrowDropDownIcon />
-                    </Button>
-                    </span>
-                  <Popper
-                    open={anchors[menu.name]}
-                    anchorEl={anchorEl}
-                    role={undefined}
-                    placement="bottom-start"
-                    transition
-                  >
-                    {({ TransitionProps, placement }) => (
-                      <Grow
-                        {...TransitionProps}
+                      <Item
+                        key={index}
+                        elevation={24}
                         style={{
-                          transformOrigin:
-                            placement === 'bottom' ? 'left top' : 'left bottom',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          height: 'auto',
                         }}
                       >
-                        <Paper sx={{ background: '#232f3e !important' }}>
-                          <ClickAwayListener onClickAway={handleClose}>
-                            <MenuList id="split-button-menu">
-                              {menu.children.map((option, index1) => {
-                                return (
-                                  <MenuItem
-                                    sx={{
-                                      background: '#232f3e !important',
-                                      fontSize: '12px !important',
-                                      color: 'white',
-                                      '&:hover': {
-                                        color: 'yellow !important',
-                                      },
-                                    }}
-                                    key={option.name}
-                                    component={Link}
-                                    to={`/${option.slug}`}
-                                    // disabled={index === 2}
-                                    // selected={index === selectedIndex}
-                                    onClick={(event) =>
-                                      handleMenuItemClick(menu.name)
-                                    }
-                                  >
-                                    {option.name}
-                                  </MenuItem>
-                                );
-                              })}
-                            </MenuList>
-                          </ClickAwayListener>
-                        </Paper>
-                      </Grow>
-                    )}
-                  </Popper>
-                {/* </Fragment> */}
-                </Item>                            
-              </Box>             
-           </Grid>
-              
-              ) : (
+                        {/* <Fragment key={index} > */}
+                        <img
+                          src={menu.imageurl}
+                          style={{ width: '40px', height: '40px' }}
+                        />
+                        <Button
+                          color="inherit"
+                          component={Link}
+                          sx={{
+                            background: 'none !important',
+                            fontSize: '11px !important',
+                            padding: '0px !important',
+                            color: 'white',
+                            marginTop: '2px',
+                            '&:hover': {
+                              color: 'yellow !important',
+                            },
+                          }}
+                          to={`/${menu.slug}`}
+                        >
+                          {menu.name}
+                        </Button>
+                      </Item>
+                    </Box>
+                  </Grid>
+                );
+              })}
 
-            <Grid item xs={1.5} sm={1.5}>          
-              <Box
-                xs={3} sm={3}
-                  sx={{
-                    p: 1,                
-                    gap: 1,
-                  }}
-                  
-                >
-                  
-                    <Item  key={index} elevation={24} style={{
-                    display: 'flex',
-                  flexDirection: 'column',
-                alignItems: 'center',
-                height: 'auto',
-                  }}>
-                {/* <Fragment key={index} > */}
-                <img src={menu.imageurl} style={{width : '40px', height:'40px'}}/>
-                <Button
-                 color="inherit"
-                      component={Link}
-                      sx={{
-                        background: 'none !important',
-                        fontSize: '11px !important',
-                        padding: '0px !important',
-                        color:'white',
-                        marginTop:'2px',
-                        '&:hover': {
-                          color: 'yellow !important',
-                        },
-                      }}
-                      to={`/${menu.slug}`}
-                    >
-                      {menu.name}
-                      </Button>
-                </Item>                            
-            </Box>           
-         </Grid>
-
-
-              );
-            })}
-
-
-
-        {/* <Grid item xs={1.5} sm={1.5}>
+              {/* <Grid item xs={1.5} sm={1.5}>
           
             <Box
             xs={3} sm={3}
@@ -933,8 +931,7 @@ export default function Navbar() {
 
 
         ))} */}
-      
-    </Grid>
+            </Grid>
             {/* {category.map((menu, index) => {
               return menu.children.length > 0 ? (
                 <Fragment key={index}>
@@ -1043,11 +1040,7 @@ export default function Navbar() {
                 </Fragment>
               );
             })} */}
-            
-          
           </div>
-         
-
         </Toolbar>
       </AppBar>
 
