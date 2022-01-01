@@ -19,11 +19,15 @@ import AppLayout from '../Layout/AppLayout';
 import AuthLayout from '../Layout/AuthLayout';
 import PageNotFound from '../views/PageNotFound/PageNotFound';
 
+import Login from '../views/Login/Login';
+import Register from '../views/Register/Register';
+
+// const AuthLayout = lazy(() => import('../Layout/AuthLayout'));
 const About = lazy(() => import('../views/about/About'));
 const Contact = lazy(() => import('../views/contact/Contact'));
 const Terms = lazy(() => import('../views/terms/Terms'));
-const Login = lazy(() => import('../views/Login/Login'));
-const Register = lazy(() => import('../views/Register/Register'));
+// const Login = lazy(() => import('../views/Login/Login'));
+// const Register = lazy(() => import('../views/Register/Register'));
 const Forgetpassword = lazy(() =>
   import('../views/Forgetpassword/Forgetpassword')
 );
@@ -52,7 +56,7 @@ const AppRoutes = () => {
         <Route
           path="about"
           element={
-            <Suspense>
+            <Suspense fallback={'Loading...'}>
               <About />
             </Suspense>
           }
@@ -60,7 +64,7 @@ const AppRoutes = () => {
         <Route
           path="contact"
           element={
-            <Suspense>
+            <Suspense fallback={'Loading...'}>
               <Contact />
             </Suspense>
           }
@@ -68,21 +72,14 @@ const AppRoutes = () => {
         <Route
           path="terms"
           element={
-            <Suspense>
+            <Suspense fallback={'Loading...'}>
               <Terms />
             </Suspense>
           }
         />
         <Route path="Cartpage" element={<Cartpage />} />
 
-        <Route
-          path="product/:id"
-          // render={(props) => {
-          //   ReactGA.pageview(props.location.pathname);
-          //   return <ProductDetail />;
-          // }}
-          element={<ProductDetail />}
-        />
+        <Route path="product/:id" element={<ProductDetail />} />
 
         <Route path=":category" element={<Products />} />
 
@@ -108,34 +105,14 @@ const AppRoutes = () => {
           }
         />
       </Route>
-      <Route
-        element={
-          <Suspense>
-            <AuthLayout />
-          </Suspense>
-        }
-      >
-        <Route
-          path="/login"
-          element={
-            <Suspense>
-              <Login />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Suspense>
-              <Register />
-            </Suspense>
-          }
-        />
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="Otpverification" element={<Otpverification />} />
         <Route
           path="Forgetpassword"
           element={
-            <Suspense>
+            <Suspense fallback={'Loading...'}>
               <Forgetpassword />
             </Suspense>
           }
