@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import RAZORPAY_KEY from './merchant-config';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import { API_URL, ENV} from '../../CONSTANTS';
@@ -51,7 +51,7 @@ export default function PaymentForm(props) {
               setError("Razorpay SDK failed to load. Are you online?");
               return;
           }
-            axios.post(order_create_url, props.order)
+            customAxios.post(order_create_url, props.order)
           .then((response) => { 
             // console.log(response);  
             // setResult(response);
@@ -75,7 +75,7 @@ export default function PaymentForm(props) {
         async function displayRazorpay(result) {
           
   
-          // const result = await axios.post("http://localhost:5000/payment/orders");
+          // const result = await customAxiospost("http://localhost:5000/payment/orders");
   
           if (!result) {
               setError("Server error. Are you online?");
@@ -100,7 +100,7 @@ export default function PaymentForm(props) {
                       razorpaySignature: response.razorpay_signature,
                   };
   
-                  const result = await axios.post(order_cofirm_url, data);
+                  const result = await customAxios.post(order_cofirm_url, data);
   
                   // alert(result.data.status);
                   

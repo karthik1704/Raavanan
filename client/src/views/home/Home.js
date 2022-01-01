@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
+// import customAxios from '../../navigation/NavigationService';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -31,11 +32,11 @@ const Home = () => {
   const { products } = useSelector((state) => state.products);
   const [, onToggleTopLoader] = useTopLoader();
   const dispatch = useDispatch();
-
+  // const  Axios = useAxios()
   useEffect(() => {
     dispatch(resetProduct([]));
-    axios.get(`${API_URL}api/product`).then((res) => {
-      onToggleTopLoader(false);
+    customAxios.get(`${API_URL}api/product`).then((res) => {
+      // onToggleTopLoader(false);
       return dispatch(fetchProduct(res.data.results));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

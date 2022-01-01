@@ -21,7 +21,7 @@ import MuiPhoneInput from 'material-ui-phone-number';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -68,7 +68,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 // }));
 
 // useEffect(() => {
-//   axios.get(category === 'new' ? url : filterUrl).then((res) => {
+//   customAxios.get(category === 'new' ? url : filterUrl).then((res) => {
 //     return dispatch(fetchProduct(res.data.results));
 //   });
 // }, [dispatch, category, url, filterUrl]);
@@ -139,7 +139,7 @@ export default function Register() {
 
     // Future Purpose -- start of unreachable code
     if (!isOtpSent) {
-      axios
+      customAxios
         .post(otp_url, {
           mobile: data.phone.substring(3),
         })
@@ -159,7 +159,7 @@ export default function Register() {
         setOpen(true);
         return;
       }
-      axios
+      customAxios
         .post(otp_verify_url, {
           mobile: data.phone.substring(3),
           otp: otp,
@@ -194,7 +194,7 @@ export default function Register() {
         non_field_errors: null,
       });
 
-    axios
+      customAxios
       .post(registration_url, {
         email,
         phone: phone.substring(3),
@@ -251,7 +251,7 @@ export default function Register() {
 
   const handleResend = () => {
     console.log(getValues('phone'));
-    axios
+    customAxios
       .post(otp_resend_url, {
         mobile: getValues('phone').substring(3),
       })

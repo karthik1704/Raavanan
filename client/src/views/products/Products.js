@@ -8,7 +8,7 @@ import { Typography } from '@mui/material';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import ReactGA from 'react-ga';
 import { API_URL } from '../../CONSTANTS';
 
@@ -47,7 +47,7 @@ const Products = () => {
   const fetchMoreData = () => {
     // if(!nextUrl)
     //   return false
-    axios.get(nextUrl).then((res) => {
+    customAxios.get(nextUrl).then((res) => {
       
 
       // setCount(res.data.count);
@@ -68,7 +68,7 @@ const Products = () => {
   useEffect(() => {
     
     ReactGA.pageview(window.location.pathname + window.location.search);
-    axios.get(category === 'new' ? url : filterUrl).then((res) => {
+    customAxios.get(category === 'new' ? url : filterUrl).then((res) => {
       setCount(res.data.count);
       if (res.data.next != null) {
         

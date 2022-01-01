@@ -83,6 +83,7 @@ class Price(models.Model):
     mrp =  models.FloatField(_('M.R.P.'))
     discount = models.IntegerField(_('Discount %'))
     price = models.FloatField()
+    weight = models.FloatField(blank=True, null=True, default=200)
 
     def __str__(self):
         return f'₹{self.price}'

@@ -23,7 +23,7 @@ import { green } from '@mui/material/colors';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 import ImageGallery from 'react-image-gallery';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { addItem } from '../../data/actions/cartActions';
 import { Helmet } from 'react-helmet';
 
@@ -76,7 +76,7 @@ export default function ProductDetail() {
   //       "quantity": cartItems[i]['quantity']
   //     })
   //   }
-  // axios.post(`${API_URL}api/sync_cart/`, carts)
+  // customAxiospost(`${API_URL}api/sync_cart/`, carts)
   //   .then((response) => {
   //  console.log(response);
   //   }, (error) => {
@@ -91,7 +91,7 @@ export default function ProductDetail() {
     //   .then((data) => dispatch(fetchProductDetail(data)))
     //   .catch((err) => console.log(err));
 
-    axios.get(`${API_URL}api/product/${id}`).then((res) => {
+    customAxios.get(`${API_URL}api/product/${id}`).then((res) => {
       dispatch(fetchProductDetail(res.data));
 
       if (res.data.price) {

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { createSelector } from 'reselect';
 import { API_URL } from '../../CONSTANTS';
 import { useSelector, useDispatch } from 'react-redux';
@@ -63,7 +63,7 @@ const Cartpage = () => {
     cart_ids = cart_ids.join(',');
     
     if (cart_ids.length < 1) return;
-    axios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
+    customAxios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
       var prod = res.data;
       // prod.filter()
 

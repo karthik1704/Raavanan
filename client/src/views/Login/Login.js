@@ -18,7 +18,7 @@ import TextField from '@mui/material/TextField';
 
 import MuiPhoneInput from 'material-ui-phone-number';
 
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -112,7 +112,7 @@ export default function Login() {
       });
 
     if (phone.length !== 13) return;
-    axios
+    customAxios
       .post(login_url, {
         phone: phone.substring(3),
         password,
@@ -142,7 +142,7 @@ export default function Login() {
     if (!('profileObj' in response)) {
       return;
     }
-    axios
+    customAxios
       .post(social_login_url, {
         access_token: response['accessToken'],
         code: response['googleId'],

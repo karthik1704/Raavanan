@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 //import makeStyles from '@mui/styles/makeStyles';
 import { useState, useEffect, useLayoutEffect } from 'react';
 import { createSelector } from 'reselect';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { API_URL } from '../../CONSTANTS';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -74,7 +74,7 @@ export default function Cartpage() {
     cart_ids = cart_ids.join(',');
 
     if (cart_ids.length < 1) return;
-    axios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
+    customAxios.get(`${API_URL}api/custom/products/?ids=${cart_ids}`).then((res) => {
       var prod = res.data;
       // prod.filter()
 

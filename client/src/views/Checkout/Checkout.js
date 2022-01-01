@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import MuiAlert from '@mui/material/Alert';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -147,7 +147,7 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    axios.get(address_create_url).then((res) => {
+    customAxios.get(address_create_url).then((res) => {
       // return dispatch(fetchProduct(res.data.results));
       setAddresses(res.data.results);
       console.log(res);
@@ -252,7 +252,7 @@ const Checkout = () => {
 
         console.log(addressId);
         if (addressId) {
-          axios
+          customAxios
             .put(`${address_create_url}${addressId}/`, {
               phone: mobile.substring(3),
               name: name,
@@ -278,7 +278,7 @@ const Checkout = () => {
               }
             );
         } else {
-          axios
+          customAxios
             .post(address_create_url, {
               phone: mobile.substring(3),
               name: name,
