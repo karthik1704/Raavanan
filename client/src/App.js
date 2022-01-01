@@ -111,16 +111,14 @@ function App() {
           content="Raavanan Store , இராவணன் அங்காடி"
         />
       </Helmet>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <Paper component="main">
-              {topLoader && <Loader />}
-              <AppRoutes />
-            </Paper>
-          </BrowserRouter>
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Paper component="main">
+            {topLoader && <Loader />}
+            <AppRoutes />
+          </Paper>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 }
