@@ -98,6 +98,7 @@ export default function Login() {
   };
 
   const responseGoogle = async (response) => {
+    console.log('I, am calling automatically');
     console.log(response);
     if (!('profileObj' in response)) {
       return;
