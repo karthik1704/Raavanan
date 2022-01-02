@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 // import makeStyles from '@mui/styles/makeStyles';
 import { styled } from '@mui/material/styles';
 
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { useHistory } from 'react-router-dom';
 
 import './Orders.css';
@@ -74,7 +74,7 @@ const Orders = () => {
   let history = useHistory();
   console.log(orders);
   useEffect(() => {
-    axios.get(orders_url).then((res) => {
+    customAxios.get(orders_url).then((res) => {
       // return dispatch(fetchProduct(res.data.results));
       console.log(res);
       setOrders(res.data);

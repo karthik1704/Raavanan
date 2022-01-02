@@ -8,7 +8,8 @@ import { Typography } from '@mui/material';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
+import ReactGA from 'react-ga4';
 import { API_URL } from '../../CONSTANTS';
 
 import { Helmet } from 'react-helmet';
@@ -46,7 +47,7 @@ const Products = () => {
   const fetchMoreData = () => {
     // if(!nextUrl)
     //   return false
-    axios.get(nextUrl).then((res) => {
+    customAxios.get(nextUrl).then((res) => {
       // setCount(res.data.count);
       if (res.data.next != null) {
         setNextUrl(res.data.next);
@@ -61,7 +62,9 @@ const Products = () => {
   };
 
   useEffect(() => {
-    axios.get(category === 'new' ? url : filterUrl).then((res) => {
+    
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    customAxios.get(category === 'new' ? url : filterUrl).then((res) => {
       setCount(res.data.count);
       if (res.data.next != null) {
         setNextUrl(res.data.next);

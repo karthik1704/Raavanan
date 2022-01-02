@@ -9,7 +9,7 @@ USER = settings.AUTH_USER_MODEL
 class Address(models.Model):
     user = models.ForeignKey(USER, on_delete=models.DO_NOTHING)
     address1 = models.CharField(max_length=115)
-    address2 = models.CharField(max_length=115)
+    address2 = models.CharField(max_length=115, null=True, blank=True)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     country = models.CharField(max_length=100)

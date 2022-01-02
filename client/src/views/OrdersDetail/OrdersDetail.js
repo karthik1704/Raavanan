@@ -14,7 +14,7 @@ import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
 
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import { useDispatch } from 'react-redux';
 
 import CartItem from '../../components/Checkout/cart-item';
@@ -192,7 +192,7 @@ const OrdersDetail = () => {
   const steps = ['Placed', 'Shipped', 'Delivered'];
 
   useEffect(() => {
-    axios.get(`${orders_url}${id}/`).then(
+    customAxios.get(`${orders_url}${id}/`).then(
       (res) => {
         // return dispatch(fetchProduct(res.data.results));
         console.log(res);

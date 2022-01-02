@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import { Fragment, useState, useEffect, useRef } from 'react';
 
-import axios from 'axios';
+// import customAxios from '../../navigation/NavigationService';
+import customAxios from '../../navigation/NavigationService';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -149,7 +150,7 @@ export default function Navbar() {
     }
   };
   const logout = () => {
-    // axios.post(logout_url, {
+    // customAxiospost(logout_url, {
 
     //   })
     //   .then((response) => {
@@ -163,9 +164,8 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    console.log('calling api');
-    console.log('navbar');
-    axios
+    
+    customAxios
       .get(`${API_URL}api/category/`)
       .then((res) => setCategory(res.data.results));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,6 +182,7 @@ export default function Navbar() {
   }, [category]);
 
   useEffect(() => {
+    console.log(login);
     if (!login.loggedIn) return;
 
     if (cartItems.length > 0) {
@@ -193,7 +194,7 @@ export default function Navbar() {
           quantity: cartItems[i]['quantity'],
         });
       }
-      axios.post(`${API_URL}api/sync_cart/`, carts).then((res) => {});
+      customAxios.post(`${API_URL}api/sync_cart/`, carts).then((res) => {});
     }
   }, [login, cartItems]);
 
