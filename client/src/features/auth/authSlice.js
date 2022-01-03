@@ -33,7 +33,7 @@ export const authSlice = createSlice({
 
     refreshAccessToken: (state, { payload }) => {
       state.access_token = payload.access;
-      localStorage.setItem('access_token', payload.access_token);
+      localStorage.setItem('access_token', payload.access);
     },
   },
   extraReducers: (builder) => {
