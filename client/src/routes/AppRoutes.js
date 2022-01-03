@@ -84,8 +84,22 @@ const AppRoutes = () => {
         <Route path=":category" element={<Products />} />
 
         <Route path=":id/waorder" element={<WAOrder />} />
-        <Route path="orders" element={<Orders />}>
-          <Route path=":id" element={<OrdersDetail />} />
+        <Route
+          path="orders"
+          element={
+            <RequireAuth>
+              <Orders />
+            </RequireAuth>
+          }
+        >
+          <Route
+            path=":id"
+            element={
+              <RequireAuth>
+                <OrdersDetail />
+              </RequireAuth>
+            }
+          />
         </Route>
         <Route
           path="/checkout"
