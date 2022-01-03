@@ -67,7 +67,9 @@ const Home = () => {
     mask = {true} maskClosable = {true}>
        
         <div className="greet">
-          <img src={greetings} />
+          <img src={greetings} 
+           srcSet={`${greetings} 1x, ${greetings} 2x`}
+           />
         </div>
       </Popup>
       <div>
