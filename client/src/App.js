@@ -1,11 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import Paper from '@mui/material/Paper';
-import {
-  createTheme,
-  ThemeProvider,
-  StyledEngineProvider,
-} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
@@ -27,8 +23,6 @@ import { toggleLoader } from './features/loader/loaderSlice';
 import { logoutUser } from './features/auth/authSlice';
 
 import { getDesignTokens } from './theme/theme';
-
-ReactGA.initialize('G-783HZEMX30');
 
 function App() {
   const [mode] = useDarkTheme();
