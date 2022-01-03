@@ -175,9 +175,14 @@ export default function Register() {
           detail: 'Something Went Wrong, Please try again',
         });
       } else if (err.data.email) {
-        setError({
+        setFormError({
           ...error,
           detail: err.data?.email,
+        });
+      } else if (err.data.phone) {
+        setFormError({
+          ...error,
+          detail: err.data?.phone,
         });
       } else if (err.data.non_field_errors) {
         setFormError({
