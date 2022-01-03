@@ -179,8 +179,7 @@ function QontoStepIcon(props) {
   );
 }
 
-const OrdersDetail = () => {
-  console.log('order details');
+const OrdersDetail = () => {  
   const dispatch = useDispatch();
   const [order, setOrder] = useState({});
   const { id } = useParams();
@@ -189,9 +188,12 @@ const OrdersDetail = () => {
   let history = useHistory();
   const [prodList, setProdList] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [courier, setCourier] = useState(0);
   const steps = ['Placed', 'Shipped', 'Delivered'];
 
   useEffect(() => {
+    var totals = 0
     customAxios.get(`${orders_url}${id}/`).then(
       (res) => {
         // return dispatch(fetchProduct(res.data.results));
@@ -204,6 +206,15 @@ const OrdersDetail = () => {
         else if (res.data[0].order_status === 'Delivered') step = 3;
         else step = 0;
         setActiveStep(step);
+
+        res.data[0]['items'].map((prod) => {
+          console.log(prod)
+          totals = totals + prod.product.total
+        });
+
+        setTotal(totals)
+
+
       },
       (error) => {
         console.log(error);
@@ -335,6 +346,40 @@ const OrdersDetail = () => {
                   ) : (
                     <h4 className="Product_Text"> Your cart is empty</h4>
                   )}
+
+<Grid item xs={12} sm={12} md={12} justify="space-between" container >
+            <Grid item xs={12} sm={12} md={8}>
+              </Grid>
+
+            <Grid item xs={12} sm={12} md={4} >
+          <div className='price_card'>
+            <div>
+              {/* className={classes.Order_summary} */}
+              <h3 className="Order_title">ORDER SUMMARY</h3>
+            </div>
+            <div className="Total_Text">
+              <h3>Price:</h3>
+              <h3>₹ {total}.00</h3>
+            </div>
+            <div className="Total_Text">
+              <h3>Courier Charges:</h3>
+              <h3>₹ {order.delivery_charge}.00</h3>
+            </div>
+            <div>
+              <hr></hr>
+              {/* <p>Shipping, taxes, and discounts are included in the total.</p> */}
+              <div className="Total_Text">
+              <h3>Total:</h3>
+              <h3>₹ {order.total_price}.00</h3>
+            </div>
+              
+            </div>
+          </div>
+        </Grid>
+
+        </Grid>
+            
+
                 </div>
               </Grid>
             </Grid>
