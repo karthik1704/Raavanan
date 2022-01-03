@@ -671,7 +671,7 @@ export default function Navbar() {
             >
               தொடர்புக்கு
             </Button> */}
-            <Button
+            {/* <Button
               color="inherit"
               onClick={onToggleTopLoader}
               component={Link}
@@ -680,12 +680,11 @@ export default function Navbar() {
                 background: '#232f3e !important',
                 fontSize: '12px !important',
               }}
-              className="blink_me"
-              // to="/terms"
+              className="blink_me"              
             >
               <img src={truck} />
               &nbsp; தமிழ்நாடு முழுவதும் தூதஞ்சல் இலவசம்
-            </Button>
+            </Button> */}
           </div>
         </Toolbar>
 

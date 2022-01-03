@@ -39,6 +39,8 @@ const Cartpage = () => {
   const cartItems = cart.cartItems;
   const [prodList, setProdList] = useState([]);
   const [total, setTotal] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [courier, setCourier] = useState(0);
   let history = useHistory();
   
   let error_occured = false;
@@ -56,6 +58,7 @@ const Cartpage = () => {
     var cart_ids = [];
     const prods = [];
     var totals = 0;
+    var weights = 0;
 
     cartItems.map((product) => cart_ids.push(product.id));
     // var myArray = ['a', 1, 'a', 2, '1'];
@@ -76,6 +79,7 @@ const Cartpage = () => {
         var price = product.price.find((price) => price.id === prod.price_id);
 
         totals = totals + prod.quantity * price.price;
+        weights = weights + prod.quantity * price.weight;
         product = {
           ...product,
           quantity: prod.quantity,
@@ -102,8 +106,19 @@ const Cartpage = () => {
 
       setProdList(prods);
       setTotal(totals);
+      setWeight(weights);
+      
     });
   }, [cartItems, dispatch]);
+
+
+  useEffect(() => {
+    
+      customAxios.post(`${API_URL}api/calculate_delivery/`, {'weight':weight}).then((res) => {
+        
+        setCourier(res.data.charge)
+    });
+  }, [weight]);
 
   const executeAllLongRunningTasks = async () => {
     error_occured = false
@@ -165,18 +180,26 @@ const Cartpage = () => {
           </div>
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
-          <div>
+          <div className='price_card'>
             <div>
               {/* className={classes.Order_summary} */}
               <h3 className="Order_title">ORDER SUMMARY</h3>
             </div>
             <div className="Total_Text">
-              <h3>Subtotal:</h3>
+              <h3>Price:</h3>
               <h3>₹ {total}.00</h3>
             </div>
+            <div className="Total_Text">
+              <h3>Courier Charges:</h3>
+              <h3>₹ {courier}.00</h3>
+            </div>
             <div>
-              <p>Shipping, taxes, and discounts are included in the total.</p>
-
+              <hr></hr>
+              {/* <p>Shipping, taxes, and discounts are included in the total.</p> */}
+              <div className="Total_Text">
+              <h3>Total:</h3>
+              <h3>₹ {total+courier}.00</h3>
+            </div>
               <Button
                 type="submit"
                 fullWidth

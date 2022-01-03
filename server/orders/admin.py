@@ -13,7 +13,7 @@ class OrderItemAdmin(admin.StackedInline):
     extra = 0
     can_delete = False
     
-    readonly_fields = ('product', 'price', 'quantity')
+    readonly_fields = ('product', 'price', 'quantity','extra')
     def has_change_permission(self, request, obj=None):
         return False
     # def get_readonly_fields(self, request, obj=None):
@@ -31,8 +31,8 @@ class OrderItemAdmin(admin.StackedInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = (OrderItemAdmin,)
     exclude = ('address',)
-    list_display= ['id', 'user','payment_id', 'transaction_status', 'order_status']
-    readonly_fields = ('user', 'total_price', 'payment_id', 'extra', 'transaction_status','delivery_address',)
+    list_display= ['id', 'user','payment_id', 'transaction_status', 'order_status','delivery_charge', 'total_price']
+    readonly_fields = ('user','delivery_charge','total_price', 'payment_id', 'extra', 'transaction_status','delivery_address',)
 
     def delivery_address(self,instance):
         address = Address.objects.get(id = instance.address.id)

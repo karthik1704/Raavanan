@@ -10,7 +10,7 @@ from rest_framework import status
 from cart.models import Cart
 from products.models import Product
 from products.serializers import ProductSerializer
-from products.models import Price
+from products.models import Price, Courier
 from addresses.models import Address
 # from accounts.utils import send_message
 import paytmchecksum
@@ -239,9 +239,15 @@ class OrderView(APIView):
             serializer.validated_data['user'] = self.request.user
             data = serializer.validated_data            
             price = 0
+            weight = 0
             for item in data['items']:                
-                price += item['price'].price *  item['quantity']        
-            data["total_price"] = price            
+                price += item['price'].price *  item['quantity']                
+                weight += item['price'].weight *  item['quantity']               
+           
+            courier_obj = Courier.objects.filter(weight_upto__gte = weight).order_by('weight_upto')[:1]            
+            charge = courier_obj[0].price
+            data['delivery_charge'] = charge
+            data["total_price"] = price + charge
             order = OrderSerializer.create(self, data)
             # create_id = Order.objects.create(data)
             
@@ -284,6 +290,7 @@ class OrderDetailView(APIView):
         # return Response(serializer.data)
 
         for item in serializer.data[0]['items']:
+            product_id = item['product']
             prod = Product.objects.filter(id=item['product'])            
             prod = serializers.serialize('json', prod) 
             prod = json.loads(prod)
@@ -296,6 +303,7 @@ class OrderDetailView(APIView):
             price = Price.objects.filter(id=item['price'])
             price = serializers.serialize('json', price)
             price = json.loads(price)
+            item['product']['id'] = product_id
             item['product']['quantity'] = item['quantity']
             item['product']['price'] = price[0]['fields'] 
             item['product']['total'] = item['product']['price']['price'] * item['quantity']

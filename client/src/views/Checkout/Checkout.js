@@ -149,8 +149,7 @@ const Checkout = () => {
   useEffect(() => {
     customAxios.get(address_create_url).then((res) => {
       // return dispatch(fetchProduct(res.data.results));
-      setAddresses(res.data.results);
-      console.log(res);
+      setAddresses(res.data.results);      
       if (res.data.results.length > 0) {
         setCreateAddress(false);
       }
