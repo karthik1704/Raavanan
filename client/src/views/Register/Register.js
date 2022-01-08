@@ -241,7 +241,7 @@ export default function Register() {
   return (
     <>
       <Helmet>
-        <title>இராவணன் அங்காடி | தனியுரிமைக் கொள்கைகள் </title>
+        <title>இராவணன் அங்காடி | Create Account </title>
       </Helmet>
       <Container
         component="main"
