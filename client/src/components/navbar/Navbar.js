@@ -208,7 +208,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem component={Link} to="/orders">
+      <MenuItem component={Link} to="/orders" onClick={handleMenuClose}>
         அடைவுகள்
       </MenuItem>
       {/* <MenuItem  onClick={logout}>Log out</MenuItem> */}
