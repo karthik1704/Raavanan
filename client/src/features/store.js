@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query/react';
 
 // Slice Reducers imports
 import authReducer from './auth/authSlice';
@@ -44,5 +45,7 @@ const store = configureStore({
       addressApi.middleware
     ),
 });
+
+setupListeners(store.dispatch);
 
 export default store;
