@@ -68,7 +68,7 @@ const SwipeableDrawer1 = styled('div')(({ theme }) => ({
 const AppDrawer = ({ theme, onToggleTheme, category }) => {
   const { drawerOpen } = useSelector((state) => state.appDrawer);
   const dispatch = useDispatch();
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const iOS =typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   var anchors_dict = {};
