@@ -6,10 +6,11 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import RAZORPAY_KEY from './merchant-config';
+
 import customAxios from '../../navigation/NavigationService';
 import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
+import { API_URL, ENV } from '../../CONSTANTS';
 
 import RAZORPAY_KEY from './merchant-config';
 import logo from '../../asserts/raavanan logo.png';
@@ -42,6 +43,8 @@ export default function PaymentForm(props) {
   // const [result,setResult] = useState({});
   const [error, setError] = useState('');
   let navigate = useNavigate();
+  const order_create_url = `${API_URL}orders/`;
+  const order_cofirm_url = `${API_URL}order_confirm/`;
 
   function loadScript(src) {
     return new Promise((resolve) => {
@@ -83,7 +86,7 @@ export default function PaymentForm(props) {
         return;
       }
     );
-  }, [dispatch]);
+  }, []);
 
   async function displayRazorpay(result) {
     // const result = await customAxiospost("http://localhost:5000/payment/orders");
@@ -114,7 +117,7 @@ export default function PaymentForm(props) {
 
         // alert(result.data.status);
 
-        history.push('orderconfirmation/' + result.data.status);
+        navigate('orderconfirmation/' + result.data.status);
       },
       prefill: {
         email: 'care@raavananstore.com',
