@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
 import store from './features/store';
@@ -13,20 +13,17 @@ import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
-// Temp fix , bug caused by cra v5 --> fix in 5.0.1 relese
-window.process = {};
-
 ReactGA.initialize('G-783HZEMX30');
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem(
 //   'app_token'
 // );
 
 // React 18
-const container = document.getElementById('root');
+const containerRoot = document.getElementById('root');
 
-if (!container) throw new Error('Could not found the root element');
+if (!containerRoot) throw new Error('Could not found the root element');
 
-const root = ReactDOM.createRoot(container);
+const root = ReactDOM.createRoot(containerRoot);
 
 // root.render(
 //   <StrictMode>
