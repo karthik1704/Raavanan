@@ -183,14 +183,12 @@ export default function ProductDetail() {
     <RootDiv>
       <Helmet>
         <title>
-          {`
-          இராவணன் அங்காடி | ${productDetail && productDetail.name} `}
+          {`இராவணன் அங்காடி | ${productDetail && productDetail.name} `}
         </title>
         <meta
           property="og:title"
           content={productDetail && productDetail.name}
         />
-
         <meta
           property="og:image"
           content={productDetail && productDetail.imageurl}

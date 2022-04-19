@@ -33,56 +33,6 @@ function App() {
 
   // const { dispatch } = store;
 
-  // useEffect(() => {
-
-  //   axios.interceptors.request.use(
-  //     function (config) {
-  //       // spinning start to show
-  //       dispatch(toggleLoader(true));
-  //       //useTopLoader(true)
-  //       return config;
-  //     },
-  //     function (error) {
-  //       return Promise.reject(error);
-  //     }
-  //   );
-
-  //   axios.interceptors.response.use(
-  //     function (response) {
-  //       // spinning hide
-  //       // self.props.loading(false)
-
-  //       dispatch(toggleLoader(false));
-  //       return response;
-  //     },
-  //     function (error) {
-  //       // if(!error.response)
-  //       // return;
-  //       if (error.response.status === 401) {
-  //         localStorage.setItem('app_token', '');
-  //         axios.defaults.headers.common['Authorization'] = '';
-  //         dispatch(logoutUser(''));
-  //         // Router.push('/');
-  //         window.location.reload();
-  //         return Promise.reject(error);
-  //       }
-  //       //   if(error.response.data.code == "token_not_valid"){
-
-  //       //   localStorage.setItem("app_token", '');
-  //       //   axios.defaults.headers.common['Authorization'] = '';
-  //       //   //Promise.reject(error);
-  //       // //   dispatch(logoutUser(''));
-  //       // // <Redirect to="/" />
-
-  //       //   //window.location.href = '/login'
-  //       //   return Promise.reject(error);
-
-  //       // }
-  //       return Promise.reject(error);
-  //     }
-  //   );
-  // }, []);
-
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
