@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 
 import useDarkTheme from './hooks/useDarkTheme';
 import Loader from './components/Loader/Loader';
-
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import store from './features/store';

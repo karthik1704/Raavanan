@@ -3,7 +3,8 @@ import {
   LOGOUT
  
 } from '../CONSTANTS';
-import axios from 'axios';
+// import customAxios from '../../navigation/NavigationService';
+// import customAxios from '../../navigation/NavigationService';
 import { syncCart } from '../../views/Cartpage/cart.utils';
 // const initalState = {
 //   user: {},
@@ -15,7 +16,8 @@ const loginReducer = (state = initalState, { type, payload }) => {
   switch (type) {
     case LOGIN: 
     localStorage.setItem("app_token", `Bearer ${payload.access_token}`)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${payload.access_token}`
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${payload.access_token}`
+      
       return {
         ...state,
         user: {...payload},
@@ -23,7 +25,7 @@ const loginReducer = (state = initalState, { type, payload }) => {
       };
       case LOGOUT:
         localStorage.setItem("app_token", '')    
-        axios.defaults.headers.common['Authorization'] = '';  
+        // axios.defaults.headers.common['Authorization'] = '';  
       return {
         ...state,
         user: {},

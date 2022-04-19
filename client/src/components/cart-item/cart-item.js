@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import { addItem, removeItem, addOtherInfo } from '../../data/actions/cartActions';
 import { useDispatch } from 'react-redux';
 import { useDebouncedCallback } from 'use-debounce';
+import './cart-item.css';
 // const useStyles = makeStyles((theme) => ({
 //   root: {
 //     maxWidth: 238,
@@ -183,6 +184,7 @@ const CartItem = ({ product }) => {
             <TextField
           required
           id="otherinfo"
+          // className="other_info"
           placeholder={product.other_information}
           max
           defaultValue=''

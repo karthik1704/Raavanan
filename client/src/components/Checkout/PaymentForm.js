@@ -6,9 +6,10 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import RAZORPAY_KEY from './merchant-config';
+import customAxios from '../../navigation/NavigationService';
+import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
-
-import { useSelector } from 'react-redux';
 
 import RAZORPAY_KEY from './merchant-config';
 import logo from '../../asserts/raavanan logo.png';
@@ -62,31 +63,30 @@ export default function PaymentForm(props) {
       setError('Razorpay SDK failed to load. Are you online?');
       return;
     }
-
-    placeOrder(props.order)
-      .unwrap()
-      .then((payload) => {
+    customAxios.post(order_create_url, props.order).then(
+      (response) => {
         // console.log(response);
         // setResult(response);
-        displayRazorpay(payload);
+        displayRazorpay(response);
         // CONFIG.data.amount = response.data.price;
         // CONFIG.data.token = response.data.body.txnToken;
         // CONFIG.data.orderId = response.data.order_id;
 
         // setConfig(CONFIG);
         // return <PaymentForm paytmdata={response}/>;
-      })
-      .catch((error) => {
+      },
+      (error) => {
         console.log(error);
 
         setError('Unable to process payment, Please try again later');
         // setOpen(true);
         return;
-      });
-  }, []);
+      }
+    );
+  }, [dispatch]);
 
   async function displayRazorpay(result) {
-    // const result = await axios.post("http://localhost:5000/payment/orders");
+    // const result = await customAxiospost("http://localhost:5000/payment/orders");
 
     if (!result) {
       setError('Server error. Are you online?');
@@ -110,13 +110,11 @@ export default function PaymentForm(props) {
           razorpaySignature: response.razorpay_signature,
         };
 
-        await confrimOrder(data);
+        const result = await customAxios.post(order_cofirm_url, data);
 
         // alert(result.data.status);
 
-        navigate(`orderconfirmation/ + ${confrimOrderData.status}`, {
-          replace: true,
-        });
+        history.push('orderconfirmation/' + result.data.status);
       },
       prefill: {
         email: 'care@raavananstore.com',

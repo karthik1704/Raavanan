@@ -3,12 +3,16 @@ from rest_framework import viewsets
 from rest_framework import generics
 from django.db.models import Q
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, BasePermission, AllowAny
+
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from django.http import HttpResponse
 from .serializers import CategorySerializer, PriceDetailSerializer, ProductSerializer
-from .models import Category, Price, Product
+from .models import Category, Price, Product, Courier
 from django.conf import settings
 
 from rest_framework.pagination import PageNumberPagination
@@ -111,3 +115,22 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class PriceDetailView(RetrieveAPIView):
     queryset = Price.objects.all()
     serializer_class = PriceDetailSerializer
+
+class CourierViewSet(viewsets.ModelViewSet):
+    queryset = Courier.objects.filter()
+
+class CourierView(APIView):
+    """
+    List all orders, or create a new snippet.
+    """
+    authentication_classes=[]
+    permission_classes = [AllowAny]
+    def post(self, request, format=None):        
+        try:                    
+            cour = request.data.get('weight')
+            courier_obj = Courier.objects.filter(weight_upto__gte = cour).order_by('weight_upto')[:1]            
+            charge = courier_obj[0].price
+            return Response({"charge" :charge}, status=status.HTTP_201_CREATED)
+        except Exception as  e:
+            return Response(e, status=status.HTTP_400_BAD_REQUEST)
+    

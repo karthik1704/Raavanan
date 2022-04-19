@@ -42,7 +42,10 @@ class Category(MPTTModel):
     #     return self.name
 
 
-
+class Courier(models.Model):                                                                     
+    weight_upto = models.FloatField(_('Weight Upto'))
+    price = models.FloatField(_('Price'))
+        
 
 
 class Product(models.Model):
@@ -83,6 +86,7 @@ class Price(models.Model):
     mrp =  models.FloatField(_('M.R.P.'))
     discount = models.IntegerField(_('Discount %'))
     price = models.FloatField()
+    weight = models.FloatField(blank=True, null=True, default=200)
 
     def __str__(self):
         return f'₹{self.price}'

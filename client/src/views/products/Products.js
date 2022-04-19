@@ -7,6 +7,9 @@ import Grid from '@mui/material/Grid';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ripple from '../../asserts/ripple.gif';
+import customAxios from '../../navigation/NavigationService';
+import ReactGA from 'react-ga4';
+import { API_URL } from '../../CONSTANTS';
 
 import { Helmet } from 'react-helmet';
 

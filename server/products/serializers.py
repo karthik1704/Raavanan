@@ -46,7 +46,7 @@ class ProductPriceSerializer(serializers.ModelSerializer):
     material = ProductMaterialSerializer(many=True)
     class Meta:
         model = Price
-        fields = ['id', 'types', 'material', 'mrp', 'discount', 'price']
+        fields = ['id', 'types', 'material', 'mrp', 'discount', 'price','weight']
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()

@@ -26,6 +26,7 @@ TRANSACTION_CHOICES = (
 class Order(models.Model):
     user = models.ForeignKey(User,on_delete=models.DO_NOTHING)
     total_price = models.FloatField()
+    delivery_charge = models.FloatField(default=0)
     payment_id = models.CharField(max_length=80)
     created_at = models.DateTimeField(auto_now_add=True)
     extra = models.CharField(max_length=80, null=True, blank=True)

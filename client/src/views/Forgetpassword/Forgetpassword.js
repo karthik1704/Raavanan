@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 //import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import customAxios from '../../navigation/NavigationService';
 import MuiPhoneInput from 'material-ui-phone-number';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -160,7 +160,7 @@ export default function Forgetpassword() {
   const getOtp = () => {
     if (mobile.length !== 13) return;
     if (!isOtpSent) {
-      axios
+      customAxios
         .post(otp_url, {
           phone: mobile.substring(3),
         })
@@ -181,7 +181,7 @@ export default function Forgetpassword() {
   const handleSendOTPSubmit = ({ phone }) => {
     if (phone.length !== 13) return;
     if (!isOtpSent) {
-      axios
+      customAxios
         .post(otp_url, {
           mobile: phone.substring(3),
         })
@@ -202,7 +202,7 @@ export default function Forgetpassword() {
         setOpen(true);
         return;
       }
-      axios
+      customAxios
         .post(otp_verify_url, {
           mobile: mobile.substring(3),
           otp: otp,
@@ -223,7 +223,7 @@ export default function Forgetpassword() {
   };
 
   const handleResetPassword = ({ new_password1, new_password2 }) => {
-    axios
+    customAxios
       .post(passwordResetConfrimUrl, {
         uid,
         token,
