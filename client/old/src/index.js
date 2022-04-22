@@ -2,7 +2,8 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
-import { store, persistor } from './data/store';
+// import { store, persistor } from './data/store';
+import store from './features/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import ReactGA from 'react-ga4';
 

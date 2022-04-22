@@ -47,7 +47,7 @@ const Home = () => {
 
   return (
     <Box sx={{ maxWidth: '100%' }}>
-      <Confetti
+      {/* <Confetti
         width={window.innerWidth - 30}
         numberOfPieces={2000}
         recycle={false}
@@ -69,7 +69,7 @@ const Home = () => {
             alt="greet"
           />
         </div>
-      </Popup>
+      </Popup> */}
       <div>
         <Carousel />
       </div>
