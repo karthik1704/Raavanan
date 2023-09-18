@@ -12,19 +12,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
-from environ import Env
+import environ
 from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
-env = Env()
+env = environ.Env()
 # reading .env file
-env_file = Path.joinpath(BASE_DIR, '.env')
-Env.read_env(env_file.as_posix())
-
+environ.Env.read_env(Path.joinpath(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -65,7 +62,7 @@ INSTALLED_APPS = [
     'cart',
     'wishlist',
     'addresses',
-    'orders',
+    'orders.apps.OrderConfig',
    
 
 ]
@@ -192,7 +189,8 @@ ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'
 
 # OTP
 
-OTP_AUTH_KEY = env('OTP_API_KEY')
+# OTP_AUTH_KEY = env('OTP_API_KEY')
+OTP_AUTH_KEY = "132456"
 
 
 # GOOGLE OAUTH2

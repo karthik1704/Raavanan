@@ -35,7 +35,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Grid from '@mui/material/Grid';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 
 import useDarkTheme from '../../hooks/useDarkTheme';
 import useTopLoader from '../../hooks/useTopLoader';
@@ -127,7 +127,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
-  let history = useHistory();
+  let history = useNavigate ();
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
@@ -700,7 +700,7 @@ export default function Navbar() {
             <Grid container spacing={0.1}>
               {category.map((menu, index) => {
                 return menu.children.length > 0 ? (
-                  <Grid item xs={1.5} sm={1.5}>
+                  <Grid item xs={1.5} sm={1.5} key={menu.id}>
                     <Box
                       xs={3}
                       sm={3}
@@ -723,6 +723,7 @@ export default function Navbar() {
                         <img
                           src={menu.imageurl}
                           style={{ width: '40px', height: '40px' }}
+                          alt={menu.name}
                         />
                         <span
                           style={{
@@ -862,7 +863,7 @@ export default function Navbar() {
                     </Box>
                   </Grid>
                 ) : (
-                  <Grid item xs={1.5} sm={1.5}>
+                  <Grid item xs={1.5} sm={1.5} key={menu.id}>
                     <Box
                       xs={3}
                       sm={3}
@@ -885,6 +886,7 @@ export default function Navbar() {
                         <img
                           src={menu.imageurl}
                           style={{ width: '40px', height: '40px' }}
+                          alt={menu.name}
                         />
                         <Button
                           color="inherit"

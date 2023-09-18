@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import About from '../views/about/About';
@@ -24,85 +24,67 @@ const Router = () => {
   const loggedIn = login.loggedIn;
 
   return (
-    <Switch>
-      <Route
-        path="/"
-        render={(props) => {
-          // ReactGA.pageview(props.location.pathname);
-          return <Home />;
-        }}
-        exact
-      />
-
-      <Route path="/about" exact>
-        <About />
-      </Route>
-      <Route path="/contact" exact>
-        <Contact />
-      </Route>
+    <Routes>
+      <Route path="/" element={<Home/>} exact />
+       
+      <Route path="/about" element={<About/>} exact />
+      
+      <Route path="/contact" element={<Contact/>} exact />
+       
       {/* <Route path="/login" exact>
         <Login />
       </Route> */}
       <Route
         exact
         path="/login"
-        render={() => (loggedIn ? <Redirect to="/" /> : <Login />)}
+        element={<Login/>}
       />
 
       <Route
         exact
         path="/register"
-        render={() => (loggedIn ? <Redirect to="/" /> : <Register />)}
+        element={<Register/>}
+
+        // render={() => (loggedIn ? <Navigate to="/" /> : <Register />)}
       />
-      <Route path="/Otpverification" exact>
-        <Otpverification />
+      <Route path="/Otpverification" element={<Otpverification/>} exact />
+   
+      <Route path="/Forgetpassword" element={<Forgetpassword/>} exact />
+   
+      <Route path="/Cartpage" element={<Cartpage/>} exact />
+       
+      <Route path="/orders" element={<Orders/>} exact >
+        <Route path=":id" element={ <OrdersDetail />} exact />
       </Route>
-      <Route path="/Forgetpassword" exact>
-        <Forgetpassword />
-      </Route>
-      <Route path="/Cartpage" exact>
-        <Cartpage />
-      </Route>
-      <Route path="/orders" exact>
-        <Orders />
-      </Route>
-      <Route path="/orderdetail/:id" exact>
-        <OrdersDetail />
-      </Route>
+       
       <Route
         exact
         path="/orderconfirmation/:status"
-        render={() => (loggedIn ? <Orderconfirm /> : <Redirect to="/login" />)}
+        render={() => (loggedIn ? <Orderconfirm /> : <Navigate to="/login" />)}
       />
       <Route
         exact
         path="/checkout"
-        render={() => (loggedIn ? <Checkout /> : <Redirect to="/login" />)}
+        render={() => (loggedIn ? <Checkout /> : <Navigate to="/login" />)}
       />
 
-      <Route path="/terms" exact>
-        <Terms />
-      </Route>
-      <Route path="/:category" exact>
-        <Products />
-      </Route>
+      <Route path="/terms" element={ <Terms />} exact />
+        
+  
+      <Route path="/:category" element={ <Products />} exact />
+        
 
-      <Route path="/:id/waorder" exact>
-        <WAOrder />
-      </Route>
-      <Route exact path="/terms">
-        <Terms />
-      </Route>
+      <Route path="/:id/waorder" element={ <WAOrder />} exact />
+       
+     
 
       <Route
         path="/product/:id"
-        render={(props) => {
-          // ReactGA.pageview(props.location.pathname);
-          return <ProductDetail />;
-        }}
+        element={ <ProductDetail />}
+      
         exact
       />
-    </Switch>
+    </Routes>
   );
 };
 

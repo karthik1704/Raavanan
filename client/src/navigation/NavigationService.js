@@ -37,8 +37,8 @@ let headers = {}
       return response;
     },
     function (error) {
-      
-      if (error.response.status === 401) {
+      if(error){
+      if (error?.response?.status === 401) {
         localStorage.removeItem('app_token');
         customAxios.defaults.headers.common['Authorization'] = '';
         
@@ -51,6 +51,7 @@ let headers = {}
         
         return Promise.reject(error);
       }
+    }
       
       return Promise.reject(error);
     }

@@ -13,12 +13,12 @@ from products.serializers import ProductSerializer
 from products.models import Price, Courier
 from addresses.models import Address
 # from accounts.utils import send_message
-import paytmchecksum
+# import paytmchecksum
 import json
 import requests
 from django.conf import settings
 from django.core import serializers
-from twilio.rest import Client 
+# from twilio.rest import Client 
 import razorpay
 
 # Create your views here.

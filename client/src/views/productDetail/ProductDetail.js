@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -49,7 +50,7 @@ export default function ProductDetail() {
   const [value, setValue] = useState('');
   const [images, setImages] = useState([]);
   const [size, setSize] = useState('');
-  // const [price, setPrice] = useState('');
+  const [price, setPrice] = useState('');
   const [type, setType] = useState('');
   const [mrp, setMrp] = useState('');
   const login = useSelector((state) => state.login);
@@ -335,7 +336,7 @@ export default function ProductDetail() {
 
               <div>
                 <Typography variant="body1">இருப்பில் உள்ளது</Typography>
-                <Button
+                {/* <Button
                   sx={{
                     m: 1,
                     backgroundColor: green[500],
@@ -349,11 +350,11 @@ export default function ProductDetail() {
                   }}
                 >
                   கூடை
-                </Button>
-                {/* <Button
+                </Button> */}
+                <Button
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
-                  className={classes.whatsappBtn}
+                  // className={classes.whatsappBtn}
                   component={Link}
                   to={{
                     pathname: `/${productDetail.id}/waorder`,
@@ -365,7 +366,7 @@ export default function ProductDetail() {
                   }}
                 >
                   பொருளை வாங்க
-                </Button> */}
+                </Button>
 
                 {/* <div className={classes.buttons}>
                   <Button

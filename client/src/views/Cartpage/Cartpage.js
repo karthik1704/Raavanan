@@ -7,7 +7,7 @@ import customAxios from '../../navigation/NavigationService';
 import { createSelector } from 'reselect';
 import { API_URL } from '../../CONSTANTS';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Header from '../../components/Header/Header';
@@ -41,7 +41,7 @@ const Cartpage = () => {
   const [total, setTotal] = useState(0);
   const [weight, setWeight] = useState(0);
   const [courier, setCourier] = useState(0);
-  let history = useHistory();
+  let history = useNavigate ();
   
   let error_occured = false;
   const dispatch = useDispatch();

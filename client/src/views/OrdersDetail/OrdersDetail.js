@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate , useParams } from 'react-router-dom';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -185,7 +185,7 @@ const OrdersDetail = () => {
   const { id } = useParams();
   const orders_url = `${API_URL}api/order_detail/`;
   // eslint-disable-next-line no-unused-vars
-  let history = useHistory();
+  let history = useNavigate ();
   const [prodList, setProdList] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
   const [total, setTotal] = useState(0);

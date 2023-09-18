@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -14,7 +14,7 @@ import { API_URL, ENV} from '../../CONSTANTS';
 import logo from "../../asserts/raavanan logo.png";
 
 
-import { CheckoutProvider, Checkout, injectCheckout} from 'paytm-blink-checkout-react';
+// import { CheckoutProvider, Checkout, injectCheckout} from 'paytm-blink-checkout-react';
 
 function Test(props) {
   const checkoutJsInstance = props.checkoutJsInstance;
@@ -27,7 +27,7 @@ export default function PaymentForm(props) {
   const [config,setConfig] = useState({});
   // const [result,setResult] = useState({});
   const [error,setError] = useState("")
-  let history = useHistory()
+  let history = useNavigate ()
   function loadScript(src) {
     return new Promise((resolve) => {
         const script = document.createElement("script");
@@ -133,8 +133,8 @@ export default function PaymentForm(props) {
   //  'body': {'resultInfo': {'resultStatus': 'S', 'resultCode': '0000', 'resultMsg': 'Success'}, 
   //  'txnToken': '955cd766f0d04d8f98ec9b4509eec51d1617899713464',
   //  'isPromoCodeValid': false, 'authenticated': false}}
-  const InjectedComponent = injectCheckout(Test);
-  if(Object.keys(config).length != 0){    
+  // const InjectedComponent = injectCheckout(Test);
+  if(Object.keys(config).length !== 0){    
   return <CircularProgress/>
   }
   else{
