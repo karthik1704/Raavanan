@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 
 //import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -10,24 +10,23 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Typography from '@mui/material/Typography';
-import Switch from '@mui/material/Switch';
+// import Switch from '@mui/material/Switch';
 
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
-import FilterFramesIcon from '@mui/icons-material/FilterFrames';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
-import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
+// import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import FilterFramesIcon from '@mui/icons-material/FilterFrames';
+// import LocalMallIcon from '@mui/icons-material/LocalMall';
+// import NewReleasesIcon from '@mui/icons-material/NewReleases';
+// import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 
 //import { deepPurple } from '@mui/material/colors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 
-import { MENUS } from '../../CONSTANTS';
 import { toggleAppDrawer } from '../../data/actions/appAction';
 
 import { styled } from '@mui/material/styles';
@@ -72,19 +71,19 @@ const SwipeableDrawer1 = styled('div')(({ theme }) => ({
 const AppDrawer = ({ theme, onToggleTheme, category }) => {
   const { appDrawerOpen } = useSelector((state) => state.appUi);
   const dispatch = useDispatch();
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const login = useSelector((state) => state.login);
+  const iOS =typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  // const login = useSelector((state) => state.login);
 
-  const loggedIn = login.loggedIn;
+  // const loggedIn = login.loggedIn;
 
   var anchors_dict = {};
-  category.map((option) => {
+  category.forEach((option) => {
     if (option.children.length > 0) {
       anchors_dict[option.name] = true;
     }
   });
   const [anchors, setAnchors] = useState(anchors_dict);
-  let history = useHistory();
+  let history = useNavigate ();
 
   const handleClick = (menu) => {
     setAnchors((prevState) => ({ ...prevState, [menu]: !anchors[menu] }));
@@ -161,7 +160,7 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
                 <ListItem>
                   <ListItemIcon>
                     {/* <InboxIcon /> */}
-                    <img src={menu.imageurl} style={{width : '20px', height:'20px'}}/>
+                    <img src={menu.imageurl} alt={menu.name} style={{width : '20px', height:'20px'}}/>
                   </ListItemIcon>
                   <ListItemText
                     button
@@ -197,10 +196,10 @@ const AppDrawer = ({ theme, onToggleTheme, category }) => {
                 </Collapse>
               </Fragment>
             ) : (
-              <ListItem key={index} button component={Link} to={menu.slug}>
+              <ListItem key={menu.slug} button component={Link} to={menu.slug}>
                 <ListItemIcon>
                   {/* <InboxIcon /> */}
-                  <img src={menu.imageurl} style={{width : '20px', height:'20px'}}/>
+                  <img src={menu.imageurl} alt={menu.name} style={{width : '20px', height:'20px'}}/>
                 </ListItemIcon>
                 <ListItemText primary={menu.name} />
               </ListItem>

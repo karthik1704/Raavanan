@@ -11,13 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { API_URL } from '../../CONSTANTS';
 
 import { fetchProduct, resetProduct } from '../../data/actions/productActions';
-import Confetti from 'react-confetti'
+// import Confetti from 'react-confetti'
 import useTopLoader from '../../hooks/useTopLoader';
 import Carousel from '../../components/carousel/Carousel';
 import ProductList from '../../components/productList/ProductList';
 import greetings from '../../asserts/images/greetings.png';
-import { Popup } from 'react-easy-popup';
-import 'react-easy-popup/dist/react-easy-popup.min.css';
+// import { Popup } from 'react-easy-popup';
+// import 'react-easy-popup/dist/react-easy-popup.min.css';
 import './home.css'
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -54,7 +54,7 @@ const Home = () => {
 
   return (
     <Box sx={{ maxWidth: '100%' }}>
-      <Confetti
+      {/* <Confetti
       width={window.innerWidth - 30}
       numberOfPieces = {2000}
       recycle = {false}
@@ -62,8 +62,8 @@ const Home = () => {
       onConfettiComplete	={closegreeting}
       
       // height={1000}
-    />
-    <Popup  visible={visible} onClose={() => setVisible(false)}
+    /> */}
+    {/* <Popup  visible={visible} onClose={() => setVisible(false)}
     mask = {true} maskClosable = {true}>
        
         <div className="greet">
@@ -71,7 +71,7 @@ const Home = () => {
            srcSet={`${greetings} 1x, ${greetings} 2x`}
            />
         </div>
-      </Popup>
+      </Popup> */}
       <div>
         <Carousel />
       </div>
