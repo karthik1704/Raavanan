@@ -1,0 +1,9 @@
+export const TOGGLE_THEME = 'TOGGLE_THEME';
+export const TOGGLE_APP_DRAWER = 'TOGGLE_APP_DRAWER';
+export const TOGGLE_APP_LOADING = 'TOGGLE_APP_LOADING';
+export const FETCH_PRODUCT_DETAIL = 'FETCH_PRODUCT_DETAIL';
+export const FETCH_PRODUCT = 'FETCH_PRODUCT';
+export const RESET_PRODUCT = 'RESET_PRODUCT';
+export const REGISTER = 'REGISTER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
