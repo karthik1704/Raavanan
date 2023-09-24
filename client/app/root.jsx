@@ -46,10 +46,10 @@
 //         />
 //         <title>இராவணன் அங்காடி</title>
 //         {/*  <Meta/> */}
-//         <Links /> 
+//         <Links />
 //       </head>
 //       <body>
-       
+
 //           <Scripts />
 //           <ScrollRestoration/>
 //           <LiveReload/>
@@ -57,7 +57,6 @@
 //     </html>
 //   );
 // }
-
 
 import * as React from 'react';
 import {
@@ -70,17 +69,26 @@ import {
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
-import { light as theme }from '~/old-app/theme';
+import { light as theme } from '~/old-app/theme';
 import ClientStyleContext from '~/mui/ClientStyleContext';
 
-import slideshow from  'react-slideshow-image/dist/styles.css';
+import Nav from '~/components/nav';
+import Footer from '~/components/footer';
+
 import FooterStyles from '~/old-app/components/NewFooter/NewFooter.css';
+import IndexStyles from '~/old-app/index.css';
 
-export const links = ()=> ([
-  { rel: "stylesheet", href: slideshow },
-  { rel: "stylesheet", href: FooterStyles },
-])
-
+export const links = () => [
+  { rel: 'stylesheet', href: FooterStyles },
+  { rel: 'stylesheet', href: IndexStyles },
+];
+export const loader = async () => {
+  const res = await fetch('http://localhost:8000/api/category/');
+  const category = await res.json();
+  return {
+    category
+  };
+};
 
 const Document = withEmotionCache(({ children, title }, emotionCache) => {
   const clientStyleData = React.useContext(ClientStyleContext);
@@ -94,7 +102,7 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
     emotionCache.sheet.flush();
     tags.forEach((tag) => {
       // eslint-disable-next-line no-underscore-dangle
-      (emotionCache.sheet )._insertTag(tag);
+      emotionCache.sheet._insertTag(tag);
     });
     // reset cache to reapply global styles
     clientStyleData.reset();
@@ -111,12 +119,19 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
         <Meta />
         <Links />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
         />
-        <meta name="emotion-insertion-point" content="emotion-insertion-point" />
+        <meta
+          name="emotion-insertion-point"
+          content="emotion-insertion-point"
+        />
         <meta
           name="description"
           content="இராவணன் அங்காடி, Raavanan Store"
@@ -154,10 +169,9 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
 export default function App() {
   return (
     <Document>
-        <div id="root">
-          <Outlet />
-        </div>
+      <Nav />
+      <Outlet />
+      <Footer />
     </Document>
   );
 }
-
