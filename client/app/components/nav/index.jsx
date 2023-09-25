@@ -31,10 +31,11 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
-// import AppDrawer from '../drawer/AppDrawer';
+import AppDrawer from './drawer';
 
 
 import RavananLogo from '~/assets/raavanan logo png.png';
+import { SettingsInputComponentOutlined } from '@mui/icons-material';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -188,7 +189,7 @@ export default function Nav() {
             }}
             color="inherit"
             aria-label="open drawer"
-            onClick={() => '' }
+            onClick={() => setOpen(true) }
             size="large"
           >
             <MenuIcon />
@@ -495,9 +496,8 @@ export default function Nav() {
 
       {/* {renderMenu} */}
 
-      {/* <AppDrawer
-        category={category}
-      /> */}
+      <AppDrawer isOpen={open} setIsOpen={setOpen}
+      />
     </Box>
   );
 }

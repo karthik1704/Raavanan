@@ -10,6 +10,11 @@ export const links = ()=>(
     ]
 )
 
+export const loader = async () => {
+  const res = await fetch('http://localhost:8000/api/banner/');
+  const banner = await res.json()
+  return {banner}
+}
 
 export default function Index(){
     return(

@@ -1,3 +1,4 @@
+import { useLoaderData } from '@remix-run/react';
 import { styled } from '@mui/material/styles';
 
 import CarouselImage1 from '~/assets/images/banner1.jpg';
@@ -12,29 +13,23 @@ const StyledImg = styled('img')({
 });
 
 const Carousel = () => {
+  const { banner } = useLoaderData();
   const slideImages = [CarouselImage1, CarouselImage2, CarouselImage3];
   return (
     <div className="slide-container">
       <Slide>
-        {slideImages.map((image, idx) => (
-          <div className="each-slide" key={idx}>
-            {/* <div className={classes.media} style={{'height': '250px','width': '100%','backgroundSize': 'cover',
-    'backgroundRepeat': 'no-repeat','background-size': '100% 220px','background-position': 'center center','backgroundImage': `url(${image})`}}> */}
-            {/* <span>Slide 1</span> */}
-            {/* </div> */}
-
-            <div style={{ width: '100%' }}>
-              <StyledImg
-                alt="a"
-                srcSet={`${image} 1x, ${image} 2x`}
-                src={image}
-              />
-              {/* <img className={classes.image} 
-                src={image} ></img> */}
-              {/* <img src={CarouselImage1}></img> */}
+        {banner &&
+          banner.map((b, idx) => (
+            <div className="each-slide" key={b.id}>
+              <div style={{ width: '100%' }}>
+                <StyledImg
+                  alt={b.title}
+                  srcSet={`${b.image} 1x, ${b.image} 2x`}
+                  src={b.image}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </Slide>
     </div>
   );
