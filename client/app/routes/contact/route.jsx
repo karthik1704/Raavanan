@@ -1,5 +1,19 @@
 import {Box} from '@mui/material';
 
+export const meta = ()=>([
+  { title: "தொடர்புக்கு | இராவணன் அங்காடி" },
+  {
+    property: "og:title",
+    content: "தொடர்புக்கு",
+  },
+  {
+    name: "description",
+    content: ` வணக்கம் ! இன்பத் தமிழ் நம் உயிருக்கு நேர் !
+    இராவணன் அங்காடியைத் தொடர்பு கொள்ள கீழ்காணும் இணைப்புகளைப்
+    பயன்படுத்தவும்.`,
+  },
+])
+
 
 const Contact = () => {
 
