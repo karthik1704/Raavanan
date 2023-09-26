@@ -4,7 +4,7 @@ import { Typography, Grid } from '@mui/material';
 import ProductList from '~/components/product-list';
 
 export const loader = async ()=>{
-  const res = await fetch('http://localhost:8000/api/products/');
+  const res = await fetch(`${process.env.API_URL}/api/products/`);
   const products = await res.json();
 
   return {products}
@@ -18,7 +18,6 @@ export const loader = async ()=>{
 
 export default  function Index(){
   const {products} =  useLoaderData();
-  console.log(products)
 
   return (
     <div>

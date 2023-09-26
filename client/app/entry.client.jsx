@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ClientStyleContext from '~/mui/ClientStyleContext';
 import createEmotionCache from '~/mui/createEmotionCache';
-import { light as theme }from '~/old-app/theme';
+import { light as theme }from '~/mui/theme';
 
 
 function ClientCacheProvider({ children }) {

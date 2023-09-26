@@ -11,7 +11,7 @@ export const links = ()=>(
 )
 
 export const loader = async () => {
-  const res = await fetch('http://localhost:8000/api/banner/');
+  const res = await fetch(`${process.env.API_URL}/api/banner/`);
   const banner = await res.json()
   return {banner}
 }

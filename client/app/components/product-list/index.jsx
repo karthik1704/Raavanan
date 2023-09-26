@@ -63,7 +63,7 @@ const ProductList = ({ products }) => {
 
                 <CenterContent>
                   <Img
-                    src={product.image}
+                    src={product?.image ? product.image : product?.product_images[0]?.image}
                     alt={product.name}
                     sx={{
                       mt: '5px',

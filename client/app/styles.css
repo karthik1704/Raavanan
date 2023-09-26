@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  font-family: 'Catamaran', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.MuiLink-underlineHover {
+  cursor: pointer;
+}
+.MuiButton-root {
+  text-transform: none !important;
+}
+.MuiButton-textPrimary:hover {
+  border-color: #43a047 !important;
+  background: #43a047 !important;
+}
+.MuiListItemText-primary{
+  font-size: 12px !important;
+  }
+
+
+  .Footer_Main_Wrap
+{
+    flex-grow: 1;
+    padding-bottom: 20px;
+    padding-top: 40px;
+    /* border-bottom: 1px solid white; */
+}
+.Footer_Wrap
+{
+    /* background-image: url("../../asserts/images/footer/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover; */
+  /* height: 400px; */
+    margin-top: 40px;
+    background-color: black;
+    padding-top: 50px;
+}
+
+.Footer_Main_Container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.Footer_Icon_Container
+{
+    height: 50px;
+    width: 50px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.Footer_Text_Details
+{
+    padding-left: 20px;
+}
+.Footer_Text_Details p
+{
+    margin: 0px;
+}
+
+
+
+/* Footer_First_block */
+
+
+.Footer_First_block .first_block_title
+{
+    color: white;
+    font-size: 18px;
+    margin: 0px;
+}
+.first_block_description
+{
+    color: white;
+    font-size: 12px;
+}
+
+.first_block_list
+{
+    color: white;
+    padding-left: 0px;
+    list-style-type: none;
+}
+.first_block_list li{
+    font-size: 16px;
+    padding-bottom: 5px;
+}
+
+
+.Footer_copywrites
+{
+    padding: 20px;
+    border-top: 1px solid white;
+}
+.Footer_copywrites .footer_copy_title
+{
+    color: white;
+}
+
+
+
+
+
+/* Footer_First_block */

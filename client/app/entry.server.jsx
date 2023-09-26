@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { RemixServer } from '@remix-run/react';
 import createEmotionCache from '~/mui/createEmotionCache';
-import { light as theme }from '~/old-app/theme';
+import { light as theme }from '~/mui/theme';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
