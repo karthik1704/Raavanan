@@ -72,6 +72,8 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import { light as theme } from '~/mui/theme';
 import ClientStyleContext from '~/mui/ClientStyleContext';
 
+import { API_URL } from '~/config';
+
 import Nav from '~/components/nav';
 import Footer from '~/components/footer';
 
@@ -81,7 +83,7 @@ export const links = () => [
   { rel: 'stylesheet', href: IndexStyles },
 ];
 export const loader = async () => {
-  const res = await fetch(`${process.env.API_URL}/api/category/`);
+  const res = await fetch(`${API_URL}/api/category/`);
   const category = await res.json();
   return {
     category

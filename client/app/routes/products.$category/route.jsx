@@ -3,8 +3,10 @@ import { Typography, Grid } from '@mui/material';
 
 import ProductList from '~/components/product-list';
 
+import { API_URL } from '~/config';
+
 export const loader = async ()=>{
-  const res = await fetch(`${process.env.API_URL}/api/products/`);
+  const res = await fetch(`${API_URL}/api/products/`);
   const products = await res.json();
 
   return {products}

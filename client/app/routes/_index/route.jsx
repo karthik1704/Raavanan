@@ -4,6 +4,8 @@ import {Box, Grid} from '@mui/material';
 import Carousel from '~/components/carousel';
 import slideshow from 'react-slideshow-image/dist/styles.css';
 
+import { API_URL } from '~/config';
+
 export const links = ()=>(
     [
         { rel: 'stylesheet', href: slideshow },
@@ -11,7 +13,7 @@ export const links = ()=>(
 )
 
 export const loader = async () => {
-  const res = await fetch(`${process.env.API_URL}/api/banner/`);
+  const res = await fetch(`${API_URL}/api/banner/`);
   const banner = await res.json()
   return {banner}
 }
