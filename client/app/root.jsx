@@ -74,7 +74,7 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import { light as theme } from '~/mui/theme';
 import ClientStyleContext from '~/mui/ClientStyleContext';
 
-import { API_URL } from '~/config';
+import { API_URL, GA_TRACKING_ID } from '~/config';
 import * as gtag from "~/utils/gtags.client";
 
 import Nav from '~/components/nav';
@@ -92,7 +92,7 @@ export const loader = async () => {
 
   return {
     category,
-    gaTrackingId: process.env.GA_TRACKING_ID
+    gaTrackingId: GA_TRACKING_ID
   };
 };
 
