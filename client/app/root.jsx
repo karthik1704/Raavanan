@@ -66,6 +66,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
+  useLoaderData,
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
@@ -73,6 +75,7 @@ import { light as theme } from '~/mui/theme';
 import ClientStyleContext from '~/mui/ClientStyleContext';
 
 import { API_URL } from '~/config';
+import * as gtag from "~/utils/gtags.client";
 
 import Nav from '~/components/nav';
 import Footer from '~/components/footer';
@@ -85,13 +88,26 @@ export const links = () => [
 export const loader = async () => {
   const res = await fetch(`${API_URL}/api/category/`);
   const category = await res.json();
+
+
   return {
-    category
+    category,
+    gaTrackingId: process.env.GA_TRACKING_ID
   };
 };
 
+// G-783HZEMX30
+
 const Document = withEmotionCache(({ children, title }, emotionCache) => {
   const clientStyleData = React.useContext(ClientStyleContext);
+  const location = useLocation();
+  const { gaTrackingId } = useLoaderData();
+
+  React.useEffect(() => {
+    if (gaTrackingId?.length) {
+      gtag.pageview(location.pathname, gaTrackingId);
+    }
+  }, [location, gaTrackingId]);
 
   // Only executed on client
   useEnhancedEffect(() => {
@@ -115,7 +131,33 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content={theme.palette.primary.main} />
-        {/* {title ? <title>{title}</title> : null} */}
+
+        {process.env.NODE_ENV === "development" || !gaTrackingId ? null : (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+            />
+            <script
+              async
+              id="gtag-init"
+              dangerouslySetInnerHTML={{
+                __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '${gaTrackingId}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+              }}
+            />
+          </>
+        )}
+
+
+
         <Meta />
         <Links />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
