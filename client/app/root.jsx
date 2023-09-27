@@ -104,6 +104,7 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
   const { gaTrackingId } = useLoaderData();
 
   React.useEffect(() => {
+    console.log(gaTrackingId);
     if (gaTrackingId?.length) {
       gtag.pageview(location.pathname, gaTrackingId);
     }
