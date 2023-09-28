@@ -96,7 +96,6 @@ export const loader = async () => {
   };
 };
 
-// G-783HZEMX30
 
 const Document = withEmotionCache(({ children, title }, emotionCache) => {
   const clientStyleData = React.useContext(ClientStyleContext);
@@ -104,7 +103,6 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
   const { gaTrackingId } = useLoaderData();
 
   React.useEffect(() => {
-    console.log(gaTrackingId);
     if (gaTrackingId?.length) {
       gtag.pageview(location.pathname, gaTrackingId);
     }
