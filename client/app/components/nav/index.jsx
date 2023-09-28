@@ -1,4 +1,4 @@
-import {  useState,  useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useLoaderData, Link, useNavigate } from '@remix-run/react';
 import { styled, alpha } from '@mui/material/styles';
 import {
@@ -28,15 +28,10 @@ import LockIcon from '@mui/icons-material/Lock';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-
-
-
 import AppDrawer from './drawer';
 
-
-import RavananLogo from '~/assets/raavanan logo png.png';
+import { logo as RavananLogo } from '~/assets';
 import { SettingsInputComponentOutlined } from '@mui/icons-material';
-
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -100,8 +95,8 @@ export default function Nav() {
 
   const [anchors, setAnchors] = useState(anchors_dict);
 
-  const {category} = useLoaderData();
-  
+  const { category } = useLoaderData();
+
   const anchorRef = useRef(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -114,7 +109,6 @@ export default function Nav() {
     setIsMenuOpen(false);
   };
 
-
   const handleClose = (event) => {
     setAnchors(anchors_dict);
     setAnchorEl(null);
@@ -124,10 +118,6 @@ export default function Nav() {
       return;
     }
   };
-
-
-
- 
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -143,7 +133,6 @@ export default function Nav() {
       <MenuItem component={Link} to="/orders">
         அடைவுகள்
       </MenuItem>
-    
     </Menu>
   );
 
@@ -189,17 +178,20 @@ export default function Nav() {
             }}
             color="inherit"
             aria-label="open drawer"
-            onClick={() => setOpen(true) }
+            onClick={() => setOpen(true)}
             size="large"
           >
             <MenuIcon />
           </IconButton>
 
-          <Link to="/" style={{ width: '100%', textAlign: 'center' }}>
-            <img src={RavananLogo} alt="logo" height="40px" width="200px" />
+          <Link
+            to="/"
+            style={{ width: '100%', textAlign: 'center', paddingTop: '6px' }}
+          >
+            <img src={RavananLogo} alt="logo" height="80px" width="50px" />
           </Link>
 
-          <Search sx={{ display: { xs: 'none', sm: 'flex' } }}>
+          {/* <Search sx={{ display: { xs: 'none', sm: 'flex' } }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -208,9 +200,9 @@ export default function Nav() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }} /> */}
 
-          <Box
+          {/* <Box
             sx={{
               display: {
                 xs: 'none',
@@ -221,11 +213,11 @@ export default function Nav() {
               justifyContent: 'flex-end',
             }}
           >
-           
+           Login , Cart
 
-          </Box>
+          </Box> */}
         </Toolbar>
-        <Toolbar
+        {/* <Toolbar
           sx={{
             display: {
               sm: 'flex',
@@ -240,8 +232,8 @@ export default function Nav() {
           // className={`${classes.sectionMobile} ${classes.centeroptionbar} `}
         >
           
-        </Toolbar>
-        <Toolbar
+        </Toolbar> */}
+        {/* <Toolbar
           sx={{ display: { xs: 'flex', sm: 'none' }, justifyContent: 'center' }}
         >
           <Search>
@@ -253,7 +245,7 @@ export default function Nav() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-        </Toolbar>
+        </Toolbar> */}
 
         <Toolbar
           sx={{
@@ -264,7 +256,6 @@ export default function Nav() {
           }}
         >
           <div>
-           
             <Button
               color="inherit"
               component={Link}
@@ -299,8 +290,6 @@ export default function Nav() {
               தொடர்புக்கு
             </Button>
           </div>
-
-        
         </Toolbar>
 
         <Toolbar
@@ -313,37 +302,163 @@ export default function Nav() {
         >
           <div style={{ width: '100%' }}>
             <Grid container spacing={0.1}>
-              {category && category.map((menu, index) => {
-                return menu?.children?.length > 0 ? (
-                  <Grid item xs={1.5} sm={1.5} key={menu.id}>
-                    <Box
-                      xs={3}
-                      sm={3}
-                      sx={{
-                        p: 1,
-                        gap: 1,
-                      }}
-                    >
-                      <Item
-                        key={index}
-                        elevation={24}
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          height: 'auto',
+              {category &&
+                category.map((menu, index) => {
+                  return menu?.children?.length > 0 ? (
+                    <Grid item xs={1.5} sm={1.5} key={menu.id}>
+                      <Box
+                        xs={3}
+                        sm={3}
+                        sx={{
+                          p: 1,
+                          gap: 1,
                         }}
                       >
-                        <img
-                          src={menu.imageurl}
-                          style={{ width: '40px', height: '40px' }}
-                          alt={menu.name}
-                        />
-                        <span
+                        <Item
+                          key={index}
+                          elevation={24}
                           style={{
-                            lineHeight: '0px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            height: 'auto',
                           }}
                         >
+                          <Link to={`/${menu.slug}`}>
+                            <img
+                              src={menu.imageurl}
+                              style={{ width: '40px', height: '40px' }}
+                              alt={menu.name}
+                            />
+                          </Link>
+                          <span
+                            style={{
+                              lineHeight: '0px',
+                            }}
+                          >
+                            <Button
+                              color="inherit"
+                              component={Link}
+                              sx={{
+                                background: 'none !important',
+                                fontSize: '11px !important',
+                                padding: '0px !important',
+                                color: 'white',
+                                marginTop: '2px',
+                                '&:hover': {
+                                  color: 'yellow !important',
+                                },
+                              }}
+                              to={`/${menu.slug}`}
+                            >
+                              {menu.name}
+                            </Button>
+
+                            <Button
+                              color="inherit"
+                              size="small"
+                              aria-controls={
+                                isMenuOpen ? 'split-button-menu' : undefined
+                              }
+                              aria-expanded={isMenuOpen ? 'true' : undefined}
+                              aria-label="select merge strategy"
+                              aria-haspopup="menu"
+                              sx={{
+                                background: 'none !important',
+                                fontSize: '11px !important',
+                                padding: '0px !important',
+                                color: 'white',
+                                marginTop: '2px',
+                                minWidth: '20px',
+                                '&:hover': {
+                                  color: 'yellow !important',
+                                },
+                              }}
+                              onClick={(e) => handleToggle(menu.name, e)}
+                            >
+                              <ArrowDropDownIcon />
+                            </Button>
+                          </span>
+                          <Popper
+                            open={anchors[menu.name]}
+                            anchorEl={anchorEl}
+                            role={undefined}
+                            placement="bottom-start"
+                            transition
+                          >
+                            {({ TransitionProps, placement }) => (
+                              <Grow
+                                {...TransitionProps}
+                                style={{
+                                  transformOrigin:
+                                    placement === 'bottom'
+                                      ? 'left top'
+                                      : 'left bottom',
+                                }}
+                              >
+                                <Paper
+                                  sx={{ background: '#232f3e !important' }}
+                                >
+                                  <ClickAwayListener onClickAway={handleClose}>
+                                    <MenuList id="split-button-menu">
+                                      {menu.children.map((option, index1) => {
+                                        return (
+                                          <MenuItem
+                                            sx={{
+                                              background: '#232f3e !important',
+                                              fontSize: '12px !important',
+                                              color: 'white',
+                                              '&:hover': {
+                                                color: 'yellow !important',
+                                              },
+                                            }}
+                                            key={option.name}
+                                            component={Link}
+                                            to={`products/${option.slug}`}
+                                            onClick={(event) =>
+                                              handleMenuItemClick(menu.name)
+                                            }
+                                          >
+                                            {option.name}
+                                          </MenuItem>
+                                        );
+                                      })}
+                                    </MenuList>
+                                  </ClickAwayListener>
+                                </Paper>
+                              </Grow>
+                            )}
+                          </Popper>
+                        </Item>
+                      </Box>
+                    </Grid>
+                  ) : (
+                    <Grid item xs={1.5} sm={1.5} key={menu.id}>
+                      <Box
+                        xs={3}
+                        sm={3}
+                        sx={{
+                          p: 1,
+                          gap: 1,
+                        }}
+                      >
+                        <Item
+                          key={index}
+                          elevation={24}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            height: 'auto',
+                          }}
+                        >
+                           <Link to={`/${menu.slug}`} style={{lineHeight:'0px'}}>
+                            <img
+                              src={menu.imageurl}
+                              style={{ width: '40px', height: '40px' }}
+                              alt={menu.name}
+                            />
+                          </Link>
                           <Button
                             color="inherit"
                             component={Link}
@@ -357,147 +472,23 @@ export default function Nav() {
                                 color: 'yellow !important',
                               },
                             }}
-                            to={`/${menu.slug}`}
+                            to={`products/${menu.slug}`}
                           >
                             {menu.name}
                           </Button>
-                         
-                          <Button
-                            color="inherit"
-                            size="small"
-                            aria-controls={
-                              isMenuOpen ? 'split-button-menu' : undefined
-                            }
-                            aria-expanded={isMenuOpen ? 'true' : undefined}
-                            aria-label="select merge strategy"
-                            aria-haspopup="menu"
-                            sx={{
-                              background: 'none !important',
-                              fontSize: '11px !important',
-                              padding: '0px !important',
-                              color: 'white',
-                              marginTop: '2px',
-                              minWidth: '20px',
-                              '&:hover': {
-                                color: 'yellow !important',
-                              },
-                            }}
-                            onClick={(e) => handleToggle(menu.name, e)}
-                          >
-                            <ArrowDropDownIcon />
-                          </Button>
-                        </span>
-                        <Popper
-                          open={anchors[menu.name]}
-                          anchorEl={anchorEl}
-                          role={undefined}
-                          placement="bottom-start"
-                          transition
-                        >
-                          {({ TransitionProps, placement }) => (
-                            <Grow
-                              {...TransitionProps}
-                              style={{
-                                transformOrigin:
-                                  placement === 'bottom'
-                                    ? 'left top'
-                                    : 'left bottom',
-                              }}
-                            >
-                              <Paper sx={{ background: '#232f3e !important' }}>
-                                <ClickAwayListener onClickAway={handleClose}>
-                                  <MenuList id="split-button-menu">
-                                    {menu.children.map((option, index1) => {
-                                      return (
-                                        <MenuItem
-                                          sx={{
-                                            background: '#232f3e !important',
-                                            fontSize: '12px !important',
-                                            color: 'white',
-                                            '&:hover': {
-                                              color: 'yellow !important',
-                                            },
-                                          }}
-                                          key={option.name}
-                                          component={Link}
-                                          to={`products/${option.slug}`}
-                                        
-                                          onClick={(event) =>
-                                            handleMenuItemClick(menu.name)
-                                          }
-                                        >
-                                          {option.name}
-                                        </MenuItem>
-                                      );
-                                    })}
-                                  </MenuList>
-                                </ClickAwayListener>
-                              </Paper>
-                            </Grow>
-                          )}
-                        </Popper>
-                      </Item>
-                    </Box>
-                  </Grid>
-                ) : (
-                  <Grid item xs={1.5} sm={1.5} key={menu.id}>
-                    <Box
-                      xs={3}
-                      sm={3}
-                      sx={{
-                        p: 1,
-                        gap: 1,
-                      }}
-                    >
-                      <Item
-                        key={index}
-                        elevation={24}
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          height: 'auto',
-                        }}
-                      >
-                        <img
-                          src={menu.imageurl}
-                          style={{ width: '40px', height: '40px' }}
-                          alt={menu.name}
-                        />
-                        <Button
-                          color="inherit"
-                          component={Link}
-                          sx={{
-                            background: 'none !important',
-                            fontSize: '11px !important',
-                            padding: '0px !important',
-                            color: 'white',
-                            marginTop: '2px',
-                            '&:hover': {
-                              color: 'yellow !important',
-                            },
-                          }}
-                          to={`products/${menu.slug}`}
-                        >
-                          {menu.name}
-                        </Button>
-                      </Item>
-                    </Box>
-                  </Grid>
-                );
-              })}
-
-    
+                        </Item>
+                      </Box>
+                    </Grid>
+                  );
+                })}
             </Grid>
-            
           </div>
         </Toolbar>
       </AppBar>
 
       {/* {renderMenu} */}
 
-      <AppDrawer isOpen={open} setIsOpen={setOpen}
-      />
+      <AppDrawer isOpen={open} setIsOpen={setOpen} />
     </Box>
   );
 }

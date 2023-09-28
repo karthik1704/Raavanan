@@ -1,9 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
 import { styled } from '@mui/material/styles';
 
-import CarouselImage1 from '~/assets/images/banner1.jpg';
-import CarouselImage2 from '~/assets/images/banner2.jpg';
-import CarouselImage3 from '~/assets/images/banner3.jpg';
+
 
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
@@ -14,7 +12,6 @@ const StyledImg = styled('img')({
 
 const Carousel = () => {
   const { banner } = useLoaderData();
-  const slideImages = [CarouselImage1, CarouselImage2, CarouselImage3];
   return (
     <div className="slide-container">
       <Slide>

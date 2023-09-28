@@ -6,22 +6,20 @@ import ProductList from '~/components/product-list';
 import { API_URL } from '~/config';
 
 export const loader = async ({params})=>{
-  const res = await fetch(`${API_URL}/api/products/`);
-  const c_res = await fetch(`${API_URL}/api/category/`);
+  const res = await fetch(`${API_URL}/api/products/${params.category}/`);
+  const categoryRes = await fetch(`${API_URL}/api/category/{${params.category}/}`);
   const products = await res.json();
+  const category = await categoryRes.json();
 
-  return {products}
+  return {products, category}
 }
 
 export const meta = ({data, matches})=>{
-  const category = matches.find(
-    (match) => match.id === "root"
-  ).category;
-  console.log(category)
+  const category = data.category
 return [ { title: `${category?.name} | இராவணன் அங்காடி` },
 {
   property: "og:title",
-  content: "தனியுரிமைக் கொள்கைகள்",
+  content: category.name,
 },
 {
   name: "description",

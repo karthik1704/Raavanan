@@ -14,9 +14,9 @@
    */
   export const pageview = (url, trackingId) => {
     if (!window.gtag) {
-      console.warn(
-        "window.gtag is not defined. This could mean your google analytics script has not loaded on the page yet.",
-      );
+      // console.warn(
+      //   "window.gtag is not defined. This could mean your google analytics script has not loaded on the page yet.",
+      // );
       return;
     }
     window.gtag("config", trackingId, {
@@ -35,9 +35,9 @@
     value,
   }) => {
     if (!window.gtag) {
-      console.warn(
-        "window.gtag is not defined. This could mean your google analytics script has not loaded on the page yet.",
-      );
+      // console.warn(
+      //   "window.gtag is not defined. This could mean your google analytics script has not loaded on the page yet.",
+      // );
       return;
     }
     window.gtag("event", action, {
