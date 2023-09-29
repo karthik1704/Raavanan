@@ -7,7 +7,7 @@ import { API_URL } from '~/config';
 
 export const loader = async ({params})=>{
   const res = await fetch(`${API_URL}/api/products/${params.category}/`);
-  const categoryRes = await fetch(`${API_URL}/api/category/{${params.category}/}`);
+  const categoryRes = await fetch(`${API_URL}/api/category/${params.category}/`);
   const products = await res.json();
   const category = await categoryRes.json();
 

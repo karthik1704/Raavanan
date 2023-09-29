@@ -452,7 +452,7 @@ export default function Nav() {
                             height: 'auto',
                           }}
                         >
-                           <Link to={`/${menu.slug}`} style={{lineHeight:'0px'}}>
+                           <Link to={`products/${menu.slug}`} style={{lineHeight:'0px'}}>
                             <img
                               src={menu.imageurl}
                               style={{ width: '40px', height: '40px' }}
