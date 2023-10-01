@@ -6,8 +6,12 @@ import ProductList from '~/components/product-list';
 import { API_URL } from '~/config';
 
 export const loader = async ({params})=>{
-  const res = await fetch(`${API_URL}/api/products/variants/${params.category}/`);
-  const categoryRes = await fetch(`${API_URL}/api/category/${params.category}/`);
+  const res = await fetch(`${API_URL}/api/products/variants/${params.category}/`, {
+    headers: { connection: "keep-alive" } 
+  });
+  const categoryRes = await fetch(`${API_URL}/api/category/${params.category}/`, {
+    headers: { connection: "keep-alive" } 
+  });
   const products = await res.json();
   const category = await categoryRes.json();
 

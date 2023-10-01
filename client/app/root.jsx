@@ -86,7 +86,7 @@ export const links = () => [
   { rel: 'stylesheet', href: IndexStyles },
 ];
 export const loader = async () => {
-  const res = await fetch(`${API_URL}/api/category/`);
+  const res = await fetch(`${API_URL}/api/category/`, {headers: { connection: "keep-alive" } });
   const category = await res.json();
 
 

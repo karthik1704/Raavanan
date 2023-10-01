@@ -28,7 +28,7 @@ import imageGalleryStyles from 'react-image-gallery/styles/css/image-gallery.css
 import { API_URL } from '~/config';
 
 export const loader = async ({ params }) => {
-  const res = await fetch(`${API_URL}/api/products/detail/${params.id}`);
+  const res = await fetch(`${API_URL}/api/products/detail/${params.id}`, {headers: { connection: "keep-alive" } });
   const product = await res.json();
 
   return {
