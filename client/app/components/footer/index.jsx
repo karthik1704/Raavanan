@@ -59,7 +59,7 @@ export default function FixedContainer() {
               <Grid item xs={12} sm={12} xl={12} md={12}>
                 <div className="Footer_copywrites">
                   <p className="footer_copy_title">
-                    Copyright © 2021 Raavanan. All Rights Reserved
+                    Copyright © 2023 Raavanan. All Rights Reserved
                   </p>
                 </div>
               </Grid>

@@ -22,12 +22,41 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { green } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 
-
-
-
 import ImageGallery from 'react-image-gallery';
 
-import imageGalleryStyles from  'react-image-gallery/styles/css/image-gallery.css';
+import imageGalleryStyles from 'react-image-gallery/styles/css/image-gallery.css';
+import { API_URL } from '~/config';
+
+export const loader = async ({ params }) => {
+  const res = await fetch(`${API_URL}/api/products/detail/${params.id}`);
+  const product = await res.json();
+
+  return {
+    product,
+  };
+};
+
+export const meta = ({ data }) => {
+  const { product } = data;
+
+  return [
+    { title: `${product.selected.title} | இராவணன் அங்காடி` },
+    {
+      property: 'og:title',
+      content: product.selected.title,
+    },
+    {
+      name: 'description',
+      content: product?.description,
+    },
+    {
+      name: 'og:description',
+      content: product?.description,
+    },
+  ];
+};
+
+export const links = () => [{ rel: 'stylesheet', href: imageGalleryStyles }];
 
 const RootDiv = styled('div')(({ theme }) => ({
   margin: theme.spacing(2),
@@ -36,19 +65,9 @@ const RootDiv = styled('div')(({ theme }) => ({
   },
 }));
 
-export const loader = async ()=>{
-  return {
-    product:{}
-  }
-}
-
-export const links = ()=>([
-  {rel:'stylesheet', href:imageGalleryStyles}
-])
-
 export default function Product() {
-  const {product} = useLoaderData();
- 
+  const { product } = useLoaderData();
+
   return (
     <RootDiv>
       {product && (
@@ -65,9 +84,8 @@ export default function Product() {
               }}
             >
               <div>
-                
                 <ImageGallery
-                  items={product.product_images}
+                  items={product.selected.variant_images}
                   thumbnailPosition={'left'}
                   showFullscreenButton={false}
                   showPlayButton={false}
@@ -79,20 +97,20 @@ export default function Product() {
             </Grid>
             <Grid item xs={12} md={6} sx={{ p: '10px' }}>
               <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                {product.name}
+                {product.selected.title}
               </Typography>
-         
+
               <Divider />
-           
+
               <>
                 <Typography variant="subtitle1">
-                  அதிகபட்ச விற்பனை விலை: ₹ <del>{product.mrp}</del>
+                  அதிகபட்ச விற்பனை விலை: ₹ <del>{product.selected.mrp}</del>
                 </Typography>
                 <Typography variant="subtitle1">
-                  தற்போதைய விலை: ₹ <b>{product.price}</b>
+                  தற்போதைய விலை: ₹ <b>{product.selected.price}</b>
                 </Typography>
                 <Divider />
-                <FormControl component="fieldset">
+                {/* <FormControl component="fieldset">
                   {product.price.length > 1 && (
                     <FormLabel component="legend" color="secondary">
                       அளவைத் தேர்ந்தெடுக்கவும் (அங்குலங்களில்)
@@ -108,7 +126,8 @@ export default function Product() {
                     {product.price
                       .filter((price) => price.types !== null)
                       .map((price) => (
-                        <FormControlLabel key={price.id}
+                        <FormControlLabel
+                          key={price.id}
                           value={price.types}
                           control={<Radio color="primary" />}
                           label={price.types}
@@ -116,7 +135,7 @@ export default function Product() {
                         />
                       ))}
                   </RadioGroup>
-                </FormControl>
+                </FormControl> */}
               </>
 
               <div>
@@ -143,63 +162,31 @@ export default function Product() {
                   component={Link}
                   to={{
                     pathname: `/${product.id}/waorder`,
-                    
                   }}
+                  sx={{ my: '1rem' }}
                 >
                   பொருளை வாங்க
                 </Button>
                 <br />
               </div>
               <Divider />
-              <Typography variant="body2">
-                {product.description}
-              </Typography>
+              <Typography variant="body2">{product.description}</Typography>
               <Divider />
-              <Typography variant="h6">பொருள் விவரங்கள் </Typography>
-              <Table size="small" aria-label="Product Detail table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>தயாரிப்பு</TableCell>
-                    <TableCell>{product.manufacturer}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>வியாபாரக் குறி</TableCell>
-
-                    <TableCell>{product.brand}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>தகுதியான சாதனங்கள்</TableCell>
-                    <TableCell>{product.supported_devices}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>எண்ணிக்கை </TableCell>
-
-                    <TableCell>{product.quantity}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>மூலப்பொருள் </TableCell>
-                    <TableCell>
-                      {product.materials &&
-                        product.materials.map((material) => (
-                          <span key={material.id}>
-                            {' '}
-                            {material.material_name}{' '}
-                          </span>
-                        ))}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>வகை </TableCell>
-                    <TableCell>
-                      {product.category && product.category.name}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>தோற்றம் </TableCell>
-                    <TableCell>{product.origin}</TableCell>
-                  </TableRow>
-                </TableHead>
-              </Table>
+              {product?.selected?.variant_spec && (
+                <>
+                  <Typography variant="h6">பொருள் விவரங்கள் </Typography>
+                  <Table size="small" aria-label="Product Detail table">
+                    <TableHead>
+                      {product.selected.variant_spec.map((spec) => (
+                        <TableRow key={spec.id}>
+                          <TableCell>{spec.key}</TableCell>
+                          <TableCell>{spec.value}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableHead>
+                  </Table>{' '}
+                </>
+              )}
             </Grid>
           </Grid>
         </div>
@@ -207,4 +194,3 @@ export default function Product() {
     </RootDiv>
   );
 }
-

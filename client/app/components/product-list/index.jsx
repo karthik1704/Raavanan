@@ -8,12 +8,12 @@ import {
   CardActionArea,
   Grid,
   Typography,
+  Skeleton,
 } from '@mui/material';
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { Link } from '@remix-run/react';
-
 
 import { styled } from '@mui/material/styles';
 
@@ -27,11 +27,10 @@ const CenterContent = styled('div')(({ theme }) => ({
 const Img = styled('img')('');
 
 const ProductList = ({ products }) => {
-
   return (
     <>
-      {products && products.map((product, i) => {
-        return (
+      {products &&
+        products.map((product, i) => (
           <Grid item xs={6} sm={4} md={3} xl={3} key={i}>
             <Card
               sx={{
@@ -40,45 +39,50 @@ const ProductList = ({ products }) => {
             >
               <CardActionArea
                 component={Link}
-                to={`/product/${product?.product_id ? product?.product_id : product?.id}`}
+                to={`/product/${product?.variant_id}`}
               >
-                {product['price']?.length > 0 &&
-                  product.price[0]?.discount !== 0 && (
-                    <Badge
-                      anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                      }}
-                      color="primary"
-                      overlap="circular"
-                      badgeContent={`${product.price[0]?.discount}%`}
-                      variant="standard"
-                      sx={{
-                        borderRadius: '50%',
-                        left: '6%',
-                        display: 'contents',
-                      }}
-                    ></Badge>
-                  )}
+                {product.price && product.discount !== '0' && (
+                  <Badge
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    color="primary"
+                    overlap="circular"
+                    badgeContent={`${product?.discount_percentage}%`}
+                    variant="standard"
+                    sx={{
+                      borderRadius: '50%',
+                      left: '6%',
+                      display: 'contents',
+                    }}
+                  ></Badge>
+                )}
 
                 <CenterContent>
-                  <Img
-                    src={product?.image ? product.image : product?.product_images[0]?.image}
-                    alt={product.name}
-                    sx={{
-                      mt: '5px',
-                      pt: 1.2,
-                      pr: 1.2,
-                      width: {
-                        xs: '150px',
-                        md: '200px',
-                      },
-                      height: {
-                        xs: '150px',
-                        md: '200px',
-                      },
-                    }}
-                  />
+                  {product?.image || product?.product_image ? (
+                    <Img
+                      src={
+                        product?.image ? product.image : product?.product_image
+                      }
+                      alt={product.title}
+                      sx={{
+                        mt: '5px',
+                        pt: 1.2,
+                        pr: 1.2,
+                        width: {
+                          xs: '150px',
+                          md: '200px',
+                        },
+                        height: {
+                          xs: '150px',
+                          md: '200px',
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Skeleton variant="rectangular" width={200} height={200} />
+                  )}
                 </CenterContent>
                 <CardContent
                   sx={{
@@ -97,7 +101,7 @@ const ProductList = ({ products }) => {
                       fontSize: '12px',
                     }}
                   >
-                    {product.product_name}
+                    {product.title}
                   </Typography>
                   <Typography
                     sx={{
@@ -108,10 +112,10 @@ const ProductList = ({ products }) => {
                     variant="subtitle1"
                     color="textPrimary"
                   >
-                    {product['price']?.length > 0 && (
+                    {product?.price && (
                       <span>
                         {' '}
-                        ₹ {product.price[0].price} - &nbsp;
+                        ₹ {product.price} - &nbsp;
                         <Box
                           component="span"
                           sx={{
@@ -119,19 +123,16 @@ const ProductList = ({ products }) => {
                             fontSize: '11px',
                           }}
                         >
-                          ₹ {product?.price[0]?.mrp}
+                          ₹ {product?.mrp}
                         </Box>
                       </span>
                     )}
-
                   </Typography>
                 </CardContent>
               </CardActionArea>
-
             </Card>
           </Grid>
-        );
-      })}
+        ))}
     </>
   );
 };

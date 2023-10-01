@@ -6,7 +6,7 @@ import ProductList from '~/components/product-list';
 import { API_URL } from '~/config';
 
 export const loader = async ({params})=>{
-  const res = await fetch(`${API_URL}/api/products/${params.category}/`);
+  const res = await fetch(`${API_URL}/api/products/variants/${params.category}/`);
   const categoryRes = await fetch(`${API_URL}/api/category/${params.category}/`);
   const products = await res.json();
   const category = await categoryRes.json();
@@ -23,23 +23,26 @@ return [ { title: `${category?.name} | இராவணன் அங்காட�
 },
 {
   name: "description",
-  content: `எங்களது தளத்தை பயன்படுத்துவதற்கு உங்களுக்கு நன்றி கூறிக் கொள்கிறோம்.
-  எங்களது தளத்தில் உங்களிடமிருந்து சேகரிக்கப்பட்ட தனிப்பட்ட தகவல்களை
-  நாங்கள் எவ்வாறு கையாளுகிறோம் என்பதை இந்த தனியுரிமைக் கொள்கைகள்
-  விவரிக்கிறது...`,
-},]
+  content: category?.description,
+},
+{
+  name: "og:description",
+  content: category?.description,
+},
+{
+  name: "keywords",
+  content: category?.keywords,
+},
+]
 }
 
-//     marginTop: theme.spacing(1),
-//   },
-// }));
 
 export default  function Index(){
   const {products} =  useLoaderData();
 
   return (
     <div>
-      
+      {products && 
       <Grid container sx={{ mt: 1 }}>
         <Grid item md={3} xl={3}></Grid>
         <Grid item xs={12} sm={12} md={9} xl={9}>
@@ -47,7 +50,8 @@ export default  function Index(){
               <ProductList products={products} />
             </Grid>
         </Grid>
-      </Grid>
+      </Grid>}
+      {!products && 'LOADING'}
     </div>
   );
 };
