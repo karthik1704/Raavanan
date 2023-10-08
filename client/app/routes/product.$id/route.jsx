@@ -1,6 +1,7 @@
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData, NavLink } from '@remix-run/react';
 
 import {
+  Box,
   Button,
   Grid,
   Divider,
@@ -9,6 +10,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Stack,
+  Paper,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -26,14 +29,17 @@ import ImageGallery from 'react-image-gallery';
 
 import imageGalleryStyles from 'react-image-gallery/styles/css/image-gallery.css';
 import { API_URL } from '~/config';
+import { json } from '@remix-run/node';
 
 export const loader = async ({ params }) => {
-  const res = await fetch(`${API_URL}/api/products/detail/${params.id}`, {headers: { connection: "keep-alive" } });
+  const res = await fetch(`${API_URL}/api/products/detail/${params.id}`, {
+    headers: { connection: 'keep-alive' },
+  });
   const product = await res.json();
 
-  return {
+  return json({
     product,
-  };
+  });
 };
 
 export const meta = ({ data }) => {
@@ -52,6 +58,10 @@ export const meta = ({ data }) => {
     {
       name: 'og:description',
       content: product?.description,
+    },
+    {
+      name: 'og:image',
+      content: product?.image ? product?.image : product?.selected?.image,
     },
   ];
 };
@@ -110,6 +120,37 @@ export default function Product() {
                   தற்போதைய விலை: ₹ <b>{product.selected.price}</b>
                 </Typography>
                 <Divider />
+                <Stack direction="row" spacing={2}>
+                  {product.variants &&
+                    product.variants.map((v) => (
+                      <NavLink
+                        key={v.id}
+                        to={`/product/${v.variant_id}`}
+                        style={{
+                          marginTop: '1rem',
+                          marginBottom: '1rem',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        {({ isActive, isPending }) => (
+                          <Paper
+                            variant={'outlined'}
+                            sx={{
+                              p: 2,
+                              textAlign: 'center',
+                              textDecoration: 'none',
+                              borderRadius: 2,
+                              borderColor: isActive ? green[500] : '#000',
+                              borderWidth: isActive ? 'medium' : 'thin',
+                            }}
+                          >
+                            {v?.variant_name}
+                          </Paper>
+                        )}
+                      </NavLink>
+                    ))}
+                </Stack>
+
                 {/* <FormControl component="fieldset">
                   {product.price.length > 1 && (
                     <FormLabel component="legend" color="secondary">
@@ -161,7 +202,7 @@ export default function Product() {
                   // className={classes.whatsappBtn}
                   component={Link}
                   to={{
-                    pathname: `/${product.id}/waorder`,
+                    pathname: `/product/${product?.selected?.variant_id}/waorder`,
                   }}
                   sx={{ my: '1rem' }}
                 >

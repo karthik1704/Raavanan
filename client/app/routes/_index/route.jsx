@@ -1,4 +1,4 @@
-import { useLoaderData, Outlet } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import {Box, Grid, Typography} from '@mui/material';
 
 import ProductList from "~/components/product-list";
@@ -32,11 +32,11 @@ export default function Index(){
         <div>
           <Carousel />
         </div>
-          <Typography variant="h4">Trending</Typography>
+          <Typography variant="h4" >பிரபலமான தயாரிப்புகள்</Typography>
         <Grid container sx={{ mt: 1 , mb:2}}>
           <ProductList products={trending} />
         </Grid>
-        <Typography variant="h4">New </Typography>
+        <Typography variant="h4">புதிய தயாரிப்புகள் </Typography>
         <Grid container sx={{ my: 1 }}>
 
           <ProductList products={newProduct} />

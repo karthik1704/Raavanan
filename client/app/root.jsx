@@ -184,8 +184,6 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
         />
         <link rel="apple-touch-icon" href="android-chrome-192x192.png" />
 
-        {/* <link rel="manifest" href="manifest.json" /> */}
-        <link rel="manifest" crossOrigin="use-credentials" href="manifest.json" />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;700&display=swap"

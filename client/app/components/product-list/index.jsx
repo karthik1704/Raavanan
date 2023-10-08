@@ -31,11 +31,12 @@ const ProductList = ({ products }) => {
     <>
       {products &&
         products.map((product, i) => (
-          <Grid item xs={6} sm={4} md={3} xl={3} key={i}>
+          <Grid item xs={6} sm={2} md={2} xl={2} key={i}>
             <Card
               sx={{
-                margin: 0.5,
+                gap:2
               }}
+              elevation={0}
             >
               <CardActionArea
                 component={Link}
@@ -101,7 +102,7 @@ const ProductList = ({ products }) => {
                       fontSize: '12px',
                     }}
                   >
-                    {product.title}
+                    {product.product_name}
                   </Typography>
                   <Typography
                     sx={{
