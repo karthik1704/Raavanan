@@ -95,7 +95,7 @@ export default function Product() {
             >
               <div>
                 <ImageGallery
-                  items={product.selected.variant_images}
+                  items={product.selected.variant_images ? product.selected.variant_images : product.product_images}
                   thumbnailPosition={'left'}
                   showFullscreenButton={false}
                   showPlayButton={false}
@@ -200,11 +200,15 @@ export default function Product() {
                   variant="contained"
                   startIcon={<WhatsAppIcon />}
                   // className={classes.whatsappBtn}
+                  sx={{
+                    my: '1rem',
+                    backgroundColor: green[500],
+                  }}
                   component={Link}
                   to={{
                     pathname: `/product/${product?.selected?.variant_id}/waorder`,
                   }}
-                  sx={{ my: '1rem' }}
+                 
                 >
                   பொருளை வாங்க
                 </Button>
@@ -219,6 +223,21 @@ export default function Product() {
                   <Table size="small" aria-label="Product Detail table">
                     <TableHead>
                       {product.selected.variant_spec.map((spec) => (
+                        <TableRow key={spec.id}>
+                          <TableCell>{spec.key}</TableCell>
+                          <TableCell>{spec.value}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableHead>
+                  </Table>{' '}
+                </>
+              )}
+                {!product?.selected?.variant_spec && product?.product_spec && (
+                <>
+                  <Typography variant="h6">பொருள் விவரங்கள் </Typography>
+                  <Table size="small" aria-label="Product Detail table">
+                    <TableHead>
+                      {product.product_spec.map((spec) => (
                         <TableRow key={spec.id}>
                           <TableCell>{spec.key}</TableCell>
                           <TableCell>{spec.value}</TableCell>

@@ -3,6 +3,7 @@ import {
   Box,
   Badge,
   Card,
+  CardMedia,
   CardContent,
   CardActions,
   CardActionArea,
@@ -34,7 +35,7 @@ const ProductList = ({ products }) => {
           <Grid item xs={6} sm={2} md={2} xl={2} key={i}>
             <Card
               sx={{
-                gap:2
+                maxWidth:'200px',
               }}
               elevation={0}
             >
@@ -46,7 +47,7 @@ const ProductList = ({ products }) => {
                   <Badge
                     anchorOrigin={{
                       vertical: 'top',
-                      horizontal: 'left',
+                      horizontal: 'right',
                     }}
                     color="primary"
                     overlap="circular"
@@ -60,31 +61,25 @@ const ProductList = ({ products }) => {
                   ></Badge>
                 )}
 
-                <CenterContent>
+                <
+                  Box
+                >
                   {product?.image || product?.product_image ? (
-                    <Img
-                      src={
-                        product?.image ? product.image : product?.product_image
-                      }
-                      alt={product.title}
-                      sx={{
-                        mt: '5px',
-                        pt: 1.2,
-                        pr: 1.2,
-                        width: {
-                          xs: '150px',
-                          md: '200px',
-                        },
-                        height: {
-                          xs: '150px',
-                          md: '200px',
-                        },
-                      }}
-                    />
+                    
+                    <CardMedia
+                    component="img"
+                    alt={product.title}
+                    height="200"
+                    image={
+                      product?.image ? product.image : product?.product_image
+                    }
+                  />
+                    
+                    
                   ) : (
                     <Skeleton variant="rectangular" width={200} height={200} />
                   )}
-                </CenterContent>
+                </Box>
                 <CardContent
                   sx={{
                     padding: '0.5rem auto',
