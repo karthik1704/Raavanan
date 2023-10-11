@@ -95,7 +95,7 @@ export default function Product() {
             >
               <div>
                 <ImageGallery
-                  items={product.selected.variant_images ? product.selected.variant_images : product.product_images}
+                  items={product.selected.variant_images.length ? product.selected.variant_images : product.product_images}
                   thumbnailPosition={'left'}
                   showFullscreenButton={false}
                   showPlayButton={false}
@@ -203,6 +203,9 @@ export default function Product() {
                   sx={{
                     my: '1rem',
                     backgroundColor: green[500],
+                    '&:hover':{
+                      backgroundColor: green[700],
+                    }
                   }}
                   component={Link}
                   to={{
@@ -217,7 +220,7 @@ export default function Product() {
               <Divider />
               <Typography variant="body2">{product.description}</Typography>
               <Divider />
-              {product?.selected?.variant_spec && (
+              {product?.selected?.variant_spec.legnth ? (
                 <>
                   <Typography variant="h6">பொருள் விவரங்கள் </Typography>
                   <Table size="small" aria-label="Product Detail table">
@@ -230,9 +233,9 @@ export default function Product() {
                       ))}
                     </TableHead>
                   </Table>{' '}
-                </>
-              )}
-                {!product?.selected?.variant_spec && product?.product_spec && (
+                </>)
+              :
+                 product?.product_spec.length ? (
                 <>
                   <Typography variant="h6">பொருள் விவரங்கள் </Typography>
                   <Table size="small" aria-label="Product Detail table">
@@ -246,7 +249,7 @@ export default function Product() {
                     </TableHead>
                   </Table>{' '}
                 </>
-              )}
+              ): null}
             </Grid>
           </Grid>
         </div>

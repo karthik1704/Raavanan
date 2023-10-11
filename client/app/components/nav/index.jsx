@@ -32,7 +32,7 @@ import AppDrawer from './drawer';
 
 import { logo as RavananLogo } from '~/assets';
 import { SettingsInputComponentOutlined } from '@mui/icons-material';
-import { green } from '@mui/material/colors';
+import { green, blue } from '@mui/material/colors';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -165,7 +165,7 @@ export default function Nav() {
         // color={theme === 'dark' ? 'inherit' : 'primary'}
         sx={{
           // background: '#131921',
-          background: green[900],
+          background: green['900'],
         }}
       >
         <Toolbar>
@@ -399,7 +399,7 @@ export default function Nav() {
                                 }}
                               >
                                 <Paper
-                                  sx={{ background: '#232f3e !important' }}
+                                  sx={{ background: '#232f3e !important' ,}}
                                 >
                                   <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList id="split-button-menu">
@@ -442,25 +442,38 @@ export default function Nav() {
                         sx={{
                           p: 1,
                           gap: 1,
+                         
                         }}
-                      >
+                      ><Link to={`products/${menu.slug}`} style={{lineHeight:'0px', textDecoration:'none'}} >
                         <Item
                           key={index}
                           elevation={24}
+                          variant='outline'
                           style={{
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                             height: 'auto',
+                            
+                          }}
+                          sx={{
+                            mb: 1,
+                            border:'1px  #232f3e solid',
+                            backgroundColor: ['sea-foods', 'dress'].includes(menu.slug) ? blue['A200']: '#232f3e',
+                            '&:hover': {
+                              borderColor: 'yellow',
+                              color: 'yellow'
+                             
+                            },
                           }}
                         >
-                           <Link to={`products/${menu.slug}`} style={{lineHeight:'0px'}}>
+                           
                             <img
                               src={menu.imageurl}
                               style={{ width: '40px', height: '40px' }}
                               alt={menu.name}
                             />
-                          </Link>
+                         
                           <Button
                             color="inherit"
                             component={Link}
@@ -476,9 +489,10 @@ export default function Nav() {
                             }}
                             to={`products/${menu.slug}`}
                           >
-                            {menu.name}
+                            {menu.name} 
                           </Button>
                         </Item>
+                        </Link>
                       </Box>
                     </Grid>
                   );
