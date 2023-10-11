@@ -12,6 +12,7 @@ const StyledImg = styled('img')({
 
 const Carousel = () => {
   const { banner } = useLoaderData();
+  if (!banner) return null;
   return (
     <div className="slide-container">
       <Slide>

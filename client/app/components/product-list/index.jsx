@@ -32,16 +32,25 @@ const ProductList = ({ products }) => {
     <>
       {products &&
         products.map((product, i) => (
-          <Grid item xs={6} sm={2} md={2} xl={2} key={i}>
+          <Grid item xs={6} sm={2} md={2} xl={2} key={i} sx={{ ml: 2, gap: 2 }}>
             <Card
+              key={i}
               sx={{
-                maxWidth:'200px',
+                gap: 2,
+                maxWidth: '140px',
               }}
               elevation={0}
             >
               <CardActionArea
                 component={Link}
                 to={`/product/${product?.variant_id}`}
+                sx={{
+                  '&:hover ': {
+                    backgroundColor: '#fff',
+                  },
+                  '&:focus': {
+                    backgroundColor: 'white',}
+                }}
               >
                 {product.price && product.discount !== '0' && (
                   <Badge
@@ -51,22 +60,25 @@ const ProductList = ({ products }) => {
                     }}
                     color="primary"
                     overlap="circular"
-                    badgeContent={`${product?.discount_percentage}%`}
+                    // badgeContent={`${product?.discount_percentage}%`}
+                    badgeContent={`10%`}
                     variant="standard"
                     sx={{
                       borderRadius: '50%',
-                      left: '6%',
+                      right: '6%',
                       display: 'contents',
                     }}
                   ></Badge>
                 )}
 
-                <
-                  Box
-                >
-                  {product?.image || product?.product_image ? (
-                    
-                    <CardMedia
+                {product?.image || product?.product_image ? (
+                  <CardMedia
+                    sx={{
+                      aspectRatio: 'unset',
+                      maxWidth: '140px',
+                      borderRadius: 2,
+                      overflow: 'hidden',
+                    }}
                     component="img"
                     alt={product.title}
                     height="200"
@@ -74,32 +86,30 @@ const ProductList = ({ products }) => {
                       product?.image ? product.image : product?.product_image
                     }
                   />
-                    
-                    
-                  ) : (
-                    <Skeleton variant="rectangular" width={200} height={200} />
-                  )}
-                </Box>
+                ) : (
+                  <Skeleton variant="rectangular" width={200} height={200} />
+                )}
+
                 <CardContent
                   sx={{
-                    padding: '0.5rem auto',
+                    p: 0.5,
+                    '&:hover': {
+                      backgroundColor: '#fff',
+                    },
                   }}
                 >
                   <Typography
                     variant="body1"
                     color="textPrimary"
                     sx={{
-                      textAlign: 'center',
-                      // fontSize: { sm: '0.6rem', md: '12px' },
-                      marginBottom: '1px',
-                      // fontWeight: { sm: 600, md: 'bold' },
+                      my: '5px',
+                      fontSize: '11px',
                       fontWeight: 'bold',
-                      fontSize: '12px',
                     }}
                   >
-                    {product.product_name}
+                    {product.short_name}
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     sx={{
                       textAlign: 'center',
                       fontWeight: 500,
@@ -123,7 +133,7 @@ const ProductList = ({ products }) => {
                         </Box>
                       </span>
                     )}
-                  </Typography>
+                  </Typography>*/}
                 </CardContent>
               </CardActionArea>
             </Card>

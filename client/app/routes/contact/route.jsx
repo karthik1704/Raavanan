@@ -32,8 +32,8 @@ const Contact = () => {
       <address>
         தொலைபேசி/பகிரி : <strong>+91-7871003935</strong> <br />
         மின்னஞ்சல் :{' '}
-        <a href="mailto:care@raavananstore.com">
-          <strong>care@raavananstore.com</strong>
+        <a href="mailto:raavananstore@gmail.com">
+          <strong>raavananstore@gmail.com</strong>
         </a>
       </address>
       <p>

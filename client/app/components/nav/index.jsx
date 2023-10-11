@@ -32,6 +32,7 @@ import AppDrawer from './drawer';
 
 import { logo as RavananLogo } from '~/assets';
 import { SettingsInputComponentOutlined } from '@mui/icons-material';
+import { green } from '@mui/material/colors';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -163,7 +164,8 @@ export default function Nav() {
         position="static"
         // color={theme === 'dark' ? 'inherit' : 'primary'}
         sx={{
-          background: '#131921',
+          // background: '#131921',
+          background: green[900],
         }}
       >
         <Toolbar>
@@ -188,7 +190,7 @@ export default function Nav() {
             to="/"
             style={{ width: '100%', textAlign: 'center', paddingTop: '6px' }}
           >
-            <img src={RavananLogo} alt="logo" height="80px" width="50px" />
+            <img src={RavananLogo} alt="logo" height="80" width="80" />
           </Link>
 
           {/* <Search sx={{ display: { xs: 'none', sm: 'flex' } }}>

@@ -28,7 +28,7 @@ export default function FixedContainer() {
                   <h5 className="first_block_title">Contacts</h5>
                   <ul className="first_block_list">
                     <li>தொலைபேசி/பகிரி : +91-7871003935</li>
-                    <li> மின்னஞ்சல் : care@raavananstore.com</li>
+                    <li> மின்னஞ்சல் : raavananstore@gmail.com</li>
                   </ul>
                 </div>
               </Grid>
