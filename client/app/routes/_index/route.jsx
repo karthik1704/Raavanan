@@ -34,7 +34,7 @@ export default function Index() {
       <div>
         <Carousel />
       </div>
-      {trending && (
+      {trending.length && (
         <>
           {' '}
           <Typography variant="h4">பிரபலமான தயாரிப்புகள்</Typography>
@@ -43,7 +43,7 @@ export default function Index() {
           </Grid>
         </>
       )}
-      {newProduct && (
+      {newProduct.length && (
         <>
           <Typography variant="h4">புதிய தயாரிப்புகள் </Typography>
           <Grid container sx={{ my: 1 }}>

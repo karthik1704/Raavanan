@@ -32,12 +32,12 @@ const ProductList = ({ products }) => {
     <>
       {products &&
         products.map((product, i) => (
-          <Grid item xs={6} sm={2} md={2} xl={2} key={i} sx={{ ml: 2, gap: 2 }}>
+          <Grid item xs={6} sm={2} md={1.5} xl={1.5} key={i} sx={{ p:1  }}>
             <Card
               key={i}
               sx={{
-                gap: 2,
-                maxWidth: '140px',
+                gap: 1 , mb: 1,
+                maxWidth: '160px',
               }}
               elevation={0}
             >
@@ -75,13 +75,13 @@ const ProductList = ({ products }) => {
                   <CardMedia
                     sx={{
                       aspectRatio: 'unset',
-                      maxWidth: '140px',
+                      maxWidth: '160px',
                       borderRadius: 2,
                       overflow: 'hidden',
                     }}
                     component="img"
                     alt={product.title}
-                    height="200"
+                    height="220"
                     image={
                       product?.image ? product.image : product?.product_image
                     }

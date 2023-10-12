@@ -48,12 +48,7 @@ export default  function Index(){
     <div>
       {products && 
       <Grid container sx={{ mt: 1 }}>
-        <Grid item md={3} xl={3}></Grid>
-        <Grid item xs={12} sm={12} md={9} xl={9}>
-            <Grid container sx={{ mt: 1 }}>
-              <ProductList products={products} />
-            </Grid>
-        </Grid>
+        <ProductList products={products} />
       </Grid>}
       {!products && 'LOADING'}
     </div>

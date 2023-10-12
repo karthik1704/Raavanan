@@ -71,7 +71,7 @@ export const loader = async ({ params }) => {
     headers: { connection: 'keep-alive' },
   });
   const product = await res.json();
-  const resRequest = await fetch(`${API_URL}/api/request/RAV2023103/`, {
+  const resRequest = await fetch(`${API_URL}/api/request/${params.id}/`, {
     headers: { connection: 'keep-alive' },
   });
   const extras = await resRequest.json();

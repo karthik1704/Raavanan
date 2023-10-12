@@ -15,6 +15,7 @@ import {
   Menu,
   MenuList,
   Toolbar,
+  Typography,
   Paper,
   Popper,
 } from '@mui/material';
@@ -164,8 +165,8 @@ export default function Nav() {
         position="static"
         // color={theme === 'dark' ? 'inherit' : 'primary'}
         sx={{
-          // background: '#131921',
-          background: green['900'],
+          background: '#131921',
+          // background: green['900'],
         }}
       >
         <Toolbar>
@@ -459,7 +460,7 @@ export default function Nav() {
                           sx={{
                             mb: 1,
                             border:'1px  #232f3e solid',
-                            backgroundColor: ['sea-foods', 'dress'].includes(menu.slug) ? blue['A200']: '#232f3e',
+                            backgroundColor:  '#232f3e',
                             '&:hover': {
                               borderColor: 'yellow',
                               color: 'yellow'
@@ -474,9 +475,8 @@ export default function Nav() {
                               alt={menu.name}
                             />
                          
-                          <Button
+                          <Typography
                             color="inherit"
-                            component={Link}
                             sx={{
                               background: 'none !important',
                               fontSize: '11px !important',
@@ -487,10 +487,9 @@ export default function Nav() {
                                 color: 'yellow !important',
                               },
                             }}
-                            to={`products/${menu.slug}`}
                           >
                             {menu.name} 
-                          </Button>
+                          </Typography>
                         </Item>
                         </Link>
                       </Box>
