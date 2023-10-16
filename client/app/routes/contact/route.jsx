@@ -12,6 +12,11 @@ export const meta = ()=>([
     இராவணன் அங்காடியைத் தொடர்பு கொள்ள கீழ்காணும் இணைப்புகளைப்
     பயன்படுத்தவும்.`,
   },
+  {
+    tagName: "link",
+    rel: "canonical",
+    href: "https://raavananstore.com/contact/",
+  },
 ])
 
 

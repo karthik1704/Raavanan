@@ -56,7 +56,7 @@ const FormBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
 
   '& .MuiTextField-root': {
-    width: '30ch',
+    // width: '30ch',
     marginTop: theme.spacing(1),
 
     [theme.breakpoints.down('md')]: {
@@ -354,6 +354,7 @@ const WAOrder = (props) => {
                         id={`${extra.id}-${extra.request}`}
                         label={extra.request}
                         name={extra.request}
+                        helperText={extra.request}
                         type="text"
                         variant="outlined"
                         required

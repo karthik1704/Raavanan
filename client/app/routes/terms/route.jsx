@@ -13,6 +13,11 @@ export const meta = ()=>([
     நாங்கள் எவ்வாறு கையாளுகிறோம் என்பதை இந்த தனியுரிமைக் கொள்கைகள்
     விவரிக்கிறது...`,
   },
+  {
+    tagName: "link",
+    rel: "canonical",
+    href: `https://raavananstore.com/terms/`,
+  },
 ])
 
 const Terms = () => {

@@ -18,7 +18,7 @@ export const loader = async ({params})=>{
   return {products, category}
 }
 
-export const meta = ({data, matches})=>{
+export const meta = ({data, params})=>{
   const category = data.category
 return [ { title: `${category?.name} | இராவணன் அங்காடி` },
 {
@@ -36,6 +36,11 @@ return [ { title: `${category?.name} | இராவணன் அங்காட�
 {
   name: "keywords",
   content: category?.keywords,
+},
+{
+  tagName: "link",
+  rel: "canonical",
+  href: `https://raavananstore.com/prodcut/${params.category}/`,
 },
 ]
 }

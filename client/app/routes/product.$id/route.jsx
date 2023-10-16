@@ -42,7 +42,7 @@ export const loader = async ({ params }) => {
   });
 };
 
-export const meta = ({ data }) => {
+export const meta = ({ data, params }) => {
   const { product } = data;
 
   return [
@@ -62,6 +62,32 @@ export const meta = ({ data }) => {
     {
       name: 'og:image',
       content: product?.image ? product?.image : product?.selected?.image,
+    },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: `https://raavananstore.com/product/${params.id}/`,
+    },
+
+    {
+      'script:ld+json': {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.selected.title,
+        url: `https://raavananstore.com/product/${params.id}`,
+        image: [ product?.image ? product?.image : product?.selected?.image],
+
+        brand: {
+          '@type': 'Brand',
+          name: 'இராவணன் அங்காடி',
+        },
+        "offers": {
+          "@type": "Offer",
+          "price":  product.selected.price,
+          "priceCurrency": "INR"
+          
+        }
+      },
     },
   ];
 };
@@ -95,7 +121,11 @@ export default function Product() {
             >
               <div>
                 <ImageGallery
-                  items={product.selected.variant_images.length ? product.selected.variant_images : product.product_images}
+                  items={
+                    product.selected.variant_images.length
+                      ? product.selected.variant_images
+                      : product.product_images
+                  }
                   thumbnailPosition={'left'}
                   showFullscreenButton={false}
                   showPlayButton={false}
@@ -203,15 +233,14 @@ export default function Product() {
                   sx={{
                     my: '1rem',
                     backgroundColor: green[500],
-                    '&:hover':{
+                    '&:hover': {
                       backgroundColor: green[700],
-                    }
+                    },
                   }}
                   component={Link}
                   to={{
                     pathname: `/product/${product?.selected?.variant_id}/waorder`,
                   }}
-                 
                 >
                   பொருளை வாங்க
                 </Button>
@@ -233,9 +262,8 @@ export default function Product() {
                       ))}
                     </TableHead>
                   </Table>{' '}
-                </>)
-              :
-                 product?.product_spec.length ? (
+                </>
+              ) : product?.product_spec.length ? (
                 <>
                   <Typography variant="h6">பொருள் விவரங்கள் </Typography>
                   <Table size="small" aria-label="Product Detail table">
@@ -249,7 +277,7 @@ export default function Product() {
                     </TableHead>
                   </Table>{' '}
                 </>
-              ): null}
+              ) : null}
             </Grid>
           </Grid>
         </div>

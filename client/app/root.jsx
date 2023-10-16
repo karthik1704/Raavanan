@@ -68,6 +68,8 @@ import {
   ScrollRestoration,
   useLocation,
   useLoaderData,
+  useRouteError,
+  isRouteErrorResponse
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
@@ -159,6 +161,7 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
 
         <Meta />
         <Links />
+        <link rel="cononical" href="https://raavananstore.com/" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -180,7 +183,7 @@ const Document = withEmotionCache(({ children, title }, emotionCache) => {
         />
         <meta
           name="keywords"
-          content="இராவணன் அங்காடி, Raavanan Store, Raavanan Angaadi, இராவணன்,அங்காடி, "
+          content="இராவணன் அங்காடி, Raavanan Store, Raavanan Angaadi, இராவணன்,அங்காடி, ecommerce, tamil"
         />
         <link rel="apple-touch-icon" href="android-chrome-192x192.png" />
 
@@ -214,5 +217,29 @@ export default function App() {
       <Outlet />
       <Footer />
     </Document>
+  );
+}
+
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  return (
+    <html>
+      <head>
+        <title>Oops!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <h1>
+          {isRouteErrorResponse(error)
+            ? `${error.status} ${error.statusText}`
+            : error instanceof Error
+            ? error.message
+            : "Unknown Error"}
+        </h1>
+        <Scripts />
+      </body>
+    </html>
   );
 }
