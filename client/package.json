@@ -11,11 +11,12 @@
     "@mui/icons-material": "^5.14.9",
     "@mui/lab": "^5.0.0-alpha.144",
     "@mui/material": "^5.14.10",
-    "@remix-run/css-bundle": "^2.0.1",
-    "@remix-run/node": "^2.0.1",
-    "@remix-run/react": "^2.0.1",
-    "@remix-run/serve": "^2.0.0",
-    "isbot": "^3.6.13",
+    "@remix-run/css-bundle": "^2.1.0",
+    "@remix-run/node": "^2.1.0",
+    "@remix-run/react": "^2.1.0",
+    "@remix-run/serve": "^2.1.0",
+    "isbot": "^3.7.0",
+    "mui-phone-number": "^3.0.3",
     "react": "^18.0.2",
     "react-dom": "^18.0.2",
     "react-image-gallery": "^1.3.0",
@@ -28,9 +29,9 @@
     "typecheck": "tsc"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.0.1",
-    "@remix-run/eslint-config": "^2.0.1",
-    "eslint": "^8.49.0"
+    "@remix-run/dev": "^2.1.0",
+    "@remix-run/eslint-config": "^2.1.0",
+    "eslint": "^8.51.0"
   },
   "engines": {
     "node": ">=18.0.0"
