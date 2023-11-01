@@ -23,12 +23,16 @@ export const loader = async () => {
   const newRes = await fetch(`${API_URL}/api/products/new/`, {
     headers: { connection: 'keep-alive' },
   });
+  const categoryProductsRes = await fetch(`${API_URL}/api/products/categories/`, {
+    headers: { connection: 'keep-alive' },
+  });
   const newProduct = await newRes.json();
-  return { banner, trending, newProduct };
+  const categoriesProduct = await categoryProductsRes.json();
+  return { banner, trending, newProduct, categoriesProduct };
 };
 
 export default function Index() {
-  const { newProduct, trending } = useLoaderData();
+  const { newProduct, trending, categoriesProduct } = useLoaderData();
   return (
     <Box sx={{ maxWidth: '100%' }}>
       <div>
@@ -51,6 +55,18 @@ export default function Index() {
           </Grid>
         </>
       )}
+
+      {categoriesProduct &&
+        Object.entries(categoriesProduct).map(([title, products])  =>
+            !!products.length && (
+              <>
+                <Typography variant="h4"> {title} </Typography>
+                <Grid container sx={{ my: 1 }}>
+                  <ProductList products={products} />
+                </Grid>
+              </>
+            )
+        )}
     </Box>
   );
 }
